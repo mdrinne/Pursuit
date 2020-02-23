@@ -75,19 +75,25 @@
         android:id="@+id/toggleUserType"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="389dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginRight="30dp"
         android:textOff="Student"
         android:textOn="Company"
-        tools:layout_editor_absoluteX="391dp"
-        tools:layout_editor_absoluteY="389dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/iAmA"
         android:layout_width="0dp"
         android:layout_height="45dp"
+        android:layout_marginStart="140dp"
+        android:layout_marginLeft="140dp"
+        android:layout_marginTop="52dp"
         android:ems="10"
         android:inputType="textPersonName"
         android:text="I am a"
-        tools:layout_editor_absoluteX="140dp"
-        tools:layout_editor_absoluteY="389dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/confirmedPassword" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
