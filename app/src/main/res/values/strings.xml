@@ -4,4 +4,10 @@
     <string name="strPassword">Password</string>
     <string name="strLogin">Login</string>
     <string name="strRegister">Register</string>
+    <string name="strEmailAddress">Email address</string>
+    <string name="strReEnterPassword">Re-enter password</string>
+    <string name="strApplicant">Applicant</string>
+    <string name="strCompany">Company</string>
+    <string name="strContinue">Continue</string>
+    <string name="strRole">Role</string>
 </resources>

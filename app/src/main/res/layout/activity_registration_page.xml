@@ -16,7 +16,7 @@
         android:layout_marginEnd="92dp"
         android:layout_marginRight="92dp"
         android:ems="10"
-        android:hint="re-enter password"
+        android:hint="@string/strReEnterPassword"
         android:inputType="textPersonName|textPassword"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.346"
@@ -33,7 +33,7 @@
         android:layout_marginEnd="92dp"
         android:layout_marginRight="92dp"
         android:ems="10"
-        android:hint="password"
+        android:hint="@string/strPassword"
         android:inputType="textPersonName|textPassword"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.346"
@@ -50,7 +50,7 @@
         android:layout_marginEnd="32dp"
         android:layout_marginRight="32dp"
         android:ems="10"
-        android:hint="Email address"
+        android:hint="@string/strEmailAddress"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.422"
@@ -66,7 +66,7 @@
         android:layout_marginEnd="216dp"
         android:layout_marginRight="216dp"
         android:layout_marginBottom="44dp"
-        android:text="Continue"
+        android:text="@string/strContinue"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -78,8 +78,8 @@
         android:layout_marginTop="389dp"
         android:layout_marginEnd="30dp"
         android:layout_marginRight="30dp"
-        android:textOff="Student"
-        android:textOn="Company"
+        android:textOff="@string/strRole"
+        android:textOn="@string/strCompany"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -92,7 +92,7 @@
         android:layout_marginTop="52dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="I am a"
+        android:text="@string/strRole"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/confirmedPassword" />
 
