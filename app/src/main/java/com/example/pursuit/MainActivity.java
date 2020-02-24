@@ -18,11 +18,15 @@ public class MainActivity extends AppCompatActivity {
         username = findViewById(R.id.username);
         password = findViewById(R.id.password);
 
-        if (username.isEmpty() || password.isEmpty()) {
+        if (!username.isEmpty() && !password.isEmpty()) {
 
+        } else {
+            Intent intent = new Intent(this, RegistrationActivity.class);
+            startActivity(intent);
         }
 
         Intent intent = new Intent(this, RegistrationActivity.class);
+
         startActivity(intent);
 
     }
