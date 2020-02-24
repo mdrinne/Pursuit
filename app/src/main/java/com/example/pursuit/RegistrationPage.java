@@ -11,13 +11,16 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 public class RegistrationPage extends AppCompatActivity {
 
-    EditText firstName;
-    EditText lastName;
     EditText emailAddress;
-    Button registration;
+    EditText userPassword;
+    EditText confirmedPassword;
+    EditText txtRole;
+    ToggleButton toggleUserType;
+    Button btnContinue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,7 +29,7 @@ public class RegistrationPage extends AppCompatActivity {
 
         emailAddress = findViewById(R.id.emailAddress);
 
-        registration.setOnClickListener(new View.OnClickListener() {
+        btnContinue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 checkDataEntered();
