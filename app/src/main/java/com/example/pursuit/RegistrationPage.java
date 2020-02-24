@@ -47,7 +47,6 @@ public class RegistrationPage extends AppCompatActivity {
         return TextUtils.isEmpty(str);
     }
 
-
     void checkDataEntered() {
         boolean isValid = true;
         if (!isEmail(emailAddress)) {

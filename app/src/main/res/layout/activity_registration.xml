@@ -4,13 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".FirstActivity">
+    tools:context=".RegistrationActivity">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="FIRST ACTIVITY"
-        tools:layout_editor_absoluteX="182dp"
-        tools:layout_editor_absoluteY="250dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>
