@@ -62,9 +62,13 @@ public class RegistrationPage extends AppCompatActivity {
             userPassword.setError("Password must be at least 4 chars long!");
             isValid = false;
         }
-        //if (userPassword != confirmedPassword) error  //FIXME
+        if (!userPassword.getText().toString().equals(confirmedPassword.getText().toString())) {
+            userPassword.setError("Passwords do not match!");
+            confirmedPassword.setError("Passwords do not match!");
+            isValid = false;
+        }
         if (isValid) {
-            if (btnContinue.isActivated()) {
+            if (toggleUserType.isChecked()) {
                 Intent i = new Intent(RegistrationPage.this, StudentRegistration.class);
                 startActivity(i);
             }
