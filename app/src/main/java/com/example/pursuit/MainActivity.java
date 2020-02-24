@@ -8,7 +8,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+
 public class MainActivity extends AppCompatActivity {
+    public static final String NO_USER_PASS_MESSAGE = "com.example.pursuit.NO_USER_PASS_MESSAGE";
 
     EditText username;
     EditText password;
@@ -32,13 +34,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void loginUser(View view) {
-        username = findViewById(R.id.username);
-        password = findViewById(R.id.password);
-
 
         Intent intent = new Intent(this, LandingActivity.class);
-        startActivity(intent);
 
+        startActivity(intent);
     }
 
     public void registerUser(View view) {

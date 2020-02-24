@@ -14,6 +14,7 @@ public class LandingActivity extends AppCompatActivity {
     Button myProfileBtn;
     Button viewCompaniesBtn;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,6 +24,7 @@ public class LandingActivity extends AppCompatActivity {
         aboutPursuitBtn = findViewById(R.id.aboutPursuitBtn);
         myProfileBtn = findViewById(R.id.myProfileBtn);
         viewCompaniesBtn = findViewById(R.id.viewCompaniesBtn);
+
 
         logOutBtn.setOnClickListener(new View.OnClickListener() {
             @Override
