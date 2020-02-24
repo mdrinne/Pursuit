@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
         String password = passwordText.getText().toString();
 
         if (!username.isEmpty() && !password.isEmpty()) {
-            if (checkUserame() && checkPassword()) {
+            if (checkUsername() && checkPassword()) {
 
             }
         } else {
