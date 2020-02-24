@@ -44,12 +44,10 @@ public class RegistrationPage extends AppCompatActivity {
         return TextUtils.isEmpty(str);
     }
 
-
     void checkDataEntered() {
-         if (!isEmail(emailAddress)) {
+        if (!isEmail(emailAddress)) {
             emailAddress.setError("You must enter a valid email address!");
-        }
-        else {
+        } else {
             Intent i = new Intent(RegistrationPage.this, MainActivity.class);
             startActivity(i);
         }
