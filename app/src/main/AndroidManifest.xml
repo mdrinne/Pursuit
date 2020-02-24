@@ -9,7 +9,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".RegistrationActivity"></activity>
+        <activity android:name=".viewCompaniesActivity"></activity>
+        <activity android:name=".myProfileActivity" />
+        <activity android:name=".aboutPursuitActivity" />
+        <activity android:name=".LandingActivity" />
+        <activity android:name=".RegistrationActivity" />
         <activity android:name=".CompanyRegistration" />
         <activity android:name=".StudentRegistration" />
         <activity android:name=".RegistrationPage" />
