@@ -24,10 +24,7 @@ public class RegistrationPage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration_page);
 
-        firstName = findViewById(R.id.firstName);
-        lastName = findViewById(R.id.lastName);
         emailAddress = findViewById(R.id.emailAddress);
-        registration = findViewById(R.id.registration);
 
         registration.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -49,14 +46,7 @@ public class RegistrationPage extends AppCompatActivity {
 
 
     void checkDataEntered() {
-        if (isEmpty(firstName)) {
-            Toast t = Toast.makeText(this, "You must enter a first name to register!", Toast.LENGTH_SHORT);
-            t.show();
-        }
-        else if (isEmpty(lastName)) {
-            lastName.setError("You must enter a last name to register!");
-        }
-        else if (!isEmail(emailAddress)) {
+         if (!isEmail(emailAddress)) {
             emailAddress.setError("You must enter a valid email address!");
         }
         else {
