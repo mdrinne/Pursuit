@@ -49,12 +49,29 @@ public class RegistrationPage extends AppCompatActivity {
 
 
     void checkDataEntered() {
-         if (!isEmail(emailAddress)) {
+        boolean isValid = true;
+        if (!isEmail(emailAddress)) {
             emailAddress.setError("You must enter a valid email address!");
+            isValid = false;
         }
-        else {
-            Intent i = new Intent(RegistrationPage.this, MainActivity.class);
-            startActivity(i);
+        if (isEmpty(userPassword)) {
+            userPassword.setError("You must enter password to login!");
+            isValid = false;
+        }
+        if (userPassword.getText().toString().length() < 4) {
+            userPassword.setError("Password must be at least 4 chars long!");
+            isValid = false;
+        }
+        //if (userPassword != confirmedPassword) error  //FIXME
+        if (isValid) {
+            if (btnContinue.isActivated()) {
+                Intent i = new Intent(RegistrationPage.this, StudentRegistration.class);
+                startActivity(i);
+            }
+            else {
+                Intent i = new Intent(RegistrationPage.this, CompanyRegistration.class);
+                startActivity(i);
+            }
         }
     }
 }
