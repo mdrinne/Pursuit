@@ -11,13 +11,16 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 public class RegistrationPage extends AppCompatActivity {
 
-    EditText firstName;
-    EditText lastName;
     EditText emailAddress;
-    Button registration;
+    EditText userPassword;
+    EditText confirmedPassword;
+    EditText txtRole;
+    ToggleButton toggleUserType;
+    Button btnContinue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,7 +29,7 @@ public class RegistrationPage extends AppCompatActivity {
 
         emailAddress = findViewById(R.id.emailAddress);
 
-        registration.setOnClickListener(new View.OnClickListener() {
+        btnContinue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 checkDataEntered();
@@ -45,11 +48,33 @@ public class RegistrationPage extends AppCompatActivity {
     }
 
     void checkDataEntered() {
+        boolean isValid = true;
         if (!isEmail(emailAddress)) {
             emailAddress.setError("You must enter a valid email address!");
-        } else {
-            Intent i = new Intent(RegistrationPage.this, MainActivity.class);
-            startActivity(i);
+            isValid = false;
+        }
+        if (isEmpty(userPassword)) {
+            userPassword.setError("You must enter password to login!");
+            isValid = false;
+        }
+        if (userPassword.getText().toString().length() < 4) {
+            userPassword.setError("Password must be at least 4 chars long!");
+            isValid = false;
+        }
+        if (!userPassword.getText().toString().equals(confirmedPassword.getText().toString())) {
+            userPassword.setError("Passwords do not match!");
+            confirmedPassword.setError("Passwords do not match!");
+            isValid = false;
+        }
+        if (isValid) {
+            if (toggleUserType.isChecked()) {
+                Intent i = new Intent(RegistrationPage.this, StudentRegistration.class);
+                startActivity(i);
+            }
+            else {
+                Intent i = new Intent(RegistrationPage.this, CompanyRegistration.class);
+                startActivity(i);
+            }
         }
     }
 }
