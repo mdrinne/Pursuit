@@ -8,6 +8,7 @@ public class Company {
   public static final String COMPANY_FIELD = "Field text";
   public static final String COMPANY_EMAIL = "Email text";
 
+  public static final String ID = "id";
   public static final String NAME = "CompanyName";
   public static final String EMAIL = "Email";
   public static final String PASSWORD = "Password";

@@ -49,81 +49,82 @@ public class MainActivity extends AppCompatActivity {
         login = findViewById(R.id.button);
         username = findViewById(R.id.username);
         password = findViewById(R.id.password);
+        db = new DatabaseHelper(this);
 
-//        login.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Log.d(getClass().getSimpleName(), "in onClick");
-//                loginUser(v);
-//            }
-//        });
+        login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(getClass().getSimpleName(), "in onClick");
+                loginUser(v);
+            }
+        });
     }
 
     // checks if user input from text field is empty
-    boolean isEmpty(EditText text) {
-        Log.d(getClass().getSimpleName(), "in isEmpty");
-        CharSequence str = text.getText().toString();
-        return TextUtils.isEmpty(str);
-    }
-
-    // converts user input from text field to a string object
-    String toString(EditText text) {
-        Log.d(getClass().getSimpleName(), "in toString");
-        return text.getText().toString();
-    }
+//    boolean isEmpty(EditText text) {
+//        Log.d(getClass().getSimpleName(), "in isEmpty");
+//        CharSequence str = text.getText().toString();
+//        return TextUtils.isEmpty(str);
+//    }
+//
+//    // converts user input from text field to a string object
+//    String toString(EditText text) {
+//        Log.d(getClass().getSimpleName(), "in toString");
+//        return text.getText().toString();
+//    }
 
     // checks for empty user input fields and displays appropriate alert
     // returns true if either input field is empty
-    Boolean checkIfEmpty(EditText username, EditText password, View v) {
-        Log.d(getClass().getSimpleName(), "in checkIfEmpty");
-        if (isEmpty(username) && isEmpty(password)) {
-            Log.d(getClass().getSimpleName(), "both empty");
-            Toast.makeText(v.getContext(), "Must Enter Email and Password", 2).show();
-            return true;
-        }
-        else if (isEmpty(username)) {
-            Log.d(getClass().getSimpleName(), "user empty");
-            Toast.makeText(v.getContext(), "Must Enter Email", 2).show();
-            return true;
-
-        }
-        else if (isEmpty(password)) {
-            Log.d(getClass().getSimpleName(), "password empty");
-            Toast.makeText(v.getContext(), "Must Enter Password", 2).show();
-            return true;
-        }
-        else return false;
-    }
+//    Boolean checkIfEmpty(EditText username, EditText password, View v) {
+//        Log.d(getClass().getSimpleName(), "in checkIfEmpty");
+//        if (isEmpty(username) && isEmpty(password)) {
+//            Log.d(getClass().getSimpleName(), "both empty");
+//            Toast.makeText(v.getContext(), "Must Enter Email and Password", 2).show();
+//            return true;
+//        }
+//        else if (isEmpty(username)) {
+//            Log.d(getClass().getSimpleName(), "user empty");
+//            Toast.makeText(v.getContext(), "Must Enter Email", 2).show();
+//            return true;
+//
+//        }
+//        else if (isEmpty(password)) {
+//            Log.d(getClass().getSimpleName(), "password empty");
+//            Toast.makeText(v.getContext(), "Must Enter Password", 2).show();
+//            return true;
+//        }
+//        else return false;
+//    }
 
     // compares user input data to database
-    Boolean compareToDB(EditText username, EditText password, View v, Cursor c) {
-        Log.d(getClass().getSimpleName(), "in compareToDb");
-        if (c != null) {
-            if (c.moveToFirst()) {
-                String dbPassword = c.getString(c.getColumnIndex("Password"));
+//    Boolean compareToDB(EditText username, EditText password, View v, Cursor c) {
+//        Log.d(getClass().getSimpleName(), "in compareToDb");
+//        if (c != null) {
+//            if (c.moveToFirst()) {
+//                String dbPassword = c.getString(c.getColumnIndex("Password"));
+//
+//                if (dbPassword.equals(toString(password))) {
+//                    return true;
+//                }
+//                else {
+//                    Log.d(getClass().getSimpleName(), "password did not match");
+//                    Toast.makeText(v.getContext(), "Incorrect Password", 2).show();
+//                    return false;
+//                }
+//            }
+//            else {
+//                Log.d(getClass().getSimpleName(), "user does not exist");
+//                Toast.makeText(v.getContext(), "User Does Not Exist", 2).show();
+//                return false;
+//            }
+//        }
+//        else {
+//            Log.e(getClass().getSimpleName(), "Cursor returned null while querying for user at login");
+//            return false;
+//        }
+//    }
 
-                if (dbPassword.equals(toString(password))) {
-                    return true;
-                }
-                else {
-                    Log.d(getClass().getSimpleName(), "password did not match");
-                    Toast.makeText(v.getContext(), "Incorrect Password", 2).show();
-                    return false;
-                }
-            }
-            else {
-                Log.d(getClass().getSimpleName(), "user does not exist");
-                Toast.makeText(v.getContext(), "User Does Not Exist", 2).show();
-                return false;
-            }
-        }
-        else {
-            Log.e(getClass().getSimpleName(), "Cursor returned null while querying for user at login");
-            return false;
-        }
-    }
-
-    // completes login verification tasks
+//     completes login verification tasks
 //    Boolean checkCredentials(EditText username, EditText password, View v) {
 //        Log.d(getClass().getSimpleName(), "in checkCredentials");
 //        if (!checkIfEmpty(username, password, v)) {
@@ -138,20 +139,37 @@ public class MainActivity extends AppCompatActivity {
 //    }
 
     // function executed upon click on login button
-//    public void loginUser(View view) {
-//        Log.d(getClass().getSimpleName(), "in loginUser");
-//        username = findViewById(R.id.username);
-//        password = findViewById(R.id.password);
-//
+    public void loginUser(View view) {
+        Log.d(getClass().getSimpleName(), "in loginUser");
+        username = findViewById(R.id.username);
+        password = findViewById(R.id.password);
+
 //        Log.d(getClass().getSimpleName(), toString(username));
-//
-//
+
+        String loginUsername = username.getText().toString();
+        String loginPassword = password.getText().toString();
+
+        if (loginUsername.isEmpty() || loginPassword.isEmpty()) {
+            Toast.makeText(view.getContext(), "Please enter username and password.", 2).show();
+        } else {
+            Company c = db.getCompanyForLogin(loginUsername, loginPassword);
+
+            if (c != null) {
+                Intent intent = new Intent(this, LandingActivity.class);
+
+                startActivity(intent);
+            } else {
+                Toast.makeText(view.getContext(), "Incorrect username and password.", 2).show();
+            }
+        }
+
+
 //        if (checkCredentials(username, password, view)) {
 //            Intent intent = new Intent(this, LandingActivity.class);
 //
 //            startActivity(intent);
 //        }
-//    }
+    }
 
     public void registerUser(View view) {
         Log.d(getClass().getSimpleName(), "register");
