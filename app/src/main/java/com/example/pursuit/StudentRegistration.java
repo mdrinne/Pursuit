@@ -10,11 +10,14 @@ public class StudentRegistration extends AppCompatActivity {
 
     EditText firstName;
     EditText lastName;
-    EditText universityName;
-    EditText studentMajor;
-    EditText studentMinor;
-    EditText studentGPA;
-    EditText studentBio;
+    EditText university;
+    EditText major;
+    EditText minor;
+    EditText gpa;
+    EditText bio;
+    EditText email;
+    EditText password1;
+    EditText password2;
     Button btnFinish;
 
     @Override
