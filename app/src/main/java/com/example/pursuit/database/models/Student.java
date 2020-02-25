@@ -14,6 +14,17 @@ public class Student {
     public static final String APPLICANT_COL9 = "username VARCHAR";
     public static final String APPLICANT_COL10 = "password VARCHAR";
 
+    public static final String FIRSTNAME = "firstname";
+    public static final String LASTNAME = "lastname";
+    public static final String UNIVERSITY = "university";
+    public static final String MAJOR = "major";
+    public static final String MINOR = "minor";
+    public static final String GPA = "gpa";
+    public static final String BIO = "bio";
+    public static final String EMAIL = "email";
+    public static final String USERNAME = "username";
+    public static final String PASSWORD = "password";
+
     private int id;
     private String fname;
     private String lname;
@@ -26,7 +37,7 @@ public class Student {
     private String username;
     private String password;
 
-    public static final String CREATE_TABLE = "CREATE TABLE IF NOT EXISTS " + APPLICANT_TABLE +
+    public static final String CREATE_QUERY = "CREATE TABLE IF NOT EXISTS " + APPLICANT_TABLE +
             " (" + APPLICANT_COL0 + ", " + APPLICANT_COL1 + ", " +
             APPLICANT_COL2 + ", " + APPLICANT_COL3 + ", " + APPLICANT_COL4 + ", " +
             APPLICANT_COL5 + ", " + APPLICANT_COL6 + ", " + APPLICANT_COL7 + ", " +

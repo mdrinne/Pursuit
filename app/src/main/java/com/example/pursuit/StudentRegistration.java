@@ -16,6 +16,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.pursuit.database.DatabaseHelper;
+
 public class StudentRegistration extends AppCompatActivity {
 
     private final String DB_NAME = "pursuit";
@@ -32,8 +34,6 @@ public class StudentRegistration extends AppCompatActivity {
     private final String APPLICANT_COL9 = "username VARCHAR";
     private final String APPLICANT_COL10 = "password VARCHAR";
 
-    SQLiteDatabase db;
-
     EditText firstName;
     EditText lastName;
     EditText university;
@@ -46,6 +46,8 @@ public class StudentRegistration extends AppCompatActivity {
     EditText password1;
     EditText password2;
     Button btnFinish;
+
+    private DatabaseHelper db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,17 +67,8 @@ public class StudentRegistration extends AppCompatActivity {
         password1 = findViewById(R.id.txtPassword);
         password2 = findViewById(R.id.txtReEnterPassword);
 
-        try {
-            db = this.openOrCreateDatabase(DB_NAME, MODE_PRIVATE, null);
+        db = new DatabaseHelper(this);
 
-            db.execSQL("CREATE TABLE IF NOT EXISTS " + APPLICANT_TABLE + " (" +
-                        APPLICANT_COL0 + ", " + APPLICANT_COL1 + ", " +
-                        APPLICANT_COL2 + ", " + APPLICANT_COL3 + ", " + APPLICANT_COL4 + ", " +
-                        APPLICANT_COL5 + ", " + APPLICANT_COL6 + ", " + APPLICANT_COL7 + ", " +
-                        APPLICANT_COL8 + ", " + APPLICANT_COL9 + ", " + APPLICANT_COL10 + ");");
-        } catch (SQLiteException se) {
-            Log.e(getClass().getSimpleName(), "Student Register: Could not create or open database");
-        }
     }
 
     boolean isEmail(EditText text, View v) {
@@ -151,50 +144,50 @@ public class StudentRegistration extends AppCompatActivity {
         return false;
     }
 
-    public boolean usernameTaken(View v) {
-        Log.d(getClass().getSimpleName(), "in usernameTaken");
-        // issue HERE
-        Cursor c = db.rawQuery("SELECT username FROM " + APPLICANT_TABLE + " WHERE username = '"
-                                    + toString(username) + "'", null);
-        Log.d(getClass().getSimpleName(), "cursor retrieved");
+//    public boolean usernameTaken(View v) {
+//        Log.d(getClass().getSimpleName(), "in usernameTaken");
+//        // issue HERE
+//        Cursor c = db.rawQuery("SELECT username FROM " + APPLICANT_TABLE + " WHERE username = '"
+//                                    + toString(username) + "'", null);
+//        Log.d(getClass().getSimpleName(), "cursor retrieved");
+//
+//        if (c != null) {
+//            if (c.moveToFirst()) {
+//                Toast.makeText(v.getContext(), "Username is Already Taken", 2).show();
+//                return true;
+//            }
+//            else return false;
+//        }
+//        Log.e(getClass().getSimpleName(), "Cursor returned null while searching of username is taken");
+//        return false;
+//    }
 
-        if (c != null) {
-            if (c.moveToFirst()) {
-                Toast.makeText(v.getContext(), "Username is Already Taken", 2).show();
-                return true;
-            }
-            else return false;
-        }
-        Log.e(getClass().getSimpleName(), "Cursor returned null while searching of username is taken");
-        return false;
-    }
-
-    public boolean emailTaken(View v) {
-        Cursor c = db.rawQuery("SELECT email FROM " + APPLICANT_TABLE + " WHERE email = '"
-                + toString(email) + "';", null);
-
-        if (c != null) {
-            if (c.moveToFirst()) {
-                Toast.makeText(v.getContext(), "Email is Already Taken", 2).show();
-                return true;
-            }
-            else return false;
-        }
-        Log.e(getClass().getSimpleName(), "Cursor returned null while searching of username is taken");
-        return false;
-    }
-
-    public boolean insertDB() {
-        try {
-            db.execSQL("INSERT INTO " + APPLICANT_TABLE + " VALUES (" + firstName + ", " + lastName +
-                    ", " + university + ", " + major + ", " + minor + ", " + gpa + ", " + bio +
-                    email + ", " + username + ", " + password1 + ", " + password2 + ");");
-            Log.d(getClass().getSimpleName(), "inserted user");
-        } catch (SQLiteException se) {
-            Log.e(getClass().getSimpleName(), "Failed to register student");
-        }
-        return true;
-    }
+//    public boolean emailTaken(View v) {
+//        Cursor c = db.rawQuery("SELECT email FROM " + APPLICANT_TABLE + " WHERE email = '"
+//                + toString(email) + "';", null);
+//
+//        if (c != null) {
+//            if (c.moveToFirst()) {
+//                Toast.makeText(v.getContext(), "Email is Already Taken", 2).show();
+//                return true;
+//            }
+//            else return false;
+//        }
+//        Log.e(getClass().getSimpleName(), "Cursor returned null while searching of username is taken");
+//        return false;
+//    }
+//
+//    public boolean insertDB() {
+//        try {
+//            db.execSQL("INSERT INTO " + APPLICANT_TABLE + " VALUES (" + firstName + ", " + lastName +
+//                    ", " + university + ", " + major + ", " + minor + ", " + gpa + ", " + bio +
+//                    email + ", " + username + ", " + password1 + ", " + password2 + ");");
+//            Log.d(getClass().getSimpleName(), "inserted user");
+//        } catch (SQLiteException se) {
+//            Log.e(getClass().getSimpleName(), "Failed to register student");
+//        }
+//        return true;
+//    }
 
     public boolean processRequest(View v) {
         if(!checkForEmpties(v)) {
@@ -203,15 +196,24 @@ public class StudentRegistration extends AppCompatActivity {
                 Log.d(getClass().getSimpleName(), "email is valid");
                 if (passwordMatch(v)) {
                     Log.d(getClass().getSimpleName(), "passwords match");
-                    if (!usernameTaken(v)) {
-                        Log.d(getClass().getSimpleName(), "username not taken");
-                        if (!emailTaken(v)) {
-                            Log.d(getClass().getSimpleName(), "email not taken");
-                            if (insertDB()) {
-                                return true;
-                            }
-                        }
-                    }
+//                    if (!usernameTaken(v)) {
+//                        Log.d(getClass().getSimpleName(), "username not taken");
+//                        if (!emailTaken(v)) {
+//                            Log.d(getClass().getSimpleName(), "email not taken");
+//                            if (insertDB()) {
+//                                return true;
+//                            }
+//                        }
+//                    }
+                    long res = db.insertStudent(toString(firstName), toString(lastName), toString(university),
+                                                toString(major), toString(minor), toString(gpa),
+                                                toString(bio), toString(email), toString(username),
+                                                toString(password1));
+
+                    Log.d(getClass().getSimpleName(), Long.toString(res));
+
+                    if (res == -1) return false;
+                    else return true;
                 }
             }
         }
@@ -233,8 +235,6 @@ public class StudentRegistration extends AppCompatActivity {
         password2 = findViewById(R.id.txtReEnterPassword);
 
         if (processRequest(v)) {
-//            db.close();
-
             Intent intent = new Intent(this, LandingActivity.class);
             startActivity(intent);
         }
