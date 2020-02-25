@@ -6,35 +6,33 @@
     android:layout_height="match_parent"
     tools:context=".viewCompaniesActivity">
 
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="127dp"
-        android:layout_marginLeft="127dp"
-        android:layout_marginTop="88dp"
-        android:layout_marginEnd="127dp"
-        android:layout_marginRight="127dp"
-        android:layout_marginBottom="130dp"
-        android:text="Need persistence to store data on companies!"
-        app:layout_constraintBottom_toTopOf="@+id/backBtnCompanies"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <Button
         android:id="@+id/backBtnCompanies"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="229dp"
         android:layout_marginLeft="229dp"
-        android:layout_marginTop="129dp"
         android:layout_marginEnd="230dp"
         android:layout_marginRight="230dp"
-        android:layout_marginBottom="447dp"
+        android:layout_marginBottom="288dp"
         android:text="Back"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="61dp"
+        android:layout_marginLeft="61dp"
+        android:layout_marginTop="187dp"
+        android:layout_marginEnd="61dp"
+        android:layout_marginRight="61dp"
+        android:layout_marginBottom="30dp"
+        android:text="Currently, no companies are registered. Sorry!"
+        app:layout_constraintBottom_toTopOf="@+id/backBtnCompanies"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
