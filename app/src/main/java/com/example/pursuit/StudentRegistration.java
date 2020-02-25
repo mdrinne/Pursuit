@@ -20,20 +20,6 @@ import com.example.pursuit.database.DatabaseHelper;
 
 public class StudentRegistration extends AppCompatActivity {
 
-    private final String DB_NAME = "pursuit";
-    private final String APPLICANT_TABLE = "Applicants";
-    private final String APPLICANT_COL0 = "id INTEGER PRIMARY KEY";
-    private final String APPLICANT_COL1 = "firstname VARCHAR";
-    private final String APPLICANT_COL2 = "lastname VARCHAR";
-    private final String APPLICANT_COL3 = "university VARCHAR";
-    private final String APPLICANT_COL4 = "major VARCHAR";
-    private final String APPLICANT_COL5 = "minor VARCHAR";
-    private final String APPLICANT_COL6 = "gpa VARCHAR";
-    private final String APPLICANT_COL7 = "bio VARCHAR";
-    private final String APPLICANT_COL8 = "email VARCHAR";
-    private final String APPLICANT_COL9 = "username VARCHAR";
-    private final String APPLICANT_COL10 = "password VARCHAR";
-
     EditText firstName;
     EditText lastName;
     EditText university;
