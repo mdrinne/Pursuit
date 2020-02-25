@@ -20,6 +20,7 @@ public class StudentRegistration extends AppCompatActivity {
 
     private final String DB_NAME = "pursuit";
     private final String APPLICANT_TABLE = "Applicants";
+    private final String APPLICANT_COL0 = "id INTEGER PRIMARY KEY";
     private final String APPLICANT_COL1 = "firstname VARCHAR";
     private final String APPLICANT_COL2 = "lastname VARCHAR";
     private final String APPLICANT_COL3 = "university VARCHAR";
@@ -64,7 +65,8 @@ public class StudentRegistration extends AppCompatActivity {
         try {
             db = this.openOrCreateDatabase(DB_NAME, MODE_PRIVATE, null);
 
-            db.execSQL("CREATE TABLE IF NOT EXISTS " + APPLICANT_TABLE + " (" + APPLICANT_COL1 + ", " +
+            db.execSQL("CREATE TABLE IF NOT EXISTS " + APPLICANT_TABLE + " (" +
+                        APPLICANT_COL0 + ", " + APPLICANT_COL1 + ", " +
                         APPLICANT_COL2 + ", " + APPLICANT_COL3 + ", " + APPLICANT_COL4 + ", " +
                         APPLICANT_COL5 + ", " + APPLICANT_COL6 + ", " + APPLICANT_COL7 + ", " +
                         APPLICANT_COL8 + ", " + APPLICANT_COL9 + ", " + APPLICANT_COL10 + ");");
