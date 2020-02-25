@@ -53,14 +53,17 @@ public class StudentRegistration extends AppCompatActivity {
         setContentView(R.layout.activity_student_registration);
 
         btnFinish = findViewById(R.id.btnFinish);
-
-        btnFinish.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d(getClass().getSimpleName(), "finish click");
-                registerStudent(v);
-            }
-        });
+        firstName = findViewById(R.id.txtFirstName);
+        lastName = findViewById(R.id.txtLastName);
+        university = findViewById(R.id.txtUniversity);
+        major = findViewById(R.id.txtMajor);
+        minor = findViewById(R.id.txtMinor);
+        gpa = findViewById(R.id.txtGPA);
+        bio = findViewById(R.id.txtBio);
+        email = findViewById(R.id.txtEmail);
+        username = findViewById(R.id.txtUsername);
+        password1 = findViewById(R.id.txtPassword);
+        password2 = findViewById(R.id.txtReEnterPassword);
 
         try {
             db = this.openOrCreateDatabase(DB_NAME, MODE_PRIVATE, null);

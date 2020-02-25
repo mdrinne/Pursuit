@@ -19,4 +19,4 @@ public class Company {
     this.password = password;
     this.field = field;
   }
-}
+};

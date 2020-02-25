@@ -2,7 +2,9 @@
   <dictionary name="matthewrinne">
     <words>
       <w>firstname</w>
+      <w>fname</w>
       <w>lastname</w>
+      <w>lname</w>
     </words>
   </dictionary>
 </component>
