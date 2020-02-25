@@ -66,6 +66,7 @@ public class CompanyRegistration extends AppCompatActivity {
         }
 
         if (valid) {
+//            String insertQuery = "INSERT INTO Companies(Password, CompanyName, Field, Email) VALUES"
             Intent intent = new Intent(this, LandingActivity.class);
             startActivity(intent);
         }
