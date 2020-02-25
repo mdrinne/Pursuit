@@ -53,40 +53,66 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    // checks if user input from text field is empty
     boolean isEmpty(EditText text) {
         CharSequence str = text.getText().toString();
         return TextUtils.isEmpty(str);
     }
 
+    // converts user input from text field to a string object
     String toString(EditText text) {
         return text.getText().toString();
     }
 
+    // checks for empty user input fields and displays appropriate alert
+    // returns false if either input field is empty
+    Boolean checkIfEmpty(EditText username, EditText password, View v) {
+        if (isEmpty(username) && isEmpty(password)) {
+            Toast.makeText(v.getContext(), "Must Enter Email and Password", 2);
+            return true;
+        }
+        else if (isEmpty(username)) {
+            Toast.makeText(v.getContext(), "Must Enter Email", 2);
+            return true;
+
+        }
+        else if (isEmpty(password)) {
+            Toast.makeText(v.getContext(), "Must Enter Password", 2);
+            return true;
+        }
+        else return false;
+    }
+
+    // completes login verification tasks
+    Boolean checkCredentials(EditText username, EditText password, View v) {
+        if (!checkIfEmpty()) {
+            Cursor c = db.rawQuery("SELECT Password FROM " + USER_TABLE +
+                    " WHERE Username = " + toString(username), null);
+
+            if (c == null) {
+                Toast.makeText(view.getContext(), "User Does Not Exist", 2);
+                return false;
+            }
+            else {
+                String dbPassword = c.getString(c.getColumnIndex("Password"));
+
+
+            }
+        }
+    }
+
+    // function executed upon click on login button
     public void loginUser(View view) {
 
         username = findViewById(R.id.username);
         password = findViewById(R.id.password);
 
 
-        if (isEmpty(username) && isEmpty(password)) {
-            Toast.makeText(view.getContext(), "Must Enter Email and Password", 2);
-        }
-        else if (isEmpty(username)) {
-            Toast.makeText(view.getContext(), "Must Enter Email", 2);
-        }
-        else if (isEmpty(password)) {
-            Toast.makeText(view.getContext(), "Must Enter Password", 2);
-        }
-        else {
-//            Cursor c = db.rawQuery("SELECT Username");
-//
-//            boolean dbUsername;
-        }
+        if (checkCredentials(username, password, view)) {
+            Intent intent = new Intent(this, LandingActivity.class);
 
-
-        Intent intent = new Intent(this, LandingActivity.class);
-
-        startActivity(intent);
+            startActivity(intent);
+        }
     }
 
     public void registerUser(View view) {
