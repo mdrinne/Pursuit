@@ -12,9 +12,8 @@ import android.widget.Toast;
 
 public class CompanyRegistration extends AppCompatActivity {
 
-    EditText companyUsername;
-    EditText companyPassword;
     EditText companyName;
+    EditText companyPassword;
     EditText companyEmail;
     EditText companyField;
 //    Button register;
@@ -23,25 +22,27 @@ public class CompanyRegistration extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_company_registration);
+
+        companyPassword = findViewById(R.id.companyPassword);
+        companyName = findViewById(R.id.companyName);
+        companyEmail = findViewById(R.id.companyEmail);
+        companyField = findViewById(R.id.companyField);
     }
 
     public void register(View view) {
         Log.d(getClass().getSimpleName(), "in checkIfEmpty");
 
-        companyUsername = findViewById(R.id.companyUsername);
-        Log.d(getClass().getSimpleName(), companyUsername.getText().toString());
+        String companyNameString = companyName.getText().toString();
+        Log.d(getClass().getSimpleName(), companyNameString);
 
-        companyPassword = findViewById(R.id.companyPassword);
-        Log.d(getClass().getSimpleName(), companyPassword.getText().toString());
+        String companyPasswordString = companyPassword.getText().toString();
+        Log.d(getClass().getSimpleName(), companyPasswordString);
 
-        companyName = findViewById(R.id.companyName);
-        Log.d(getClass().getSimpleName(), companyName.getText().toString());
+        String companyEmailString = companyEmail.getText().toString();
+        Log.d(getClass().getSimpleName(), companyEmailString);
 
-        companyEmail = findViewById(R.id.companyEmail);
-        Log.d(getClass().getSimpleName(), companyEmail.getText().toString());
-
-        companyField = findViewById(R.id.companyField);
-        Log.d(getClass().getSimpleName(), companyField.getText().toString());
+        String companyFieldString = companyField.getText().toString();
+        Log.d(getClass().getSimpleName(), companyFieldString);
 
     }
 }

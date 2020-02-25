@@ -25,11 +25,10 @@ public class MainActivity extends AppCompatActivity {
 
     private final String COMPANY_TABLE = "Companies";
     private final String COMPANY_ID = "id integer primary key";
-    private final String COMPANY_COL1 = "Username VARCHAR";
-    private final String COMPANY_COL2 = "Password VARCHAR";
-    private final String COMPANY_COL3 = "CompanyName VARCHAR";
-    private final String COMPANY_COL4 = "Field VARCHAR";
-    private final String COMPANY_COL5 = "Email VARCHAR";
+    private final String COMPANY_PSWD = "Password VARCHAR";
+    private final String COMPANY_NAME = "CompanyName VARCHAR";
+    private final String COMPANY_FIELD = "Field VARCHAR";
+    private final String COMPANY_EMAIL = "Email VARCHAR";
 
     SQLiteDatabase db;
 
@@ -58,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
             db = this.openOrCreateDatabase(DB_NAME, MODE_PRIVATE, null);
 
             db.execSQL("CREATE TABLE IF NOT EXISTS " + USER_TABLE + " (" + USER_ID + ", " + USER_COL1 + ", " + USER_COL2 + ");");
-            db.execSQL("CREATE TABLE IF NOT EXISTS " + COMPANY_TABLE + " (" + COMPANY_ID + ", " + COMPANY_COL1 + ", " + COMPANY_COL2 + ", " + COMPANY_COL3 + ", " + COMPANY_COL4 + ", " + COMPANY_COL5 + ");");
+            db.execSQL("CREATE TABLE IF NOT EXISTS " + COMPANY_TABLE + " (" + COMPANY_ID + ", " + COMPANY_PSWD + ", " + COMPANY_NAME + ", " + COMPANY_FIELD + ", " + COMPANY_EMAIL +  ");");
 
             // to be deleted, using for testing
             db.execSQL("INSERT INTO " + USER_TABLE + " VALUES ('mdrinne', 'pw123');");
