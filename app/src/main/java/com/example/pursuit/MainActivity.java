@@ -18,7 +18,7 @@ import android.text.TextUtils;
 public class MainActivity extends AppCompatActivity {
     public static final String NO_USER_PASS_MESSAGE = "com.example.pursuit.NO_USER_PASS_MESSAGE";
 
-    private final String DB_NAME = "pursuit.db";
+    private final String DB_NAME = "pursuit";
     private final String USER_TABLE = "Users";
     private final String USER_COL1 = "Username VARCHAR";
     private final String USER_COL2 = "Password VARCHAR";
@@ -35,8 +35,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         login = findViewById(R.id.button);
-        username = findViewById(R.id.username);
-        password = findViewById(R.id.password);
+        username = findViewById(R.id.txtUsername);
+        password = findViewById(R.id.txtPassword);
 
         login.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -148,8 +148,8 @@ public class MainActivity extends AppCompatActivity {
     // function executed upon click on login button
     public void loginUser(View view) {
         Log.d(getClass().getSimpleName(), "in loginUser");
-        username = findViewById(R.id.username);
-        password = findViewById(R.id.password);
+        username = findViewById(R.id.txtUsername);
+        password = findViewById(R.id.txtPassword);
 
         Log.d(getClass().getSimpleName(), toString(username));
 

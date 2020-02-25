@@ -18,7 +18,7 @@
             android:orientation="vertical">
 
             <EditText
-                android:id="@+id/firstName"
+                android:id="@+id/txtFirstName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="99dp"
@@ -37,7 +37,7 @@
                 tools:targetApi="o" />
 
             <EditText
-                android:id="@+id/lastName"
+                android:id="@+id/txtLastName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="99dp"
@@ -51,10 +51,10 @@
                 android:inputType="textPersonName"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/firstName" />
+                app:layout_constraintTop_toBottomOf="@+id/txtFirstName" />
 
             <EditText
-                android:id="@+id/universityName"
+                android:id="@+id/txtUniversity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="99dp"
@@ -68,10 +68,10 @@
                 android:inputType="textNoSuggestions"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/lastName" />
+                app:layout_constraintTop_toBottomOf="@+id/txtLastName" />
 
             <EditText
-                android:id="@+id/studentMajor"
+                android:id="@+id/txtMajor"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="99dp"
@@ -85,10 +85,10 @@
                 android:inputType="textShortMessage"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/universityName" />
+                app:layout_constraintTop_toBottomOf="@+id/txtUniversity" />
 
             <EditText
-                android:id="@+id/studentMinor"
+                android:id="@+id/txtMinor"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="99dp"
@@ -102,10 +102,10 @@
                 android:inputType="textShortMessage"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/studentMajor" />
+                app:layout_constraintTop_toBottomOf="@+id/txtMajor" />
 
             <EditText
-                android:id="@+id/studentGPA"
+                android:id="@+id/txtGPA"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="99dp"
@@ -119,10 +119,10 @@
                 android:inputType="numberDecimal"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/studentMinor" />
+                app:layout_constraintTop_toBottomOf="@+id/txtMinor" />
 
             <EditText
-                android:id="@+id/studentBio"
+                android:id="@+id/txtBio"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="99dp"
@@ -136,10 +136,10 @@
                 android:inputType="textLongMessage"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/studentGPA" />
+                app:layout_constraintTop_toBottomOf="@+id/txtGPA" />
 
             <EditText
-                android:id="@+id/email"
+                android:id="@+id/txtEmail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="99dp"
@@ -154,10 +154,28 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/studentBio" />
+                app:layout_constraintTop_toBottomOf="@+id/txtBio" />
 
             <EditText
-                android:id="@+id/password"
+                android:id="@+id/txtUsername"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="99dp"
+                android:layout_marginLeft="99dp"
+                android:layout_marginTop="25dp"
+                android:layout_marginEnd="99dp"
+                android:layout_marginRight="99dp"
+                android:ems="10"
+                android:hint="@string/strUsername"
+                android:importantForAutofill="no"
+                android:inputType="textEmailAddress"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtBio" />
+
+            <EditText
+                android:id="@+id/txtPassword"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="99dp"
@@ -172,10 +190,10 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/email" />
+                app:layout_constraintTop_toBottomOf="@+id/txtEmail" />
 
             <EditText
-                android:id="@+id/reEnterPassword"
+                android:id="@+id/txtReEnterPassword"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="99dp"
@@ -190,7 +208,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/password" />
+                app:layout_constraintTop_toBottomOf="@+id/txtPassword" />
 
             <Button
                 android:id="@+id/btnFinish"
