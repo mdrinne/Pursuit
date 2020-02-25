@@ -44,7 +44,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     SQLiteDatabase db = this.getWritableDatabase();
 
     ContentValues values = new ContentValues();
-    // `id` and `timestamp` will be inserted automatically.
+    // `id` will be inserted automatically.
     // no need to add them
     values.put(Company.NAME, name);
     values.put(Company.EMAIL, email);
