@@ -10,10 +10,11 @@ import android.widget.EditText;
 import android.view.View;
 import android.content.Intent;
 import android.widget.Toast;
+
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
-import android.database.sqlite.SQLiteDatabase.OpenParams;
-
+import com.example.pursuit.database.DatabaseHelper;
+import com.example.pursuit.database.models.Company;
 
 public class CompanyRegistration extends AppCompatActivity {
 
@@ -21,10 +22,11 @@ public class CompanyRegistration extends AppCompatActivity {
     EditText companyEmail;
     EditText companyPassword;
     EditText companyField;
-//    Button register;
+    private DatabaseHelper db;
+    // Button register;
 
-    private final String DB_NAME = "pursuit.db";
-    SQLiteDatabase db;
+    // private final String DB_NAME = "pursuit.db";
+    // SQLiteDatabase db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,12 +38,7 @@ public class CompanyRegistration extends AppCompatActivity {
         companyEmail = findViewById(R.id.companyEmail);
         companyField = findViewById(R.id.companyField);
 
-        try {
-            db = this.openOrCreateDatabase(DB_NAME, MODE_PRIVATE, null);
-
-        } catch (SQLiteException se) {
-            Log.e(getClass().getSimpleName(), "Could not create or open database");
-        }
+        db = new DatabaseHelper(this);
     }
 
     public void register(View view) {
@@ -66,13 +63,15 @@ public class CompanyRegistration extends AppCompatActivity {
         }
 
         if (valid) {
-//            String insertQuery = "INSERT INTO Companies(Password, CompanyName, Field, Email) VALUES"
+            long res = db.insertCompany(companyNameString, companyEmailString, companyPasswordString, companyFieldString);
+            Log.d(getClass().getSimpleName(), Long.toString(res));
             Intent intent = new Intent(this, LandingActivity.class);
             startActivity(intent);
         }
-//        if (!companyAlreadyExists(companyEmailString, companyPasswordString)) {
-//
-//        }
+
+        // if (!companyAlreadyExists(companyEmailString, companyPasswordString)) {
+        //
+        // }
     }
 
 }

@@ -1,12 +1,20 @@
+package com.example.pursuit.database.models;
+
 public class Company {
   public static final String TABLE_NAME = "Companies";
   public static final String COMPANY_ID = "id integer primary key";
-  public static final String COMPANY_PSWD = "Password VARCHAR";
-  public static final String COMPANY_NAME = "CompanyName VARCHAR";
-  public static final String COMPANY_FIELD = "Field VARCHAR";
-  public static final String COMPANY_EMAIL = "Email VARCHAR";
+  public static final String COMPANY_PSWD = "Password text";
+  public static final String COMPANY_NAME = "CompanyName text";
+  public static final String COMPANY_FIELD = "Field text";
+  public static final String COMPANY_EMAIL = "Email text";
 
-  public static final String CREATE_QUERY = "CREATE TABLE IF NOT EXISTS " + COMPANY_TABLE + " (" + COMPANY_ID + ", " + COMPANY_PSWD + ", " + COMPANY_NAME + ", " + COMPANY_FIELD + ", " + COMPANY_EMAIL +  ");"
+  public static final String CREATE_QUERY = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + " (" + COMPANY_ID + ", " + COMPANY_NAME + ", " + COMPANY_EMAIL + ", " + COMPANY_PSWD + ", " + COMPANY_FIELD +  ");";
+
+  private int id;
+  private String name;
+  private String email;
+  private String password;
+  private String field;
 
   public Company() {
 
