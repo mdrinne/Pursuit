@@ -50,4 +50,48 @@ public class Student {
         this.username = username;
         this.password = password;
     }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getFname() {
+        return fname;
+    }
+
+    public String getLname() {
+        return lname;
+    }
+
+    public String getUniversity() {
+        return university;
+    }
+
+    public String getMajor() {
+        return major;
+    }
+
+    public String getMinor() {
+        return minor;
+    }
+
+    public String getGpa() {
+        return gpa;
+    }
+
+    public String getBio() {
+        return bio;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
 }
