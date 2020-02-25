@@ -51,14 +51,6 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Log.d(getClass().getSimpleName(), "in onClick");
                 loginUser(v);
-//                if (checkCredentials(username, password, v)) {
-//                    Intent intent = new Intent(MainActivity.this, LandingActivity.class);
-//                    startActivity(intent);
-//                }
-
-//                Intent intent = new Intent(MainActivity.this, LandingActivity.class);
-//
-//                startActivity(intent);
             }
         });
 
