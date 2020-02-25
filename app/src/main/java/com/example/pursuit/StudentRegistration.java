@@ -70,10 +70,6 @@ public class StudentRegistration extends AppCompatActivity {
                         APPLICANT_COL8 + ", " + APPLICANT_COL9 + ", " + APPLICANT_COL10 + ");");
         } catch (SQLiteException se) {
             Log.e(getClass().getSimpleName(), "Student Register: Could not create or open database");
-        } finally {
-            if (db != null)
-                db.execSQL("DELETE FROM " + APPLICANT_TABLE + ";");
-            db.close();
         }
     }
 
@@ -98,47 +94,47 @@ public class StudentRegistration extends AppCompatActivity {
     public boolean checkForEmpties(View v) {
         if (isEmpty(firstName)) {
             Toast.makeText(v.getContext(), "All Fields are Required", 2).show();
-            return false;
+            return true;
         }
         else if (isEmpty(lastName)) {
             Toast.makeText(v.getContext(), "All Fields are Required", 2).show();
-            return false;
+            return true;
         }
         else if (isEmpty(university)) {
             Toast.makeText(v.getContext(), "All Fields are Required", 2).show();
-            return false;
+            return true;
         }
         else if (isEmpty(major)) {
             Toast.makeText(v.getContext(), "All Fields are Required", 2).show();
-            return false;
+            return true;
         }
         else if (isEmpty(minor)) {
             Toast.makeText(v.getContext(), "All Fields are Required", 2).show();
-            return false;
+            return true;
         }
         else if (isEmpty(gpa)) {
             Toast.makeText(v.getContext(), "All Fields are Required", 2).show();
-            return false;
+            return true;
         }
         else if (isEmpty(bio)) {
             Toast.makeText(v.getContext(), "All Fields are Required", 2).show();
-            return false;
+            return true;
         }
         else if (isEmpty(email)) {
             Toast.makeText(v.getContext(), "All Fields are Required", 2).show();
-            return false;
+            return true;
         }
         else if (isEmpty(username)) {
             Toast.makeText(v.getContext(), "All Fields are Required", 2).show();
-            return false;
+            return true;
         }
         else if (isEmpty(password1)) {
             Toast.makeText(v.getContext(), "All Fields are Required", 2).show();
-            return false;
+            return true;
         }
         else if (isEmpty(password2)) {
             Toast.makeText(v.getContext(), "All Fields are Required", 2).show();
-            return false;
+            return true;
         }
         else return false;
     }
@@ -151,8 +147,10 @@ public class StudentRegistration extends AppCompatActivity {
     }
 
     public boolean usernameTaken(View v) {
+        Log.d(getClass().getSimpleName(), "in usernameTaken");
         Cursor c = db.rawQuery("SELECT username FROM " + APPLICANT_TABLE + " WHERE username = '"
-                                    + toString(username) + "';", null);
+                                    + toString(username) + "'", null);
+        Log.d(getClass().getSimpleName(), "cursor retrieved");
 
         if (c != null) {
             if (c.moveToFirst()) {
@@ -181,16 +179,28 @@ public class StudentRegistration extends AppCompatActivity {
     }
 
     public boolean insertDB() {
-
+        try {
+            db.execSQL("INSERT INTO " + APPLICANT_TABLE + " VALUES (" + firstName + ", " + lastName +
+                    ", " + university + ", " + major + ", " + minor + ", " + gpa + ", " + bio +
+                    email + ", " + username + ", " + password1 + ", " + password2 + ");");
+            Log.d(getClass().getSimpleName(), "inserted user");
+        } catch (SQLiteException se) {
+            Log.e(getClass().getSimpleName(), "Failed to register student");
+        }
+        return true;
     }
 
     public boolean processRequest(View v) {
         if(!checkForEmpties(v)) {
             Log.d(getClass().getSimpleName(), "no empty fields");
             if (isEmail(email, v)) {
+                Log.d(getClass().getSimpleName(), "email is valid");
                 if (passwordMatch(v)) {
+                    Log.d(getClass().getSimpleName(), "passwords match");
                     if (!usernameTaken(v)) {
+                        Log.d(getClass().getSimpleName(), "username not taken");
                         if (!emailTaken(v)) {
+                            Log.d(getClass().getSimpleName(), "email not taken");
                             if (insertDB()) {
                                 return true;
                             }
@@ -217,8 +227,9 @@ public class StudentRegistration extends AppCompatActivity {
         password2 = findViewById(R.id.txtReEnterPassword);
 
         if (processRequest(v)) {
-            Intent intent = new Intent(this, LandingActivity.class);
+//            db.close();
 
+            Intent intent = new Intent(this, LandingActivity.class);
             startActivity(intent);
         }
     }
