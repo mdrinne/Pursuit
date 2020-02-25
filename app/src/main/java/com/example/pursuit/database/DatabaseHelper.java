@@ -46,10 +46,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     ContentValues values = new ContentValues();
     // `id` and `timestamp` will be inserted automatically.
     // no need to add them
-    values.put(Company.COMPANY_NAME, name);
-    values.put(Company.COMPANY_EMAIL, email);
-    values.put(Company.COMPANY_PSWD, password);
-    values.put(Company.COMPANY_FIELD, field);
+    values.put(Company.NAME, name);
+    values.put(Company.EMAIL, email);
+    values.put(Company.PASSWORD, password);
+    values.put(Company.FIELD, field);
+
 
     // insert row
     long id = db.insert(Company.TABLE_NAME, null, values);
