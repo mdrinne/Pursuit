@@ -6,4 +6,46 @@
     android:layout_height="match_parent"
     tools:context=".RegistrationActivity">
 
+    <RadioGroup
+        android:id="@+id/studentOrCompany"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textIamA">
+
+        <RadioButton
+            android:id="@+id/radioBtnStudent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/strStudent" />
+
+        <RadioButton
+            android:id="@+id/radioBtnCompany"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/strCompany" />
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/textIamA"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:text="@string/strIamA"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btnContinue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:onClick="continueToRegistration"
+        android:text="@string/strContinue"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/studentOrCompany" />
 </androidx.constraintlayout.widget.ConstraintLayout>

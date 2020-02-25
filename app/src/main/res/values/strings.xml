@@ -10,4 +10,6 @@
     <string name="strCompany">Company</string>
     <string name="strContinue">Continue</string>
     <string name="strRole">Role</string>
+    <string name="strStudent">Student</string>
+    <string name="strIamA">I am A</string>
 </resources>
