@@ -16,12 +16,20 @@ import android.text.TextUtils;
 
 
 public class MainActivity extends AppCompatActivity {
-    public static final String NO_USER_PASS_MESSAGE = "com.example.pursuit.NO_USER_PASS_MESSAGE";
 
     private final String DB_NAME = "pursuit";
     private final String USER_TABLE = "Users";
+    private final String USER_ID = "id integer primary key";
     private final String USER_COL1 = "Username VARCHAR";
     private final String USER_COL2 = "Password VARCHAR";
+
+    private final String COMPANY_TABLE = "Companies";
+    private final String COMPANY_ID = "id integer primary key";
+    private final String COMPANY_COL1 = "Username VARCHAR";
+    private final String COMPANY_COL2 = "Password VARCHAR";
+    private final String COMPANY_COL3 = "CompanyName VARCHAR";
+    private final String COMPANY_COL4 = "Field VARCHAR";
+    private final String COMPANY_COL5 = "Email VARCHAR";
 
     SQLiteDatabase db;
 
@@ -57,7 +65,8 @@ public class MainActivity extends AppCompatActivity {
         try {
             db = this.openOrCreateDatabase(DB_NAME, MODE_PRIVATE, null);
 
-            db.execSQL("CREATE TABLE IF NOT EXISTS " + USER_TABLE + " (" + USER_COL1 + ", " + USER_COL2 + ");");
+            db.execSQL("CREATE TABLE IF NOT EXISTS " + USER_TABLE + " (" + USER_ID + ", " + USER_COL1 + ", " + USER_COL2 + ");");
+            db.execSQL("CREATE TABLE IF NOT EXISTS " + COMPANY_TABLE + " (" + COMPANY_ID + ", " + COMPANY_COL1 + ", " + COMPANY_COL2 + ", " + COMPANY_COL3 + ", " + COMPANY_COL4 + ", " + COMPANY_COL5 + ");");
 
             // to be deleted, using for testing
             db.execSQL("INSERT INTO " + USER_TABLE + " VALUES ('mdrinne', 'pw123');");
