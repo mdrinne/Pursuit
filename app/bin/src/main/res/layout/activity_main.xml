@@ -37,7 +37,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.479"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtUsername" />
+        app:layout_constraintTop_toBottomOf="@+id/username" />
 
     <Button
         android:id="@+id/login"

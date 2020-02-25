@@ -3,11 +3,7 @@ package com.example.pursuit;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteException;
 import android.os.Bundle;
-import android.print.PrinterId;
 import android.text.TextUtils;
 import android.util.Log;
 import android.util.Patterns;
@@ -49,8 +45,8 @@ public class StudentRegistration extends AppCompatActivity {
         gpa = findViewById(R.id.txtGPA);
         bio = findViewById(R.id.txtBio);
         email = findViewById(R.id.txtEmail);
-        username = findViewById(R.id.txtUsername);
-        password1 = findViewById(R.id.txtPassword);
+        username = findViewById(R.id.username);
+        password1 = findViewById(R.id.password);
         password2 = findViewById(R.id.txtReEnterPassword);
 
         db = new DatabaseHelper(this);
@@ -216,8 +212,8 @@ public class StudentRegistration extends AppCompatActivity {
         gpa = findViewById(R.id.txtGPA);
         bio = findViewById(R.id.txtBio);
         email = findViewById(R.id.txtEmail);
-        username = findViewById(R.id.txtUsername);
-        password1 = findViewById(R.id.txtPassword);
+        username = findViewById(R.id.username);
+        password1 = findViewById(R.id.password);
         password2 = findViewById(R.id.txtReEnterPassword);
 
         if (processRequest(v)) {

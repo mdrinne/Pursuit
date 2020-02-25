@@ -141,8 +141,8 @@ public class MainActivity extends AppCompatActivity {
     // function executed upon click on login button
     public void loginUser(View view) {
         Log.d(getClass().getSimpleName(), "in loginUser");
-        username = findViewById(R.id.username);
-        password = findViewById(R.id.password);
+//        username = findViewById(R.id.username);
+//        password = findViewById(R.id.password);
 
 //        Log.d(getClass().getSimpleName(), toString(username));
 

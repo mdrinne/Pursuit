@@ -101,7 +101,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
       return null;
     }
   }
-}
+
 
   public long insertStudent(String fname, String lname, String university, String major, String minor,
                             String gpa, String bio, String email, String username, String password) {
