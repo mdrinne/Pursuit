@@ -3,12 +3,14 @@ package com.example.pursuit;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.os.Bundle;
 import android.print.PrinterId;
 import android.text.TextUtils;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -75,6 +77,15 @@ public class StudentRegistration extends AppCompatActivity {
         }
     }
 
+    boolean isEmail(EditText text, View v) {
+        CharSequence email = text.getText().toString();
+        if (!(!TextUtils.isEmpty(email) && Patterns.EMAIL_ADDRESS.matcher(email).matches())) {
+            Toast.makeText(v.getContext(), "Invalid Email", 2).show();
+            return false;
+        }
+        else return true;
+    }
+
     boolean isEmpty(EditText text) {
         CharSequence str = text.getText().toString();
         return TextUtils.isEmpty(str);
@@ -129,7 +140,7 @@ public class StudentRegistration extends AppCompatActivity {
             Toast.makeText(v.getContext(), "All Fields are Required", 2).show();
             return false;
         }
-        return false;
+        else return false;
     }
 
     public boolean passwordMatch(View v) {
@@ -139,13 +150,54 @@ public class StudentRegistration extends AppCompatActivity {
         return false;
     }
 
+    public boolean usernameTaken(View v) {
+        Cursor c = db.rawQuery("SELECT username FROM " + APPLICANT_TABLE + " WHERE username = '"
+                                    + toString(username) + "';", null);
+
+        if (c != null) {
+            if (c.moveToFirst()) {
+                Toast.makeText(v.getContext(), "Username is Already Taken", 2).show();
+                return true;
+            }
+            else return false;
+        }
+        Log.e(getClass().getSimpleName(), "Cursor returned null while searching of username is taken");
+        return false;
+    }
+
+    public boolean emailTaken(View v) {
+        Cursor c = db.rawQuery("SELECT email FROM " + APPLICANT_TABLE + " WHERE email = '"
+                + toString(email) + "';", null);
+
+        if (c != null) {
+            if (c.moveToFirst()) {
+                Toast.makeText(v.getContext(), "Email is Already Taken", 2).show();
+                return true;
+            }
+            else return false;
+        }
+        Log.e(getClass().getSimpleName(), "Cursor returned null while searching of username is taken");
+        return false;
+    }
+
+    public boolean insertDB() {
+
+    }
+
     public boolean processRequest(View v) {
         if(!checkForEmpties(v)) {
             Log.d(getClass().getSimpleName(), "no empty fields");
-            if (passwordMatch(v)) {
-
+            if (isEmail(email, v)) {
+                if (passwordMatch(v)) {
+                    if (!usernameTaken(v)) {
+                        if (!emailTaken(v)) {
+                            if (insertDB()) {
+                                return true;
+                            }
+                        }
+                    }
+                }
             }
-            return false;
         }
         return false;
     }
