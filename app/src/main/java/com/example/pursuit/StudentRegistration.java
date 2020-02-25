@@ -148,6 +148,7 @@ public class StudentRegistration extends AppCompatActivity {
 
     public boolean usernameTaken(View v) {
         Log.d(getClass().getSimpleName(), "in usernameTaken");
+        // issue HERE
         Cursor c = db.rawQuery("SELECT username FROM " + APPLICANT_TABLE + " WHERE username = '"
                                     + toString(username) + "'", null);
         Log.d(getClass().getSimpleName(), "cursor retrieved");
