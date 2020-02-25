@@ -37,7 +37,7 @@
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/firstName" />
+        app:layout_constraintTop_toBottomOf="@+id/txtFirstName" />
 
     <EditText
         android:id="@+id/universityName"
@@ -53,7 +53,7 @@
         android:inputType="textNoSuggestions"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/lastName" />
+        app:layout_constraintTop_toBottomOf="@+id/txtLastName" />
 
     <EditText
         android:id="@+id/studentMajor"
@@ -69,7 +69,7 @@
         android:inputType="textShortMessage"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/universityName" />
+        app:layout_constraintTop_toBottomOf="@+id/txtUniversity" />
 
     <EditText
         android:id="@+id/studentMinor"
@@ -85,7 +85,7 @@
         android:inputType="textShortMessage"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/studentMajor" />
+        app:layout_constraintTop_toBottomOf="@+id/txtMajor" />
 
     <EditText
         android:id="@+id/studentGPA"
@@ -101,7 +101,7 @@
         android:inputType="numberDecimal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/studentMinor" />
+        app:layout_constraintTop_toBottomOf="@+id/txtMinor" />
 
     <EditText
         android:id="@+id/studentBio"
@@ -117,7 +117,7 @@
         android:inputType="textLongMessage"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/studentGPA" />
+        app:layout_constraintTop_toBottomOf="@+id/txtGPA" />
 
     <Button
         android:id="@+id/btnFinish"

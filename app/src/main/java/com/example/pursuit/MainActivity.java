@@ -14,16 +14,28 @@ import android.widget.EditText;
 import android.widget.Toast;
 import android.text.TextUtils;
 
+import com.example.pursuit.database.DatabaseHelper;
+import com.example.pursuit.database.models.Company;
+
 
 public class MainActivity extends AppCompatActivity {
-    public static final String NO_USER_PASS_MESSAGE = "com.example.pursuit.NO_USER_PASS_MESSAGE";
 
-    private final String DB_NAME = "pursuit.db";
+    private final String DB_NAME = "pursuit";
     private final String USER_TABLE = "Users";
+    private final String USER_ID = "id integer primary key";
     private final String USER_COL1 = "Username VARCHAR";
     private final String USER_COL2 = "Password VARCHAR";
 
-    SQLiteDatabase db;
+    private final String COMPANY_TABLE = "Companies";
+    private final String COMPANY_ID = "id integer primary key";
+    private final String COMPANY_PSWD = "Password VARCHAR";
+    private final String COMPANY_NAME = "CompanyName VARCHAR";
+    private final String COMPANY_FIELD = "Field VARCHAR";
+    private final String COMPANY_EMAIL = "Email VARCHAR";
+
+    private DatabaseHelper db;
+
+//    SQLiteDatabase db;
 
     EditText username;
     EditText password;
@@ -35,36 +47,16 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         login = findViewById(R.id.button);
-        username = findViewById(R.id.username);
-        password = findViewById(R.id.password);
+        username = findViewById(R.id.txtUsername);
+        password = findViewById(R.id.txtPassword);
 
-        login.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d(getClass().getSimpleName(), "in onClick");
-                loginUser(v);
-//                if (checkCredentials(username, password, v)) {
-//                    Intent intent = new Intent(MainActivity.this, LandingActivity.class);
-//                    startActivity(intent);
-//                }
-
-//                Intent intent = new Intent(MainActivity.this, LandingActivity.class);
-//
-//                startActivity(intent);
-            }
-        });
-
-        try {
-            db = this.openOrCreateDatabase(DB_NAME, MODE_PRIVATE, null);
-
-            db.execSQL("CREATE TABLE IF NOT EXISTS " + USER_TABLE + " (" + USER_COL1 + ", " + USER_COL2 + ");");
-
-            // to be deleted, using for testing
-            db.execSQL("INSERT INTO " + USER_TABLE + " VALUES ('mdrinne', 'pw123');");
-        } catch (SQLiteException se) {
-            Log.e(getClass().getSimpleName(), "Could not create or open database");
-        }
-
+//        login.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Log.d(getClass().getSimpleName(), "in onClick");
+//                loginUser(v);
+//            }
+//        });
     }
 
     // checks if user input from text field is empty
@@ -132,34 +124,21 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // completes login verification tasks
-    Boolean checkCredentials(EditText username, EditText password, View v) {
-        Log.d(getClass().getSimpleName(), "in checkCredentials");
-        if (!checkIfEmpty(username, password, v)) {
-            Log.d(getClass().getSimpleName(), "fields not empty");
-            Cursor c = db.rawQuery("SELECT Password FROM " + USER_TABLE +
-                    " WHERE Username = '" + toString(username) + "'", null);
-            Log.d(getClass().getSimpleName(), "created cursor");
-
-            return compareToDB(username, password, v, c);
-        }
-        else return false;
-    }
+//    Boolean checkCredentials(EditText username, EditText password, View v) {
+//        Log.d(getClass().getSimpleName(), "in checkCredentials");
+//        if (!checkIfEmpty(username, password, v)) {
+//            Log.d(getClass().getSimpleName(), "fields not empty");
+//            Cursor c = db.rawQuery("SELECT Password FROM " + USER_TABLE +
+//                    " WHERE Username = '" + toString(username) + "'", null);
+//            Log.d(getClass().getSimpleName(), "created cursor");
+//
+//            return compareToDB(username, password, v, c);
+//        }
+//        else return false;
+//    }
 
     // function executed upon click on login button
-    public void loginUser(View view) {
-        Log.d(getClass().getSimpleName(), "in loginUser");
-        username = findViewById(R.id.username);
-        password = findViewById(R.id.password);
-
-        Log.d(getClass().getSimpleName(), toString(username));
-
-
-        if (checkCredentials(username, password, view)) {
-            Intent intent = new Intent(this, LandingActivity.class);
-
-            startActivity(intent);
-        }
-    }
+//
 
     public void registerUser(View view) {
         Log.d(getClass().getSimpleName(), "register");

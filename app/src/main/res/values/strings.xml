@@ -4,7 +4,7 @@
     <string name="strPassword">Password</string>
     <string name="strLogin">Login</string>
     <string name="strRegister">Register</string>
-    <string name="strEmailAddress">Email address</string>
+    <string name="strEmail">Email</string>
     <string name="strReEnterPassword">Re-enter password</string>
     <string name="strApplicant">Applicant</string>
     <string name="strCompany">Company</string>
@@ -12,4 +12,12 @@
     <string name="strRole">Role</string>
     <string name="strStudent">Student</string>
     <string name="strIamA">I am A</string>
+    <string name="strFirstName">First Name</string>
+    <string name="strLastName">Last Name</string>
+    <string name="strUniversity">University</string>
+    <string name="strMajors">Major(s)</string>
+    <string name="strMinors">Minor(s)/Concentration(s)</string>
+    <string name="strGPA">GPA</string>
+    <string name="strBio">Bio</string>
+    <string name="strFinish">Finish</string>
 </resources>
