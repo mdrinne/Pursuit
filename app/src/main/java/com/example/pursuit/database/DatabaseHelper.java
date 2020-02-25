@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.example.pursuit.database.models.Company;
+import com.example.pursuit.database.models.Student;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
   // Database Version
@@ -26,8 +27,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
   @Override
   public void onCreate(SQLiteDatabase db) {
 
-    // create Company table
+    // create Tables
     db.execSQL(Company.CREATE_QUERY);
+    db.execSQL(Student.CREATE_QUERY);
   }
 
   // Upgrading database
@@ -35,6 +37,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
   public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
     // Drop older table if existed
     db.execSQL("DROP TABLE IF EXISTS " + Company.TABLE_NAME);
+    db.execSQL("DROP TABLE IF EXISTS " + Student.APPLICANT_TABLE);
 
     // Create tables again
     onCreate(db);
@@ -62,6 +65,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     // return newly inserted row id
     return id;
   }
+
 
   public Company getCompanyForLogin(String email, String password) {
     SQLiteDatabase db = this.getReadableDatabase();
@@ -98,3 +102,31 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
   }
 }
+
+  public long insertStudent(String fname, String lname, String university, String major, String minor,
+                            String gpa, String bio, String email, String username, String password) {
+    SQLiteDatabase db = this.getWritableDatabase();
+
+    ContentValues values = new ContentValues();
+
+    values.put(Student.FIRSTNAME, fname);
+    values.put(Student.LASTNAME, lname);
+    values.put(Student.UNIVERSITY, university);
+    values.put(Student.MAJOR, major);
+    values.put(Student.MINOR, minor);
+    values.put(Student.GPA, gpa);
+    values.put(Student.BIO, bio);
+    values.put(Student.EMAIL, email);
+    values.put(Student.USERNAME, username);
+    values.put(Student.PASSWORD, password);
+
+    // insert row
+    long id = db.insert(Student.APPLICANT_TABLE, null, values);
+
+    // close db connection
+    db.close();
+
+    return id;
+  }
+}
+

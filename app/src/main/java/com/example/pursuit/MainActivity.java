@@ -20,7 +20,7 @@ import com.example.pursuit.database.models.Company;
 
 public class MainActivity extends AppCompatActivity {
 
-    private final String DB_NAME = "pursuit.db";
+    private final String DB_NAME = "pursuit";
     private final String USER_TABLE = "Users";
     private final String USER_ID = "id integer primary key";
     private final String USER_COL1 = "Username VARCHAR";
