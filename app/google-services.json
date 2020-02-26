@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "321439611292",
+    "firebase_url": "https://pursuit-f4d1a.firebaseio.com",
+    "project_id": "pursuit-f4d1a",
+    "storage_bucket": "pursuit-f4d1a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:321439611292:android:e627a1739b6ce0ee373059",
+        "android_client_info": {
+          "package_name": "com.example.pursuit"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "321439611292-b1tk0eofgp6jet3nsdqdiro1dl9uv3rj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.pursuit",
+            "certificate_hash": "dc8381241edd2a442e7f3cf430c6350dff484c7e"
+          }
+        },
+        {
+          "client_id": "321439611292-6lolkntu30odq2u7mijc2ha900jrnk75.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCrzGui0sMUrGsv56Z_UECNEruD8dxkGGM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "321439611292-6lolkntu30odq2u7mijc2ha900jrnk75.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

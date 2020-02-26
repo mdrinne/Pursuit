@@ -1,5 +1,6 @@
 package com.example.pursuit;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -13,6 +14,11 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.pursuit.database.DatabaseHelper;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
 
 public class StudentRegistration extends AppCompatActivity {
 
@@ -29,7 +35,7 @@ public class StudentRegistration extends AppCompatActivity {
     EditText password2;
     Button btnFinish;
 
-    private DatabaseHelper db;
+//    private DatabaseHelper db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,82 +55,106 @@ public class StudentRegistration extends AppCompatActivity {
         password1 = findViewById(R.id.password);
         password2 = findViewById(R.id.txtReEnterPassword);
 
-        db = new DatabaseHelper(this);
+//        db = new DatabaseHelper(this);
+
+        // write a message to the database
+        FirebaseDatabase db = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = db.getReference("message");
+
+        myRef.setValue("Hello, World!");
+
+        // read from database
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                // method is called once w/ the initial value and again
+                // whenever data at this location is updated
+                String value = dataSnapshot.getValue(String.class);
+                Log.d("MainActivity", "Value is: " + value);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                // failed to read value
+                Log.w("MainActivity", "Failed to read value.", error.toException());
+            }
+        });
+
 
     }
 
-    boolean isEmail(EditText text, View v) {
-        CharSequence email = text.getText().toString();
-        if (!(!TextUtils.isEmpty(email) && Patterns.EMAIL_ADDRESS.matcher(email).matches())) {
-            Toast.makeText(v.getContext(), "Invalid Email", 2).show();
-            return false;
-        }
-        else return true;
-    }
-
-    boolean isEmpty(EditText text) {
-        CharSequence str = text.getText().toString();
-        return TextUtils.isEmpty(str);
-    }
-
-    String toString(EditText text) {
-        return text.getText().toString();
-    }
-
-    public boolean checkForEmpties(View v) {
-        if (isEmpty(firstName)) {
-            Toast.makeText(v.getContext(), "All Fields are Required", 2).show();
-            return true;
-        }
-        else if (isEmpty(lastName)) {
-            Toast.makeText(v.getContext(), "All Fields are Required", 2).show();
-            return true;
-        }
-        else if (isEmpty(university)) {
-            Toast.makeText(v.getContext(), "All Fields are Required", 2).show();
-            return true;
-        }
-        else if (isEmpty(major)) {
-            Toast.makeText(v.getContext(), "All Fields are Required", 2).show();
-            return true;
-        }
-        else if (isEmpty(minor)) {
-            Toast.makeText(v.getContext(), "All Fields are Required", 2).show();
-            return true;
-        }
-        else if (isEmpty(gpa)) {
-            Toast.makeText(v.getContext(), "All Fields are Required", 2).show();
-            return true;
-        }
-        else if (isEmpty(bio)) {
-            Toast.makeText(v.getContext(), "All Fields are Required", 2).show();
-            return true;
-        }
-        else if (isEmpty(email)) {
-            Toast.makeText(v.getContext(), "All Fields are Required", 2).show();
-            return true;
-        }
-        else if (isEmpty(username)) {
-            Toast.makeText(v.getContext(), "All Fields are Required", 2).show();
-            return true;
-        }
-        else if (isEmpty(password1)) {
-            Toast.makeText(v.getContext(), "All Fields are Required", 2).show();
-            return true;
-        }
-        else if (isEmpty(password2)) {
-            Toast.makeText(v.getContext(), "All Fields are Required", 2).show();
-            return true;
-        }
-        else return false;
-    }
-
-    public boolean passwordMatch(View v) {
-        if (toString(password1).equals(toString(password2)))
-            return true;
-        Toast.makeText(v.getContext(), "Passwords Did Not Match", 2).show();
-        return false;
-    }
+//    boolean isEmail(EditText text, View v) {
+//        CharSequence email = text.getText().toString();
+//        if (!(!TextUtils.isEmpty(email) && Patterns.EMAIL_ADDRESS.matcher(email).matches())) {
+//            Toast.makeText(v.getContext(), "Invalid Email", 2).show();
+//            return false;
+//        }
+//        else return true;
+//    }
+//
+//    boolean isEmpty(EditText text) {
+//        CharSequence str = text.getText().toString();
+//        return TextUtils.isEmpty(str);
+//    }
+//
+//    String toString(EditText text) {
+//        return text.getText().toString();
+//    }
+//
+//    public boolean checkForEmpties(View v) {
+//        if (isEmpty(firstName)) {
+//            Toast.makeText(v.getContext(), "All Fields are Required", 2).show();
+//            return true;
+//        }
+//        else if (isEmpty(lastName)) {
+//            Toast.makeText(v.getContext(), "All Fields are Required", 2).show();
+//            return true;
+//        }
+//        else if (isEmpty(university)) {
+//            Toast.makeText(v.getContext(), "All Fields are Required", 2).show();
+//            return true;
+//        }
+//        else if (isEmpty(major)) {
+//            Toast.makeText(v.getContext(), "All Fields are Required", 2).show();
+//            return true;
+//        }
+//        else if (isEmpty(minor)) {
+//            Toast.makeText(v.getContext(), "All Fields are Required", 2).show();
+//            return true;
+//        }
+//        else if (isEmpty(gpa)) {
+//            Toast.makeText(v.getContext(), "All Fields are Required", 2).show();
+//            return true;
+//        }
+//        else if (isEmpty(bio)) {
+//            Toast.makeText(v.getContext(), "All Fields are Required", 2).show();
+//            return true;
+//        }
+//        else if (isEmpty(email)) {
+//            Toast.makeText(v.getContext(), "All Fields are Required", 2).show();
+//            return true;
+//        }
+//        else if (isEmpty(username)) {
+//            Toast.makeText(v.getContext(), "All Fields are Required", 2).show();
+//            return true;
+//        }
+//        else if (isEmpty(password1)) {
+//            Toast.makeText(v.getContext(), "All Fields are Required", 2).show();
+//            return true;
+//        }
+//        else if (isEmpty(password2)) {
+//            Toast.makeText(v.getContext(), "All Fields are Required", 2).show();
+//            return true;
+//        }
+//        else return false;
+//    }
+//
+//    public boolean passwordMatch(View v) {
+//        if (toString(password1).equals(toString(password2)))
+//            return true;
+//        Toast.makeText(v.getContext(), "Passwords Did Not Match", 2).show();
+//        return false;
+//    }
 
 //    public boolean usernameTaken(View v) {
 //        Log.d(getClass().getSimpleName(), "in usernameTaken");
@@ -170,55 +200,55 @@ public class StudentRegistration extends AppCompatActivity {
 //        }
 //        return true;
 //    }
-
-    public boolean processRequest(View v) {
-        if(!checkForEmpties(v)) {
-            Log.d(getClass().getSimpleName(), "no empty fields");
-            if (isEmail(email, v)) {
-                Log.d(getClass().getSimpleName(), "email is valid");
-                if (passwordMatch(v)) {
-                    Log.d(getClass().getSimpleName(), "passwords match");
-//                    if (!usernameTaken(v)) {
-//                        Log.d(getClass().getSimpleName(), "username not taken");
-//                        if (!emailTaken(v)) {
-//                            Log.d(getClass().getSimpleName(), "email not taken");
-//                            if (insertDB()) {
-//                                return true;
-//                            }
-//                        }
-//                    }
-                    long res = db.insertStudent(toString(firstName), toString(lastName), toString(university),
-                                                toString(major), toString(minor), toString(gpa),
-                                                toString(bio), toString(email), toString(username),
-                                                toString(password1));
-
-                    Log.d(getClass().getSimpleName(), Long.toString(res));
-
-                    if (res == -1) return false;
-                    else return true;
-                }
-            }
-        }
-        return false;
-    }
-
-    // called by onClick, attempts to register a student
-    public void registerStudent(View v) {
-        firstName = findViewById(R.id.txtFirstName);
-        lastName = findViewById(R.id.txtLastName);
-        university = findViewById(R.id.txtUniversity);
-        major = findViewById(R.id.txtMajor);
-        minor = findViewById(R.id.txtMinor);
-        gpa = findViewById(R.id.txtGPA);
-        bio = findViewById(R.id.txtBio);
-        email = findViewById(R.id.txtEmail);
-        username = findViewById(R.id.username);
-        password1 = findViewById(R.id.password);
-        password2 = findViewById(R.id.txtReEnterPassword);
-
-        if (processRequest(v)) {
-            Intent intent = new Intent(this, LandingActivity.class);
-            startActivity(intent);
-        }
-    }
+//
+//    public boolean processRequest(View v) {
+//        if(!checkForEmpties(v)) {
+//            Log.d(getClass().getSimpleName(), "no empty fields");
+//            if (isEmail(email, v)) {
+//                Log.d(getClass().getSimpleName(), "email is valid");
+//                if (passwordMatch(v)) {
+//                    Log.d(getClass().getSimpleName(), "passwords match");
+////                    if (!usernameTaken(v)) {
+////                        Log.d(getClass().getSimpleName(), "username not taken");
+////                        if (!emailTaken(v)) {
+////                            Log.d(getClass().getSimpleName(), "email not taken");
+////                            if (insertDB()) {
+////                                return true;
+////                            }
+////                        }
+////                    }
+//                    long res = db.insertStudent(toString(firstName), toString(lastName), toString(university),
+//                                                toString(major), toString(minor), toString(gpa),
+//                                                toString(bio), toString(email), toString(username),
+//                                                toString(password1));
+//
+//                    Log.d(getClass().getSimpleName(), Long.toString(res));
+//
+//                    if (res == -1) return false;
+//                    else return true;
+//                }
+//            }
+//        }
+//        return false;
+//    }
+//
+//    // called by onClick, attempts to register a student
+//    public void registerStudent(View v) {
+//        firstName = findViewById(R.id.txtFirstName);
+//        lastName = findViewById(R.id.txtLastName);
+//        university = findViewById(R.id.txtUniversity);
+//        major = findViewById(R.id.txtMajor);
+//        minor = findViewById(R.id.txtMinor);
+//        gpa = findViewById(R.id.txtGPA);
+//        bio = findViewById(R.id.txtBio);
+//        email = findViewById(R.id.txtEmail);
+//        username = findViewById(R.id.username);
+//        password1 = findViewById(R.id.password);
+//        password2 = findViewById(R.id.txtReEnterPassword);
+//
+//        if (processRequest(v)) {
+//            Intent intent = new Intent(this, LandingActivity.class);
+//            startActivity(intent);
+//        }
+//    }
 }
