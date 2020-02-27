@@ -58,13 +58,25 @@ public class MainActivity extends AppCompatActivity {
         username = findViewById(R.id.username);
         password = findViewById(R.id.password);
 
-        writeNewCompany(1, "NT", "mr416@ntrs.com", "1234", "banking");
+//        writeNewCompany(1, "NT", "mr416@ntrs.com", "1234", "banking");
+
+
+
+        // db = new DatabaseHelper(this);
+
+        // login.setOnClickListener(new View.OnClickListener() {
+        // @Override
+        // public void onClick(View v) {
+        // Log.d(getClass().getSimpleName(), "in onClick");
+        // loginUser(v);
+        // }
+        // });
     }
 
     private void writeNewCompany(int id, String name, String email, String password, String field) {
         Company company = new Company(id, name, email, password, field);
 
-        db.child("company").child(email).setValue(company);
+        db.child("company").child("123").setValue(company);
     }
 
     // checks if user input from text field is empty
