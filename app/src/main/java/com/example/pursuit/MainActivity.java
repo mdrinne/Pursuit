@@ -23,24 +23,9 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class MainActivity extends AppCompatActivity {
 
-//    private final String DB_NAME = "pursuit";
-//    private final String USER_TABLE = "Users";
-//    private final String USER_ID = "id integer primary key";
-//    private final String USER_COL1 = "Username VARCHAR";
-//    private final String USER_COL2 = "Password VARCHAR";
-
-    // private final String COMPANY_TABLE = "Companies";
-    // private final String COMPANY_ID = "id integer primary key";
-    // private final String COMPANY_PSWD = "Password VARCHAR";
-    // private final String COMPANY_NAME = "CompanyName VARCHAR";
-    // private final String COMPANY_FIELD = "Field VARCHAR";
-    // private final String COMPANY_EMAIL = "Email VARCHAR";
-
-//    private DatabaseHelper db;
-
-    // SQLiteDatabase db;
-
-    private DatabaseReference db;
+    // firebase variables
+    private FirebaseDatabase mFirebaseDatabase;
+    private DatabaseReference mRef;
 
     EditText username;
     EditText password;
@@ -52,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         // initialize database reference
-        db = FirebaseDatabase.getInstance().getReference();
+        mRef = FirebaseDatabase.getInstance().getReference();
 
         login = findViewById(R.id.button);
         username = findViewById(R.id.username);
@@ -60,23 +45,12 @@ public class MainActivity extends AppCompatActivity {
 
 //        writeNewCompany(1, "NT", "mr416@ntrs.com", "1234", "banking");
 
-
-
-        // db = new DatabaseHelper(this);
-
-        // login.setOnClickListener(new View.OnClickListener() {
-        // @Override
-        // public void onClick(View v) {
-        // Log.d(getClass().getSimpleName(), "in onClick");
-        // loginUser(v);
-        // }
-        // });
     }
 
     private void writeNewCompany(int id, String name, String email, String password, String field) {
         Company company = new Company(id, name, email, password, field);
 
-        db.child("company").child("123").setValue(company);
+        mRef.child("Users").child("Company").child(name).setValue(company);
     }
 
     // checks if user input from text field is empty
