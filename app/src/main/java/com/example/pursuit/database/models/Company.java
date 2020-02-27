@@ -26,7 +26,7 @@ public class Company {
 
   }
 
-  public Company(int id, String name, String email, String password, String field) {
+  public Company(int  id, String name, String email, String password, String field) {
     this.id = id;
     this.name = name;
     this.email = email;
