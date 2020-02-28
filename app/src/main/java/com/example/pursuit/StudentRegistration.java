@@ -27,7 +27,6 @@ public class StudentRegistration extends AppCompatActivity {
     private static final String TAG = "StudentRegistration";
 
     private DatabaseReference mRef;
-    private FirebaseDatabase mFirebaseDatabase;
 
     EditText firstName;
     EditText lastName;
@@ -62,10 +61,48 @@ public class StudentRegistration extends AppCompatActivity {
 
         mRef = FirebaseDatabase.getInstance().getReference();
 
+    }
+
+    /* DATABASE FUNCTIONS */
+    private void writeNewStudent(int id, String fname, String lname, String university, String major, String minor,
+                                String gpa, String bio, String email, String username, String password) {
+
+        Student student = new Student(id, fname, lname, university, major, minor, gpa, bio, email, username, password);
+
+        mRef.child("Users").child("Student").child(username).setValue(student);
+    }
+
+    private void searchUsername(DataSnapshot dataSnapshot, String username) {
+        for (DataSnapshot ds : dataSnapshot.getChildren()) {
+            Student student = new Student();
+            if (ds.child("Student").child(username).getValue() == null) {
+                Log.d(TAG, ds.child("Student").child(username).getValue().getClass().toString());
+                student.setUsername(ds.child("Student").child(username).child("username").getValue().toString());
+                Log.d(TAG, "showData: username: " + student.getUsername());
+            }
+            else {
+                Log.d(TAG, "showData: username: " + student.getUsername());
+            }
+        }
+    }
+    /* ****************** */
+
+    boolean isEmpty(EditText text) {
+        CharSequence str = text.getText().toString();
+        return TextUtils.isEmpty(str);
+    }
+
+    public String toString(EditText text) {
+        return text.getText().toString();
+    }
+
+    public boolean usernameTaken(View v) {
+        Log.d(getClass().getSimpleName(), "in usernameTaken");
+
         mRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                showData(dataSnapshot);
+                searchUsername(dataSnapshot, username.getText().toString());
             }
 
             @Override
@@ -74,127 +111,54 @@ public class StudentRegistration extends AppCompatActivity {
             }
         });
 
+        return true;
     }
 
-    private void showData(DataSnapshot dataSnapshot) {
-        for (DataSnapshot ds : dataSnapshot.getChildren()) {
-            Student student = new Student();
-            student.setUsername(ds.child("Student").child("mdrinne").getValue(Student.class).getUsername());
-
-            Log.d(TAG, "showData: username: " + student.getUsername());
-        }
-    }
-
-    private void writeNewStudent(int id, String fname, String lname, String university, String major, String minor,
-            String gpa, String bio, String email, String username, String password) {
-        Student student = new Student(id, fname, lname, university, major, minor, gpa, bio, email, username, password);
-
-        mRef.child("Users").child("Student").child(username).setValue(student);
+    public boolean passwordMatch(View v) {
+        if (toString(password1).equals(toString(password2)))
+            return true;
+        Toast.makeText(v.getContext(), "Passwords Did Not Match", Toast.LENGTH_SHORT).show();
+        return false;
     }
 
     boolean isEmail(EditText text, View v) {
         CharSequence email = text.getText().toString();
         if (!(!TextUtils.isEmpty(email) && Patterns.EMAIL_ADDRESS.matcher(email).matches())) {
-            Toast.makeText(v.getContext(), "Invalid Email", 2).show();
+            Toast.makeText(v.getContext(), "Invalid Email", Toast.LENGTH_SHORT).show();
             return false;
         } else
             return true;
-    }
-
-    boolean isEmpty(EditText text) {
-        CharSequence str = text.getText().toString();
-        return TextUtils.isEmpty(str);
-    }
-
-    String toString(EditText text) {
-        return text.getText().toString();
     }
 
     public boolean checkForEmpties(View v) {
         if (isEmpty(firstName) || isEmpty(lastName) || isEmpty(university) || isEmpty(major) || isEmpty(minor)
                 || isEmpty(gpa) || isEmpty(bio) || isEmpty(email) || isEmpty(username) || isEmpty(password1)
                 || isEmpty(password2)) {
-            Toast.makeText(v.getContext(), "All Fields are Required", 2).show();
+            Toast.makeText(v.getContext(), "All Fields are Required", Toast.LENGTH_SHORT).show();
             return true;
         }
         return false;
     }
 
-    public boolean passwordMatch(View v) {
-        if (toString(password1).equals(toString(password2)))
-            return true;
-        Toast.makeText(v.getContext(), "Passwords Did Not Match", 2).show();
-        return false;
-    }
-
-    public boolean usernameTaken(View v) {
-        Log.d(getClass().getSimpleName(), "in usernameTaken");
-
-        return false;
-    }
-
-    // public boolean emailTaken(View v) {
-    // Cursor c = db.rawQuery("SELECT email FROM " + APPLICANT_TABLE + " WHERE email
-    // = '"
-    // + toString(email) + "';", null);
-    //
-    // if (c != null) {
-    // if (c.moveToFirst()) {
-    // Toast.makeText(v.getContext(), "Email is Already Taken", 2).show();
-    // return true;
-    // }
-    // else return false;
-    // }
-    // Log.e(getClass().getSimpleName(), "Cursor returned null while searching of
-    // username is taken");
-    // return false;
-    // }
-    //
-    // public boolean insertDB() {
-    // try {
-    // db.execSQL("INSERT INTO " + APPLICANT_TABLE + " VALUES (" + firstName + ", "
-    // + lastName +
-    // ", " + university + ", " + major + ", " + minor + ", " + gpa + ", " + bio +
-    // email + ", " + username + ", " + password1 + ", " + password2 + ");");
-    // Log.d(getClass().getSimpleName(), "inserted user");
-    // } catch (SQLiteException se) {
-    // Log.e(getClass().getSimpleName(), "Failed to register student");
-    // }
-    // return true;
-    // }
-
     public boolean processRequest(View v) {
         if (!checkForEmpties(v)) {
             Log.d(getClass().getSimpleName(), "no empty fields");
+
             if (isEmail(email, v)) {
                 Log.d(getClass().getSimpleName(), "email is valid");
+
                 if (passwordMatch(v)) {
                     Log.d(getClass().getSimpleName(), "passwords match");
 
                     if (!usernameTaken(v)) {
                         Log.d(getClass().getSimpleName(), "username not taken");
-                        // if (!emailTaken(v)) {
-                        // Log.d(getClass().getSimpleName(), "email not taken");
-                        // if (insertDB()) {
 
                         writeNewStudent(1, toString(firstName), toString(lastName), toString(university),
                                 toString(major), toString(minor), toString(gpa), toString(bio), toString(email),
                                 toString(username), toString(password1));
 
                         return true;
-                        // }
-                        // }
                     }
-                    // long res = db.insertStudent(toString(firstName), toString(lastName),
-                    // toString(university),
-                    // toString(major), toString(minor), toString(gpa),
-                    // toString(bio), toString(email), toString(username),
-                    // toString(password1));
-                    //
-                    // Log.d(getClass().getSimpleName(), Long.toString(res));
-                    //
-                    // if (res == -1) return false;
-                    // else return true;
                 }
             }
         }
