@@ -4,7 +4,7 @@ import com.google.firebase.database.IgnoreExtraProperties;
 
 @IgnoreExtraProperties
 public class Student {
-    public int id;
+    public String id;
     public String firstName;
     public String lastName;
     public String university;
@@ -17,11 +17,13 @@ public class Student {
     public String password;
 
     public Student() {
-        // default constructor required for calls to DataSnapshot.getValue(Company.class)
+        // default constructor required for calls to
+        // DataSnapshot.getValue(Company.class)
     }
 
     // constructor
-    public Student(int id, String fname, String lname, String university, String major, String minor, String gpa, String bio, String email, String username, String password) {
+    public Student(String id, String fname, String lname, String university, String major, String minor, String gpa,
+            String bio, String email, String username, String password) {
         this.id = id;
         this.firstName = fname;
         this.lastName = lname;
@@ -35,11 +37,11 @@ public class Student {
         this.password = password;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 

@@ -14,9 +14,10 @@ public class Company {
   public static final String PASSWORD = "Password";
   public static final String FIELD = "Field";
 
-  public static final String CREATE_QUERY = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + " (" + COMPANY_ID + ", " + COMPANY_NAME + ", " + COMPANY_EMAIL + ", " + COMPANY_PSWD + ", " + COMPANY_FIELD +  ");";
+  public static final String CREATE_QUERY = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + " (" + COMPANY_ID + ", "
+      + COMPANY_NAME + ", " + COMPANY_EMAIL + ", " + COMPANY_PSWD + ", " + COMPANY_FIELD + ");";
 
-  private int id;
+  private String id;
   private String name;
   private String email;
   private String password;
@@ -26,11 +27,15 @@ public class Company {
 
   }
 
-  public Company(int  id, String name, String email, String password, String field) {
+  public Company(String id, String name, String email, String password, String field) {
     this.id = id;
     this.name = name;
     this.email = email;
     this.password = password;
     this.field = field;
+  }
+
+  public String getEmail() {
+    return this.email;
   }
 };

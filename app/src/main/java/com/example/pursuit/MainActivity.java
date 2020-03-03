@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void writeNewCompany(int id, String name, String email, String password, String field) {
+    private void writeNewCompany(String id, String name, String email, String password, String field) {
         Company company = new Company(id, name, email, password, field);
 
         mRef.child("Users").child("Company").child(name).setValue(company);

@@ -13,8 +13,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.pursuit.database.DatabaseHelper;
 import com.example.pursuit.models.Student;
+import com.example.pursuit.RandomKeyGenerator;
 import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -33,12 +33,11 @@ public class StudentRegistration extends AppCompatActivity {
     private DatabaseReference mRef;
     private ArrayList<Student> matchedUsers;
     private ArrayList<Student> matchedEmails;
-//    private ValueEventListener usernameListener;
+    // private ValueEventListener usernameListener;
     private View view;
     private boolean match;
     private boolean register;
     private String checkEmail;
-
 
     EditText firstName;
     EditText lastName;
@@ -143,10 +142,11 @@ public class StudentRegistration extends AppCompatActivity {
         }
     };
 
-    private void writeNewStudent(int id, String fname, String lname, String university, String major, String minor,
-                                String gpa, String bio, String email, String username, String password) {
+    private void writeNewStudent(String fname, String lname, String university, String major, String minor, String gpa,
+            String bio, String email, String username, String password) {
 
-        Student student = new Student(id, fname, lname, university, major, minor, gpa, bio, email, username, password);
+        Student student = new Student(RandomKeyGenerator.randomAlphaNumeric(16), fname, lname, university, major, minor,
+                gpa, bio, email, username, password);
 
         mRef.child("Students").child(username).setValue(student);
     }
@@ -182,7 +182,6 @@ public class StudentRegistration extends AppCompatActivity {
         }
 
     }
-
 
     /* ******** */
 
@@ -236,10 +235,10 @@ public class StudentRegistration extends AppCompatActivity {
                         Log.d(TAG, "username not taken");
                         if (!emailExists(toString(email))) {
                             Log.d(TAG, "email not taken");
-                            writeNewStudent(1, toString(firstName), toString(lastName), toString(university),
+                            writeNewStudent(toString(firstName), toString(lastName), toString(university),
                                     toString(major), toString(minor), toString(gpa), toString(bio), toString(email),
                                     toString(username), toString(password1));
-//                            register = true;
+                            // register = true;
                             Intent intent = new Intent(this, LandingActivity.class);
                             startActivity(intent);
                         } else {
@@ -289,26 +288,27 @@ public class StudentRegistration extends AppCompatActivity {
 
         usernameQuery.addListenerForSingleValueEvent(usernameListener);
 
-//        Query emailQuery = mRef.child("Students").orderByChild("email").equalTo(toString(email));
-//
-//        if (emailQuery == null) {
-//            Log.d(TAG, "Email query is null");
-//        } else {
-//            Log.d(TAG, "Email query is not null");
-//        }
-//
-//        emailQuery.addListenerForSingleValueEvent(emailListener);
+        // Query emailQuery =
+        // mRef.child("Students").orderByChild("email").equalTo(toString(email));
+        //
+        // if (emailQuery == null) {
+        // Log.d(TAG, "Email query is null");
+        // } else {
+        // Log.d(TAG, "Email query is not null");
+        // }
+        //
+        // emailQuery.addListenerForSingleValueEvent(emailListener);
 
-//        if (register == true) {
-//            Log.d(TAG, "register: true");
-//        } else {
-//            Log.d(TAG, "register: false");
-//        }
-//
-//        if (register) {
-//            Intent intent = new Intent(this, LandingActivity.class);
-//            startActivity(intent);
-//        }
+        // if (register == true) {
+        // Log.d(TAG, "register: true");
+        // } else {
+        // Log.d(TAG, "register: false");
+        // }
+        //
+        // if (register) {
+        // Intent intent = new Intent(this, LandingActivity.class);
+        // startActivity(intent);
+        // }
     }
 
 }
