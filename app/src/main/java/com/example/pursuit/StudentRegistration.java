@@ -32,9 +32,13 @@ public class StudentRegistration extends AppCompatActivity {
 
     private DatabaseReference mRef;
     private ArrayList<Student> matchedUsers;
+    private ArrayList<Student> matchedEmails;
 //    private ValueEventListener usernameListener;
     private View view;
-    private boolean match = false;
+    private boolean match;
+    private boolean register;
+    private String checkEmail;
+
 
     EditText firstName;
     EditText lastName;
@@ -69,13 +73,17 @@ public class StudentRegistration extends AppCompatActivity {
 
         mRef = FirebaseDatabase.getInstance().getReference();
         matchedUsers = new ArrayList<>();
+        matchedEmails = new ArrayList<>();
+        register = false;
 
     }
 
+    /* DATABASE */
     ValueEventListener usernameListener = new ValueEventListener() {
         @Override
         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-            Log.d(TAG, "In onDataChange");
+            matchedUsers = new ArrayList<>();
+            Log.d(TAG, "In usernameListener onDataChange");
             if (dataSnapshot.exists()) {
                 Log.d(TAG, "Snapshot exists");
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
@@ -89,7 +97,17 @@ public class StudentRegistration extends AppCompatActivity {
                     matchedUsers.add(student);
                 }
             }
-            processRequest();
+
+            Log.d(TAG, "email is: " + email.toString());
+            Query emailQuery = mRef.child("Students").orderByChild("email").equalTo(checkEmail);
+
+            if (emailQuery == null) {
+                Log.d(TAG, "Email query is null");
+            } else {
+                Log.d(TAG, "Email query is not null");
+            }
+
+            emailQuery.addListenerForSingleValueEvent(emailListener);
         }
 
         @Override
@@ -98,31 +116,43 @@ public class StudentRegistration extends AppCompatActivity {
         }
     };
 
-    /* DATABASE FUNCTIONS */
+    ValueEventListener emailListener = new ValueEventListener() {
+        @Override
+        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+            matchedEmails = new ArrayList<>();
+            Log.d(TAG, "in emailListener onDataChange");
+            if (dataSnapshot.exists()) {
+                Log.d(TAG, "Snapshot exists");
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    Log.d(TAG, "looping in snapshot");
+                    Student student = snapshot.getValue(Student.class);
+                    if (student == null) {
+                        Log.d(TAG, "student is null");
+                    } else {
+                        Log.d(TAG, "student exists: " + student.getEmail());
+                    }
+                    matchedEmails.add(student);
+                }
+            }
+            processRequest();
+        }
+
+        @Override
+        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+        }
+    };
+
     private void writeNewStudent(int id, String fname, String lname, String university, String major, String minor,
                                 String gpa, String bio, String email, String username, String password) {
 
         Student student = new Student(id, fname, lname, university, major, minor, gpa, bio, email, username, password);
-
-//        mRef.child("Users").child("Student").child(username).setValue(student);
 
         mRef.child("Students").child(username).setValue(student);
     }
 
     private boolean usernameExists(String username) {
         Log.d(TAG, "In usernameExists; username: " + username);
-
-//        Query query = mRef.child("Students").orderByChild("username").equalTo(username);
-//
-//        if (query == null) {
-//            Log.d(TAG, "Query is null");
-//        } else {
-//            Log.d(TAG, "Query is not null");
-//        }
-//
-//        query.addListenerForSingleValueEvent(usernameListener);
-
-//        usernameListener.onDataChange();
 
         String size = String.valueOf(matchedUsers.size());
 
@@ -135,7 +165,26 @@ public class StudentRegistration extends AppCompatActivity {
             return false;
         }
     }
-    /* ****************** */
+
+    private boolean emailExists(String email) {
+
+        Log.d(TAG, "In emailExists; email: " + email);
+
+        String size = String.valueOf(matchedEmails.size());
+
+        Log.d(TAG, "matchedEmails size: " + size);
+
+        if (matchedEmails.size() > 0) {
+            match = true;
+            return true;
+        } else {
+            return false;
+        }
+
+    }
+
+
+    /* ******** */
 
     public String toString(EditText text) {
         return text.getText().toString();
@@ -173,6 +222,7 @@ public class StudentRegistration extends AppCompatActivity {
     }
 
     public void processRequest() {
+        match = false;
         if (!checkForEmpties()) {
             Log.d(TAG, "no empty fields");
 
@@ -184,11 +234,21 @@ public class StudentRegistration extends AppCompatActivity {
 
                     if (!usernameExists(toString(username))) {
                         Log.d(TAG, "username not taken");
-
-//                        writeNewStudent(1, toString(firstName), toString(lastName), toString(university),
-//                                toString(major), toString(minor), toString(gpa), toString(bio), toString(email),
-//                                toString(username), toString(password1));
-
+                        if (!emailExists(toString(email))) {
+                            Log.d(TAG, "email not taken");
+                            writeNewStudent(1, toString(firstName), toString(lastName), toString(university),
+                                    toString(major), toString(minor), toString(gpa), toString(bio), toString(email),
+                                    toString(username), toString(password1));
+//                            register = true;
+                            Intent intent = new Intent(this, LandingActivity.class);
+                            startActivity(intent);
+                        } else {
+                            Log.d(TAG, "email is already taken");
+                            Toast.makeText(view.getContext(), "Email is Already Taken", Toast.LENGTH_LONG).show();
+                        }
+                    } else {
+                        Log.d(TAG, "username is already taken");
+                        Toast.makeText(view.getContext(), "Username Already Exists", Toast.LENGTH_LONG).show();
                     }
                 }
             }
@@ -199,6 +259,7 @@ public class StudentRegistration extends AppCompatActivity {
         } else {
             Log.d(TAG, "RESULT: false");
         }
+
     }
 
     // called by onClick, attempts to register a student
@@ -216,22 +277,38 @@ public class StudentRegistration extends AppCompatActivity {
         password1 = findViewById(R.id.password);
         password2 = findViewById(R.id.txtReEnterPassword);
 
-        Query query = mRef.child("Students").orderByChild("username").equalTo(toString(username));
+        checkEmail = toString(email);
 
-        if (query == null) {
-            Log.d(TAG, "Query is null");
+        Query usernameQuery = mRef.child("Students").orderByChild("username").equalTo(toString(username));
+
+        if (usernameQuery == null) {
+            Log.d(TAG, "Username query is null");
         } else {
-            Log.d(TAG, "Query is not null");
+            Log.d(TAG, "Username query is not null");
         }
 
-        query.addListenerForSingleValueEvent(usernameListener);
+        usernameQuery.addListenerForSingleValueEvent(usernameListener);
 
-//        boolean processResult = processRequest(v);
+//        Query emailQuery = mRef.child("Students").orderByChild("email").equalTo(toString(email));
+//
+//        if (emailQuery == null) {
+//            Log.d(TAG, "Email query is null");
+//        } else {
+//            Log.d(TAG, "Email query is not null");
+//        }
+//
+//        emailQuery.addListenerForSingleValueEvent(emailListener);
 
-
-
-//        Intent intent = new Intent(this, LandingActivity.class);
-//        startActivity(intent);
+//        if (register == true) {
+//            Log.d(TAG, "register: true");
+//        } else {
+//            Log.d(TAG, "register: false");
+//        }
+//
+//        if (register) {
+//            Intent intent = new Intent(this, LandingActivity.class);
+//            startActivity(intent);
+//        }
     }
 
 }
