@@ -21,12 +21,20 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.database.Query;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 
 public class StudentRegistration extends AppCompatActivity {
 
     private static final String TAG = "StudentRegistration";
 
     private DatabaseReference mRef;
+    private ArrayList<Student> matchedUsers;
+//    private ValueEventListener usernameListener;
+    private View view;
+    private boolean match = false;
 
     EditText firstName;
     EditText lastName;
@@ -60,8 +68,35 @@ public class StudentRegistration extends AppCompatActivity {
         password2 = findViewById(R.id.txtReEnterPassword);
 
         mRef = FirebaseDatabase.getInstance().getReference();
+        matchedUsers = new ArrayList<>();
 
     }
+
+    ValueEventListener usernameListener = new ValueEventListener() {
+        @Override
+        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+            Log.d(TAG, "In onDataChange");
+            if (dataSnapshot.exists()) {
+                Log.d(TAG, "Snapshot exists");
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    Log.d(TAG, "looping in snapshot");
+                    Student student = snapshot.getValue(Student.class);
+                    if (student == null) {
+                        Log.d(TAG, "student is null");
+                    } else {
+                        Log.d(TAG, "student exists: " + student.getUsername());
+                    }
+                    matchedUsers.add(student);
+                }
+            }
+            processRequest();
+        }
+
+        @Override
+        public void onCancelled(DatabaseError databaseError) {
+
+        }
+    };
 
     /* DATABASE FUNCTIONS */
     private void writeNewStudent(int id, String fname, String lname, String university, String major, String minor,
@@ -69,21 +104,35 @@ public class StudentRegistration extends AppCompatActivity {
 
         Student student = new Student(id, fname, lname, university, major, minor, gpa, bio, email, username, password);
 
-        mRef.child("Users").child("Student").child(username).setValue(student);
+//        mRef.child("Users").child("Student").child(username).setValue(student);
+
+        mRef.child("Students").child(username).setValue(student);
     }
 
-    private void searchUsername(DataSnapshot dataSnapshot, String username) {
-        Log.d(TAG, "top of search username");
-        for (DataSnapshot ds : dataSnapshot.getChildren()) {
-            Student student = new Student();
-            if (ds.child("Student").child(username).getValue() == null) {
-                Log.d(TAG, "null");
-                student.setUsername("null");
-                Log.d(TAG, "showData: username: " + student.getUsername());
-            }
-            else {
-                Log.d(TAG, "showData: username: " + student.getUsername());
-            }
+    private boolean usernameExists(String username) {
+        Log.d(TAG, "In usernameExists; username: " + username);
+
+//        Query query = mRef.child("Students").orderByChild("username").equalTo(username);
+//
+//        if (query == null) {
+//            Log.d(TAG, "Query is null");
+//        } else {
+//            Log.d(TAG, "Query is not null");
+//        }
+//
+//        query.addListenerForSingleValueEvent(usernameListener);
+
+//        usernameListener.onDataChange();
+
+        String size = String.valueOf(matchedUsers.size());
+
+        Log.d(TAG, "matchedUsers size: " + size);
+
+        if (matchedUsers.size() > 0) {
+            match = true;
+            return true;
+        } else {
+            return false;
         }
     }
     /* ****************** */
@@ -92,35 +141,17 @@ public class StudentRegistration extends AppCompatActivity {
         return text.getText().toString();
     }
 
-    public boolean usernameTaken(View v) {
-        Log.d(getClass().getSimpleName(), "in usernameTaken");
-
-        mRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                searchUsername(dataSnapshot, username.getText().toString());
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-
-        return true;
-    }
-
-    public boolean passwordMatch(View v) {
+    public boolean passwordMatch() {
         if (toString(password1).equals(toString(password2)))
             return true;
-        Toast.makeText(v.getContext(), "Passwords Did Not Match", Toast.LENGTH_SHORT).show();
+        Toast.makeText(view.getContext(), "Passwords Did Not Match", Toast.LENGTH_SHORT).show();
         return false;
     }
 
-    boolean isEmail(EditText text, View v) {
+    boolean isEmail(EditText text) {
         CharSequence email = text.getText().toString();
         if (!(!TextUtils.isEmpty(email) && Patterns.EMAIL_ADDRESS.matcher(email).matches())) {
-            Toast.makeText(v.getContext(), "Invalid Email", Toast.LENGTH_SHORT).show();
+            Toast.makeText(view.getContext(), "Invalid Email", Toast.LENGTH_SHORT).show();
             return false;
         } else
             return true;
@@ -131,43 +162,48 @@ public class StudentRegistration extends AppCompatActivity {
         return TextUtils.isEmpty(str);
     }
 
-    public boolean checkForEmpties(View v) {
+    public boolean checkForEmpties() {
         if (isEmpty(firstName) || isEmpty(lastName) || isEmpty(university) || isEmpty(major) || isEmpty(minor)
                 || isEmpty(gpa) || isEmpty(bio) || isEmpty(email) || isEmpty(username) || isEmpty(password1)
                 || isEmpty(password2)) {
-            Toast.makeText(v.getContext(), "All Fields are Required", Toast.LENGTH_SHORT).show();
+            Toast.makeText(view.getContext(), "All Fields are Required", Toast.LENGTH_SHORT).show();
             return true;
         }
         return false;
     }
 
-    public boolean processRequest(View v) {
-        if (!checkForEmpties(v)) {
+    public void processRequest() {
+        if (!checkForEmpties()) {
             Log.d(TAG, "no empty fields");
 
-            if (isEmail(email, v)) {
+            if (isEmail(email)) {
                 Log.d(TAG, "email is valid");
 
-                if (passwordMatch(v)) {
+                if (passwordMatch()) {
                     Log.d(TAG, "passwords match");
 
-                    if (!usernameTaken(v)) {
+                    if (!usernameExists(toString(username))) {
                         Log.d(TAG, "username not taken");
 
-                        writeNewStudent(1, toString(firstName), toString(lastName), toString(university),
-                                toString(major), toString(minor), toString(gpa), toString(bio), toString(email),
-                                toString(username), toString(password1));
+//                        writeNewStudent(1, toString(firstName), toString(lastName), toString(university),
+//                                toString(major), toString(minor), toString(gpa), toString(bio), toString(email),
+//                                toString(username), toString(password1));
 
-                        return true;
                     }
                 }
             }
         }
-        return false;
+        if (match == true) {
+            Log.d(TAG, "RESULT: true");
+
+        } else {
+            Log.d(TAG, "RESULT: false");
+        }
     }
 
     // called by onClick, attempts to register a student
     public void registerStudent(View v) {
+        view = v;
         firstName = findViewById(R.id.txtFirstName);
         lastName = findViewById(R.id.txtLastName);
         university = findViewById(R.id.txtUniversity);
@@ -180,10 +216,22 @@ public class StudentRegistration extends AppCompatActivity {
         password1 = findViewById(R.id.password);
         password2 = findViewById(R.id.txtReEnterPassword);
 
-        if (processRequest(v)) {
-            Intent intent = new Intent(this, LandingActivity.class);
-            startActivity(intent);
+        Query query = mRef.child("Students").orderByChild("username").equalTo(toString(username));
+
+        if (query == null) {
+            Log.d(TAG, "Query is null");
+        } else {
+            Log.d(TAG, "Query is not null");
         }
+
+        query.addListenerForSingleValueEvent(usernameListener);
+
+//        boolean processResult = processRequest(v);
+
+
+
+//        Intent intent = new Intent(this, LandingActivity.class);
+//        startActivity(intent);
     }
 
 }
