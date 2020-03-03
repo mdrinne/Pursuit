@@ -73,11 +73,12 @@ public class StudentRegistration extends AppCompatActivity {
     }
 
     private void searchUsername(DataSnapshot dataSnapshot, String username) {
+        Log.d(TAG, "top of search username");
         for (DataSnapshot ds : dataSnapshot.getChildren()) {
             Student student = new Student();
             if (ds.child("Student").child(username).getValue() == null) {
-                Log.d(TAG, ds.child("Student").child(username).getValue().getClass().toString());
-                student.setUsername(ds.child("Student").child(username).child("username").getValue().toString());
+                Log.d(TAG, "null");
+                student.setUsername("null");
                 Log.d(TAG, "showData: username: " + student.getUsername());
             }
             else {
@@ -86,11 +87,6 @@ public class StudentRegistration extends AppCompatActivity {
         }
     }
     /* ****************** */
-
-    boolean isEmpty(EditText text) {
-        CharSequence str = text.getText().toString();
-        return TextUtils.isEmpty(str);
-    }
 
     public String toString(EditText text) {
         return text.getText().toString();
@@ -130,6 +126,11 @@ public class StudentRegistration extends AppCompatActivity {
             return true;
     }
 
+    boolean isEmpty(EditText text) {
+        CharSequence str = text.getText().toString();
+        return TextUtils.isEmpty(str);
+    }
+
     public boolean checkForEmpties(View v) {
         if (isEmpty(firstName) || isEmpty(lastName) || isEmpty(university) || isEmpty(major) || isEmpty(minor)
                 || isEmpty(gpa) || isEmpty(bio) || isEmpty(email) || isEmpty(username) || isEmpty(password1)
@@ -142,16 +143,16 @@ public class StudentRegistration extends AppCompatActivity {
 
     public boolean processRequest(View v) {
         if (!checkForEmpties(v)) {
-            Log.d(getClass().getSimpleName(), "no empty fields");
+            Log.d(TAG, "no empty fields");
 
             if (isEmail(email, v)) {
-                Log.d(getClass().getSimpleName(), "email is valid");
+                Log.d(TAG, "email is valid");
 
                 if (passwordMatch(v)) {
-                    Log.d(getClass().getSimpleName(), "passwords match");
+                    Log.d(TAG, "passwords match");
 
                     if (!usernameTaken(v)) {
-                        Log.d(getClass().getSimpleName(), "username not taken");
+                        Log.d(TAG, "username not taken");
 
                         writeNewStudent(1, toString(firstName), toString(lastName), toString(university),
                                 toString(major), toString(minor), toString(gpa), toString(bio), toString(email),
