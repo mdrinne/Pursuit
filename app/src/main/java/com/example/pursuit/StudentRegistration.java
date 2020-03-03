@@ -23,20 +23,18 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.database.Query;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class StudentRegistration extends AppCompatActivity {
 
     private static final String TAG = "StudentRegistration";
 
+    // Declaring Global Class Variables
     private DatabaseReference mRef;
     private ArrayList<Student> matchedUsers;
     private ArrayList<Student> matchedEmails;
-    // private ValueEventListener usernameListener;
     private View view;
     private boolean match;
-    private boolean register;
     private String checkEmail;
 
     EditText firstName;
@@ -58,26 +56,16 @@ public class StudentRegistration extends AppCompatActivity {
         setContentView(R.layout.activity_student_registration);
 
         btnFinish = findViewById(R.id.btnFinish);
-        firstName = findViewById(R.id.txtFirstName);
-        lastName = findViewById(R.id.txtLastName);
-        university = findViewById(R.id.txtUniversity);
-        major = findViewById(R.id.txtMajor);
-        minor = findViewById(R.id.txtMinor);
-        gpa = findViewById(R.id.txtGPA);
-        bio = findViewById(R.id.txtBio);
-        email = findViewById(R.id.txtEmail);
-        username = findViewById(R.id.username);
-        password1 = findViewById(R.id.password);
-        password2 = findViewById(R.id.txtReEnterPassword);
 
+        // Get Database Reference
         mRef = FirebaseDatabase.getInstance().getReference();
+
         matchedUsers = new ArrayList<>();
         matchedEmails = new ArrayList<>();
-        register = false;
-
     }
 
     /* DATABASE */
+    // Listener For Username Query, Calls Email Query At End
     ValueEventListener usernameListener = new ValueEventListener() {
         @Override
         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -98,6 +86,8 @@ public class StudentRegistration extends AppCompatActivity {
             }
 
             Log.d(TAG, "email is: " + email.toString());
+
+            // SELECT * FROM Students WHERE email = ?
             Query emailQuery = mRef.child("Students").orderByChild("email").equalTo(checkEmail);
 
             if (emailQuery == null) {
@@ -106,15 +96,17 @@ public class StudentRegistration extends AppCompatActivity {
                 Log.d(TAG, "Email query is not null");
             }
 
+            // Call To Email EventListener
             emailQuery.addListenerForSingleValueEvent(emailListener);
         }
 
         @Override
         public void onCancelled(DatabaseError databaseError) {
-
+            Log.e(TAG, databaseError.toString());
         }
     };
 
+    // Listener For Email Query
     ValueEventListener emailListener = new ValueEventListener() {
         @Override
         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -133,12 +125,14 @@ public class StudentRegistration extends AppCompatActivity {
                     matchedEmails.add(student);
                 }
             }
+
+            // Continue To processRequest After Queries Are Complete
             processRequest();
         }
 
         @Override
         public void onCancelled(@NonNull DatabaseError databaseError) {
-
+            Log.e(TAG, databaseError.toString());
         }
     };
 
@@ -151,6 +145,7 @@ public class StudentRegistration extends AppCompatActivity {
         mRef.child("Students").child(username).setValue(student);
     }
 
+    // Checks If Given Username Already Exists
     private boolean usernameExists(String username) {
         Log.d(TAG, "In usernameExists; username: " + username);
 
@@ -166,8 +161,8 @@ public class StudentRegistration extends AppCompatActivity {
         }
     }
 
+    // Checks If Given Email Already Exists
     private boolean emailExists(String email) {
-
         Log.d(TAG, "In emailExists; email: " + email);
 
         String size = String.valueOf(matchedEmails.size());
@@ -182,13 +177,14 @@ public class StudentRegistration extends AppCompatActivity {
         }
 
     }
-
     /* ******** */
 
+    // Converts EditText Type To String
     public String toString(EditText text) {
         return text.getText().toString();
     }
 
+    // Checks If Password And Re-Entered Password Match
     public boolean passwordMatch() {
         if (toString(password1).equals(toString(password2)))
             return true;
@@ -196,6 +192,7 @@ public class StudentRegistration extends AppCompatActivity {
         return false;
     }
 
+    // Checks If Given Email Is A Valid Email
     boolean isEmail(EditText text) {
         CharSequence email = text.getText().toString();
         if (!(!TextUtils.isEmpty(email) && Patterns.EMAIL_ADDRESS.matcher(email).matches())) {
@@ -205,11 +202,13 @@ public class StudentRegistration extends AppCompatActivity {
             return true;
     }
 
+    // Checks If TextField Is Empty
     boolean isEmpty(EditText text) {
         CharSequence str = text.getText().toString();
         return TextUtils.isEmpty(str);
     }
 
+    // Checks For Any Empty TextFields
     public boolean checkForEmpties() {
         if (isEmpty(firstName) || isEmpty(lastName) || isEmpty(university) || isEmpty(major) || isEmpty(minor)
                 || isEmpty(gpa) || isEmpty(bio) || isEmpty(email) || isEmpty(username) || isEmpty(password1)
@@ -220,6 +219,7 @@ public class StudentRegistration extends AppCompatActivity {
         return false;
     }
 
+    // Completes Necessary Checks For Registering A New Student
     public void processRequest() {
         match = false;
         if (!checkForEmpties()) {
@@ -261,7 +261,7 @@ public class StudentRegistration extends AppCompatActivity {
 
     }
 
-    // called by onClick, attempts to register a student
+    // Called By onClick, Attempts To Register A Student
     public void registerStudent(View v) {
         view = v;
         firstName = findViewById(R.id.txtFirstName);
@@ -278,6 +278,7 @@ public class StudentRegistration extends AppCompatActivity {
 
         checkEmail = toString(email);
 
+        // SELECT * FROM Students WHERE username = ?
         Query usernameQuery = mRef.child("Students").orderByChild("username").equalTo(toString(username));
 
         if (usernameQuery == null) {
@@ -286,29 +287,8 @@ public class StudentRegistration extends AppCompatActivity {
             Log.d(TAG, "Username query is not null");
         }
 
+        // Call To Username Event Listener
         usernameQuery.addListenerForSingleValueEvent(usernameListener);
-
-        // Query emailQuery =
-        // mRef.child("Students").orderByChild("email").equalTo(toString(email));
-        //
-        // if (emailQuery == null) {
-        // Log.d(TAG, "Email query is null");
-        // } else {
-        // Log.d(TAG, "Email query is not null");
-        // }
-        //
-        // emailQuery.addListenerForSingleValueEvent(emailListener);
-
-        // if (register == true) {
-        // Log.d(TAG, "register: true");
-        // } else {
-        // Log.d(TAG, "register: false");
-        // }
-        //
-        // if (register) {
-        // Intent intent = new Intent(this, LandingActivity.class);
-        // startActivity(intent);
-        // }
     }
 
 }
