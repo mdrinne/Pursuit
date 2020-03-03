@@ -29,7 +29,6 @@ public class StudentRegistration extends AppCompatActivity {
 
     private static final String TAG = "StudentRegistration";
 
-    // Declaring Global Class Variables
     private DatabaseReference mRef;
     private ArrayList<Student> matchedUsers;
     private ArrayList<Student> matchedEmails;
@@ -46,16 +45,13 @@ public class StudentRegistration extends AppCompatActivity {
     EditText bio;
     EditText email;
     EditText username;
-    EditText password1;
-    EditText password2;
-    Button btnFinish;
+    EditText studentPassword;
+    EditText studentReEnterPassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_student_registration);
-
-        btnFinish = findViewById(R.id.btnFinish);
 
         // Get Database Reference
         mRef = FirebaseDatabase.getInstance().getReference();
@@ -64,7 +60,8 @@ public class StudentRegistration extends AppCompatActivity {
         matchedEmails = new ArrayList<>();
     }
 
-    /* DATABASE */
+    /* ********DATABASE******** */
+
     // Listener For Username Query, Calls Email Query At End
     ValueEventListener usernameListener = new ValueEventListener() {
         @Override
@@ -138,12 +135,14 @@ public class StudentRegistration extends AppCompatActivity {
 
     private void writeNewStudent(String fname, String lname, String university, String major, String minor, String gpa,
             String bio, String email, String username, String password) {
-
-        Student student = new Student(RandomKeyGenerator.randomAlphaNumeric(16), fname, lname, university, major, minor,
+        String id = RandomKeyGenerator.randomAlphaNumeric(16);
+        Student student = new Student(id, fname, lname, university, major, minor,
                 gpa, bio, email, username, password);
 
-        mRef.child("Students").child(username).setValue(student);
+        mRef.child("Students").child(id).setValue(student);
     }
+
+    /* ******END DATABASE****** */
 
     // Checks If Given Username Already Exists
     private boolean usernameExists(String username) {
@@ -177,7 +176,6 @@ public class StudentRegistration extends AppCompatActivity {
         }
 
     }
-    /* ******** */
 
     // Converts EditText Type To String
     public String toString(EditText text) {
@@ -186,7 +184,7 @@ public class StudentRegistration extends AppCompatActivity {
 
     // Checks If Password And Re-Entered Password Match
     public boolean passwordMatch() {
-        if (toString(password1).equals(toString(password2)))
+        if (toString(studentPassword).equals(toString(studentReEnterPassword)))
             return true;
         Toast.makeText(view.getContext(), "Passwords Did Not Match", Toast.LENGTH_SHORT).show();
         return false;
@@ -211,8 +209,8 @@ public class StudentRegistration extends AppCompatActivity {
     // Checks For Any Empty TextFields
     public boolean checkForEmpties() {
         if (isEmpty(firstName) || isEmpty(lastName) || isEmpty(university) || isEmpty(major) || isEmpty(minor)
-                || isEmpty(gpa) || isEmpty(bio) || isEmpty(email) || isEmpty(username) || isEmpty(password1)
-                || isEmpty(password2)) {
+                || isEmpty(gpa) || isEmpty(bio) || isEmpty(email) || isEmpty(username) || isEmpty(studentPassword)
+                || isEmpty(studentReEnterPassword)) {
             Toast.makeText(view.getContext(), "All Fields are Required", Toast.LENGTH_SHORT).show();
             return true;
         }
@@ -237,8 +235,7 @@ public class StudentRegistration extends AppCompatActivity {
                             Log.d(TAG, "email not taken");
                             writeNewStudent(toString(firstName), toString(lastName), toString(university),
                                     toString(major), toString(minor), toString(gpa), toString(bio), toString(email),
-                                    toString(username), toString(password1));
-                            // register = true;
+                                    toString(username), toString(studentPassword));
                             Intent intent = new Intent(this, LandingActivity.class);
                             startActivity(intent);
                         } else {
@@ -272,9 +269,9 @@ public class StudentRegistration extends AppCompatActivity {
         gpa = findViewById(R.id.txtGPA);
         bio = findViewById(R.id.txtBio);
         email = findViewById(R.id.txtEmail);
-        username = findViewById(R.id.username);
-        password1 = findViewById(R.id.password);
-        password2 = findViewById(R.id.txtReEnterPassword);
+        username = findViewById(R.id.txtUsername);
+        studentPassword = findViewById(R.id.txtPassword);
+        studentReEnterPassword = findViewById(R.id.txtReEnterPassword);
 
         checkEmail = toString(email);
 

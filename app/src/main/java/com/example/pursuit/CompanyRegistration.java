@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.util.Patterns;
+import android.widget.Button;
 import android.widget.EditText;
 import android.view.View;
 import android.content.Intent;
@@ -22,42 +23,36 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.database.Query;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class CompanyRegistration extends AppCompatActivity {
 
     private static final String TAG = "CompanyRegistration";
 
+    private DatabaseReference mRef;
+    private ArrayList<Company> matchedEmails;
+    private View view;
+    private boolean match;
+    private String checkEmail;
+
     EditText companyName;
     EditText companyEmail;
     EditText companyPassword;
+    EditText companyReEnterPassword;
     EditText companyField;
-
-    private DatabaseReference mRef;
-    private ArrayList<Company> matchedEmails;
-
-    private View view;
-    private boolean match;
-    private boolean register;
-    private String checkEmail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_company_registration);
 
-        companyPassword = findViewById(R.id.companyPassword);
-        companyName = findViewById(R.id.companyName);
-        companyEmail = findViewById(R.id.companyEmail);
-        companyField = findViewById(R.id.companyField);
-
         mRef = FirebaseDatabase.getInstance().getReference();
+
         matchedEmails = new ArrayList<>();
-        register = false;
     }
 
-    /* DATABASE */
+    /* ********DATABASE******** */
+
     ValueEventListener emailListener = new ValueEventListener() {
         @Override
         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -86,9 +81,12 @@ public class CompanyRegistration extends AppCompatActivity {
     };
 
     private void writeNewCompany(String name, String email, String password, String field) {
-        Company newCompany = new Company(RandomKeyGenerator.randomAlphaNumeric(16), name, email, password, field);
-        mRef.child("Companies").child(name).setValue(newCompany);
+        String id = RandomKeyGenerator.randomAlphaNumeric(16);
+        Company newCompany = new Company(id, name, email, password, field);
+        mRef.child("Companies").child(id).setValue(newCompany);
     }
+
+    /* ******END DATABASE****** */
 
     private boolean emailExists(String email) {
         Log.d(TAG, "In emailExists; email: " + email);
@@ -105,10 +103,16 @@ public class CompanyRegistration extends AppCompatActivity {
         }
     }
 
-    /* END DATABASE */
-
     public String toString(EditText text) {
         return text.getText().toString();
+    }
+
+    // Checks If Password And Re-Entered Password Match
+    public boolean passwordMatch() {
+        if (toString(companyPassword).equals(toString(companyReEnterPassword)))
+            return true;
+        Toast.makeText(view.getContext(), "Passwords Did Not Match", Toast.LENGTH_SHORT).show();
+        return false;
     }
 
     boolean isEmail(EditText text) {
@@ -140,14 +144,22 @@ public class CompanyRegistration extends AppCompatActivity {
             Log.d(TAG, "no empty fields");
 
             if (isEmail(companyEmail)) {
-                if (!emailExists(toString(companyEmail))) {
-                    Log.d(TAG, "email not taken");
+                Log.d(TAG, "email is valid");
 
-                    writeNewCompany(toString(companyName), toString(companyEmail), toString(companyPassword),
-                            toString(companyField));
-                } else {
-                    Log.d(TAG, "email is already taken");
-                    Toast.makeText(view.getContext(), "Email is Already Taken", Toast.LENGTH_LONG).show();
+                if (passwordMatch()) {
+                    Log.d(TAG, "passwords match");
+
+                    if (!emailExists(toString(companyEmail))) {
+                        Log.d(TAG, "email not taken");
+
+                        writeNewCompany(toString(companyName), toString(companyEmail), toString(companyPassword),
+                                toString(companyField));
+                        Intent intent = new Intent(this, LandingActivity.class);
+                        startActivity(intent);
+                    } else {
+                        Log.d(TAG, "email is already taken");
+                        Toast.makeText(view.getContext(), "Email is Already Taken", Toast.LENGTH_LONG).show();
+                    }
                 }
             }
         }
@@ -162,6 +174,11 @@ public class CompanyRegistration extends AppCompatActivity {
 
     public void register(View v) {
         view = v;
+        companyName = findViewById(R.id.companyName);
+        companyEmail = findViewById(R.id.companyEmail);
+        companyPassword = findViewById(R.id.companyPassword);
+        companyReEnterPassword = findViewById(R.id.companyReEnterPassword);
+        companyField = findViewById(R.id.companyField);
 
         checkEmail = toString(companyEmail);
 

@@ -1,7 +1,7 @@
 package com.example.pursuit;
 
 public class RandomKeyGenerator {
-    private static final String ALPHA_NUMERIC_STRING = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    private static final String ALPHA_NUMERIC_STRING = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefgghijklmnopqrstuvwxyz0123456789";
 
     public static String randomAlphaNumeric(int count) {
         StringBuilder builder = new StringBuilder();

@@ -40,8 +40,8 @@ public class MainActivity extends AppCompatActivity {
         mRef = FirebaseDatabase.getInstance().getReference();
 
         login = findViewById(R.id.button);
-        username = findViewById(R.id.username);
-        password = findViewById(R.id.password);
+        username = findViewById(R.id.txtUsername);
+        password = findViewById(R.id.txtPassword);
 
 //        writeNewCompany(1, "NT", "mr416@ntrs.com", "1234", "banking");
 

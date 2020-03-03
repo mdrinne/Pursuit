@@ -20,4 +20,5 @@
     <string name="strGPA">GPA</string>
     <string name="strBio">Bio</string>
     <string name="strFinish">Finish</string>
+    <string name="strFieldOfBusiness">Field of Business</string>
 </resources>
