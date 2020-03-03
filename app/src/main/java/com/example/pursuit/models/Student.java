@@ -5,8 +5,8 @@ import com.google.firebase.database.IgnoreExtraProperties;
 @IgnoreExtraProperties
 public class Student {
     public int id;
-    public String fname;
-    public String lname;
+    public String firstName;
+    public String lastName;
     public String university;
     public String major;
     public String minor;
@@ -23,8 +23,8 @@ public class Student {
     // constructor
     public Student(int id, String fname, String lname, String university, String major, String minor, String gpa, String bio, String email, String username, String password) {
         this.id = id;
-        this.fname = fname;
-        this.lname = lname;
+        this.firstName = fname;
+        this.lastName = lname;
         this.university = university;
         this.major = major;
         this.minor = minor;
@@ -43,12 +43,12 @@ public class Student {
         this.id = id;
     }
 
-    public String getLname() {
-        return lname;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setLname(String lname) {
-        this.lname = lname;
+    public void setLastName(String lname) {
+        this.lastName = lname;
     }
 
     public String getUniversity() {
