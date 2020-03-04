@@ -47,6 +47,8 @@ public class StudentRegistration extends AppCompatActivity {
     EditText studentPassword;
     EditText studentReEnterPassword;
 
+    Student newStudent;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -135,10 +137,9 @@ public class StudentRegistration extends AppCompatActivity {
     private void writeNewStudent(String fname, String lname, String university, String major, String minor, String gpa,
             String bio, String email, String username, String password) {
         String id = RandomKeyGenerator.randomAlphaNumeric(16);
-        Student student = new Student(id, fname, lname, university, major, minor,
-                gpa, bio, email, username, password);
+        newStudent = new Student(id, fname, lname, university, major, minor, gpa, bio, email, username, password);
 
-        mRef.child("Students").child(id).setValue(student);
+        mRef.child("Students").child(id).setValue(newStudent);
     }
 
     /* ******END DATABASE****** */
@@ -235,6 +236,10 @@ public class StudentRegistration extends AppCompatActivity {
                             writeNewStudent(toString(firstName), toString(lastName), toString(university),
                                     toString(major), toString(minor), toString(gpa), toString(bio), toString(email),
                                     toString(username), toString(studentPassword));
+
+                            // set the Current User
+                            ((PursuitApplication) this.getApplication()).setCurrentStudent(newStudent);
+
                             Intent intent = new Intent(this, LandingActivity.class);
                             startActivity(intent);
                         } else {

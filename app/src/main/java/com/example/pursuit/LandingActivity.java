@@ -36,7 +36,7 @@ public class LandingActivity extends AppCompatActivity {
         }
 
         currentUserNameText = findViewById(R.id.currentUserName);
-        currentUserNameText.setText(currentUserNameString);
+        currentUserNameText.setText("Welcome, " + currentUserNameString);
 
         logOutBtn = findViewById(R.id.logOutBtn);
         aboutPursuitBtn = findViewById(R.id.aboutPursuitBtn);
@@ -46,6 +46,12 @@ public class LandingActivity extends AppCompatActivity {
         logOutBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (currentStudent != null) {
+                    removeCurrentStudent();
+                } else {
+                    removeCurrentCompany();
+                }
+
                 Intent i = new Intent(LandingActivity.this, MainActivity.class);
                 startActivity(i);
                 finish();
@@ -84,6 +90,14 @@ public class LandingActivity extends AppCompatActivity {
         } else {
             currentCompany = ((PursuitApplication) this.getApplication()).getCurrentCompany();
         }
+    }
+
+    private void removeCurrentStudent() {
+        ((PursuitApplication) this.getApplication()).setCurrentStudent(null);
+    }
+
+    private void removeCurrentCompany() {
+        ((PursuitApplication) this.getApplication()).setCurrentCompany(null);
     }
 
 }
