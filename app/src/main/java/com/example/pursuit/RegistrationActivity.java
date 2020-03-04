@@ -1,6 +1,7 @@
 package com.example.pursuit;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,10 +13,19 @@ public class RegistrationActivity extends AppCompatActivity {
 
     private RegistrationPageAdapter registrationPageAdapter;
 
+    public static final String UI_TAB_STUDENTREGISTRATION = "STUDENTREGISTRATION";
+    public static final String UI_TAB_COMPANYREGISTRATION = "COMPANYREGISTRATION";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
+    }
+
+    private void  setupViewPager(ViewPager viewPager) {
+        RegistrationPageAdapter adapter = new RegistrationPageAdapter(getSupportFragmentManager());
+        adapter.addFragment(new StudentRegistration(), UI_TAB_STUDENTREGISTRATION);
+
     }
 
 //    public void continueToRegistration(View view) {

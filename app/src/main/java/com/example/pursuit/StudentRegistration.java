@@ -1,7 +1,9 @@
 package com.example.pursuit;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,8 +11,11 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import android.view.LayoutInflater;
 
 import com.example.pursuit.models.Student;
 import com.example.pursuit.RandomKeyGenerator;
@@ -24,7 +29,7 @@ import com.google.firebase.database.Query;
 
 import java.util.ArrayList;
 
-public class StudentRegistration extends AppCompatActivity {
+public class StudentRegistration extends Fragment {
 
     private static final String TAG = "StudentRegistration";
 
@@ -47,16 +52,21 @@ public class StudentRegistration extends AppCompatActivity {
     EditText studentPassword;
     EditText studentReEnterPassword;
 
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_student_registration);
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+//        super.onCreate(savedInstanceState);
+//        setContentView(R.layout.activity_student_registration);
+        View v = inflater.inflate(R.layout.activity_student_registration,container,false);
 
         // Get Database Reference
         mRef = FirebaseDatabase.getInstance().getReference();
 
         matchedUsers = new ArrayList<>();
         matchedEmails = new ArrayList<>();
+
+        view = v;
+        return v;
     }
 
     /* ********DATABASE******** */
