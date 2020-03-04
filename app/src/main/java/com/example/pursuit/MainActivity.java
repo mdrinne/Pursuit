@@ -90,6 +90,7 @@ public class MainActivity extends AppCompatActivity {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     Log.d(TAG, "looping in snapshot");
                     Student student = snapshot.getValue(Student.class);
+                    Log.d(TAG, "got student");
                     if (student == null) {
                         Log.d(TAG, "student is null");
                     } else {
@@ -108,33 +109,33 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
-        ValueEventListener companyEmailListener = new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                matchedCompanyEmails = new ArrayList<>();
-                Log.d(TAG, "In companyEmailListener onDataChange");
-                if (dataSnapshot.exists()) {
-                    Log.d(TAG, "Snapshot exists");
-                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                        Log.d(TAG, "looping in snapshot");
-                        Company company = snapshot.getValue(Company.class);
-                        if (company == null) {
-                            Log.d(TAG, "company is null");
-                        } else {
-                            Log.d(TAG, "company exists: " + company.getId() + "; " + company.getEmail());
-                        }
-                        matchedCompanyEmails.add(company);
+    ValueEventListener companyEmailListener = new ValueEventListener() {
+        @Override
+        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+            matchedCompanyEmails = new ArrayList<>();
+            Log.d(TAG, "In companyEmailListener onDataChange");
+            if (dataSnapshot.exists()) {
+                Log.d(TAG, "Snapshot exists");
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    Log.d(TAG, "looping in snapshot");
+                    Company company = snapshot.getValue(Company.class);
+                    if (company == null) {
+                        Log.d(TAG, "company is null");
+                    } else {
+                        Log.d(TAG, "company exists: " + company.getId() + "; " + company.getEmail());
                     }
+                    matchedCompanyEmails.add(company);
                 }
-
-                postCompanyEmailListener();
             }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Log.e(TAG, databaseError.toString());
-            }
-        };
+            postCompanyEmailListener();
+        }
+
+        @Override
+        public void onCancelled(@NonNull DatabaseError databaseError) {
+            Log.e(TAG, databaseError.toString());
+        }
+    };
 
     /* ******END DATABASE****** */
 

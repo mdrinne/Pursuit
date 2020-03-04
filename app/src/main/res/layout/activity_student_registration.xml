@@ -214,10 +214,9 @@
                 android:id="@+id/btnRegister"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="160dp"
-                android:layout_marginTop="25dp"
-                android:layout_marginRight="160dp"
-                android:onClick="registerStudent"
+                android:layout_marginLeft="135dp"
+                android:layout_marginTop="35dp"
+                android:layout_marginRight="135dp"
                 android:text="@string/strRegister" />
 
         </LinearLayout>

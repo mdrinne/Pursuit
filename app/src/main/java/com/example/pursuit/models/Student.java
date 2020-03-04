@@ -18,7 +18,7 @@ public class Student {
 
     public Student() {
         // default constructor required for calls to
-        // DataSnapshot.getValue(Company.class)
+        // DataSnapshot.getValue(Student.class)
     }
 
     // constructor
