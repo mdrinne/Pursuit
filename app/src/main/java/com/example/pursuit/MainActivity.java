@@ -178,7 +178,7 @@ public class MainActivity extends AppCompatActivity {
         }
         else {
             Log.d(TAG, "EMAIL NOT FOUND");
-            Toast.makeText(view.getContext(), "Email Does Not Have An Account", Toast.LENGTH_LONG).show();
+            Toast.makeText(view.getContext(), "Email Not Found", Toast.LENGTH_LONG).show();
         }
     }
 
