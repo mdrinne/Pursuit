@@ -9,7 +9,6 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -190,7 +189,7 @@ public class StudentRegistration extends AppCompatActivity {
         return false;
     }
 
-    // Checks If Given Email Is A Valid Email
+    // Checks If Given String Is A Valid Email
     boolean isEmail(EditText text) {
         CharSequence email = text.getText().toString();
         if (!(!TextUtils.isEmpty(email) && Patterns.EMAIL_ADDRESS.matcher(email).matches())) {
