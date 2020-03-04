@@ -40,6 +40,8 @@ public class CompanyRegistration extends AppCompatActivity {
     EditText companyReEnterPassword;
     EditText companyField;
 
+    Company newCompany;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,7 +83,7 @@ public class CompanyRegistration extends AppCompatActivity {
 
     private void writeNewCompany(String name, String email, String password, String field) {
         String id = RandomKeyGenerator.randomAlphaNumeric(16);
-        Company newCompany = new Company(id, name, email, password, field);
+        newCompany = new Company(id, name, email, password, field);
         mRef.child("Companies").child(id).setValue(newCompany);
     }
 
@@ -153,6 +155,10 @@ public class CompanyRegistration extends AppCompatActivity {
 
                         writeNewCompany(toString(companyName), toString(companyEmail), toString(companyPassword),
                                 toString(companyField));
+
+                        // set the currentCompany
+                        ((PursuitApplication) this.getApplication()).setCurrentCompany(newCompany);
+
                         Intent intent = new Intent(this, LandingActivity.class);
                         startActivity(intent);
                     } else {
