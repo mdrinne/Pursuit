@@ -7,12 +7,14 @@
     tools:context=".RegistrationActivity">
 
     <androidx.viewpager.widget.ViewPager
+        android:id="@+id/viewPagerRegistration"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" >
+        app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tabsRegistration"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 

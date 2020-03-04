@@ -1,12 +1,16 @@
 package com.example.pursuit;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.util.Patterns;
+import android.view.LayoutInflater;
+import android.view.ViewGroup;
 import android.widget.EditText;
 import android.view.View;
 import android.content.Intent;
@@ -24,7 +28,7 @@ import com.google.firebase.database.Query;
 
 import java.util.ArrayList;
 
-public class CompanyRegistration extends AppCompatActivity {
+public class CompanyRegistration extends Fragment {
 
     private static final String TAG = "CompanyRegistration";
 
@@ -40,14 +44,19 @@ public class CompanyRegistration extends AppCompatActivity {
     EditText companyReEnterPassword;
     EditText companyField;
 
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_company_registration);
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+//        super.onCreate(savedInstanceState);
+//        setContentView(R.layout.activity_company_registration);
+        View v = inflater.inflate(R.layout.activity_company_registration,container,false);
 
         mRef = FirebaseDatabase.getInstance().getReference();
 
         matchedEmails = new ArrayList<>();
+
+        view = v;
+        return v;
     }
 
     /* ********DATABASE******** */
@@ -153,7 +162,7 @@ public class CompanyRegistration extends AppCompatActivity {
 
                         writeNewCompany(toString(companyName), toString(companyEmail), toString(companyPassword),
                                 toString(companyField));
-                        Intent intent = new Intent(this, LandingActivity.class);
+                        Intent intent = new Intent(getActivity(), CompanyRegistration.class);
                         startActivity(intent);
                     } else {
                         Log.d(TAG, "email is already taken");
@@ -173,11 +182,11 @@ public class CompanyRegistration extends AppCompatActivity {
 
     public void register(View v) {
         view = v;
-        companyName = findViewById(R.id.companyName);
-        companyEmail = findViewById(R.id.companyEmail);
-        companyPassword = findViewById(R.id.companyPassword);
-        companyReEnterPassword = findViewById(R.id.companyReEnterPassword);
-        companyField = findViewById(R.id.companyField);
+        companyName = view.findViewById(R.id.companyName);
+        companyEmail = view.findViewById(R.id.companyEmail);
+        companyPassword = view.findViewById(R.id.companyPassword);
+        companyReEnterPassword = view.findViewById(R.id.companyReEnterPassword);
+        companyField = view.findViewById(R.id.companyField);
 
         checkEmail = toString(companyEmail);
 

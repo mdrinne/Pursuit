@@ -217,7 +217,6 @@
                 android:layout_marginLeft="135dp"
                 android:layout_marginTop="35dp"
                 android:layout_marginRight="135dp"
-                android:onClick="registerStudent"
                 android:text="@string/strRegister" />
 
         </LinearLayout>

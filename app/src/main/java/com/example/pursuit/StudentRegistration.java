@@ -12,7 +12,9 @@ import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import android.view.LayoutInflater;
@@ -51,6 +53,7 @@ public class StudentRegistration extends Fragment {
     EditText username;
     EditText studentPassword;
     EditText studentReEnterPassword;
+    Button   btnRegister;
 
     @Nullable
     @Override
@@ -58,6 +61,36 @@ public class StudentRegistration extends Fragment {
 //        super.onCreate(savedInstanceState);
 //        setContentView(R.layout.activity_student_registration);
         View v = inflater.inflate(R.layout.activity_student_registration,container,false);
+        view = v;
+
+        btnRegister = view.findViewById(R.id.btnRegister);
+
+        btnRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                firstName = v.findViewById(R.id.txtFirstName);
+                lastName = v.findViewById(R.id.txtLastName);
+                university = v.findViewById(R.id.txtUniversity);
+                major = v.findViewById(R.id.txtMajor);
+                minor = v.findViewById(R.id.txtMinor);
+                gpa = v.findViewById(R.id.txtGPA);
+                bio = v.findViewById(R.id.txtBio);
+                email = v.findViewById(R.id.txtEmail);
+                username = v.findViewById(R.id.txtUsername);
+                studentPassword = v.findViewById(R.id.txtPassword);
+                studentReEnterPassword = v.findViewById(R.id.txtReEnterPassword);
+
+                Toast.makeText(view.getContext(), "button clicked", Toast.LENGTH_LONG);
+
+//                if (TextUtils.isEmpty(email.getText().toString())) {
+//                    Log.d(TAG, "email is empty");
+//                } else {
+//                    Log.d(TAG, "email is " + email.getText().toString());
+//                }
+//
+//                registerStudent(v);
+            }
+        });
 
         // Get Database Reference
         mRef = FirebaseDatabase.getInstance().getReference();
@@ -65,7 +98,6 @@ public class StudentRegistration extends Fragment {
         matchedUsers = new ArrayList<>();
         matchedEmails = new ArrayList<>();
 
-        view = v;
         return v;
     }
 
@@ -245,7 +277,7 @@ public class StudentRegistration extends Fragment {
                             writeNewStudent(toString(firstName), toString(lastName), toString(university),
                                     toString(major), toString(minor), toString(gpa), toString(bio), toString(email),
                                     toString(username), toString(studentPassword));
-                            Intent intent = new Intent(this, LandingActivity.class);
+                            Intent intent = new Intent(getActivity(), StudentRegistration.class);
                             startActivity(intent);
                         } else {
                             Log.d(TAG, "email is already taken");
@@ -269,18 +301,7 @@ public class StudentRegistration extends Fragment {
 
     // Called By onClick, Attempts To Register A Student
     public void registerStudent(View v) {
-        view = v;
-        firstName = findViewById(R.id.txtFirstName);
-        lastName = findViewById(R.id.txtLastName);
-        university = findViewById(R.id.txtUniversity);
-        major = findViewById(R.id.txtMajor);
-        minor = findViewById(R.id.txtMinor);
-        gpa = findViewById(R.id.txtGPA);
-        bio = findViewById(R.id.txtBio);
-        email = findViewById(R.id.txtEmail);
-        username = findViewById(R.id.txtUsername);
-        studentPassword = findViewById(R.id.txtPassword);
-        studentReEnterPassword = findViewById(R.id.txtReEnterPassword);
+        Log.d(TAG, "register onClick");
 
         checkEmail = toString(email);
 
