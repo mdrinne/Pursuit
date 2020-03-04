@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
-        android:layout_marginTop="44dp"
+        android:layout_marginTop="332dp"
         android:layout_marginEnd="25dp"
         android:layout_marginRight="25dp"
         android:text="View Companies"
@@ -35,7 +35,7 @@
         android:id="@+id/myProfileBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="44dp"
+        android:layout_marginTop="284dp"
         android:layout_marginEnd="32dp"
         android:layout_marginRight="32dp"
         android:text="My Profile"
@@ -49,11 +49,12 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="283dp"
         android:layout_marginLeft="283dp"
-        android:layout_marginTop="37dp"
+        android:layout_marginTop="28dp"
         android:layout_marginEnd="283dp"
         android:layout_marginRight="283dp"
         android:text="Log Out"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.559"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/viewCompaniesBtn" />
 
@@ -61,9 +62,22 @@
         android:id="@+id/aboutPursuitBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="44dp"
+        android:layout_marginTop="284dp"
         android:text="About Pursuit"
         app:layout_constraintEnd_toStartOf="@+id/viewCompaniesBtn"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+
+    <TextView
+        android:id="@+id/currentUserName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="176dp"
+        android:layout_marginLeft="176dp"
+        android:layout_marginTop="44dp"
+        android:layout_marginEnd="176dp"
+        android:layout_marginRight="176dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView2" />
 

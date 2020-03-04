@@ -1,5 +1,7 @@
 package com.example.pursuit;
 
+import com.example.pursuit.PursuitApplication;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -140,24 +142,28 @@ public class MainActivity extends AppCompatActivity {
     /* ******END DATABASE****** */
 
     public boolean passwordsMatch(String dbPassword, String inputPassword) {
-        if (dbPassword.equals(inputPassword)) { return true; }
-        else { return false; }
+        if (dbPassword.equals(inputPassword)) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
-    public void postStudentUsernameListener () {
+    public void postStudentUsernameListener() {
         int size = matchedStudentUsernames.size();
         Log.d(TAG, "matchedStudentUsernames size: " + size);
 
         if (size == 1) {
             if (passwordsMatch(matchedStudentUsernames.get(0).getPassword(), checkPassword)) {
+                // set the currentStudent
+                ((PursuitApplication) this.getApplication()).setCurrentStudent(matchedStudentUsernames.get(0));
+
                 Intent intent = new Intent(this, LandingActivity.class);
                 startActivity(intent);
-            }
-            else {
+            } else {
                 Toast.makeText(view.getContext(), "Incorrect Password", Toast.LENGTH_LONG).show();
             }
-        }
-        else {
+        } else {
             Log.d(TAG, "USERNAME NOT FOUND");
             Toast.makeText(view.getContext(), "Username Does Not Exist", Toast.LENGTH_LONG).show();
         }
@@ -169,14 +175,15 @@ public class MainActivity extends AppCompatActivity {
 
         if (size == 1) {
             if (passwordsMatch(matchedStudentEmails.get(0).getPassword(), checkPassword)) {
+                // set the currentStudent
+                ((PursuitApplication) this.getApplication()).setCurrentStudent(matchedStudentEmails.get(0));
+
                 Intent intent = new Intent(this, LandingActivity.class);
                 startActivity(intent);
-            }
-            else {
+            } else {
                 Toast.makeText(view.getContext(), "Incorrect Password", Toast.LENGTH_LONG).show();
             }
-        }
-        else {
+        } else {
             Log.d(TAG, "EMAIL NOT FOUND");
             Toast.makeText(view.getContext(), "Email Not Found", Toast.LENGTH_LONG).show();
         }
@@ -188,14 +195,15 @@ public class MainActivity extends AppCompatActivity {
 
         if (size == 1) {
             if (passwordsMatch(matchedCompanyEmails.get(0).getPassword(), checkPassword)) {
+                // set the currentCompany
+                ((PursuitApplication) this.getApplication()).setCurrentCompany(matchedCompanyEmails.get(0));
+
                 Intent intent = new Intent(this, LandingActivity.class);
                 startActivity(intent);
-            }
-            else {
+            } else {
                 Toast.makeText(view.getContext(), "Incorrect Password", Toast.LENGTH_LONG).show();
             }
-        }
-        else {
+        } else {
             // SELECT * FROM Companies WHERE email = ?;
             Query studentEmailQuery = dbRef.child("Students").orderByChild("email").equalTo(checkEmail);
 
@@ -228,8 +236,11 @@ public class MainActivity extends AppCompatActivity {
     // Checks If Given String Is A Valid Email
     boolean isEmail(EditText text) {
         CharSequence email = text.getText().toString();
-        if (!(!TextUtils.isEmpty(email) && Patterns.EMAIL_ADDRESS.matcher(email).matches())) { return false; }
-        else { return true; }
+        if (!(!TextUtils.isEmpty(email) && Patterns.EMAIL_ADDRESS.matcher(email).matches())) {
+            return false;
+        } else {
+            return true;
+        }
     }
 
     // Checks If TextField Is Empty
