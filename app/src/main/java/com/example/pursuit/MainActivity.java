@@ -1,178 +1,290 @@
 package com.example.pursuit;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteException;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-import android.text.TextUtils;
 
-import com.example.pursuit.database.DatabaseHelper;
-import com.example.pursuit.database.models.Company;
+import com.example.pursuit.models.Company;
+import com.example.pursuit.models.Student;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.database.Query;
 
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
-    private final String DB_NAME = "pursuit";
-    private final String USER_TABLE = "Users";
-    private final String USER_ID = "id integer primary key";
-    private final String USER_COL1 = "Username VARCHAR";
-    private final String USER_COL2 = "Password VARCHAR";
+    private static final String TAG = "MainActivity";
 
-    private final String COMPANY_TABLE = "Companies";
-    private final String COMPANY_ID = "id integer primary key";
-    private final String COMPANY_PSWD = "Password VARCHAR";
-    private final String COMPANY_NAME = "CompanyName VARCHAR";
-    private final String COMPANY_FIELD = "Field VARCHAR";
-    private final String COMPANY_EMAIL = "Email VARCHAR";
+    private DatabaseReference dbRef;
+    private ArrayList<Company> matchedCompanyEmails;
+    private ArrayList<Student> matchedStudentEmails;
+    private ArrayList<Student> matchedStudentUsernames;
+    private View view;
+    private String checkEmail;
+    private String checkUsername;
+    private String checkPassword;
 
-    private DatabaseHelper db;
-
-//    SQLiteDatabase db;
-
-    EditText username;
-    EditText password;
-    Button login;
+    EditText loginUsernameEmail;
+    EditText loginPassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        login = findViewById(R.id.button);
-        username = findViewById(R.id.username);
-        password = findViewById(R.id.password);
-        db = new DatabaseHelper(this);
+        // Get Database Reference
+        dbRef = FirebaseDatabase.getInstance().getReference();
 
-        login.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d(getClass().getSimpleName(), "in onClick");
-                loginUser(v);
-            }
-        });
     }
 
-    // checks if user input from text field is empty
-//    boolean isEmpty(EditText text) {
-//        Log.d(getClass().getSimpleName(), "in isEmpty");
-//        CharSequence str = text.getText().toString();
-//        return TextUtils.isEmpty(str);
-//    }
-//
-//    // converts user input from text field to a string object
-//    String toString(EditText text) {
-//        Log.d(getClass().getSimpleName(), "in toString");
-//        return text.getText().toString();
-//    }
+    /* ********DATABASE******** */
 
-    // checks for empty user input fields and displays appropriate alert
-    // returns true if either input field is empty
-//    Boolean checkIfEmpty(EditText username, EditText password, View v) {
-//        Log.d(getClass().getSimpleName(), "in checkIfEmpty");
-//        if (isEmpty(username) && isEmpty(password)) {
-//            Log.d(getClass().getSimpleName(), "both empty");
-//            Toast.makeText(v.getContext(), "Must Enter Email and Password", 2).show();
-//            return true;
-//        }
-//        else if (isEmpty(username)) {
-//            Log.d(getClass().getSimpleName(), "user empty");
-//            Toast.makeText(v.getContext(), "Must Enter Email", 2).show();
-//            return true;
-//
-//        }
-//        else if (isEmpty(password)) {
-//            Log.d(getClass().getSimpleName(), "password empty");
-//            Toast.makeText(v.getContext(), "Must Enter Password", 2).show();
-//            return true;
-//        }
-//        else return false;
-//    }
-
-    // compares user input data to database
-//    Boolean compareToDB(EditText username, EditText password, View v, Cursor c) {
-//        Log.d(getClass().getSimpleName(), "in compareToDb");
-//        if (c != null) {
-//            if (c.moveToFirst()) {
-//                String dbPassword = c.getString(c.getColumnIndex("Password"));
-//
-//                if (dbPassword.equals(toString(password))) {
-//                    return true;
-//                }
-//                else {
-//                    Log.d(getClass().getSimpleName(), "password did not match");
-//                    Toast.makeText(v.getContext(), "Incorrect Password", 2).show();
-//                    return false;
-//                }
-//            }
-//            else {
-//                Log.d(getClass().getSimpleName(), "user does not exist");
-//                Toast.makeText(v.getContext(), "User Does Not Exist", 2).show();
-//                return false;
-//            }
-//        }
-//        else {
-//            Log.e(getClass().getSimpleName(), "Cursor returned null while querying for user at login");
-//            return false;
-//        }
-//    }
-
-//     completes login verification tasks
-//    Boolean checkCredentials(EditText username, EditText password, View v) {
-//        Log.d(getClass().getSimpleName(), "in checkCredentials");
-//        if (!checkIfEmpty(username, password, v)) {
-//            Log.d(getClass().getSimpleName(), "fields not empty");
-//            Cursor c = db.rawQuery("SELECT Password FROM " + USER_TABLE +
-//                    " WHERE Username = '" + toString(username) + "'", null);
-//            Log.d(getClass().getSimpleName(), "created cursor");
-//
-//            return compareToDB(username, password, v, c);
-//        }
-//        else return false;
-//    }
-
-    // function executed upon click on login button
-    public void loginUser(View view) {
-        Log.d(getClass().getSimpleName(), "in loginUser");
-//        username = findViewById(R.id.username);
-//        password = findViewById(R.id.password);
-
-//        Log.d(getClass().getSimpleName(), toString(username));
-
-        String loginUsername = username.getText().toString();
-        String loginPassword = password.getText().toString();
-
-        if (loginUsername.isEmpty() || loginPassword.isEmpty()) {
-            Toast.makeText(view.getContext(), "Please enter username and password.", 2).show();
-        } else {
-            Company c = db.getCompanyForLogin(loginUsername, loginPassword);
-
-            if (c != null) {
-                Intent intent = new Intent(this, LandingActivity.class);
-
-                startActivity(intent);
-            } else {
-                Toast.makeText(view.getContext(), "Incorrect username and password.", 2).show();
+    ValueEventListener studentUsernameListener = new ValueEventListener() {
+        @Override
+        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+            matchedStudentUsernames = new ArrayList<>();
+            Log.d(TAG, "In studentUsernameListener onDataChange");
+            if (dataSnapshot.exists()) {
+                Log.d(TAG, "Snapshot exists");
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    Log.d(TAG, "looping in snapshot");
+                    Student student = snapshot.getValue(Student.class);
+                    if (student == null) {
+                        Log.d(TAG, "student is null");
+                    } else {
+                        Log.d(TAG, "student exists: " + student.getId() + "; " + student.getUsername());
+                    }
+                    matchedStudentUsernames.add(student);
+                }
             }
+
+            Log.d(TAG, "finished student username listener");
+            postStudentUsernameListener();
         }
 
+        @Override
+        public void onCancelled(@NonNull DatabaseError databaseError) {
+            Log.e(TAG, databaseError.toString());
+        }
+    };
 
-//        if (checkCredentials(username, password, view)) {
-//            Intent intent = new Intent(this, LandingActivity.class);
-//
-//            startActivity(intent);
-//        }
+    ValueEventListener studentEmailListener = new ValueEventListener() {
+        @Override
+        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+            matchedStudentEmails = new ArrayList<>();
+            Log.d(TAG, "In studentEmailListener onDataChange");
+            if (dataSnapshot.exists()) {
+                Log.d(TAG, "Snapshot exists");
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    Log.d(TAG, "looping in snapshot");
+                    Student student = snapshot.getValue(Student.class);
+                    Log.d(TAG, "got student");
+                    if (student == null) {
+                        Log.d(TAG, "student is null");
+                    } else {
+                        Log.d(TAG, "student exists: " + student.getId() + "; " + student.getEmail());
+                    }
+                    matchedStudentEmails.add(student);
+                }
+            }
+
+            postStudentEmailListener();
+        }
+
+        @Override
+        public void onCancelled(@NonNull DatabaseError databaseError) {
+            Log.e(TAG, databaseError.toString());
+        }
+    };
+
+    ValueEventListener companyEmailListener = new ValueEventListener() {
+        @Override
+        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+            matchedCompanyEmails = new ArrayList<>();
+            Log.d(TAG, "In companyEmailListener onDataChange");
+            if (dataSnapshot.exists()) {
+                Log.d(TAG, "Snapshot exists");
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    Log.d(TAG, "looping in snapshot");
+                    Company company = snapshot.getValue(Company.class);
+                    if (company == null) {
+                        Log.d(TAG, "company is null");
+                    } else {
+                        Log.d(TAG, "company exists: " + company.getId() + "; " + company.getEmail());
+                    }
+                    matchedCompanyEmails.add(company);
+                }
+            }
+
+            postCompanyEmailListener();
+        }
+
+        @Override
+        public void onCancelled(@NonNull DatabaseError databaseError) {
+            Log.e(TAG, databaseError.toString());
+        }
+    };
+
+    /* ******END DATABASE****** */
+
+    public boolean passwordsMatch(String dbPassword, String inputPassword) {
+        if (dbPassword.equals(inputPassword)) { return true; }
+        else { return false; }
     }
 
-    public void registerUser(View view) {
-        Log.d(getClass().getSimpleName(), "register");
+    public void postStudentUsernameListener () {
+        int size = matchedStudentUsernames.size();
+        Log.d(TAG, "matchedStudentUsernames size: " + size);
+
+        if (size == 1) {
+            if (passwordsMatch(matchedStudentUsernames.get(0).getPassword(), checkPassword)) {
+                Intent intent = new Intent(this, LandingActivity.class);
+                startActivity(intent);
+            }
+            else {
+                Toast.makeText(view.getContext(), "Incorrect Password", Toast.LENGTH_LONG).show();
+            }
+        }
+        else {
+            Log.d(TAG, "USERNAME NOT FOUND");
+            Toast.makeText(view.getContext(), "Username Does Not Exist", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    public void postStudentEmailListener() {
+        int size = matchedStudentEmails.size();
+        Log.d(TAG, "matchedStudentEmails size: " + size);
+
+        if (size == 1) {
+            if (passwordsMatch(matchedStudentEmails.get(0).getPassword(), checkPassword)) {
+                Intent intent = new Intent(this, LandingActivity.class);
+                startActivity(intent);
+            }
+            else {
+                Toast.makeText(view.getContext(), "Incorrect Password", Toast.LENGTH_LONG).show();
+            }
+        }
+        else {
+            Log.d(TAG, "EMAIL NOT FOUND");
+            Toast.makeText(view.getContext(), "Email Not Found", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    public void postCompanyEmailListener() {
+        int size = matchedCompanyEmails.size();
+        Log.d(TAG, "matchedCompanyEmails size: " + size);
+
+        if (size == 1) {
+            if (passwordsMatch(matchedCompanyEmails.get(0).getPassword(), checkPassword)) {
+                Intent intent = new Intent(this, LandingActivity.class);
+                startActivity(intent);
+            }
+            else {
+                Toast.makeText(view.getContext(), "Incorrect Password", Toast.LENGTH_LONG).show();
+            }
+        }
+        else {
+            // SELECT * FROM Companies WHERE email = ?;
+            Query studentEmailQuery = dbRef.child("Students").orderByChild("email").equalTo(checkEmail);
+
+            // Call Student Email Listener
+            studentEmailQuery.addListenerForSingleValueEvent(studentEmailListener);
+        }
+    }
+
+    public void loginUsername() {
+        // SELECT * FROM Students WHERE username = ?
+        Query studentUsernameQuery = dbRef.child("Students").orderByChild("username").equalTo(checkUsername);
+
+        // Call Student User Listener
+        studentUsernameQuery.addListenerForSingleValueEvent(studentUsernameListener);
+    }
+
+    public void loginEmail() {
+        // SELECT * FROM Companies WHERE email = ?
+        Query companyEmailQuery = dbRef.child("Companies").orderByChild("email").equalTo(checkEmail);
+
+        // Call Company Email Listener
+        companyEmailQuery.addListenerForSingleValueEvent(companyEmailListener);
+    }
+
+    // Converts EditText Type To String
+    public String toString(EditText text) {
+        return text.getText().toString();
+    }
+
+    // Checks If Given String Is A Valid Email
+    boolean isEmail(EditText text) {
+        CharSequence email = text.getText().toString();
+        if (!(!TextUtils.isEmpty(email) && Patterns.EMAIL_ADDRESS.matcher(email).matches())) { return false; }
+        else { return true; }
+    }
+
+    // Checks If TextField Is Empty
+    boolean isEmpty(EditText text) {
+        CharSequence str = text.getText().toString();
+        return TextUtils.isEmpty(str);
+    }
+
+    // Checks For Any Empty TextFields
+    public boolean checkForEmpties() {
+        if (isEmpty(loginUsernameEmail) && isEmpty(loginPassword)) {
+            Toast.makeText(view.getContext(), "Username/Email and Password Required ", Toast.LENGTH_SHORT).show();
+            return true;
+        } else if (isEmpty(loginUsernameEmail)) {
+            Toast.makeText(view.getContext(), "Username/Email Required ", Toast.LENGTH_SHORT).show();
+            return true;
+        } else if (isEmpty(loginPassword)) {
+            Toast.makeText(view.getContext(), "Password Required ", Toast.LENGTH_SHORT).show();
+            return true;
+        }
+        return false;
+    }
+
+    // Called By onClick, Attempts To Login User
+    public void loginUser(View v) {
+        Log.d(TAG, "loginUser Called");
+
+        view = v;
+        loginUsernameEmail = findViewById(R.id.txtUsernameEmail);
+        loginPassword = findViewById(R.id.txtPassword);
+
+        if (!checkForEmpties()) {
+            Log.d(TAG, "No empty login fields");
+
+            // Choose Login route based on what is received in Username/Login field
+            if (isEmail(loginUsernameEmail)) {
+                Log.d(TAG, "attempting EMAIL login");
+                checkEmail = toString(loginUsernameEmail);
+                checkPassword = toString(loginPassword);
+
+                loginEmail();
+
+            } else {
+                Log.d(TAG, "attempting USERNAME login");
+                checkUsername = toString(loginUsernameEmail);
+                checkPassword = toString(loginPassword);
+
+                loginUsername();
+            }
+        }
+    }
+
+    public void registerUser(View v) {
+        Log.d(TAG, "register");
+
         Intent intent = new Intent(this, RegistrationActivity.class);
         startActivity(intent);
     }

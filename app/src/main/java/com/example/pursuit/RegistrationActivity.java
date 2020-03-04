@@ -10,6 +10,15 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.pursuit.models.Student;
+import com.google.firebase.auth.FirebaseAuthException;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.database.Query;
+
 public class RegistrationActivity extends AppCompatActivity {
 
     @Override
@@ -22,14 +31,12 @@ public class RegistrationActivity extends AppCompatActivity {
         final RadioGroup radGroup = (RadioGroup) findViewById(R.id.studentOrCompany);
         if (radGroup.getCheckedRadioButtonId() == -1) {
             Toast.makeText(this, "Please make a selection.", Toast.LENGTH_SHORT).show();
-        }
-        else {
+        } else {
             int selectedID = radGroup.getCheckedRadioButtonId();
             if (selectedID == findViewById(R.id.radioBtnStudent).getId()) {
                 Intent intent = new Intent(this, StudentRegistration.class);
                 startActivity(intent);
-            }
-            else {
+            } else {
                 Intent intent = new Intent(this, CompanyRegistration.class);
                 startActivity(intent);
             }
@@ -37,11 +44,10 @@ public class RegistrationActivity extends AppCompatActivity {
         }
     }
 
-    //public void getSelectedRadioButton(View view) {
-    //    final RadioGroup radGroup = (RadioGroup) findViewById(R.id.studentOrCompany);
-    //    int radioID = radGroup.getCheckedRadioButtonId();
-    //    RadioButton singleButton = (RadioButton) findViewById(radioID);
+    // public void getSelectedRadioButton(View view) {
+    // final RadioGroup radGroup = (RadioGroup) findViewById(R.id.studentOrCompany);
+    // int radioID = radGroup.getCheckedRadioButtonId();
+    // RadioButton singleButton = (RadioButton) findViewById(radioID);
 
-
-    //}
+    // }
 }
