@@ -6,46 +6,26 @@
     android:layout_height="match_parent"
     tools:context=".RegistrationActivity">
 
-    <RadioGroup
-        android:id="@+id/studentOrCompany"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        app:layout_constraintEnd_toEndOf="parent"
+    <androidx.viewpager.widget.ViewPager
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textIamA">
+        app:layout_constraintTop_toTopOf="parent" >
 
-        <RadioButton
-            android:id="@+id/radioBtnStudent"
+        <com.google.android.material.tabs.TabLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/strStudent" />
+            android:layout_height="wrap_content">
 
-        <RadioButton
-            android:id="@+id/radioBtnCompany"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/strCompany" />
-    </RadioGroup>
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/strStudent" />
 
-    <TextView
-        android:id="@+id/textIamA"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:text="@string/strIamA"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/strCompany" />
+        </com.google.android.material.tabs.TabLayout>
+    </androidx.viewpager.widget.ViewPager>
 
-    <Button
-        android:id="@+id/btnContinue"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:onClick="continueToRegistration"
-        android:text="@string/strContinue"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/studentOrCompany" />
 </androidx.constraintlayout.widget.ConstraintLayout>
