@@ -10,8 +10,7 @@
         android:id="@+id/imageView2"
         android:layout_width="397dp"
         android:layout_height="130dp"
-        android:layout_marginBottom="44dp"
-        app:layout_constraintBottom_toTopOf="@+id/viewCompaniesBtn"
+        android:contentDescription="PursuitLogo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -21,26 +20,25 @@
         android:id="@+id/viewCompaniesBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="332dp"
-        android:layout_marginEnd="25dp"
-        android:layout_marginRight="25dp"
+        android:layout_marginStart="135dp"
+        android:layout_marginLeft="135dp"
+        android:layout_marginTop="31dp"
+        android:layout_marginEnd="135dp"
+        android:layout_marginRight="135dp"
         android:text="View Companies"
-        app:layout_constraintEnd_toStartOf="@+id/myProfileBtn"
-        app:layout_constraintStart_toEndOf="@+id/aboutPursuitBtn"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/myProfileBtn" />
 
     <Button
         android:id="@+id/myProfileBtn"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="284dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginRight="32dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="119dp"
+        android:layout_marginEnd="53dp"
+        android:layout_marginRight="53dp"
         android:text="My Profile"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/viewCompaniesBtn"
         app:layout_constraintTop_toBottomOf="@+id/imageView2" />
 
     <Button
@@ -49,12 +47,12 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="283dp"
         android:layout_marginLeft="283dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="32dp"
         android:layout_marginEnd="283dp"
         android:layout_marginRight="283dp"
         android:text="Log Out"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.559"
+        app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/viewCompaniesBtn" />
 
@@ -62,9 +60,10 @@
         android:id="@+id/aboutPursuitBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="284dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="119dp"
         android:text="About Pursuit"
-        app:layout_constraintEnd_toStartOf="@+id/viewCompaniesBtn"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView2" />
 
