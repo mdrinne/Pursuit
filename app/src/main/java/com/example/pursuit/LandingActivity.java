@@ -18,8 +18,8 @@ public class LandingActivity extends AppCompatActivity {
     Button viewCompaniesBtn;
     TextView currentUserNameText;
 
-    Student currentStudent;
-    Company currentCompany;
+    Student currentStudent = null;
+    Company currentCompany = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,8 +69,14 @@ public class LandingActivity extends AppCompatActivity {
         myProfileBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(LandingActivity.this, myProfileActivity.class);
-                startActivity(i);
+                if (currentStudent != null) {
+                    Intent i = new Intent(LandingActivity.this, StudentProfileActivity.class);
+                    startActivity(i);
+                } else {
+                    Intent i = new Intent(LandingActivity.this, StudentProfileActivity.class);
+                    startActivity(i);
+                }
+
             }
         });
 
