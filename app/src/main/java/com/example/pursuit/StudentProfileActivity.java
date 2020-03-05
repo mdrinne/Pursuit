@@ -2,19 +2,19 @@ package com.example.pursuit;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
-import com.example.pursuit.models.Company;
+
 import com.example.pursuit.models.Student;
 
 public class StudentProfileActivity extends AppCompatActivity {
 
     TextView studentFullName;
     TextView studentUniversity;
-    TextView studentMajorMinor;
+    TextView studentMajor;
+    TextView studentMinor;
+    TextView studentGPA;
+    TextView studentBio;
     Student currentStudent;
 
     @Override
@@ -31,12 +31,18 @@ public class StudentProfileActivity extends AppCompatActivity {
         studentUniversity = findViewById(R.id.studentUniversity);
         studentUniversity.setText("University: " + currentStudent.getUniversity());
 
-        String studentMajorMinorString = currentStudent.getMajor();
-        if (currentStudent.getMinor() != "") {
-            studentMajorMinorString += "/" + currentStudent.getMinor();
-        }
-        studentMajorMinor = findViewById(R.id.studentMajorMinor);
-        studentMajorMinor.setText("Major/Minor: " + studentMajorMinorString);
+        studentMajor = findViewById(R.id.studentMajor);
+        studentMajor.setText("Major: " + currentStudent.getMajor());
+
+        studentMinor = findViewById(R.id.txtStudentMinor);
+        studentMinor.setText("Minor: " + currentStudent.getMinor());
+
+        studentGPA = findViewById(R.id.txtStudentGPA);
+        studentGPA.setText("GPA: " + currentStudent.getGpa());
+
+        studentBio = findViewById(R.id.txtStudentBio);
+        studentBio.setText(currentStudent.getBio());
+
     }
 
     private void initializeCurrentStudent() {
