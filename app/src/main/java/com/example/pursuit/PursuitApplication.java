@@ -30,4 +30,10 @@ public class PursuitApplication extends Application {
     public String getRole() {return currentRole; }
 
     public void setCurrentRole(String currentRole) { this.currentRole = currentRole; }
+
+    public void removeCurrentUser() {
+        this.currentStudent = null;
+        this.currentCompany = null;
+        this.currentRole = null;
+    }
 }
