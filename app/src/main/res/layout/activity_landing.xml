@@ -37,6 +37,7 @@
         android:layout_marginTop="119dp"
         android:layout_marginEnd="53dp"
         android:layout_marginRight="53dp"
+        android:onClick="myProfile"
         android:text="My Profile"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView2" />
@@ -50,6 +51,7 @@
         android:layout_marginTop="32dp"
         android:layout_marginEnd="283dp"
         android:layout_marginRight="283dp"
+        android:onClick="logoutCurrentUser"
         android:text="Log Out"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.502"
