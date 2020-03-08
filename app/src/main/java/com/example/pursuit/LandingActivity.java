@@ -12,9 +12,7 @@ import com.example.pursuit.models.Student;
 
 public class LandingActivity extends AppCompatActivity {
 
-    Button logOutBtn;
     Button aboutPursuitBtn;
-    Button myProfileBtn;
     Button viewCompaniesBtn;
     TextView currentUserNameText;
 
@@ -71,12 +69,13 @@ public class LandingActivity extends AppCompatActivity {
     }
 
     public void myProfile(View v) {
-        if (currentStudent != null) {
+        if (currentRole.equals("Student")) {
             Intent i = new Intent(LandingActivity.this, StudentProfileActivity.class);
             startActivity(i);
         } else {
-            Intent i = new Intent(LandingActivity.this, CompanyProfileActivity.class);
-            startActivity(i);
+            /* ***** HAVING AN ISSUE WITH THIS ***** */
+//            Intent i = new Intent(LandingActivity.this, CompanyProfileActivity.class);
+//            startActivity(i);
         }
     }
 

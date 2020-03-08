@@ -3,12 +3,15 @@ package com.example.pursuit;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.TextView;
 
 import com.example.pursuit.models.Company;
 
-public class CompanyProfileActivity  extends AppCompatActivity{
+public class CompanyProfileActivity extends AppCompatActivity{
+    private static final String TAG = "CompanyProfileActivity";
 
+    TextView companyName;
     Company currentCompany;
 
     @Override
@@ -17,9 +20,13 @@ public class CompanyProfileActivity  extends AppCompatActivity{
         setContentView(R.layout.activity_company_profile);
 
         initializeCurrentCompany();
+
+//        companyName = findViewById(R.id.txtCompanyName);
+//        companyName.setText(currentCompany.getName());
     }
 
     private void initializeCurrentCompany() {
+        Log.d(TAG, "initializing company");
         currentCompany = ((PursuitApplication) this.getApplicationContext()).getCurrentCompany();
     }
 }
