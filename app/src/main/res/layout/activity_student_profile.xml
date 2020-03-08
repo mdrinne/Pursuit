@@ -8,17 +8,13 @@
 
     <TextView
         android:id="@+id/studentFullName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="223dp"
+        android:layout_height="45dp"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
-        android:layout_marginTop="66dp"
-        android:layout_marginEnd="247dp"
-        android:layout_marginRight="247dp"
+        android:layout_marginTop="50dp"
         android:text="TextView"
         android:textSize="36sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -34,7 +30,7 @@
         app:layout_constraintTop_toBottomOf="@+id/studentFullName" />
 
     <TextView
-        android:id="@+id/studentMajorMinor"
+        android:id="@+id/studentMajor"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -42,4 +38,36 @@
         android:text="TextView"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/studentUniversity" />
+
+    <TextView
+        android:id="@+id/txtStudentMinor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:text="TextView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/studentMajor" />
+
+    <TextView
+        android:id="@+id/txtStudentGPA"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:text="TextView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtStudentMinor" />
+
+    <TextView
+        android:id="@+id/txtStudentBio"
+        android:layout_width="379dp"
+        android:layout_height="72dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="24dp"
+        android:text="TextView"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtStudentGPA" />
 </androidx.constraintlayout.widget.ConstraintLayout>
