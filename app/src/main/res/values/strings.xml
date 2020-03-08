@@ -22,4 +22,7 @@
     <string name="strFinish">Finish</string>
     <string name="strFieldOfBusiness">Field of Business</string>
     <string name="strUsernameEmail">Username/Email</string>
+    <string name="strCompanyDescription">Company Description</string>
+    <string name="strCompanyName">Company Name</string>
+    <string name="strCompanyEmail">Company Email</string>
 </resources>

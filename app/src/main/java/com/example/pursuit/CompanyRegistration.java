@@ -39,6 +39,7 @@ public class CompanyRegistration extends AppCompatActivity {
     EditText companyPassword;
     EditText companyReEnterPassword;
     EditText companyField;
+    EditText companyDescription;
 
     Company newCompany;
 
@@ -81,9 +82,9 @@ public class CompanyRegistration extends AppCompatActivity {
         }
     };
 
-    private void writeNewCompany(String name, String email, String password, String field) {
+    private void writeNewCompany(String name, String email, String password, String field, String description) {
         String id = RandomKeyGenerator.randomAlphaNumeric(16);
-        newCompany = new Company(id, name, email, password, field);
+        newCompany = new Company(id, name, email, password, field, description);
         mRef.child("Companies").child(id).setValue(newCompany);
     }
 
@@ -110,8 +111,9 @@ public class CompanyRegistration extends AppCompatActivity {
 
     // Checks If Password And Re-Entered Password Match
     public boolean passwordMatch() {
-        if (toString(companyPassword).equals(toString(companyReEnterPassword)))
+        if (toString(companyPassword).equals(toString(companyReEnterPassword))) {
             return true;
+        }
         Toast.makeText(view.getContext(), "Passwords Did Not Match", Toast.LENGTH_SHORT).show();
         return false;
     }
@@ -131,7 +133,8 @@ public class CompanyRegistration extends AppCompatActivity {
     }
 
     public boolean checkForEmpties() {
-        if (isEmpty(companyName) || isEmpty(companyEmail) || isEmpty(companyField) || isEmpty(companyPassword)) {
+        if (isEmpty(companyName) || isEmpty(companyEmail) || isEmpty(companyField) || isEmpty(companyPassword)
+            || isEmpty(companyReEnterPassword) || isEmpty(companyDescription)) {
             Toast.makeText(view.getContext(), "All Fields are Required", Toast.LENGTH_SHORT).show();
             return true;
         }
@@ -154,7 +157,7 @@ public class CompanyRegistration extends AppCompatActivity {
                         Log.d(TAG, "email not taken");
 
                         writeNewCompany(toString(companyName), toString(companyEmail), toString(companyPassword),
-                                toString(companyField));
+                                toString(companyField), toString(companyDescription));
 
                         // set the currentCompany
                         ((PursuitApplication) this.getApplication()).setCurrentCompany(newCompany);
@@ -184,6 +187,7 @@ public class CompanyRegistration extends AppCompatActivity {
         companyPassword = findViewById(R.id.companyPassword);
         companyReEnterPassword = findViewById(R.id.companyReEnterPassword);
         companyField = findViewById(R.id.companyField);
+        companyDescription = findViewById(R.id.companyDescription);
 
         checkEmail = toString(companyEmail);
 
