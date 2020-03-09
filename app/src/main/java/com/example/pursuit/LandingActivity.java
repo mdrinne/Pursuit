@@ -74,8 +74,8 @@ public class LandingActivity extends AppCompatActivity {
             startActivity(i);
         } else {
             /* ***** HAVING AN ISSUE WITH THIS ***** */
-//            Intent i = new Intent(LandingActivity.this, CompanyProfileActivity.class);
-//            startActivity(i);
+            Intent i = new Intent(LandingActivity.this, CompanyProfileActivity.class);
+            startActivity(i);
         }
     }
 

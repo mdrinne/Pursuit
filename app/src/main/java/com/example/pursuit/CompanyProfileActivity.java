@@ -21,8 +21,8 @@ public class CompanyProfileActivity extends AppCompatActivity{
 
         initializeCurrentCompany();
 
-//        companyName = findViewById(R.id.txtCompanyName);
-//        companyName.setText(currentCompany.getName());
+        companyName = findViewById(R.id.txtCompanyName);
+        companyName.setText(currentCompany.getName());
     }
 
     private void initializeCurrentCompany() {

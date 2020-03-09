@@ -13,6 +13,7 @@
         <activity android:name=".viewCompaniesActivity"></activity>
         <!-- <activity android:name=".myProfileActivity" /> -->
         <activity android:name=".StudentProfileActivity"></activity>
+        <activity android:name=".CompanyProfileActivity">t</activity>
         <activity android:name=".aboutPursuitActivity" />
         <activity android:name=".LandingActivity" />
         <activity android:name=".RegistrationActivity" />
