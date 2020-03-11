@@ -2,37 +2,27 @@ package com.example.pursuit;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.os.Bundle;
 import android.util.Log;
-import android.widget.TextView;
 import android.view.View;
-
+import android.os.Bundle;
 
 import com.example.pursuit.models.Company;
 
-public class CompanyProfileActivity extends AppCompatActivity{
-    private static final String TAG = "CompanyProfileActivity";
+public class InviteEmployeeActivity extends AppCompatActivity{
+    private static final String TAG = "InviteEmployeeActivity";
 
-    TextView companyName;
     Company currentCompany;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_company_profile);
+        setContentView(R.layout.activity_invite_employee);
 
         initializeCurrentCompany();
-
-        companyName = findViewById(R.id.txtCompanyName);
-        companyName.setText(currentCompany.getName());
     }
 
     private void initializeCurrentCompany() {
         Log.d(TAG, "initializing company");
         currentCompany = ((PursuitApplication) this.getApplicationContext()).getCurrentCompany();
-    }
-
-    public void inviteEmployee(View v) {
-        Log.d(TAG, "inviting");
     }
 }

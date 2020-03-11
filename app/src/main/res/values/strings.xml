@@ -25,4 +25,5 @@
     <string name="strCompanyDescription">Company Description</string>
     <string name="strCompanyName">Company Name</string>
     <string name="strCompanyEmail">Company Email</string>
+    <string name="strInviteEmployee">Invite Employee</string>
 </resources>
