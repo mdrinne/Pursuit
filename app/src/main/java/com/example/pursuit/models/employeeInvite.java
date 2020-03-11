@@ -3,19 +3,14 @@ package com.example.pursuit.models;
 import com.google.firebase.database.IgnoreExtraProperties;
 
 @IgnoreExtraProperties
-public class employeeInvite {
-
+public class EmployeeInvite {
     public String code;
-    public String companyName;
     public String employeeEmail;
 
-    public employeeInvite() {
+    public EmployeeInvite () {}
 
-    }
-
-    public employeeInvite(String code, String companyName, String employeeEmail) {
+    public EmployeeInvite(String code, String companyName, String employeeEmail) {
         this.code = code;
-        this.companyName = companyName;
         this.employeeEmail = employeeEmail;
     }
 
@@ -25,14 +20,6 @@ public class employeeInvite {
 
     public void setCode(String code) {
         this.code = code;
-    }
-
-    public String getCompanyName() {
-        return companyName;
-    }
-
-    public void setCompanyName(String companyName) {
-        this.companyName = companyName;
     }
 
     public String getEmployeeEmail() {
