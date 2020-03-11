@@ -2,6 +2,7 @@ package com.example.pursuit;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
@@ -34,5 +35,7 @@ public class CompanyProfileActivity extends AppCompatActivity{
 
     public void inviteEmployee(View v) {
         Log.d(TAG, "inviting");
+        Intent intent = new Intent(this, InviteEmployeeActivity.class);
+        startActivity(intent);
     }
 }
