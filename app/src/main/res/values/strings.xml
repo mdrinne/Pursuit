@@ -22,4 +22,5 @@
     <string name="strFinish">Finish</string>
     <string name="strFieldOfBusiness">Field of Business</string>
     <string name="strUsernameEmail">Username/Email</string>
+    <string name="profile_photo">Profile Photo</string>
 </resources>
