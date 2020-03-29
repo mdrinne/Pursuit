@@ -14,6 +14,7 @@ public class LandingActivity extends AppCompatActivity {
 
     Button aboutPursuitBtn;
     Button viewCompaniesBtn;
+    Button myProfileBtn;
     TextView currentUserNameText;
 
     Student currentStudent = null;
