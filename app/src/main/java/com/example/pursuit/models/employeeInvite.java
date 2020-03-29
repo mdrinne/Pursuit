@@ -7,9 +7,10 @@ public class EmployeeInvite {
     public String code;
     public String employeeEmail;
 
-    public EmployeeInvite () {}
+    public EmployeeInvite() {
+    }
 
-    public EmployeeInvite(String code, String companyName, String employeeEmail) {
+    public EmployeeInvite(String code, String employeeEmail) {
         this.code = code;
         this.employeeEmail = employeeEmail;
     }
