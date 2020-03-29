@@ -1,12 +1,22 @@
 package com.example.pursuit;
 
-import androidx.appcompat.app.AppCompatActivity;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+
+import com.example.pursuit.fragments.HomeFragment;
+import com.example.pursuit.fragments.MessagesFragment;
+import com.example.pursuit.fragments.ProfileFragment;
 import com.example.pursuit.models.Company;
 import com.example.pursuit.models.Student;
 
@@ -17,6 +27,7 @@ public class LandingActivity extends AppCompatActivity {
     Button myProfileBtn;
     Button viewCompaniesBtn;
     TextView currentUserNameText;
+    BottomNavigationView bottomNavigation;
 
     Student currentStudent = null;
     Company currentCompany = null;
@@ -26,6 +37,10 @@ public class LandingActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_landing);
+        bottomNavigation = findViewById(R.id.bottom_navigation);
+        bottomNavigation.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
+        openFragment(HomeFragment.newInstance("", ""));
+
 
         findAndSetCurrentUser();
 
@@ -86,6 +101,39 @@ public class LandingActivity extends AppCompatActivity {
         });
 
     }
+
+    public void openFragment(Fragment fragment) {
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.container, fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
+    }
+
+    BottomNavigationView.OnNavigationItemSelectedListener navigationItemSelectedListener =
+      new BottomNavigationView.OnNavigationItemSelectedListener() {
+        @Override public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+          switch (item.getItemId()) {
+            case R.id.navigation_home:
+              openFragment(HomeFragment.newInstance("", ""));
+              return true;
+            case R.id.navigation_messages:
+              openFragment(MessagesFragment.newInstance("", ""));
+              return true;
+            case R.id.navigation_profile:
+//              openFragment(ProfileFragment.newInstance("", ""));
+                if (currentStudent != null) {
+                    Intent i = new Intent(LandingActivity.this, StudentProfileActivity.class);
+                    startActivity(i);
+                } else {
+                    Intent i = new Intent(LandingActivity.this, StudentProfileActivity.class);
+                    startActivity(i);
+                }
+              return true;
+          }
+          return false;
+        }
+      };
+
 
     private void findAndSetCurrentUser() {
         if (((PursuitApplication) this.getApplication()).getCurrentStudent() != null) {
