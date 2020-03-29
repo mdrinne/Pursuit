@@ -4,8 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.widget.TextView;
-// import android.widget.ImageView;
-// import android.widget.LinearLayout;
 
 import com.example.pursuit.models.Student;
 
@@ -17,7 +15,6 @@ public class StudentProfileActivity extends AppCompatActivity {
     TextView studentMinor;
     TextView studentGPA;
     TextView studentBio;
-    // ImageView profilePhoto;
     Student currentStudent;
 
     @Override
@@ -45,14 +42,6 @@ public class StudentProfileActivity extends AppCompatActivity {
 
         studentBio = findViewById(R.id.txtStudentBio);
         studentBio.setText(currentStudent.getBio());
-
-        // profilePhoto = findViewById(R.id.profilePhoto);
-        // int width = 150;
-        // int height = 150;
-        // LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(width,height);
-        // profilePhoto.setLayoutParams(params);
-
-
     }
 
     private void initializeCurrentStudent() {
