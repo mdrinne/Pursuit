@@ -42,6 +42,7 @@ public class StudentProfileActivity extends AppCompatActivity {
 
         studentBio = findViewById(R.id.txtStudentBio);
         studentBio.setText(currentStudent.getBio());
+
     }
 
     private void initializeCurrentStudent() {

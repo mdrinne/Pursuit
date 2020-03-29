@@ -62,31 +62,7 @@ public class LandingActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
-
-        myProfileBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (currentStudent != null) {
-                    Intent i = new Intent(LandingActivity.this, StudentProfileActivity.class);
-                    startActivity(i);
-                } else {
-                    Intent i = new Intent(LandingActivity.this, StudentProfileActivity.class);
-                    startActivity(i);
-                }
-
-            }
-        });
-
-        viewCompaniesBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(LandingActivity.this, viewCompaniesActivity.class);
-                startActivity(i);
-            }
-        });
-
     }
-
 
     private void findAndSetCurrentUser() {
         if (((PursuitApplication) this.getApplication()).getCurrentStudent() != null) {
