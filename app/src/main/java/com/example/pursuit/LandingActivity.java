@@ -17,9 +17,7 @@ import com.example.pursuit.models.Student;
 
 public class LandingActivity extends AppCompatActivity {
 
-    Button logOutBtn;
     Button aboutPursuitBtn;
-    Button myProfileBtn;
     Button viewCompaniesBtn;
     TextView currentUserNameText;
     BottomNavigationView bottomNavigation;
@@ -47,20 +45,9 @@ public class LandingActivity extends AppCompatActivity {
         currentUserNameText = findViewById(R.id.currentUserName);
         currentUserNameText.setText("Welcome, " + currentUserNameString);
 
-        logOutBtn = findViewById(R.id.logOutBtn);
         aboutPursuitBtn = findViewById(R.id.aboutPursuitBtn);
         viewCompaniesBtn = findViewById(R.id.viewCompaniesBtn);
 
-        logOutBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                removeCurrentUser();
-
-                Intent i = new Intent(LandingActivity.this, MainActivity.class);
-                startActivity(i);
-                finish();
-            }
-        });
 
         aboutPursuitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -103,7 +90,6 @@ public class LandingActivity extends AppCompatActivity {
         }
       };
 
-
     private void findAndSetCurrentUser() {
         if (((PursuitApplication) this.getApplication()).getCurrentStudent() != null) {
             currentStudent = ((PursuitApplication) this.getApplication()).getCurrentStudent();
@@ -113,8 +99,27 @@ public class LandingActivity extends AppCompatActivity {
         currentRole = ((PursuitApplication) this.getApplication()).getRole();
     }
 
+    public void myProfile(View v) {
+        if (currentRole.equals("Student")) {
+            Intent i = new Intent(LandingActivity.this, StudentProfileActivity.class);
+            startActivity(i);
+        } else {
+            /* ***** HAVING AN ISSUE WITH THIS ***** */
+            Intent i = new Intent(LandingActivity.this, CompanyProfileActivity.class);
+            startActivity(i);
+        }
+    }
+
     private void removeCurrentUser() {
         ((PursuitApplication) this.getApplication()).removeCurrentUser();
+    }
+
+    public void logoutCurrentUser(View v) {
+        removeCurrentUser();
+
+        Intent i = new Intent(LandingActivity.this, MainActivity.class);
+        startActivity(i);
+        finish();
     }
 
 }

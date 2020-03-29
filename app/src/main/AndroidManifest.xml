@@ -13,12 +13,16 @@
         <activity android:name=".viewCompaniesActivity"></activity>
         <!-- <activity android:name=".myProfileActivity" /> -->
         <activity android:name=".StudentProfileActivity"></activity>
+        <activity android:name=".CompanyProfileActivity"></activity>
+        <activity android:name=".InviteEmployeeActivity"></activity>
         <activity android:name=".aboutPursuitActivity" />
         <activity android:name=".LandingActivity" />
         <activity android:name=".RegistrationActivity" />
         <activity android:name=".CompanyRegistration" />
         <activity android:name=".StudentRegistration" />
         <activity android:name=".RegistrationPage" />
+        <activity android:name=".viewCompanyEmployeeInvites"/>
+        <activity android:name=".inviteAdapter"/>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
