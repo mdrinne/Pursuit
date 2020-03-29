@@ -43,7 +43,7 @@ public class InviteEmployeeActivity extends AppCompatActivity {
         Log.d(TAG, "new invite created");
         dbRef.child("EmployeeInvites").child(companyName).child(code).setValue(newInvite);
 
-        Intent intent = new Intent(this, CompanyProfileActivity.class);
+        Intent intent = new Intent(this, viewCompanyEmployeeInvites.class);
         startActivity(intent);
     }
 
