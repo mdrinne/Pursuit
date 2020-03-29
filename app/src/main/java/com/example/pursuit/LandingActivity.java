@@ -14,9 +14,9 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.example.pursuit.fragments.HomeFragment;
-import com.example.pursuit.fragments.MessagesFragment;
-import com.example.pursuit.fragments.ProfileFragment;
+//import com.example.pursuit.fragments.HomeFragment;
+//import com.example.pursuit.fragments.MessagesFragment;
+//import com.example.pursuit.fragments.ProfileFragment;
 import com.example.pursuit.models.Company;
 import com.example.pursuit.models.Student;
 
@@ -39,7 +39,7 @@ public class LandingActivity extends AppCompatActivity {
         setContentView(R.layout.activity_landing);
         bottomNavigation = findViewById(R.id.bottom_navigation);
         bottomNavigation.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
-        openFragment(HomeFragment.newInstance("", ""));
+//        openFragment(HomeFragment.newInstance("", ""));
 
 
         findAndSetCurrentUser();
@@ -102,22 +102,20 @@ public class LandingActivity extends AppCompatActivity {
 
     }
 
-    public void openFragment(Fragment fragment) {
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.container, fragment);
-        transaction.addToBackStack(null);
-        transaction.commit();
-    }
+//    public void openFragment(Fragment fragment) {
+//        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+//        transaction.replace(R.id.container, fragment);
+//        transaction.addToBackStack(null);
+//        transaction.commit();
+//    }
 
     BottomNavigationView.OnNavigationItemSelectedListener navigationItemSelectedListener =
       new BottomNavigationView.OnNavigationItemSelectedListener() {
         @Override public boolean onNavigationItemSelected(@NonNull MenuItem item) {
           switch (item.getItemId()) {
             case R.id.navigation_home:
-              openFragment(HomeFragment.newInstance("", ""));
               return true;
             case R.id.navigation_messages:
-              openFragment(MessagesFragment.newInstance("", ""));
               return true;
             case R.id.navigation_profile:
 //              openFragment(ProfileFragment.newInstance("", ""));
@@ -127,6 +125,7 @@ public class LandingActivity extends AppCompatActivity {
                 } else {
                     Intent i = new Intent(LandingActivity.this, StudentProfileActivity.class);
                     startActivity(i);
+                    finish();
                 }
               return true;
           }
