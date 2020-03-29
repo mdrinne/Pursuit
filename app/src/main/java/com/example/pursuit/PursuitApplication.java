@@ -7,6 +7,7 @@ import com.example.pursuit.models.Student;
 public class PursuitApplication extends Application {
     private Student currentStudent;
     private Company currentCompany;
+    private String currentRole;
 
     public Student getCurrentStudent() {
         return currentStudent;
@@ -14,6 +15,7 @@ public class PursuitApplication extends Application {
 
     public void setCurrentStudent(Student currentStudent) {
         this.currentStudent = currentStudent;
+        setCurrentRole("Student");
     }
 
     public Company getCurrentCompany() {
@@ -22,5 +24,16 @@ public class PursuitApplication extends Application {
 
     public void setCurrentCompany(Company currentCompany) {
         this.currentCompany = currentCompany;
+        setCurrentRole("Company");
+    }
+
+    public String getRole() {return currentRole; }
+
+    public void setCurrentRole(String currentRole) { this.currentRole = currentRole; }
+
+    public void removeCurrentUser() {
+        this.currentStudent = null;
+        this.currentCompany = null;
+        this.currentRole = null;
     }
 }

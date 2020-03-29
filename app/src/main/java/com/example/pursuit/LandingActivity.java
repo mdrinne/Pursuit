@@ -18,8 +18,9 @@ public class LandingActivity extends AppCompatActivity {
     Button viewCompaniesBtn;
     TextView currentUserNameText;
 
-    Student currentStudent;
-    Company currentCompany;
+    Student currentStudent = null;
+    Company currentCompany = null;
+    String  currentRole = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +30,7 @@ public class LandingActivity extends AppCompatActivity {
         findAndSetCurrentUser();
 
         String currentUserNameString;
-        if (currentStudent != null) {
+        if (currentRole.equals("Student")) {
             currentUserNameString = currentStudent.getUsername();
         } else {
             currentUserNameString = currentCompany.getName();
@@ -46,11 +47,7 @@ public class LandingActivity extends AppCompatActivity {
         logOutBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (currentStudent != null) {
-                    removeCurrentStudent();
-                } else {
-                    removeCurrentCompany();
-                }
+                removeCurrentUser();
 
                 Intent i = new Intent(LandingActivity.this, MainActivity.class);
                 startActivity(i);
@@ -69,8 +66,14 @@ public class LandingActivity extends AppCompatActivity {
         myProfileBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(LandingActivity.this, myProfileActivity.class);
-                startActivity(i);
+                if (currentStudent != null) {
+                    Intent i = new Intent(LandingActivity.this, StudentProfileActivity.class);
+                    startActivity(i);
+                } else {
+                    Intent i = new Intent(LandingActivity.this, StudentProfileActivity.class);
+                    startActivity(i);
+                }
+
             }
         });
 
@@ -90,14 +93,11 @@ public class LandingActivity extends AppCompatActivity {
         } else {
             currentCompany = ((PursuitApplication) this.getApplication()).getCurrentCompany();
         }
+        currentRole = ((PursuitApplication) this.getApplication()).getRole();
     }
 
-    private void removeCurrentStudent() {
-        ((PursuitApplication) this.getApplication()).setCurrentStudent(null);
-    }
-
-    private void removeCurrentCompany() {
-        ((PursuitApplication) this.getApplication()).setCurrentCompany(null);
+    private void removeCurrentUser() {
+        ((PursuitApplication) this.getApplication()).removeCurrentUser();
     }
 
 }

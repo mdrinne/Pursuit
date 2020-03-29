@@ -13,8 +13,6 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.pursuit.models.Student;
-import com.example.pursuit.RandomKeyGenerator;
-import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
@@ -270,7 +268,7 @@ public class StudentRegistration extends AppCompatActivity {
         university = findViewById(R.id.txtUniversity);
         major = findViewById(R.id.txtMajor);
         minor = findViewById(R.id.txtMinor);
-        gpa = findViewById(R.id.txtGPA);
+        gpa = findViewById(R.id.txtStudentGPA);
         bio = findViewById(R.id.txtBio);
         email = findViewById(R.id.txtEmail);
         username = findViewById(R.id.txtUsername);
