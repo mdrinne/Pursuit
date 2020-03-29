@@ -10,20 +10,18 @@ public class Company {
     public String email;
     public String password;
     public String field;
-    public String description;
 
     public Company() {
         // default constructor required for calls to
         // DataSnapshot.getValue(Company.class)
     }
 
-    public Company(String id, String name, String email, String password, String field, String description) {
+    public Company(String id, String name, String email, String password, String field) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.password = password;
         this.field = field;
-        this.description = description;
     }
 
     public String getId() {
@@ -64,11 +62,4 @@ public class Company {
         this.field = field;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
 }
