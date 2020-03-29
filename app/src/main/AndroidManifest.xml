@@ -21,6 +21,7 @@
         <activity android:name=".CompanyRegistration" />
         <activity android:name=".StudentRegistration" />
         <activity android:name=".RegistrationPage" />
+        <activity android:name=".viewCompanyEmployeeInvites"/>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
