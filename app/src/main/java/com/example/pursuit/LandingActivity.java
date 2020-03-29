@@ -49,7 +49,6 @@ public class LandingActivity extends AppCompatActivity {
 
         logOutBtn = findViewById(R.id.logOutBtn);
         aboutPursuitBtn = findViewById(R.id.aboutPursuitBtn);
-        myProfileBtn = findViewById(R.id.myProfileBtn);
         viewCompaniesBtn = findViewById(R.id.viewCompaniesBtn);
 
         logOutBtn.setOnClickListener(new View.OnClickListener() {
@@ -68,20 +67,6 @@ public class LandingActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent i = new Intent(LandingActivity.this, aboutPursuitActivity.class);
                 startActivity(i);
-            }
-        });
-
-        myProfileBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (currentStudent != null) {
-                    Intent i = new Intent(LandingActivity.this, StudentProfileActivity.class);
-                    startActivity(i);
-                } else {
-                    Intent i = new Intent(LandingActivity.this, StudentProfileActivity.class);
-                    startActivity(i);
-                }
-
             }
         });
 
