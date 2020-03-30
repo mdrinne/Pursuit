@@ -22,6 +22,12 @@
     <string name="strFinish">Finish</string>
     <string name="strFieldOfBusiness">Field of Business</string>
     <string name="strUsernameEmail">Username/Email</string>
+    <string name="strCompanyDescription">Company Description</string>
+    <string name="strCompanyName">Company Name</string>
+    <string name="strCompanyEmail">Company Email</string>
+    <string name="strInviteEmployee">Invite Employee</string>
+    <string name="strEmployeeEmail">Employee Email</string>
+    <string name="strCreateInviteCode">Create Invite Code</string>
     <string name="profile_photo">Profile Photo</string>
     <string name="upload_photo">Upload Photo</string>
 </resources>

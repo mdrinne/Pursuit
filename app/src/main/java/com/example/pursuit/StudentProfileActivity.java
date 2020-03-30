@@ -1,6 +1,6 @@
 package com.example.pursuit;
 
-import androidx.appcompat.app.AppCompatActivity;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import android.content.Intent;
 import android.database.Cursor;
@@ -11,9 +11,12 @@ import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.os.Bundle;
+import android.view.MenuItem;
 import android.widget.TextView;
-// import android.widget.ImageView;
-// import android.widget.LinearLayout;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.pursuit.models.Student;
 
@@ -25,7 +28,7 @@ public class StudentProfileActivity extends AppCompatActivity {
     TextView studentMinor;
     TextView studentGPA;
     TextView studentBio;
-    // ImageView profilePhoto;
+    BottomNavigationView bottomNavigation;
     Student currentStudent;
     private static int RESULT_LOAD_IMAGE = 1;
 
@@ -33,6 +36,8 @@ public class StudentProfileActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_student_profile);
+        bottomNavigation = findViewById(R.id.bottom_navigation);
+        bottomNavigation.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
 
         initializeCurrentStudent();
 
@@ -93,6 +98,27 @@ public class StudentProfileActivity extends AppCompatActivity {
             imageView.setImageBitmap(BitmapFactory.decodeFile(picturePath));
         }
     }
+
+    BottomNavigationView.OnNavigationItemSelectedListener navigationItemSelectedListener =
+      new BottomNavigationView.OnNavigationItemSelectedListener() {
+        @Override public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            switch (item.getItemId()) {
+                case R.id.navigation_home:
+                    Intent landing = new Intent(StudentProfileActivity.this, LandingActivity.class);
+                    startActivity(landing);
+                    finish();
+                    return true;
+                case R.id.navigation_messages:
+                    Intent messages = new Intent(StudentProfileActivity.this, LandingActivity.class);
+                    startActivity(messages);
+                    finish();
+                    return true;
+                case R.id.navigation_profile:
+                    return true;
+          }
+          return false;
+        }
+      };
 
     private void initializeCurrentStudent() {
         currentStudent = ((PursuitApplication) this.getApplication()).getCurrentStudent();
