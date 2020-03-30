@@ -32,4 +32,10 @@
     <string name="message_activity_title">Messaging</string>
     <string name="new_conversation_button">Start a Conversation</string>
     <string name="create_string">Create</string>
+    <string name="strViewInvites">View Invites</string>
+    <string name="strEmployee">Employee</string>
+    <string name="strCompanyCode">Company Code</string>
+    <string name="strInvitationCode">Invitation Code</string>
+    <string name="strPosition">Position</string>
+
 </resources>

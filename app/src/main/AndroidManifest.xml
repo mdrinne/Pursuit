@@ -29,6 +29,8 @@
         <activity android:name=".InviteEmployeeActivity" />
         <activity android:name=".viewCompanyEmployeeInvites" />
         <activity android:name=".MessagesActivity" />
+        <activity android:name=".EmployeeRegistration1" />
+        <activity android:name=".EmployeeRegistration2" />
     </application>
 
 </manifest>

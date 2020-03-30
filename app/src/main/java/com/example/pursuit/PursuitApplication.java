@@ -2,11 +2,13 @@ package com.example.pursuit;
 
 import android.app.Application;
 import com.example.pursuit.models.Company;
+import com.example.pursuit.models.Employee;
 import com.example.pursuit.models.Student;
 
 public class PursuitApplication extends Application {
     private Student currentStudent;
     private Company currentCompany;
+    private Employee currentEmployee;
     private String currentRole;
 
     public Student getCurrentStudent() {
@@ -27,6 +29,15 @@ public class PursuitApplication extends Application {
         setCurrentRole("Company");
     }
 
+    public Employee getCurrentEmployee() {
+        return currentEmployee;
+    }
+
+    public void setCurrentEmployee(Employee currentEmployee) {
+        this.currentEmployee = currentEmployee;
+        setCurrentRole("Employee");
+    }
+
     public String getRole() {return currentRole; }
 
     public void setCurrentRole(String currentRole) { this.currentRole = currentRole; }
@@ -34,6 +45,7 @@ public class PursuitApplication extends Application {
     public void removeCurrentUser() {
         this.currentStudent = null;
         this.currentCompany = null;
+        this.currentEmployee = null;
         this.currentRole = null;
     }
 }

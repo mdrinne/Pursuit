@@ -1,7 +1,6 @@
 package com.example.pursuit;
 
 import android.content.Context;
-import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -51,7 +50,7 @@ public class inviteAdapter extends RecyclerView.Adapter<inviteAdapter.MyViewHold
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            employeeEmail = itemView.findViewById(R.id.txtEmployeeEmail);
+            employeeEmail = itemView.findViewById(R.id.txtCompanyCode);
             code = itemView.findViewById(R.id.txtCode);
         }
     }
