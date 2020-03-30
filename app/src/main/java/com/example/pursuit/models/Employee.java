@@ -10,6 +10,8 @@ public class Employee {
     public String email;
     public String password;
     public String username;
+
+    public String position;
     public String companyName;
     public String inviteCode;
 
@@ -19,13 +21,14 @@ public class Employee {
     }
 
 
-    public Employee(String id, String firstName, String lastName, String email, String password, String username, String companyName, String inviteCode) {
+    public Employee(String id, String firstName, String lastName, String email, String password, String username, String position, String companyName, String inviteCode) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
         this.username = username;
+        this.position = position;
         this.companyName = companyName;
         this.inviteCode = inviteCode;
     }
@@ -76,6 +79,14 @@ public class Employee {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public String getPosition() {
+        return position;
+    }
+
+    public void setPosition(String position) {
+        this.position = position;
     }
 
     public String getCompanyName() {

@@ -1,5 +1,6 @@
 package com.example.pursuit;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -144,12 +145,17 @@ public class EmployeeRegistration1 extends AppCompatActivity {
             Toast.makeText(view.getContext(), "Incorrect Invitation Code", Toast.LENGTH_SHORT).show();;
         } else {
             Log.d(TAG, "Invite exists");
-            newEmployee.setId(RandomKeyGenerator.randomAlphaNumeric(16));
-            newEmployee.setCompanyName(matchedCompany.getName());
-            newEmployee.setEmail(matchedInvite.getEmployeeEmail());
-            newEmployee.setInviteCode(toString(invitationCode));
+            String newId = RandomKeyGenerator.randomAlphaNumeric(16);
 
+            newEmployee = new Employee(newId,null,null,matchedInvite.getEmployeeEmail(),
+                    null,null,null,matchedInvite.getEmployeeEmail(),
+                    toString(invitationCode));
+
+            ((PursuitApplication) this.getApplication()).setCurrentCompany(matchedCompany);
             ((PursuitApplication) this.getApplication()).setCurrentEmployee(newEmployee);
+
+            Intent intent = new Intent(this, EmployeeRegistration2.class);
+            startActivity(intent);
         }
     }
 

@@ -33,5 +33,6 @@
     <string name="strEmployee">Employee</string>
     <string name="strCompanyCode">Company Code</string>
     <string name="strInvitationCode">Invitation Code</string>
+    <string name="strPosition">Position</string>
 
 </resources>
