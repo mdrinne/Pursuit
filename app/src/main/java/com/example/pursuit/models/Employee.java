@@ -11,6 +11,7 @@ public class Employee {
     public String password;
     public String username;
     public String companyName;
+    public String inviteCode;
 
     public Employee() {
         // default constructor required for calls to
@@ -18,7 +19,7 @@ public class Employee {
     }
 
 
-    public Employee(String id, String firstName, String lastName, String email, String password, String username, String companyName) {
+    public Employee(String id, String firstName, String lastName, String email, String password, String username, String companyName, String inviteCode) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -26,6 +27,7 @@ public class Employee {
         this.password = password;
         this.username = username;
         this.companyName = companyName;
+        this.inviteCode = inviteCode;
     }
 
     public String getId() {
@@ -82,5 +84,13 @@ public class Employee {
 
     public void setCompanyName(String companyName) {
         this.companyName = companyName;
+    }
+
+    public String getInviteCode() {
+        return inviteCode;
+    }
+
+    public void setInviteCode(String inviteCode) {
+        this.inviteCode = inviteCode;
     }
 }

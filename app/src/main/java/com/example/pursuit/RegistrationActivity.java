@@ -36,6 +36,9 @@ public class RegistrationActivity extends AppCompatActivity {
             if (selectedID == findViewById(R.id.radioBtnStudent).getId()) {
                 Intent intent = new Intent(this, StudentRegistration.class);
                 startActivity(intent);
+            } else if (selectedID == findViewById(R.id.radioBtnEmployee).getId()){
+                Intent intent = new Intent(this, EmployeeRegistration1.class);
+                startActivity(intent);
             } else {
                 Intent intent = new Intent(this, CompanyRegistration.class);
                 startActivity(intent);
