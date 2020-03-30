@@ -1,7 +1,6 @@
 package com.example.pursuit.models;
 
 import com.google.firebase.database.IgnoreExtraProperties;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 @IgnoreExtraProperties
