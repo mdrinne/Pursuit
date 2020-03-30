@@ -1,6 +1,7 @@
 package com.example.pursuit.models;
 
 import com.google.firebase.database.IgnoreExtraProperties;
+import java.time.LocalDateTime;
 
 @IgnoreExtraProperties
 public class Message {
@@ -10,18 +11,20 @@ public class Message {
     public String recipientId;
     public String subject;
     public String messageText;
+    public LocalDateTime createdAt;
 
     public Message() {
         // default constructor required for calls to
         // DataSnapshot.getValue(Company.class)
     }
 
-    public Message(String id, String senderId, String recipientId, String subject, String messageText) {
+    public Message(String id, String senderId, String recipientId, String subject, String messageText, LocalDateTime createdAt) {
         this.id = id;
         this.senderId = senderId;
         this.recipientId = recipientId;
         this.subject = subject;
         this.messageText = messageText;
+        this.createdAt = createdAt;
     }
 
     public void setSenderId(String senderId) {
@@ -36,8 +39,12 @@ public class Message {
         this.subject = subject;
     }
 
-    public void messageText(String messageText) {
+    public void setMessageText(String messageText) {
         this.messageText = messageText;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
     }
 
     public String getId() {
@@ -58,6 +65,10 @@ public class Message {
 
     public String getMessageText() {
         return messageText;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
     }
 
 }
