@@ -48,7 +48,8 @@
         android:text="@string/create_string"
         android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/newConversationUsername" />
+        app:layout_constraintTop_toBottomOf="@+id/newConversationUsername"
+        android:onClick="createConversation"/>
 
     <FrameLayout
         android:id="@+id/container"

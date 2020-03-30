@@ -4,6 +4,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.MenuItem;
 import android.widget.Button;
@@ -22,7 +23,11 @@ import androidx.annotation.NonNull;
 import com.example.pursuit.models.Company;
 import com.example.pursuit.models.Student;
 
+import java.util.ArrayList;
+
 public class MessagesActivity extends AppCompatActivity {
+
+    private static final String TAG = "MessagesActivity";
   
     BottomNavigationView bottomNavigation;
     private DatabaseReference dbRef;
@@ -33,6 +38,8 @@ public class MessagesActivity extends AppCompatActivity {
     Student currentStudent = null;
     Company currentCompany = null;
     String  currentRole = null;
+
+    private ArrayList<Student> matchedUsernames;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +53,33 @@ public class MessagesActivity extends AppCompatActivity {
 
     }
 
+
+    ValueEventListener usernameListener = new ValueEventListener() {
+        @Override
+        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+            matchedUsernames = new ArrayList<>();
+            Log.d(TAG, "In usernameListener onDataChange");
+            if (dataSnapshot.exists()) {
+                Log.d(TAG, "Snapshot exists");
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    Log.d(TAG, "looping in snapshot");
+                    Student student = snapshot.getValue(Student.class);
+                    if (student == null) {
+                        Log.d(TAG, "student is null");
+                    } else {
+                        Log.d(TAG, "student exists: " + student.getUsername());
+                    }
+                    matchedUsernames.add(student);
+                }
+            }
+        }
+
+        @Override
+        public void onCancelled(DatabaseError databaseError) {
+            Log.e(TAG, databaseError.toString());
+        }
+    };
+
     public void showCreateConversation(View v) {
         newConversationUsername = findViewById(R.id.newConversationUsername);
         createConversationButton = findViewById(R.id.createConversationButton);
@@ -58,9 +92,10 @@ public class MessagesActivity extends AppCompatActivity {
             createConversationButton.setVisibility(View.INVISIBLE);
         }
 
-//        Intent newConversation = new Intent(MessagesActivity.this, newConversationActivity.class);
-//        startActivity(newConversation);
-//        finish();
+    }
+
+    public void createConversation(View v) {
+
     }
 
     BottomNavigationView.OnNavigationItemSelectedListener navigationItemSelectedListener =
