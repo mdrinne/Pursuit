@@ -15,6 +15,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.pursuit.models.Company;
+import com.example.pursuit.models.Employee;
 import com.example.pursuit.models.Student;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -33,6 +34,9 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<Company> matchedCompanyEmails;
     private ArrayList<Student> matchedStudentEmails;
     private ArrayList<Student> matchedStudentUsernames;
+    private Employee matchedEmployeeEmail;
+    private Employee matchedEmployeeUsername;
+    private Company getEmployeeCompany;
     private View view;
     private String checkEmail;
     private String checkUsername;
@@ -79,6 +83,44 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onCancelled(@NonNull DatabaseError databaseError) {
             Log.e(TAG, databaseError.toString());
+        }
+    };
+
+    ValueEventListener employeeUsernameListener = new ValueEventListener() {
+        @Override
+        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+            matchedEmployeeUsername = null;
+            if (dataSnapshot.exists()) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    Employee employee = snapshot.getValue(Employee.class);
+                    matchedEmployeeUsername = employee;
+                }
+            }
+            postEmployeeUsernameListener();
+        }
+
+        @Override
+        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+        }
+    };
+
+    ValueEventListener employeeEmailListener = new ValueEventListener() {
+        @Override
+        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+            matchedEmployeeEmail = null;
+            if (dataSnapshot.exists()) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    Employee employee = snapshot.getValue(Employee.class);
+                    matchedEmployeeEmail = employee;
+                }
+            }
+            postEmployeeEmailListener();
+        }
+
+        @Override
+        public void onCancelled(@NonNull DatabaseError databaseError) {
+
         }
     };
 
@@ -139,6 +181,24 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
+    ValueEventListener getEmployeeCompanyListener = new ValueEventListener() {
+        @Override
+        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+            if (dataSnapshot.exists()) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    Company company = snapshot.getValue(Company.class);
+                    getEmployeeCompany = company;
+                }
+            }
+            setCurrentCompany();
+        }
+
+        @Override
+        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+        }
+    };
+
     /* ******END DATABASE****** */
 
     public boolean passwordsMatch(String dbPassword, String inputPassword) {
@@ -147,6 +207,14 @@ public class MainActivity extends AppCompatActivity {
         } else {
             return false;
         }
+    }
+
+    private void setCurrentCompany() {
+        ((PursuitApplication) this.getApplication()).setCurrentCompany(getEmployeeCompany);
+        ((PursuitApplication) this.getApplication()).setCurrentRole("Employee");
+
+        Intent intent = new Intent(this, LandingActivity.class);
+        startActivity(intent);
     }
 
     public void postStudentUsernameListener() {
@@ -164,8 +232,39 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(view.getContext(), "Incorrect Password", Toast.LENGTH_LONG).show();
             }
         } else {
+            Query employeeUsernameQuery = dbRef.child("Employees").orderByChild("username").equalTo(checkUsername);
+            employeeUsernameQuery.addListenerForSingleValueEvent(employeeUsernameListener);
+        }
+    }
+
+    private void postEmployeeUsernameListener() {
+        if (matchedEmployeeUsername != null) {
+            if (passwordsMatch(matchedEmployeeUsername.getPassword(), checkPassword)) {
+                ((PursuitApplication) this.getApplication()).setCurrentEmployee(matchedEmployeeEmail);
+
+                Query employeeCompanyQuery = dbRef.child("Companies").orderByChild("name").equalTo(matchedEmployeeUsername.getCompanyName());
+                employeeCompanyQuery.addListenerForSingleValueEvent(getEmployeeCompanyListener);
+            } else {
+                Toast.makeText(view.getContext(), "Incorrect Password", Toast.LENGTH_LONG).show();
+            }
+        } else {
             Log.d(TAG, "USERNAME NOT FOUND");
             Toast.makeText(view.getContext(), "Username Does Not Exist", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private void postEmployeeEmailListener() {
+        if (matchedEmployeeEmail != null) {
+            if (passwordsMatch(matchedEmployeeEmail.getPassword(), checkPassword)) {
+                ((PursuitApplication) this.getApplication()).setCurrentEmployee(matchedEmployeeEmail);
+
+                Query employeeCompanyQuery = dbRef.child("Companies").orderByChild("name").equalTo(matchedEmployeeEmail.getCompanyName());
+                employeeCompanyQuery.addListenerForSingleValueEvent(getEmployeeCompanyListener);
+            } else {
+                Toast.makeText(view.getContext(), "Incorrect Password", Toast.LENGTH_LONG).show();
+            }
+        } else {
+            Toast.makeText(view.getContext(), "Email Not Found", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -184,8 +283,8 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(view.getContext(), "Incorrect Password", Toast.LENGTH_LONG).show();
             }
         } else {
-            Log.d(TAG, "EMAIL NOT FOUND");
-            Toast.makeText(view.getContext(), "Email Not Found", Toast.LENGTH_LONG).show();
+            Query employeeEmailQuery = dbRef.child("Employees").orderByChild("email").equalTo(checkEmail);
+            employeeEmailQuery.addListenerForSingleValueEvent(employeeEmailListener);
         }
     }
 
