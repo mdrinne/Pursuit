@@ -30,5 +30,6 @@
     <string name="strCreateInviteCode">Create Invite Code</string>
     <string name="profile_photo">Profile Photo</string>
     <string name="message_activity_title">Messaging</string>
-    <string name="new_message_button">Send a Message</string>
+    <string name="new_conversation_button">Start a Conversation</string>
+    <string name="create_string">Create</string>
 </resources>

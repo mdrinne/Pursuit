@@ -7,7 +7,14 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.MenuItem;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.database.Query;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.annotation.NonNull;
@@ -18,6 +25,10 @@ import com.example.pursuit.models.Student;
 public class MessagesActivity extends AppCompatActivity {
   
     BottomNavigationView bottomNavigation;
+    private DatabaseReference dbRef;
+
+    TextView newConversationUsername;
+    Button createConversationButton;
 
     Student currentStudent = null;
     Company currentCompany = null;
@@ -31,7 +42,25 @@ public class MessagesActivity extends AppCompatActivity {
         bottomNavigation.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
 
         findAndSetCurrentUser();
+        dbRef = FirebaseDatabase.getInstance().getReference();
 
+    }
+
+    public void showCreateConversation(View v) {
+        newConversationUsername = findViewById(R.id.newConversationUsername);
+        createConversationButton = findViewById(R.id.createConversationButton);
+
+        if (newConversationUsername.getVisibility() == View.INVISIBLE && createConversationButton.getVisibility() == View.INVISIBLE) {
+            newConversationUsername.setVisibility(View.VISIBLE);
+            createConversationButton.setVisibility(View.VISIBLE);
+        } else {
+            newConversationUsername.setVisibility(View.INVISIBLE);
+            createConversationButton.setVisibility(View.INVISIBLE);
+        }
+
+//        Intent newConversation = new Intent(MessagesActivity.this, newConversationActivity.class);
+//        startActivity(newConversation);
+//        finish();
     }
 
     BottomNavigationView.OnNavigationItemSelectedListener navigationItemSelectedListener =
