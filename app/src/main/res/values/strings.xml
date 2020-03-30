@@ -30,5 +30,8 @@
     <string name="strCreateInviteCode">Create Invite Code</string>
     <string name="profile_photo">Profile Photo</string>
     <string name="strViewInvites">View Invites</string>
+    <string name="strEmployee">Employee</string>
+    <string name="strCompanyCode">Company Code</string>
+    <string name="strInvitationCode">Invitation Code</string>
 
 </resources>

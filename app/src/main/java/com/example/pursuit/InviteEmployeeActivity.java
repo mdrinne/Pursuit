@@ -45,11 +45,11 @@ public class InviteEmployeeActivity extends AppCompatActivity {
 
     private void writeNewEmployeeInvite(String companyName, String employeeEmail) {
         Log.d(TAG, "in writeNewEmployeeInvite, company: " + companyName + "; email: " + employeeEmail);
-        String code = RandomKeyGenerator.randomInviteCode(25);
+        String code = RandomKeyGenerator.randomLowerNumeric(25);
         Log.d(TAG, "code: " + code);
         newInvite = new EmployeeInvite(code, employeeEmail);
         Log.d(TAG, "new invite created");
-        dbRef.child("EmployeeInvites").child(companyName).child(code).setValue(newInvite);
+        dbRef.child("EmployeeInvites").child(currentCompany.getId()).child(code).setValue(newInvite);
 
         Intent intent = new Intent(this, viewCompanyEmployeeInvites.class);
         startActivity(intent);
@@ -84,7 +84,7 @@ public class InviteEmployeeActivity extends AppCompatActivity {
     }
 
     public void createEmployeeInvite(View v) {
-        employeeEmail = findViewById(R.id.txtEmployeeEmail);
+        employeeEmail = findViewById(R.id.txtCompanyCode);
         Log.d(TAG, employeeEmail.getText().toString());
 
         writeNewEmployeeInvite(currentCompany.getName(), employeeEmail.getText().toString());

@@ -13,7 +13,7 @@ public class RandomKeyGenerator {
         return builder.toString();
     }
 
-    public static String randomInviteCode(int count) {
+    public static String randomLowerNumeric(int count) {
         StringBuilder builder = new StringBuilder();
         while (count-- != 0) {
             int character = (int) (Math.random() * LOWER_CASE_ALPHA_NUMERIC_STRING.length());

@@ -49,7 +49,7 @@ public class viewCompanyEmployeeInvites extends AppCompatActivity {
 
         activeInvites = findViewById(R.id.rcycEmployeeInvites);
 
-        Query inviteQuery = dbref.child("EmployeeInvites").child(currentCompany.getName()).orderByKey();
+        Query inviteQuery = dbref.child("EmployeeInvites").child(currentCompany.getId()).orderByKey();
 
         if (inviteQuery == null) {
             Log.d(TAG, "Invite query is null");
