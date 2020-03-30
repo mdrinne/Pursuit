@@ -1,8 +1,13 @@
 package com.example.pursuit;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
+import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -26,6 +31,7 @@ public class viewCompanyEmployeeInvites extends AppCompatActivity {
     private DatabaseReference dbref;
 
     Company currentCompany;
+    BottomNavigationView bottomNavigation;
     private ArrayList<EmployeeInvite> companyInvites;
 
     RecyclerView activeInvites;
@@ -35,6 +41,8 @@ public class viewCompanyEmployeeInvites extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.company_view_employee_invites);
+        bottomNavigation = findViewById(R.id.bottom_navigation);
+        bottomNavigation.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
 
         initializeCurrentCompany();
         dbref = FirebaseDatabase.getInstance().getReference();
@@ -84,6 +92,27 @@ public class viewCompanyEmployeeInvites extends AppCompatActivity {
 
     /* ******END DATABASE****** */
 
+    BottomNavigationView.OnNavigationItemSelectedListener navigationItemSelectedListener =
+            new BottomNavigationView.OnNavigationItemSelectedListener() {
+                @Override public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                    switch (item.getItemId()) {
+                        case R.id.navigation_home:
+                            Intent i0 = new Intent(viewCompanyEmployeeInvites.this, LandingActivity.class);
+                            startActivity(i0);
+                            finish();
+                            return true;
+                        case R.id.navigation_messages:
+                            return true;
+                        case R.id.navigation_profile:
+                            Intent i2 = new Intent(viewCompanyEmployeeInvites.this, CompanyProfileActivity.class);
+                            startActivity(i2);
+                            finish();
+                            return true;
+                    }
+                    return false;
+                }
+            };
+
     private void initializeCurrentCompany() {
         Log.d(TAG, "initializing company");
         currentCompany = ((PursuitApplication) this.getApplicationContext()).getCurrentCompany();
@@ -94,9 +123,10 @@ public class viewCompanyEmployeeInvites extends AppCompatActivity {
         inviteAdapter myAdapter = new inviteAdapter(this, companyInvites);
         activeInvites.setAdapter(myAdapter);
         activeInvites.setLayoutManager(new LinearLayoutManager(this));
+    }
 
-
-//        Intent intent = new Intent(this, CompanyProfileActivity.class);
-//        startActivity(intent);
+    public void inviteEmployee(View v) {
+        Intent intent = new Intent(this, InviteEmployeeActivity.class);
+        startActivity(intent);
     }
 }

@@ -1,8 +1,10 @@
 package com.example.pursuit;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.os.Bundle;
 import android.widget.EditText;
@@ -10,6 +12,7 @@ import android.content.Intent;
 
 import com.example.pursuit.models.Company;
 import com.example.pursuit.models.EmployeeInvite;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -21,12 +24,17 @@ public class InviteEmployeeActivity extends AppCompatActivity {
     Company currentCompany;
     EditText employeeEmail;
 
+    BottomNavigationView bottomNavigation;
+
+
     EmployeeInvite newInvite;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_invite_employee);
+        bottomNavigation = findViewById(R.id.bottom_navigation);
+        bottomNavigation.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
 
         initializeCurrentCompany();
 
@@ -48,6 +56,27 @@ public class InviteEmployeeActivity extends AppCompatActivity {
     }
 
     /* ******END DATABASE****** */
+
+    BottomNavigationView.OnNavigationItemSelectedListener navigationItemSelectedListener =
+            new BottomNavigationView.OnNavigationItemSelectedListener() {
+                @Override public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                    switch (item.getItemId()) {
+                        case R.id.navigation_home:
+                            Intent i0 = new Intent(InviteEmployeeActivity.this, LandingActivity.class);
+                            startActivity(i0);
+                            finish();
+                            return true;
+                        case R.id.navigation_messages:
+                            return true;
+                        case R.id.navigation_profile:
+                            Intent i2 = new Intent(InviteEmployeeActivity.this, CompanyProfileActivity.class);
+                            startActivity(i2);
+                            finish();
+                            return true;
+                    }
+                    return false;
+                }
+            };
 
     private void initializeCurrentCompany() {
         Log.d(TAG, "initializing company");
