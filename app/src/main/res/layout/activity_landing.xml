@@ -28,19 +28,7 @@
         android:text="View Companies"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/myProfileBtn" />
-
-    <Button
-        android:id="@+id/myProfileBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="48dp"
-        android:layout_marginTop="119dp"
-        android:layout_marginEnd="53dp"
-        android:layout_marginRight="53dp"
-        android:onClick="myProfile"
-        android:text="My Profile"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+        app:layout_constraintTop_toBottomOf="@+id/aboutPursuitBtn" />
 
     <Button
         android:id="@+id/logOutBtn"
@@ -49,9 +37,7 @@
         android:layout_marginStart="283dp"
         android:layout_marginLeft="283dp"
         android:layout_marginTop="32dp"
-        android:layout_marginEnd="283dp"
-        android:layout_marginRight="283dp"
-        android:onClick="logoutCurrentUser"
+        android:foregroundGravity="clip_horizontal"
         android:text="Log Out"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.502"
