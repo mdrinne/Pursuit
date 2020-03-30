@@ -148,7 +148,7 @@ public class EmployeeRegistration1 extends AppCompatActivity {
             String newId = RandomKeyGenerator.randomAlphaNumeric(16);
 
             newEmployee = new Employee(newId,null,null,matchedInvite.getEmployeeEmail(),
-                    null,null,null,matchedInvite.getEmployeeEmail(),
+                    null,null,null,matchedCompany.getName(),
                     toString(invitationCode));
 
             ((PursuitApplication) this.getApplication()).setCurrentCompany(matchedCompany);
