@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.widget.TextView;
 import android.view.View;
+import android.widget.Toast;
 
 
 import com.example.pursuit.models.Company;
@@ -21,6 +22,7 @@ public class CompanyProfileActivity extends AppCompatActivity{
     Company currentCompany;
     BottomNavigationView bottomNavigation;
 
+    String currentRole;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +32,7 @@ public class CompanyProfileActivity extends AppCompatActivity{
         bottomNavigation.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
 
         initializeCurrentCompany();
+        initializeCurrentRole();
 
         companyName = findViewById(R.id.txtCompanyName);
         companyName.setText(currentCompany.getName());
@@ -61,10 +64,19 @@ public class CompanyProfileActivity extends AppCompatActivity{
         currentCompany = ((PursuitApplication) this.getApplicationContext()).getCurrentCompany();
     }
 
+    private void initializeCurrentRole() {
+        currentRole = ((PursuitApplication) this.getApplicationContext()).getRole();
+    }
+
     public void inviteEmployee(View v) {
         Log.d(TAG, "inviting");
-        Intent intent = new Intent(this, InviteEmployeeActivity.class);
-        startActivity(intent);
+
+        if (currentRole.equals("Employee")) {
+            Toast.makeText(v.getContext(), "Only Admin Has Access To Invite", Toast.LENGTH_SHORT).show();
+        } else {
+            Intent intent = new Intent(this, InviteEmployeeActivity.class);
+            startActivity(intent);
+        }
     }
 
     public void viewInvites(View v) {

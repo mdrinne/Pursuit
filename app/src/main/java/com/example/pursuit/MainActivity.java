@@ -242,7 +242,7 @@ public class MainActivity extends AppCompatActivity {
             if (passwordsMatch(matchedEmployeeUsername.getPassword(), checkPassword)) {
                 ((PursuitApplication) this.getApplication()).setCurrentEmployee(matchedEmployeeEmail);
 
-                Query employeeCompanyQuery = dbRef.child("Companies").orderByChild("name").equalTo(matchedEmployeeEmail.getCompanyName());
+                Query employeeCompanyQuery = dbRef.child("Companies").orderByChild("name").equalTo(matchedEmployeeUsername.getCompanyName());
                 employeeCompanyQuery.addListenerForSingleValueEvent(getEmployeeCompanyListener);
             } else {
                 Toast.makeText(view.getContext(), "Incorrect Password", Toast.LENGTH_LONG).show();

@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -31,6 +32,7 @@ public class viewCompanyEmployeeInvites extends AppCompatActivity {
     private DatabaseReference dbref;
 
     Company currentCompany;
+    String currentRole;
     BottomNavigationView bottomNavigation;
     private ArrayList<EmployeeInvite> companyInvites;
 
@@ -45,6 +47,8 @@ public class viewCompanyEmployeeInvites extends AppCompatActivity {
         bottomNavigation.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
 
         initializeCurrentCompany();
+        initializeCurrentRole();
+
         dbref = FirebaseDatabase.getInstance().getReference();
 
         activeInvites = findViewById(R.id.rcycEmployeeInvites);
@@ -118,6 +122,11 @@ public class viewCompanyEmployeeInvites extends AppCompatActivity {
         currentCompany = ((PursuitApplication) this.getApplicationContext()).getCurrentCompany();
     }
 
+    private void initializeCurrentRole() {
+        currentRole = ((PursuitApplication) this.getApplicationContext()).getRole();
+    }
+
+
     private void postOnCreate() {
         Log.d(TAG, Integer.toString(companyInvites.size()));
         inviteAdapter myAdapter = new inviteAdapter(this, companyInvites);
@@ -126,7 +135,11 @@ public class viewCompanyEmployeeInvites extends AppCompatActivity {
     }
 
     public void inviteEmployee(View v) {
-        Intent intent = new Intent(this, InviteEmployeeActivity.class);
-        startActivity(intent);
+        if (currentRole.equals("Employee")) {
+            Toast.makeText(v.getContext(), "Only Admin Has Access To Invite", Toast.LENGTH_SHORT).show();
+        } else {
+            Intent intent = new Intent(this, InviteEmployeeActivity.class);
+            startActivity(intent);
+        }
     }
 }
