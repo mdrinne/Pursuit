@@ -1,5 +1,6 @@
 package com.example.pursuit;
 
+import com.example.pursuit.models.Employee;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import android.content.Intent;
@@ -8,8 +9,11 @@ import android.util.Log;
 import android.view.View;
 import android.view.MenuItem;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
@@ -32,14 +36,17 @@ public class MessagesActivity extends AppCompatActivity {
     BottomNavigationView bottomNavigation;
     private DatabaseReference dbRef;
 
-    TextView newConversationUsername;
+    private View view;
+    EditText newConversationUsername;
     Button createConversationButton;
 
     Student currentStudent = null;
     Company currentCompany = null;
     String  currentRole = null;
 
-    private ArrayList<Student> matchedUsernames;
+    private Student matchedStudentUsername;
+    private Employee matchedEmployeeUsername;
+    private String checkUsername;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,10 +61,10 @@ public class MessagesActivity extends AppCompatActivity {
     }
 
 
-    ValueEventListener usernameListener = new ValueEventListener() {
+    ValueEventListener studentUsernameListener = new ValueEventListener() {
         @Override
         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-            matchedUsernames = new ArrayList<>();
+            matchedStudentUsername = null;
             Log.d(TAG, "In usernameListener onDataChange");
             if (dataSnapshot.exists()) {
                 Log.d(TAG, "Snapshot exists");
@@ -69,9 +76,11 @@ public class MessagesActivity extends AppCompatActivity {
                     } else {
                         Log.d(TAG, "student exists: " + student.getUsername());
                     }
-                    matchedUsernames.add(student);
+                    matchedStudentUsername = student;
                 }
             }
+
+            postStudentUsernameListener();
         }
 
         @Override
@@ -79,6 +88,44 @@ public class MessagesActivity extends AppCompatActivity {
             Log.e(TAG, databaseError.toString());
         }
     };
+
+    public void postStudentUsernameListener() {
+        if (matchedStudentUsername != null) {
+            // create new conversation with this student
+            Toast.makeText(view.getContext(), "This is a student username!", Toast.LENGTH_LONG).show();
+        } else {
+            Query employeeUsernameQuery = dbRef.child("Employees").orderByChild("username").equalTo(checkUsername);
+            employeeUsernameQuery.addListenerForSingleValueEvent(employeeUsernameListener);
+        }
+    }
+
+    ValueEventListener employeeUsernameListener = new ValueEventListener() {
+        @Override
+        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+            matchedEmployeeUsername = null;
+            if (dataSnapshot.exists()) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    Employee employee = snapshot.getValue(Employee.class);
+                    matchedEmployeeUsername = employee;
+                }
+            }
+            postEmployeeUsernameListener();
+        }
+
+        @Override
+        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+        }
+    };
+
+    public void postEmployeeUsernameListener() {
+        if (matchedEmployeeUsername != null) {
+            // create new conversation with this employee
+            Toast.makeText(view.getContext(), "This is an employee username!", Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(view.getContext(), "This username does not exist!", Toast.LENGTH_LONG).show();
+        }
+    }
 
     public void showCreateConversation(View v) {
         newConversationUsername = findViewById(R.id.newConversationUsername);
@@ -95,7 +142,13 @@ public class MessagesActivity extends AppCompatActivity {
     }
 
     public void createConversation(View v) {
+        newConversationUsername = findViewById(R.id.newConversationUsername);
 
+        view = v;
+        checkUsername = toString(newConversationUsername);
+
+        Query studentUsernameQuery = dbRef.child("Students").orderByChild("username").equalTo(checkUsername);
+        studentUsernameQuery.addListenerForSingleValueEvent(studentUsernameListener);
     }
 
     BottomNavigationView.OnNavigationItemSelectedListener navigationItemSelectedListener =
@@ -132,6 +185,11 @@ public class MessagesActivity extends AppCompatActivity {
             currentCompany = ((PursuitApplication) this.getApplication()).getCurrentCompany();
         }
         currentRole = ((PursuitApplication) this.getApplication()).getRole();
+    }
+
+    // Converts EditText Type To String
+    public String toString(EditText text) {
+        return text.getText().toString();
     }
 
 }
