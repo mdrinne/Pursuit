@@ -11,7 +11,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".viewCompaniesActivity"></activity>
-        <!-- <activity android:name=".myProfileActivity" /> -->
         <activity android:name=".StudentProfileActivity"></activity>
         <activity android:name=".aboutPursuitActivity" />
         <activity android:name=".LandingActivity" />
@@ -29,6 +28,7 @@
         <activity android:name=".CompanyProfileActivity" />
         <activity android:name=".InviteEmployeeActivity" />
         <activity android:name=".viewCompanyEmployeeInvites" />
+        <activity android:name=".MessagesActivity" />
     </application>
 
 </manifest>

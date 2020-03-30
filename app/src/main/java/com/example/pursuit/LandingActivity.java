@@ -72,22 +72,25 @@ public class LandingActivity extends AppCompatActivity {
         @Override public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
             case R.id.navigation_home:
-              return true;
+                return true;
             case R.id.navigation_messages:
-              return true;
+                Intent messages = new Intent(LandingActivity.this, MessagesActivity.class);
+                startActivity(messages);
+                finish();
+                return true;
             case R.id.navigation_profile:
                 if (currentStudent != null) {
-                    Intent i = new Intent(LandingActivity.this, StudentProfileActivity.class);
-                    startActivity(i);
+                    Intent profile = new Intent(LandingActivity.this, StudentProfileActivity.class);
+                    startActivity(profile);
                     finish();
                 } else {
-                    Intent i = new Intent(LandingActivity.this, CompanyProfileActivity.class);
-                    startActivity(i);
+                    Intent profile = new Intent(LandingActivity.this, CompanyProfileActivity.class);
+                    startActivity(profile);
                     finish();
                 }
-              return true;
-          }
-          return false;
+                return true;
+            }
+            return false;
         }
       };
 
@@ -100,16 +103,6 @@ public class LandingActivity extends AppCompatActivity {
         currentRole = ((PursuitApplication) this.getApplication()).getRole();
     }
 
-    public void myProfile(View v) {
-        if (currentRole.equals("Student")) {
-            Intent i = new Intent(LandingActivity.this, StudentProfileActivity.class);
-            startActivity(i);
-        } else {
-            /* ***** HAVING AN ISSUE WITH THIS ***** */
-            Intent i = new Intent(LandingActivity.this, CompanyProfileActivity.class);
-            startActivity(i);
-        }
-    }
 
     private void removeCurrentUser() {
         ((PursuitApplication) this.getApplication()).removeCurrentUser();
