@@ -8,6 +8,8 @@ import android.content.Context;
 import android.widget.TextView;
 import android.view.View;
 import android.view.ViewGroup;
+import androidx.recyclerview.widget.RecyclerView.ViewHolder;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.pursuit.models.Conversation;
 
@@ -19,7 +21,7 @@ public class ConversationAdapter extends ArrayAdapter<Conversation> {
     Context context;
 
     public ConversationAdapter(Context context, ArrayList<Conversation> conversations) {
-        super(context, 0, conversations);
+        super(context, R.layout.conversation, conversations);
     }
 
     public void add(Conversation conversation) {
@@ -33,7 +35,7 @@ public class ConversationAdapter extends ArrayAdapter<Conversation> {
     }
 
     @Override
-    public Object getItem(int i) {
+    public Conversation getItem(int i) {
         return conversations.get(i);
     }
 
@@ -43,14 +45,22 @@ public class ConversationAdapter extends ArrayAdapter<Conversation> {
     }
 
     @Override
-    public View getView(int i, View convertView, ViewGroup viewGroup) {
-        ConversationViewHolder holder = new ConversationViewHolder();
-        LayoutInflater conversationInflater = (LayoutInflater) context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
-        Conversation conversation = conversations.get(i);
+    public View getView(int i, View convertView, ViewGroup parent) {
+        Conversation conversation = getItem(i);
 
-        convertView = conversationInflater.inflate(R.layout.conversation, null);
-        holder.conversationTitle = convertView.findViewById(R.id.conversation_title);
-        convertView.setTag(holder);
+        ConversationViewHolder viewHolder;
+
+        if (convertView == null) {
+            viewHolder = new ConversationViewHolder();
+            LayoutInflater inflater = LayoutInflater.from(getContext());
+            convertView = inflater.inflate(R.layout.conversation, parent, false);
+            viewHolder.conversationTitle = (TextView) convertView.findViewById(R.id.conversation_title);
+            convertView.setTag(viewHolder);
+        } else {
+            viewHolder = (ConversationViewHolder) convertView.getTag();
+        }
+
+        viewHolder.conversationTitle.setText(conversation.getUserIds().get(0));
 
         return convertView;
     }

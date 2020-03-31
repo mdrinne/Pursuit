@@ -30,10 +30,20 @@ import androidx.annotation.NonNull;
 
 import com.example.pursuit.models.Company;
 import com.example.pursuit.models.Student;
+import com.example.pursuit.models.Employee;
+import com.example.pursuit.models.Conversation;
 
 import java.util.ArrayList;
 
 public class MessagesActivity extends AppCompatActivity {
+
+    private Student matchedStudentUsername;
+    private Employee matchedEmployeeUsername;
+    private String checkUsername;
+    private ConversationAdapter conversationAdapter;
+    private Conversation newConversation;
+    private ListView conversationsView;
+    private ArrayList<Conversation> myConversations;
 
     private static final String TAG = "MessagesActivity";
   
@@ -49,13 +59,7 @@ public class MessagesActivity extends AppCompatActivity {
     Company currentCompany = null;
     String  currentRole = null;
 
-    private Student matchedStudentUsername;
-    private Employee matchedEmployeeUsername;
-    private String checkUsername;
-    private ConversationAdapter conversationAdapter;
-    private Conversation newConversation;
-    private ListView conversationsView;
-    private ArrayList<Conversation> myConversations;
+
 
 
     @Override
@@ -153,6 +157,48 @@ public class MessagesActivity extends AppCompatActivity {
         }
     }
 
+    ValueEventListener myConversationsListener = new ValueEventListener() {
+        @Override
+        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+            myConversations = new ArrayList<>();
+            if (dataSnapshot.exists()) {
+                Log.d(TAG, "Snapshot exists for myConversations");
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    Log.d(TAG, "Looping in myConversations snapshot");
+                    Conversation conversation = snapshot.getValue(Conversation.class);
+                    if (conversation == null) {
+                        Log.d(TAG, "Conversation is null");
+                    } else {
+                        ArrayList<String> conversationIds = conversation.getUserIds();
+                        if (currentStudent != null) {
+                            if (conversationIds.contains(currentStudent.getId())) {
+                                Log.d(TAG, "Conversation contains current student id");
+                                myConversations.add(conversation);
+                            } else {
+                                Log.d(TAG, "Conversation DOES NOT current student id");
+                            }
+                        } else if (currentEmployee != null) {
+                            if (conversationIds.contains(currentEmployee.getId())) {
+                                Log.d(TAG, "Conversation contains current employee id");
+                                myConversations.add(conversation);
+                            } else {
+                                Log.d(TAG, "Conversation DOES NOT current employee id");
+                            }
+                        }
+                    }
+                }
+            }
+
+            // TODO: Implement this
+            postMyConversationsListener();
+        }
+
+        @Override
+        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+        }
+    };
+
     public void showCreateConversation(View v) {
         newConversationUsername = findViewById(R.id.newConversationUsername);
         createConversationButton = findViewById(R.id.createConversationButton);
@@ -229,6 +275,7 @@ public class MessagesActivity extends AppCompatActivity {
     public void getMyConversations() {
         // get all conversations
         Query myConversationsQuery = dbRef.child("Conversations").orderByChild("id");
+        myConversationsQuery.addListenerForSingleValueEvent(myConversationsListener);
     }
 
     private void findAndSetCurrentUser() {
