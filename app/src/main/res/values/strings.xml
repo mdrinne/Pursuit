@@ -34,5 +34,6 @@
     <string name="strCompanyCode">Company Code</string>
     <string name="strInvitationCode">Invitation Code</string>
     <string name="strPosition">Position</string>
+    <string name="strDelete">Delete</string>
 
 </resources>

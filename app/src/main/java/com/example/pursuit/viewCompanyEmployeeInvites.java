@@ -5,7 +5,6 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
@@ -34,9 +33,11 @@ public class viewCompanyEmployeeInvites extends AppCompatActivity {
     Company currentCompany;
     String currentRole;
     BottomNavigationView bottomNavigation;
-    private ArrayList<EmployeeInvite> companyInvites;
 
-    RecyclerView activeInvites;
+    private ArrayList<EmployeeInvite> companyInvites;
+    private RecyclerView activeInvites;
+    private inviteAdapter mAdapter;
+    private RecyclerView.LayoutManager mLayoutManager;
 
 
     @Override
@@ -51,15 +52,7 @@ public class viewCompanyEmployeeInvites extends AppCompatActivity {
 
         dbref = FirebaseDatabase.getInstance().getReference();
 
-        activeInvites = findViewById(R.id.rcycEmployeeInvites);
-
         Query inviteQuery = dbref.child("EmployeeInvites").child(currentCompany.getId()).orderByKey();
-
-        if (inviteQuery == null) {
-            Log.d(TAG, "Invite query is null");
-        } else {
-            Log.d(TAG, "Invite query is not null");
-        }
 
         inviteQuery.addListenerForSingleValueEvent(employeeInviteListener);
     }
@@ -70,22 +63,16 @@ public class viewCompanyEmployeeInvites extends AppCompatActivity {
         @Override
         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
             companyInvites = new ArrayList<>();
-            Log.d(TAG, "In employeeInviteListener onDataChange");
+            companyInvites.clear();
+
             if (dataSnapshot.exists()) {
-                Log.d(TAG, "Snapshot exists");
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    Log.d(TAG, "looping in snapshot");
                     EmployeeInvite invite = snapshot.getValue(EmployeeInvite.class);
-                    if (invite == null) {
-                        Log.d(TAG, "invite is null");
-                    } else {
-                        Log.d(TAG, "invite exists");
-                    }
                     companyInvites.add(invite);
                 }
             }
 
-            postOnCreate();
+            buildRecyclerView();
         }
 
         @Override
@@ -118,7 +105,6 @@ public class viewCompanyEmployeeInvites extends AppCompatActivity {
             };
 
     private void initializeCurrentCompany() {
-        Log.d(TAG, "initializing company");
         currentCompany = ((PursuitApplication) this.getApplicationContext()).getCurrentCompany();
     }
 
@@ -126,12 +112,29 @@ public class viewCompanyEmployeeInvites extends AppCompatActivity {
         currentRole = ((PursuitApplication) this.getApplicationContext()).getRole();
     }
 
+    public void removeInvite(Integer position) {
+        EmployeeInvite invite = companyInvites.get(position);
+        dbref.child("EmployeeInvites").child(currentCompany.getId()).child(invite.getCode()).removeValue();
+        companyInvites.remove(invite);
+        mAdapter.notifyItemRemoved(position);
+    }
 
-    private void postOnCreate() {
-        Log.d(TAG, Integer.toString(companyInvites.size()));
-        inviteAdapter myAdapter = new inviteAdapter(this, companyInvites);
-        activeInvites.setAdapter(myAdapter);
-        activeInvites.setLayoutManager(new LinearLayoutManager(this));
+
+    private void buildRecyclerView() {
+        activeInvites = findViewById(R.id.rcycEmployeeInvites);
+        activeInvites.setHasFixedSize(false);
+        mLayoutManager = new LinearLayoutManager(this);
+        mAdapter = new inviteAdapter(companyInvites);
+
+        activeInvites.setLayoutManager(mLayoutManager);
+        activeInvites.setAdapter(mAdapter);
+
+        mAdapter.setOnItemClickListener(new inviteAdapter.OnItemClickListener() {
+            @Override
+            public void onDeleteClick(int position) {
+                removeInvite(position);
+            }
+        });
     }
 
     public void inviteEmployee(View v) {
