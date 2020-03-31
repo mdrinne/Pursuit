@@ -10,9 +10,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".viewCompaniesActivity"></activity>
-        <!-- <activity android:name=".myProfileActivity" /> -->
-        <activity android:name=".StudentProfileActivity"></activity>
+        <activity
+            android:name=".MessagesActivity"
+            android:label="@string/title_activity_messages"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".viewCompaniesActivity" /> <!-- <activity android:name=".myProfileActivity" /> -->
+        <activity android:name=".StudentProfileActivity" />
         <activity android:name=".aboutPursuitActivity" />
         <activity android:name=".LandingActivity" />
         <activity android:name=".RegistrationActivity" />

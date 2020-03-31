@@ -48,6 +48,9 @@ public class CompanyProfileActivity extends AppCompatActivity{
                             finish();
                             return true;
                         case R.id.navigation_messages:
+                            Intent i1 = new Intent(CompanyProfileActivity.this, MessagesActivity.class);
+                            startActivity(i1);
+                            finish();
                             return true;
                         case R.id.navigation_profile:
                             Intent i2 = new Intent(CompanyProfileActivity.this, CompanyProfileActivity.class);
