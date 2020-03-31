@@ -1,11 +1,9 @@
 package com.example.pursuit;
 
-import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -19,7 +17,6 @@ import java.util.ArrayList;
 public class inviteAdapter extends RecyclerView.Adapter<inviteAdapter.MyViewHolder> {
 
     ArrayList<EmployeeInvite> employeeInvites;
-//    Context context;
 
     private OnItemClickListener mListener;
 
@@ -77,7 +74,6 @@ public class inviteAdapter extends RecyclerView.Adapter<inviteAdapter.MyViewHold
 
     @Override
     public int getItemCount() {
-        Log.d("getItemCount", "invite count: " + employeeInvites.size());
         return employeeInvites.size();
     }
 
