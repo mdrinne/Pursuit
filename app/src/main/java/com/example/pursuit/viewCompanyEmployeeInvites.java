@@ -34,9 +34,11 @@ public class viewCompanyEmployeeInvites extends AppCompatActivity {
     Company currentCompany;
     String currentRole;
     BottomNavigationView bottomNavigation;
-    private ArrayList<EmployeeInvite> companyInvites;
 
-    RecyclerView activeInvites;
+    private ArrayList<EmployeeInvite> companyInvites;
+    private RecyclerView activeInvites;
+    private inviteAdapter mAdapter;
+    private RecyclerView.LayoutManager mLayoutManager;
 
 
     @Override
@@ -51,7 +53,8 @@ public class viewCompanyEmployeeInvites extends AppCompatActivity {
 
         dbref = FirebaseDatabase.getInstance().getReference();
 
-        activeInvites = findViewById(R.id.rcycEmployeeInvites);
+//        activeInvites = findViewById(R.id.rcycEmployeeInvites);
+//        buildRecyclerView();
 
         Query inviteQuery = dbref.child("EmployeeInvites").child(currentCompany.getId()).orderByKey();
 
@@ -85,7 +88,7 @@ public class viewCompanyEmployeeInvites extends AppCompatActivity {
                 }
             }
 
-            postOnCreate();
+            buildRecyclerView();
         }
 
         @Override
@@ -126,12 +129,32 @@ public class viewCompanyEmployeeInvites extends AppCompatActivity {
         currentRole = ((PursuitApplication) this.getApplicationContext()).getRole();
     }
 
+    public void removeInvite(Integer position) {
+        EmployeeInvite invite = companyInvites.get(position);
+        dbref.child("EmployeeInvites").child(currentCompany.getId()).child(invite.getCode()).removeValue();
+        companyInvites.remove(position);
+        mAdapter.notifyItemRemoved(position);
+    }
 
-    private void postOnCreate() {
-        Log.d(TAG, Integer.toString(companyInvites.size()));
-        inviteAdapter myAdapter = new inviteAdapter(this, companyInvites);
-        activeInvites.setAdapter(myAdapter);
-        activeInvites.setLayoutManager(new LinearLayoutManager(this));
+
+    private void buildRecyclerView() {
+//        inviteAdapter myAdapter = new inviteAdapter(this, companyInvites);
+//        activeInvites.setAdapter(myAdapter);
+//        activeInvites.setLayoutManager(new LinearLayoutManager(this));
+        activeInvites = findViewById(R.id.rcycEmployeeInvites);
+        activeInvites.setHasFixedSize(true);
+        mLayoutManager = new LinearLayoutManager(this);
+        mAdapter = new inviteAdapter(companyInvites);
+
+        activeInvites.setLayoutManager(mLayoutManager);
+        activeInvites.setAdapter(mAdapter);
+
+        mAdapter.setOnItemClickListener(new inviteAdapter.OnItemClickListener() {
+            @Override
+            public void onDeleteClick(int position) {
+                removeInvite(position);
+            }
+        });
     }
 
     public void inviteEmployee(View v) {
