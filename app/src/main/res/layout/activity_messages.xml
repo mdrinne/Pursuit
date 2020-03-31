@@ -51,6 +51,14 @@
         app:layout_constraintTop_toBottomOf="@+id/newConversationUsername"
         android:onClick="createConversation"/>
 
+    <ListView
+        android:id="@+id/conversations_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="2"
+        android:divider="#fff"
+        app:layout_constraintTop_toTopOf="@id/messageActivityTitle" />
+
     <FrameLayout
         android:id="@+id/container"
         android:layout_width="match_parent"

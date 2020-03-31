@@ -1,6 +1,8 @@
 package com.example.pursuit;
 
+import com.example.pursuit.models.Conversation;
 import com.example.pursuit.models.Employee;
+import com.example.pursuit.ConversationAdapter;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import android.content.Intent;
@@ -10,9 +12,11 @@ import android.view.View;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.content.Context;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -41,12 +45,18 @@ public class MessagesActivity extends AppCompatActivity {
     Button createConversationButton;
 
     Student currentStudent = null;
+    Employee currentEmployee = null;
     Company currentCompany = null;
     String  currentRole = null;
 
     private Student matchedStudentUsername;
     private Employee matchedEmployeeUsername;
     private String checkUsername;
+    private ConversationAdapter conversationAdapter;
+    private Conversation newConversation;
+    private ListView conversationsView;
+    private ArrayList<Conversation> myConversations;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +64,12 @@ public class MessagesActivity extends AppCompatActivity {
         setContentView(R.layout.activity_messages);
         bottomNavigation = findViewById(R.id.bottom_navigation);
         bottomNavigation.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
+
+        getMyConversations();
+
+        conversationAdapter = new ConversationAdapter(this, myConversations);
+        conversationsView = findViewById(R.id.conversations_view);
+        conversationsView.setAdapter(conversationAdapter);
 
         findAndSetCurrentUser();
         dbRef = FirebaseDatabase.getInstance().getReference();
@@ -92,7 +108,12 @@ public class MessagesActivity extends AppCompatActivity {
     public void postStudentUsernameListener() {
         if (matchedStudentUsername != null) {
             // create new conversation with this student
-            Toast.makeText(view.getContext(), "This is a student username!", Toast.LENGTH_LONG).show();
+            writeNewConversation();
+
+            conversationAdapter.add(newConversation);
+            conversationsView.setSelection(conversationsView.getCount() - 1);
+
+            Toast.makeText(view.getContext(), "Conversation Created!", Toast.LENGTH_LONG).show();
         } else {
             Query employeeUsernameQuery = dbRef.child("Employees").orderByChild("username").equalTo(checkUsername);
             employeeUsernameQuery.addListenerForSingleValueEvent(employeeUsernameListener);
@@ -121,7 +142,12 @@ public class MessagesActivity extends AppCompatActivity {
     public void postEmployeeUsernameListener() {
         if (matchedEmployeeUsername != null) {
             // create new conversation with this employee
-            Toast.makeText(view.getContext(), "This is an employee username!", Toast.LENGTH_LONG).show();
+            writeNewConversation();
+
+            conversationAdapter.add(newConversation);
+            conversationsView.setSelection(conversationsView.getCount() - 1);
+
+            Toast.makeText(view.getContext(), "Conversation Created!", Toast.LENGTH_LONG).show();
         } else {
             Toast.makeText(view.getContext(), "This username does not exist!", Toast.LENGTH_LONG).show();
         }
@@ -178,9 +204,38 @@ public class MessagesActivity extends AppCompatActivity {
         }
       };
 
+    public void writeNewConversation() {
+
+        ArrayList<String> userIds = new ArrayList<>();
+        if (currentRole == "Student") {
+            userIds.add(currentStudent.getId());
+        } else {
+            userIds.add(currentEmployee.getId());
+        }
+
+        if (matchedStudentUsername != null) {
+            userIds.add(matchedStudentUsername.getId());
+        } else if (matchedEmployeeUsername != null) {
+            userIds.add(matchedEmployeeUsername.getId());
+        } else {
+            Toast.makeText(view.getContext(), "Something went wrong!", Toast.LENGTH_LONG).show();
+        }
+
+        String id = RandomKeyGenerator.randomAlphaNumeric(16);
+        newConversation = new Conversation(id, userIds);
+        dbRef.child("Conversations").child(id).setValue(newConversation);
+    }
+
+    public void getMyConversations() {
+        // get all conversations
+        Query myConversationsQuery = dbRef.child("Conversations").orderByChild("id");
+    }
+
     private void findAndSetCurrentUser() {
         if (((PursuitApplication) this.getApplication()).getCurrentStudent() != null) {
             currentStudent = ((PursuitApplication) this.getApplication()).getCurrentStudent();
+        } else if (((PursuitApplication) this.getApplication()).getCurrentEmployee() != null) {
+            currentEmployee = ((PursuitApplication) this.getApplication()).getCurrentEmployee();
         } else {
             currentCompany = ((PursuitApplication) this.getApplication()).getCurrentCompany();
         }
