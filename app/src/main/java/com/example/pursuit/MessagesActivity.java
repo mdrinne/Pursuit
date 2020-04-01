@@ -203,6 +203,7 @@ public class MessagesActivity extends AppCompatActivity {
     // conversations should be an array of Conversations that actually have userIds set (test this)
     // then, need to figure out attaching to the listview, getting things to show up, etc.
     public void postMyConversationsListener() {
+        Log.d("MYCONVO_SIZE", String.valueOf(myConversations.size()));
         conversationAdapter = new ConversationAdapter(this, myConversations);
         conversationsView = findViewById(R.id.conversations_view);
         conversationsView.setAdapter(conversationAdapter);
