@@ -207,6 +207,8 @@ public class MessagesActivity extends AppCompatActivity {
         conversationAdapter = new ConversationAdapter(this, myConversations);
         conversationsView = findViewById(R.id.conversations_view);
         conversationsView.setAdapter(conversationAdapter);
+//        conversationAdapter.add(myConversations.get(0));
+        conversationAdapter.addAll(myConversations);
     }
 
     public void showCreateConversation(View v) {
@@ -280,6 +282,8 @@ public class MessagesActivity extends AppCompatActivity {
         String id = RandomKeyGenerator.randomAlphaNumeric(16);
         newConversation = new Conversation(id, userIds);
         dbRef.child("Conversations").child(id).setValue(newConversation);
+
+        conversationAdapter.add(newConversation);
     }
 
     public void getMyConversations() {

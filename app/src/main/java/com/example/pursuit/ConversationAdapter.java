@@ -1,5 +1,6 @@
 package com.example.pursuit;
 
+import android.util.Log;
 import android.app.Activity;
 import android.view.LayoutInflater;
 import android.widget.ArrayAdapter;
@@ -16,16 +17,26 @@ import com.example.pursuit.models.Conversation;
 import java.util.ArrayList;
 
 public class ConversationAdapter extends ArrayAdapter<Conversation> {
+    private String TAG = "ConversationAdapter";
 
-    ArrayList<Conversation> conversations = new ArrayList<>();
-    Context context;
+    private ArrayList<Conversation> conversations = new ArrayList<>();
 
     public ConversationAdapter(Context context, ArrayList<Conversation> conversations) {
         super(context, R.layout.conversation, conversations);
+        Log.d(TAG, "in ConversationAdapter constructor");
     }
 
     public void add(Conversation conversation) {
+        Log.d(TAG, "adding to the adapter");
         this.conversations.add(conversation);
+        notifyDataSetChanged();
+    }
+
+    public void addAll(ArrayList<Conversation> conversations) {
+        Log.d(TAG, "adding all");
+        for (int i = 0; i < conversations.size(); i++) {
+            this.conversations.add(conversations.get(i));
+        }
         notifyDataSetChanged();
     }
 
@@ -46,21 +57,27 @@ public class ConversationAdapter extends ArrayAdapter<Conversation> {
 
     @Override
     public View getView(int i, View convertView, ViewGroup parent) {
+        Log.d(TAG, "in getView");
         Conversation conversation = getItem(i);
+        if (conversation != null) {
+            Log.d(TAG, "conversation is not null");
+        }
 
         ConversationViewHolder viewHolder;
 
         if (convertView == null) {
+            Log.d(TAG, "convertView is null");
             viewHolder = new ConversationViewHolder();
             LayoutInflater inflater = LayoutInflater.from(getContext());
             convertView = inflater.inflate(R.layout.conversation, parent, false);
             viewHolder.conversationTitle = (TextView) convertView.findViewById(R.id.conversation_title);
             convertView.setTag(viewHolder);
         } else {
+            Log.d(TAG, "convertView is NOT null");
             viewHolder = (ConversationViewHolder) convertView.getTag();
         }
 
-        viewHolder.conversationTitle.setText(conversation.getUserIds().get(0));
+        viewHolder.conversationTitle.setText(conversation.getId());
 
         return convertView;
     }
