@@ -76,17 +76,14 @@ public class LandingActivity extends AppCompatActivity {
             case R.id.navigation_messages:
                 Intent i1 = new Intent(LandingActivity.this, MessagesActivity.class);
                 startActivity(i1);
-                finish();
                 return true;
             case R.id.navigation_profile:
                 if (currentStudent != null) {
                     Intent i = new Intent(LandingActivity.this, StudentProfileActivity.class);
                     startActivity(i);
-                    finish();
                 } else {
                     Intent i = new Intent(LandingActivity.this, CompanyProfileActivity.class);
                     startActivity(i);
-                    finish();
                 }
               return true;
           }

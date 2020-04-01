@@ -1,5 +1,6 @@
 package com.example.pursuit;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -31,7 +32,9 @@ public class MessagesActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                
+                Intent i = new Intent(MessagesActivity.this, CreateMessageActivity.class);
+                startActivity(i);
+                finish();
             }
         });
     }
