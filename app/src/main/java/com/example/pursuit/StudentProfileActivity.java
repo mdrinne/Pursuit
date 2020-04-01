@@ -4,6 +4,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
@@ -19,6 +20,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.pursuit.models.Student;
+
+import java.io.InputStream;
 
 public class StudentProfileActivity extends AppCompatActivity {
 
@@ -83,7 +86,7 @@ public class StudentProfileActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && null != data) {
-            Uri selectedImage = data.getData();
+            final Uri selectedImage = data.getData();
             String[] filePathColumn = { MediaStore.Images.Media.DATA };
 
             Cursor cursor = getContentResolver().query(selectedImage,
@@ -94,8 +97,13 @@ public class StudentProfileActivity extends AppCompatActivity {
             String picturePath = cursor.getString(columnIndex);
             cursor.close();
 
+            // Resize image
+            Bitmap resizedBitmap = Bitmap.createScaledBitmap(BitmapFactory.decodeFile(picturePath),
+                    160, 160, true);
+
             ImageView imageView = (ImageView) findViewById(R.id.imageView6);
-            imageView.setImageBitmap(BitmapFactory.decodeFile(picturePath));
+            imageView.setImageBitmap(resizedBitmap);
+            //imageView.setImageBitmap(BitmapFactory.decodeFile(picturePath));
         }
     }
 
