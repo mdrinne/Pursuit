@@ -14,12 +14,16 @@ public class Conversation {
         // DataSnapshot.getValue(Conversation.class)
     }
 
-    public Conversation(String id, ArrayList<String> UserIds) {
+    public Conversation(String id, ArrayList<String> userIds) {
       this.id = id;
-      this.userIds = UserIds;
+      this.userIds = userIds;
     }
 
-    public void setUserIds(ArrayList<String> UserIds) {
+    public String getId() {
+        return id;
+    }
+
+    public void setUserIds(ArrayList<String> userIds) {
         this.userIds = userIds;
     }
 

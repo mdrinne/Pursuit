@@ -69,14 +69,10 @@ public class MessagesActivity extends AppCompatActivity {
         bottomNavigation = findViewById(R.id.bottom_navigation);
         bottomNavigation.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
 
-        getMyConversations();
-
-        conversationAdapter = new ConversationAdapter(this, myConversations);
-        conversationsView = findViewById(R.id.conversations_view);
-        conversationsView.setAdapter(conversationAdapter);
-
         findAndSetCurrentUser();
         dbRef = FirebaseDatabase.getInstance().getReference();
+
+        getMyConversations();
 
     }
 
@@ -166,9 +162,13 @@ public class MessagesActivity extends AppCompatActivity {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     Log.d(TAG, "Looping in myConversations snapshot");
                     Conversation conversation = snapshot.getValue(Conversation.class);
+                    ArrayList<String> cIds = (ArrayList<String>) snapshot.child("userIds").getValue();
+                    conversation.setUserIds(cIds);
                     if (conversation == null) {
                         Log.d(TAG, "Conversation is null");
                     } else {
+                        Log.d(TAG, "conversation is not null");
+
                         ArrayList<String> conversationIds = conversation.getUserIds();
                         if (currentStudent != null) {
                             if (conversationIds.contains(currentStudent.getId())) {
@@ -198,6 +198,15 @@ public class MessagesActivity extends AppCompatActivity {
 
         }
     };
+
+    // TODO: Finish this
+    // conversations should be an array of Conversations that actually have userIds set (test this)
+    // then, need to figure out attaching to the listview, getting things to show up, etc.
+    public void postMyConversationsListener() {
+        conversationAdapter = new ConversationAdapter(this, myConversations);
+        conversationsView = findViewById(R.id.conversations_view);
+        conversationsView.setAdapter(conversationAdapter);
+    }
 
     public void showCreateConversation(View v) {
         newConversationUsername = findViewById(R.id.newConversationUsername);
@@ -274,8 +283,9 @@ public class MessagesActivity extends AppCompatActivity {
 
     public void getMyConversations() {
         // get all conversations
-        Query myConversationsQuery = dbRef.child("Conversations").orderByChild("id");
-        myConversationsQuery.addListenerForSingleValueEvent(myConversationsListener);
+        DatabaseReference conversationsRef = dbRef.child("Conversations");
+        conversationsRef.addValueEventListener(myConversationsListener);
+        Log.d(TAG, "just added the VEL from getMyConversations()");
     }
 
     private void findAndSetCurrentUser() {
