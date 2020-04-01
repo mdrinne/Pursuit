@@ -12,7 +12,6 @@ import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.TextView;
 
@@ -21,7 +20,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.pursuit.models.Student;
 
-import java.io.InputStream;
+import java.io.IOException;
 
 public class StudentProfileActivity extends AppCompatActivity {
 
@@ -31,6 +30,10 @@ public class StudentProfileActivity extends AppCompatActivity {
     TextView studentMinor;
     TextView studentGPA;
     TextView studentBio;
+    ImageView imageView;
+    Button btnSelect;
+    Uri filePath;
+    final int PICK_IMAGE_REQUEST = 22;
     BottomNavigationView bottomNavigation;
     Student currentStudent;
     private static int RESULT_LOAD_IMAGE = 1;
@@ -69,7 +72,18 @@ public class StudentProfileActivity extends AppCompatActivity {
         // LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(width,height);
         // profilePhoto.setLayoutParams(params);
 
-        Button buttonLoadImage = (Button) findViewById(R.id.buttonLoadPicture);
+        btnSelect = findViewById(R.id.buttonLoadPicture);
+        imageView = findViewById(R.id.imgStudentProfilePic);
+
+        btnSelect.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                SelectImage();
+            }
+        });
+
+        /*Button buttonLoadImage = (Button) findViewById(R.id.buttonLoadPicture);
         buttonLoadImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -78,32 +92,50 @@ public class StudentProfileActivity extends AppCompatActivity {
 
                 startActivityForResult(i, RESULT_LOAD_IMAGE);
             }
-        });
+        });*/
+    }
+
+    private void SelectImage()
+    {
+
+        // Defining Implicit Intent to mobile gallery
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(
+                Intent.createChooser(
+                        intent,
+                        "Select Image from here..."),
+                PICK_IMAGE_REQUEST);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && null != data) {
-            final Uri selectedImage = data.getData();
-            String[] filePathColumn = { MediaStore.Images.Media.DATA };
+        if (requestCode == PICK_IMAGE_REQUEST
+                && resultCode == RESULT_OK
+                && data != null
+                && data.getData() != null) {
 
-            Cursor cursor = getContentResolver().query(selectedImage,
-                    filePathColumn, null, null, null);
-            cursor.moveToFirst();
+            // Get the Uri of data
+            filePath = data.getData();
+            try {
 
-            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-            String picturePath = cursor.getString(columnIndex);
-            cursor.close();
+                // Setting image on image view using Bitmap
+                Bitmap bitmap = MediaStore
+                        .Images
+                        .Media
+                        .getBitmap(
+                                getContentResolver(),
+                                filePath);
+                imageView.setImageBitmap(bitmap);
+            }
 
-            // Resize image
-            Bitmap resizedBitmap = Bitmap.createScaledBitmap(BitmapFactory.decodeFile(picturePath),
-                    160, 160, true);
-
-            ImageView imageView = (ImageView) findViewById(R.id.imageView6);
-            imageView.setImageBitmap(resizedBitmap);
-            //imageView.setImageBitmap(BitmapFactory.decodeFile(picturePath));
+            catch (IOException e) {
+                // Log the exception
+                e.printStackTrace();
+            }
         }
     }
 
