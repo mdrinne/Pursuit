@@ -10,7 +10,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".CreateMessageActivity"></activity>
+        <activity android:name=".CreateOpportunity"></activity>
+        <activity
+            android:name=".ViewOpportunities"
+            android:label="@string/title_activity_view_opportunities"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".CreateMessageActivity" />
         <activity
             android:name=".MessagesActivity"
             android:label="@string/title_activity_messages"
