@@ -1,16 +1,19 @@
 package com.example.pursuit;
 
 import android.util.Log;
-import android.app.Activity;
 import android.view.LayoutInflater;
 import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
 import android.content.Context;
 import android.widget.TextView;
 import android.view.View;
 import android.view.ViewGroup;
-import androidx.recyclerview.widget.RecyclerView.ViewHolder;
-import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.database.Query;
 
 import com.example.pursuit.models.Conversation;
 
@@ -20,6 +23,8 @@ public class ConversationAdapter extends ArrayAdapter<Conversation> {
     private String TAG = "ConversationAdapter";
 
     private ArrayList<Conversation> conversations = new ArrayList<>();
+
+    private DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference();
 
     public ConversationAdapter(Context context, ArrayList<Conversation> conversations) {
         super(context, R.layout.conversation, conversations);
@@ -77,7 +82,7 @@ public class ConversationAdapter extends ArrayAdapter<Conversation> {
             viewHolder = (ConversationViewHolder) convertView.getTag();
         }
 
-        viewHolder.conversationTitle.setText(conversation.getId());
+        viewHolder.conversationTitle.setText(conversation.getOtherUserRole() + ": " + conversation.getOtherUserUsername());
 
         return convertView;
     }

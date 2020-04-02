@@ -162,29 +162,29 @@ public class MessagesActivity extends AppCompatActivity {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     Log.d(TAG, "Looping in myConversations snapshot");
                     Conversation conversation = snapshot.getValue(Conversation.class);
-                    ArrayList<String> cIds = (ArrayList<String>) snapshot.child("userIds").getValue();
-                    conversation.setUserIds(cIds);
+//                    ArrayList<String> cIds = (ArrayList<String>) snapshot.child("userIds").getValue();
+//                    conversation.setUserIds(cIds);
                     if (conversation == null) {
                         Log.d(TAG, "Conversation is null");
                     } else {
                         Log.d(TAG, "conversation is not null");
-
-                        ArrayList<String> conversationIds = conversation.getUserIds();
-                        if (currentStudent != null) {
-                            if (conversationIds.contains(currentStudent.getId())) {
-                                Log.d(TAG, "Conversation contains current student id");
-                                myConversations.add(conversation);
-                            } else {
-                                Log.d(TAG, "Conversation DOES NOT current student id");
-                            }
-                        } else if (currentEmployee != null) {
-                            if (conversationIds.contains(currentEmployee.getId())) {
-                                Log.d(TAG, "Conversation contains current employee id");
-                                myConversations.add(conversation);
-                            } else {
-                                Log.d(TAG, "Conversation DOES NOT current employee id");
-                            }
-                        }
+                        myConversations.add(conversation);
+//                        ArrayList<String> conversationIds = conversation.getUserIds();
+//                        if (currentStudent != null) {
+//                            if (conversationIds.contains(currentStudent.getId())) {
+//                                Log.d(TAG, "Conversation contains current student id");
+//                                myConversations.add(conversation);
+//                            } else {
+//                                Log.d(TAG, "Conversation DOES NOT current student id");
+//                            }
+//                        } else if (currentEmployee != null) {
+//                            if (conversationIds.contains(currentEmployee.getId())) {
+//                                Log.d(TAG, "Conversation contains current employee id");
+//                                myConversations.add(conversation);
+//                            } else {
+//                                Log.d(TAG, "Conversation DOES NOT current employee id");
+//                            }
+//                        }
                     }
                 }
             }
@@ -203,11 +203,11 @@ public class MessagesActivity extends AppCompatActivity {
     // conversations should be an array of Conversations that actually have userIds set (test this)
     // then, need to figure out attaching to the listview, getting things to show up, etc.
     public void postMyConversationsListener() {
-        Log.d("MYCONVO_SIZE", String.valueOf(myConversations.size()));
+        Log.d(TAG, "in postMyConversationsListener");
+        Log.d("MY_CONVOS_SIZE", String.valueOf(myConversations.size()));
         conversationAdapter = new ConversationAdapter(this, myConversations);
         conversationsView = findViewById(R.id.conversations_view);
         conversationsView.setAdapter(conversationAdapter);
-//        conversationAdapter.add(myConversations.get(0));
         conversationAdapter.addAll(myConversations);
     }
 
@@ -263,32 +263,42 @@ public class MessagesActivity extends AppCompatActivity {
       };
 
     public void writeNewConversation() {
-
-        ArrayList<String> userIds = new ArrayList<>();
-        if (currentRole == "Student") {
-            userIds.add(currentStudent.getId());
-        } else {
-            userIds.add(currentEmployee.getId());
-        }
+        String otherUserId = null;
+        String otherUserUsername = null;
+        String otherUserRole = null;
 
         if (matchedStudentUsername != null) {
-            userIds.add(matchedStudentUsername.getId());
+            otherUserId = matchedStudentUsername.getId();
+            otherUserUsername = matchedStudentUsername.getUsername();
+            otherUserRole = "Student";
         } else if (matchedEmployeeUsername != null) {
-            userIds.add(matchedEmployeeUsername.getId());
+            otherUserId = matchedEmployeeUsername.getId();
+            otherUserUsername = matchedEmployeeUsername.getUsername();
+            otherUserRole = "Employee";
         } else {
             Toast.makeText(view.getContext(), "Something went wrong!", Toast.LENGTH_LONG).show();
         }
 
         String id = RandomKeyGenerator.randomAlphaNumeric(16);
-        newConversation = new Conversation(id, userIds);
-        dbRef.child("Conversations").child(id).setValue(newConversation);
+        newConversation = new Conversation(id, otherUserId, otherUserUsername, otherUserRole);
+        if (currentStudent != null) {
+            dbRef.child("Students").child(currentStudent.getId()).child("Conversations").child(id).setValue(newConversation);
+        } else {
+            dbRef.child("Employees").child(currentEmployee.getId()).child("Conversations").child(id).setValue(newConversation);
+        }
 
         conversationAdapter.add(newConversation);
     }
 
     public void getMyConversations() {
         // get all conversations
-        DatabaseReference conversationsRef = dbRef.child("Conversations");
+        DatabaseReference conversationsRef;
+        if (currentStudent != null) {
+            conversationsRef = dbRef.child("Students").child(currentStudent.getId()).child("Conversations");
+        } else {
+            conversationsRef = dbRef.child("Employees").child(currentEmployee.getId()).child("Conversations");
+        }
+
         conversationsRef.addValueEventListener(myConversationsListener);
         Log.d(TAG, "just added the VEL from getMyConversations()");
     }
