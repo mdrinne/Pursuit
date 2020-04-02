@@ -86,6 +86,7 @@
                 android:layout_marginStart="18dp"
                 android:layout_marginLeft="18dp"
                 android:layout_marginTop="8dp"
+                android:onClick="editPicture"
                 android:text="@string/txtEditPic"
                 android:textSize="12sp"
                 app:layout_constraintStart_toStartOf="parent"
