@@ -131,5 +131,5 @@
     <string name="title_activity_view_opportunities">ViewOpportunities</string>
     <string name="txtCompanyProfilePic">Company Profile Picture</string>
     <string name="txtEditPic">Edit Picture</string>
-
+    <string name="upload_photo">Upload Photo</string>
 </resources>
