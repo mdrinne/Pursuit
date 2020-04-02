@@ -39,9 +39,9 @@ public class CompanyRegistration extends AppCompatActivity {
     EditText companyPassword;
     EditText companyReEnterPassword;
     EditText companyField;
+    EditText companyDescription;
 
     Company newCompany;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,9 +81,9 @@ public class CompanyRegistration extends AppCompatActivity {
         }
     };
 
-    private void writeNewCompany(String name, String email, String password, String field) {
+    private void writeNewCompany(String name, String email, String password, String field, String description) {
         String id = RandomKeyGenerator.randomAlphaNumeric(16);
-        newCompany = new Company(id, name, email, password, field);
+        newCompany = new Company(id, name, email, password, field, description);
         mRef.child("Companies").child(id).setValue(newCompany);
     }
 
@@ -131,7 +131,8 @@ public class CompanyRegistration extends AppCompatActivity {
     }
 
     public boolean checkForEmpties() {
-        if (isEmpty(companyName) || isEmpty(companyEmail) || isEmpty(companyField) || isEmpty(companyPassword)) {
+        if (isEmpty(companyName) || isEmpty(companyEmail) || isEmpty(companyField) || isEmpty(companyPassword)
+            || isEmpty(companyReEnterPassword) || isEmpty(companyDescription)) {
             Toast.makeText(view.getContext(), "All Fields are Required", Toast.LENGTH_SHORT).show();
             return true;
         }
@@ -154,7 +155,7 @@ public class CompanyRegistration extends AppCompatActivity {
                         Log.d(TAG, "email not taken");
 
                         writeNewCompany(toString(companyName), toString(companyEmail), toString(companyPassword),
-                                toString(companyField));
+                                toString(companyField), toString(companyDescription));
 
                         // set the currentCompany
                         ((PursuitApplication) this.getApplication()).setCurrentCompany(newCompany);
@@ -184,6 +185,7 @@ public class CompanyRegistration extends AppCompatActivity {
         companyPassword = findViewById(R.id.companyPassword);
         companyReEnterPassword = findViewById(R.id.companyReEnterPassword);
         companyField = findViewById(R.id.companyField);
+        companyDescription = findViewById(R.id.companyDescription);
 
         checkEmail = toString(companyEmail);
 

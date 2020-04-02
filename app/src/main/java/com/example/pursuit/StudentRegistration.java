@@ -133,7 +133,7 @@ public class StudentRegistration extends AppCompatActivity {
     };
 
     private void writeNewStudent(String fname, String lname, String university, String major, String minor, String gpa,
-            String bio, String email, String username, String password) {
+                                 String bio, String email, String username, String password) {
         String id = RandomKeyGenerator.randomAlphaNumeric(16);
         newStudent = new Student(id, fname, lname, university, major, minor, gpa, bio, email, username, password);
 
