@@ -12,6 +12,7 @@ public class Company {
     public String field;
 
     public Company() {
+        this.id = "";
         // default constructor required for calls to
         // DataSnapshot.getValue(Company.class)
     }

@@ -116,7 +116,7 @@
                 android:ems="10"
                 android:hint="@string/strGPA"
                 android:importantForAutofill="no"
-                android:inputType="numberDecimal"
+                android:inputType="text"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/txtMinor" />

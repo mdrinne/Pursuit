@@ -18,6 +18,7 @@ public class Employee {
     public Employee() {
         // default constructor required for calls to
         //        // DataSnapshot.getValue(Student.class)
+        this.id = "";
     }
 
 
