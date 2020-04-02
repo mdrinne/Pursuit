@@ -132,4 +132,5 @@
     <string name="txtCompanyProfilePic">Company Profile Picture</string>
     <string name="txtEditPic">Edit Picture</string>
     <string name="upload_photo">Upload Photo</string>
+    <string name="txtCompanyField">Field</string>
 </resources>
