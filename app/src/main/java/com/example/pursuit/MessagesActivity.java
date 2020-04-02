@@ -13,10 +13,8 @@ import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.ImageButton;
-import android.widget.TextView;
+
 import android.widget.Toast;
-import android.content.Context;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -30,8 +28,6 @@ import androidx.annotation.NonNull;
 
 import com.example.pursuit.models.Company;
 import com.example.pursuit.models.Student;
-import com.example.pursuit.models.Employee;
-import com.example.pursuit.models.Conversation;
 
 import java.util.ArrayList;
 
@@ -46,27 +42,22 @@ public class MessagesActivity extends AppCompatActivity {
     private ArrayList<Conversation> myConversations;
 
     private static final String TAG = "MessagesActivity";
-  
-    BottomNavigationView bottomNavigation;
+
     private DatabaseReference dbRef;
 
     private View view;
-    EditText newConversationUsername;
-    Button createConversationButton;
+    private EditText newConversationUsername;
 
-    Student currentStudent = null;
-    Employee currentEmployee = null;
-    Company currentCompany = null;
-    String  currentRole = null;
-
-
-
+    private Student currentStudent = null;
+    private Employee currentEmployee = null;
+    private Company currentCompany = null;
+    private String  currentRole = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_messages);
-        bottomNavigation = findViewById(R.id.bottom_navigation);
+        BottomNavigationView bottomNavigation = findViewById(R.id.bottom_navigation);
         bottomNavigation.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
 
         findAndSetCurrentUser();
@@ -87,11 +78,6 @@ public class MessagesActivity extends AppCompatActivity {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     Log.d(TAG, "looping in snapshot");
                     Student student = snapshot.getValue(Student.class);
-                    if (student == null) {
-                        Log.d(TAG, "student is null");
-                    } else {
-                        Log.d(TAG, "student exists: " + student.getUsername());
-                    }
                     matchedStudentUsername = student;
                 }
             }
@@ -156,40 +142,25 @@ public class MessagesActivity extends AppCompatActivity {
     ValueEventListener myConversationsListener = new ValueEventListener() {
         @Override
         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
             myConversations = new ArrayList<>();
+
             if (dataSnapshot.exists()) {
                 Log.d(TAG, "Snapshot exists for myConversations");
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     Log.d(TAG, "Looping in myConversations snapshot");
+
                     Conversation conversation = snapshot.getValue(Conversation.class);
-//                    ArrayList<String> cIds = (ArrayList<String>) snapshot.child("userIds").getValue();
-//                    conversation.setUserIds(cIds);
+
                     if (conversation == null) {
                         Log.d(TAG, "Conversation is null");
                     } else {
                         Log.d(TAG, "conversation is not null");
                         myConversations.add(conversation);
-//                        ArrayList<String> conversationIds = conversation.getUserIds();
-//                        if (currentStudent != null) {
-//                            if (conversationIds.contains(currentStudent.getId())) {
-//                                Log.d(TAG, "Conversation contains current student id");
-//                                myConversations.add(conversation);
-//                            } else {
-//                                Log.d(TAG, "Conversation DOES NOT current student id");
-//                            }
-//                        } else if (currentEmployee != null) {
-//                            if (conversationIds.contains(currentEmployee.getId())) {
-//                                Log.d(TAG, "Conversation contains current employee id");
-//                                myConversations.add(conversation);
-//                            } else {
-//                                Log.d(TAG, "Conversation DOES NOT current employee id");
-//                            }
-//                        }
                     }
                 }
             }
 
-            // TODO: Implement this
             postMyConversationsListener();
         }
 
@@ -199,12 +170,7 @@ public class MessagesActivity extends AppCompatActivity {
         }
     };
 
-    // TODO: Finish this
-    // conversations should be an array of Conversations that actually have userIds set (test this)
-    // then, need to figure out attaching to the listview, getting things to show up, etc.
     public void postMyConversationsListener() {
-        Log.d(TAG, "in postMyConversationsListener");
-        Log.d("MY_CONVOS_SIZE", String.valueOf(myConversations.size()));
         conversationAdapter = new ConversationAdapter(this, myConversations);
         conversationsView = findViewById(R.id.conversations_view);
         conversationsView.setAdapter(conversationAdapter);
@@ -213,7 +179,7 @@ public class MessagesActivity extends AppCompatActivity {
 
     public void showCreateConversation(View v) {
         newConversationUsername = findViewById(R.id.newConversationUsername);
-        createConversationButton = findViewById(R.id.createConversationButton);
+        Button createConversationButton = findViewById(R.id.createConversationButton);
 
         if (newConversationUsername.getVisibility() == View.INVISIBLE && createConversationButton.getVisibility() == View.INVISIBLE) {
             newConversationUsername.setVisibility(View.VISIBLE);
@@ -234,33 +200,6 @@ public class MessagesActivity extends AppCompatActivity {
         Query studentUsernameQuery = dbRef.child("Students").orderByChild("username").equalTo(checkUsername);
         studentUsernameQuery.addListenerForSingleValueEvent(studentUsernameListener);
     }
-
-    BottomNavigationView.OnNavigationItemSelectedListener navigationItemSelectedListener =
-      new BottomNavigationView.OnNavigationItemSelectedListener() {
-        @Override public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            switch (item.getItemId()) {
-            case R.id.navigation_home:
-                Intent home = new Intent(MessagesActivity.this, LandingActivity.class);
-                startActivity(home);
-                finish();
-                return true;
-            case R.id.navigation_messages:
-                return true;
-            case R.id.navigation_profile:
-                if (currentStudent != null) {
-                    Intent i = new Intent(MessagesActivity.this, StudentProfileActivity.class);
-                    startActivity(i);
-                    finish();
-                } else {
-                    Intent profile = new Intent(MessagesActivity.this, CompanyProfileActivity.class);
-                    startActivity(profile);
-                    finish();
-                }
-              return true;
-          }
-          return false;
-        }
-      };
 
     public void writeNewConversations() {
         String otherUserId;
@@ -293,7 +232,6 @@ public class MessagesActivity extends AppCompatActivity {
             dbRef.child("Students").child(currentStudent.getId()).child("Conversations").child(id).setValue(newConversation);
             counterpartOtherUserId = currentStudent.getId();
             counterpartOtherUserUsername = currentStudent.getUsername();
-            Log.d("COUNTER_OTHER_USERNAME", counterpartOtherUserUsername);
             counterpartOtherUserRole = "Student";
         } else {
             dbRef.child("Employees").child(currentEmployee.getId()).child("Conversations").child(id).setValue(newConversation);
@@ -341,5 +279,32 @@ public class MessagesActivity extends AppCompatActivity {
     public String toString(EditText text) {
         return text.getText().toString();
     }
+
+    BottomNavigationView.OnNavigationItemSelectedListener navigationItemSelectedListener =
+        new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.navigation_home:
+                        Intent home = new Intent(MessagesActivity.this, LandingActivity.class);
+                        startActivity(home);
+                        finish();
+                        return true;
+                    case R.id.navigation_messages:
+                        return true;
+                    case R.id.navigation_profile:
+                        if (currentStudent != null) {
+                            Intent i = new Intent(MessagesActivity.this, StudentProfileActivity.class);
+                            startActivity(i);
+                            finish();
+                        } else {
+                            Intent profile = new Intent(MessagesActivity.this, CompanyProfileActivity.class);
+                            startActivity(profile);
+                            finish();
+                        }
+                        return true;
+                }
+                return false;
+            }
+        };
 
 }
