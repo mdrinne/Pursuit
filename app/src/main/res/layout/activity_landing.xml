@@ -59,6 +59,7 @@
         android:layout_marginLeft="161dp"
         android:layout_marginTop="32dp"
         android:foregroundGravity="clip_horizontal"
+        android:onClick="logoutCurrentUser"
         android:text="Log Out"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/viewCompaniesBtn" />

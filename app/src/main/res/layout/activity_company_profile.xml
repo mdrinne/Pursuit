@@ -19,36 +19,99 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toTopOf="@+id/container">
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <TextView
                 android:id="@+id/txtCompanyName"
-                android:layout_width="311dp"
+                android:layout_width="match_parent"
                 android:layout_height="74dp"
                 android:layout_gravity="center"
                 android:layout_marginTop="20dp"
                 android:gravity="center"
                 android:text="TextView"
-                android:textSize="36sp" />
+                android:textSize="36sp"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <Button
                 android:id="@+id/btnInviteEmployee"
-                android:layout_width="150dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="216dp"
                 android:onClick="inviteEmployee"
-                android:text="@string/strInviteEmployee" />
+                android:text="@string/strInviteEmployee"
+                app:layout_constraintTop_toBottomOf="@+id/txtCompanyName"
+                tools:layout_editor_absoluteX="0dp" />
 
-        </LinearLayout>
+            <Button
+                android:id="@+id/btnViewInvites"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="39dp"
+                android:onClick="viewInvites"
+                android:text="@string/strViewInvites"
+                app:layout_constraintTop_toBottomOf="@+id/btnInviteEmployee"
+                tools:layout_editor_absoluteX="1dp" />
+
+            <Button
+                android:id="@+id/btnViewOpportunities"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="52dp"
+                android:text="View Opportunities"
+                app:layout_constraintTop_toBottomOf="@+id/btnViewInvites" />
+
+            <ImageView
+                android:id="@+id/imgCompanyProfilePic"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                android:contentDescription="@string/txtCompanyProfilePic"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtCompanyName"
+                app:srcCompat="@drawable/ic_add_a_photo" />
+
+            <Button
+                android:id="@+id/button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="18dp"
+                android:layout_marginLeft="18dp"
+                android:layout_marginTop="8dp"
+                android:onClick="editPicture"
+                android:text="@string/txtEditPic"
+                android:textSize="12sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imgCompanyProfilePic" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 
-    <!--        </LinearLayout>-->
-    <!--    </ScrollView>-->
+    <FrameLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bottom_navigation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:background="@color/colorPrimary"
+            app:itemIconTint="@color/white"
+            app:itemTextColor="@color/white"
+            app:menu="@menu/bottom_navigation_menu" />
+
+    </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
