@@ -108,7 +108,7 @@ public class MessagesActivity extends AppCompatActivity {
     public void postStudentUsernameListener() {
         if (matchedStudentUsername != null) {
             // create new conversation with this student
-            writeNewConversation();
+            writeNewConversations();
 
             conversationAdapter.add(newConversation);
             conversationsView.setSelection(conversationsView.getCount() - 1);
@@ -142,7 +142,7 @@ public class MessagesActivity extends AppCompatActivity {
     public void postEmployeeUsernameListener() {
         if (matchedEmployeeUsername != null) {
             // create new conversation with this employee
-            writeNewConversation();
+            writeNewConversations();
 
             conversationAdapter.add(newConversation);
             conversationsView.setSelection(conversationsView.getCount() - 1);
@@ -262,10 +262,14 @@ public class MessagesActivity extends AppCompatActivity {
         }
       };
 
-    public void writeNewConversation() {
+    public void writeNewConversations() {
         String otherUserId;
         String otherUserUsername;
         String otherUserRole;
+
+        String counterpartOtherUserId;
+        String counterpartOtherUserUsername;
+        String counterpartOtherUserRole;
 
         if (matchedStudentUsername != null) {
             otherUserId = matchedStudentUsername.getId();
@@ -287,19 +291,24 @@ public class MessagesActivity extends AppCompatActivity {
         // Students/Employees > id > Conversations > id > newConversation
         if (currentStudent != null) {
             dbRef.child("Students").child(currentStudent.getId()).child("Conversations").child(id).setValue(newConversation);
+            counterpartOtherUserId = currentStudent.getId();
+            counterpartOtherUserUsername = currentStudent.getUsername();
+            Log.d("COUNTER_OTHER_USERNAME", counterpartOtherUserUsername);
+            counterpartOtherUserRole = "Student";
         } else {
-            // TODO
             dbRef.child("Employees").child(currentEmployee.getId()).child("Conversations").child(id).setValue(newConversation);
-//            dbRef.child("Companies").child(currentCompany.getId()).child("Conversations").child(id).setValue(newConversation);
+            counterpartOtherUserId = currentEmployee.getId();
+            counterpartOtherUserUsername = currentEmployee.getUsername();
+            counterpartOtherUserRole = "Employee";
         }
 
         // Add the newConversation's counterpart to the user/company it is with
-
+        String counterpartId = RandomKeyGenerator.randomAlphaNumeric(16);
+        Conversation counterpart = new Conversation(counterpartId, counterpartOtherUserId, counterpartOtherUserUsername, counterpartOtherUserRole);
         if (matchedStudentUsername != null) {
-            dbRef.child("Students").child(matchedStudentUsername.getId()).child("Conversations").child(id).setValue(newConversation);
+            dbRef.child("Students").child(matchedStudentUsername.getId()).child("Conversations").child(id).setValue(counterpart);
         } else {
-            // TODO
-            dbRef.child("Employees").child(matchedEmployeeUsername.getId()).child("Conversations").child(id).setValue(newConversation);
+            dbRef.child("Employees").child(matchedEmployeeUsername.getId()).child("Conversations").child(id).setValue(counterpart);
         }
 
         conversationAdapter.add(newConversation);
@@ -311,19 +320,15 @@ public class MessagesActivity extends AppCompatActivity {
         if (currentStudent != null) {
             conversationsRef = dbRef.child("Students").child(currentStudent.getId()).child("Conversations");
         } else {
-            // TODO
             conversationsRef = dbRef.child("Employees").child(currentEmployee.getId()).child("Conversations");
-//            conversationsRef = dbRef.child("Companies").child(currentCompany.getId()).child("Conversations");
         }
 
         conversationsRef.addValueEventListener(myConversationsListener);
-        Log.d(TAG, "just added the VEL from getMyConversations()");
     }
 
     private void findAndSetCurrentUser() {
         if (((PursuitApplication) this.getApplication()).getCurrentStudent() != null) {
             currentStudent = ((PursuitApplication) this.getApplication()).getCurrentStudent();
-            // TODO
         } else if (((PursuitApplication) this.getApplication()).getCurrentEmployee() != null) {
             currentEmployee = ((PursuitApplication) this.getApplication()).getCurrentEmployee();
         } else {
