@@ -39,6 +39,8 @@ public class CompanyProfileActivity extends AppCompatActivity{
     private static final String TAG = "CompanyProfileActivity";
 
     TextView companyName;
+    TextView companyField;
+    TextView companyDescription;
     Company currentCompany;
     BottomNavigationView bottomNavigation;
     ImageView companyProfilePic;
@@ -63,8 +65,7 @@ public class CompanyProfileActivity extends AppCompatActivity{
         initializeCurrentCompany();
         initializeCurrentRole();
 
-        companyName = findViewById(R.id.txtCompanyName);
-        companyName.setText(currentCompany.getName());
+        populateTextFields();
 
         dbref = FirebaseDatabase.getInstance().getReference();
         storageReference = FirebaseStorage.getInstance().getReference();
@@ -200,6 +201,17 @@ public class CompanyProfileActivity extends AppCompatActivity{
 
     private void initializeCurrentRole() {
         currentRole = ((PursuitApplication) this.getApplicationContext()).getRole();
+    }
+
+    private void populateTextFields() {
+        companyName = findViewById(R.id.txtCompanyName);
+        companyName.setText(currentCompany.getName());
+
+        companyField = findViewById(R.id.txtCompanyField);
+        companyField.setText(currentCompany.getField());
+
+        companyDescription = findViewById(R.id.txtCompanyDescription);
+        companyDescription.setText(currentCompany.getDescription());
     }
 
     public void inviteEmployee(View v) {
