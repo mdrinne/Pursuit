@@ -17,6 +17,7 @@ public class Student {
     public String password;
 
     public Student() {
+        this.id = "";
         // default constructor required for calls to
         // DataSnapshot.getValue(Student.class)
     }
