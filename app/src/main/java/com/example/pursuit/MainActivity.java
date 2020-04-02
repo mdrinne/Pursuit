@@ -240,7 +240,7 @@ public class MainActivity extends AppCompatActivity {
     private void postEmployeeUsernameListener() {
         if (matchedEmployeeUsername != null) {
             if (passwordsMatch(matchedEmployeeUsername.getPassword(), checkPassword)) {
-                ((PursuitApplication) this.getApplication()).setCurrentEmployee(matchedEmployeeEmail);
+                ((PursuitApplication) this.getApplication()).setCurrentEmployee(matchedEmployeeUsername);
 
                 Query employeeCompanyQuery = dbRef.child("Companies").orderByChild("name").equalTo(matchedEmployeeUsername.getCompanyName());
                 employeeCompanyQuery.addListenerForSingleValueEvent(getEmployeeCompanyListener);
