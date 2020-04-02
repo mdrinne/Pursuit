@@ -1,14 +1,16 @@
 package com.example.pursuit;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
-import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -19,10 +21,20 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.pursuit.models.Student;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
+import com.google.firebase.storage.StorageException;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
 
 public class StudentProfileActivity extends AppCompatActivity {
+
+    private static final String TAG = "StudentProfileActivity";
 
     TextView studentFullName;
     TextView studentUniversity;
@@ -30,10 +42,14 @@ public class StudentProfileActivity extends AppCompatActivity {
     TextView studentMinor;
     TextView studentGPA;
     TextView studentBio;
-    ImageView imageView;
+    ImageView studentProfilePic;
     Button btnSelect;
+
+    private DatabaseReference dbref;
     Uri filePath;
     final int PICK_IMAGE_REQUEST = 22;
+    FirebaseStorage storage;
+    StorageReference storageReference;
     BottomNavigationView bottomNavigation;
     Student currentStudent;
     private static int RESULT_LOAD_IMAGE = 1;
@@ -66,6 +82,13 @@ public class StudentProfileActivity extends AppCompatActivity {
         studentBio = findViewById(R.id.txtStudentBio);
         studentBio.setText(currentStudent.getBio());
 
+        dbref = FirebaseDatabase.getInstance().getReference();
+        storageReference = FirebaseStorage.getInstance().getReference();
+        storage = FirebaseStorage.getInstance();
+
+        studentProfilePic = findViewById(R.id.imgStudentProfilePic);
+        downloadStudentProfilePicture();
+
         // profilePhoto = findViewById(R.id.profilePhoto);
         // int width = 150;
         // int height = 150;
@@ -73,8 +96,6 @@ public class StudentProfileActivity extends AppCompatActivity {
         // profilePhoto.setLayoutParams(params);
 
         btnSelect = findViewById(R.id.buttonLoadPicture);
-        imageView = findViewById(R.id.imgStudentProfilePic);
-
         btnSelect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
@@ -82,18 +103,91 @@ public class StudentProfileActivity extends AppCompatActivity {
                 SelectImage();
             }
         });
-
-        /*Button buttonLoadImage = (Button) findViewById(R.id.buttonLoadPicture);
-        buttonLoadImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(Intent.ACTION_PICK,
-                        android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-
-                startActivityForResult(i, RESULT_LOAD_IMAGE);
-            }
-        });*/
     }
+
+    /* ********DATABASE******** */
+
+    private void downloadStudentProfilePicture() {
+        StorageReference profilePic = storageReference.child("images").child("StudentProfilePictures").child(currentStudent.getId());
+        profilePic.getDownloadUrl()
+                .addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        Log.d(TAG, uri.toString());
+                        Picasso.get().load(uri.toString()).into(studentProfilePic);
+
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        int errorCode = ((StorageException) e).getErrorCode();
+                        if (errorCode == StorageException.ERROR_OBJECT_NOT_FOUND) {
+                            Log.e(TAG, "Company does not have profile picture");
+                        }
+                    }
+                });
+    }
+
+    public void uploadImage()
+    {
+
+        Log.d(TAG, filePath.toString());
+        if (filePath != null) {
+
+            final ProgressDialog progressDialog
+                    = new ProgressDialog(this);
+            progressDialog.setTitle("Uploading...");
+            progressDialog.show();
+
+            StorageReference ref
+                    = storageReference
+                    .child(
+                            "images/StudentProfilePictures/"
+                                    + currentStudent.getId());
+
+            ref.putFile(filePath)
+                    .addOnSuccessListener(
+                            new OnSuccessListener<UploadTask.TaskSnapshot>() {
+
+                                @Override
+                                public void onSuccess(
+                                        UploadTask.TaskSnapshot taskSnapshot)
+                                {
+                                    progressDialog.dismiss();
+                                }
+                            })
+
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e)
+                        {
+                            progressDialog.dismiss();
+                            Log.e(TAG, e.getMessage());
+                        }
+                    })
+                    .addOnProgressListener(
+                            new OnProgressListener<UploadTask.TaskSnapshot>() {
+
+                                // Progress Listener for loading
+                                // percentage on the dialog box
+                                @Override
+                                public void onProgress(
+                                        UploadTask.TaskSnapshot taskSnapshot)
+                                {
+                                    double progress
+                                            = (100.0
+                                            * taskSnapshot.getBytesTransferred()
+                                            / taskSnapshot.getTotalByteCount());
+                                    progressDialog.setMessage(
+                                            "Uploaded "
+                                                    + (int)progress + "%");
+                                }
+                            });
+        }
+    }
+
+    /* ******END DATABASE****** */
 
     private void SelectImage()
     {
@@ -129,11 +223,11 @@ public class StudentProfileActivity extends AppCompatActivity {
                         .getBitmap(
                                 getContentResolver(),
                                 filePath);
-                imageView.setImageBitmap(bitmap);
+                studentProfilePic.setImageBitmap(bitmap);
+                uploadImage();
             }
 
             catch (IOException e) {
-                // Log the exception
                 e.printStackTrace();
             }
         }
