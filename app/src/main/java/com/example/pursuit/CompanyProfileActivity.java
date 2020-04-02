@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.widget.TextView;
 import android.view.View;
 import android.widget.Toast;
+import android.widget.Button;
 
 
 import com.example.pursuit.models.Company;
@@ -36,6 +37,16 @@ public class CompanyProfileActivity extends AppCompatActivity{
 
         companyName = findViewById(R.id.txtCompanyName);
         companyName.setText(currentCompany.getName());
+
+        Button viewOpps = findViewById(R.id.btnViewOpportunities);
+        viewOpps.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(CompanyProfileActivity.this, ViewOpportunities.class);
+                startActivity(i);
+
+            }
+        });
     }
 
     BottomNavigationView.OnNavigationItemSelectedListener navigationItemSelectedListener =
@@ -48,6 +59,9 @@ public class CompanyProfileActivity extends AppCompatActivity{
                             finish();
                             return true;
                         case R.id.navigation_messages:
+                            Intent i1 = new Intent(CompanyProfileActivity.this, MessagesActivity.class);
+                            startActivity(i1);
+                            finish();
                             return true;
                         case R.id.navigation_profile:
                             Intent i2 = new Intent(CompanyProfileActivity.this, CompanyProfileActivity.class);

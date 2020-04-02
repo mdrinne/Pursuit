@@ -29,7 +29,7 @@
 
             <TextView
                 android:id="@+id/txtCompanyName"
-                android:layout_width="311dp"
+                android:layout_width="match_parent"
                 android:layout_height="74dp"
                 android:layout_gravity="center"
                 android:layout_marginTop="20dp"
@@ -39,7 +39,7 @@
 
             <Button
                 android:id="@+id/btnInviteEmployee"
-                android:layout_width="150dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="20dp"
@@ -48,12 +48,18 @@
 
             <Button
                 android:id="@+id/btnViewInvites"
-                android:layout_width="150dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="10dp"
                 android:onClick="viewInvites"
                 android:text="@string/strViewInvites" />
+
+            <Button
+                android:id="@+id/btnViewOpportunities"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="View Opportunities" />
 
         </LinearLayout>
     </ScrollView>

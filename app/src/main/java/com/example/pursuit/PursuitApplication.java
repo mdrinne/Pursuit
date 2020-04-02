@@ -9,7 +9,18 @@ public class PursuitApplication extends Application {
     private Student currentStudent;
     private Company currentCompany;
     private Employee currentEmployee;
-    private String currentRole;
+    private String currentRole = "";
+
+    public PursuitApplication(){
+        //empty constructor
+    }
+
+    public PursuitApplication(Student student, Company company, Employee employee, String role){
+        this.currentStudent = student;
+        this.currentCompany = company;
+        this.currentEmployee = employee;
+        this.currentRole = role;
+    }
 
     public Student getCurrentStudent() {
         return currentStudent;
