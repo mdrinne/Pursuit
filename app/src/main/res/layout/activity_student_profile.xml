@@ -16,7 +16,7 @@
         android:contentDescription="@string/profile_photo"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/colin" />
+        app:srcCompat="@drawable/ic_add_a_photo" />
 
     <TextView
         android:id="@+id/studentFullName"
