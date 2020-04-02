@@ -263,9 +263,9 @@ public class MessagesActivity extends AppCompatActivity {
       };
 
     public void writeNewConversation() {
-        String otherUserId = null;
-        String otherUserUsername = null;
-        String otherUserRole = null;
+        String otherUserId;
+        String otherUserUsername;
+        String otherUserRole;
 
         if (matchedStudentUsername != null) {
             otherUserId = matchedStudentUsername.getId();
@@ -277,14 +277,29 @@ public class MessagesActivity extends AppCompatActivity {
             otherUserRole = "Employee";
         } else {
             Toast.makeText(view.getContext(), "Something went wrong!", Toast.LENGTH_LONG).show();
+            return;
         }
 
         String id = RandomKeyGenerator.randomAlphaNumeric(16);
         newConversation = new Conversation(id, otherUserId, otherUserUsername, otherUserRole);
+
+        // Add the newConversation under the Student
+        // Students/Employees > id > Conversations > id > newConversation
         if (currentStudent != null) {
             dbRef.child("Students").child(currentStudent.getId()).child("Conversations").child(id).setValue(newConversation);
         } else {
+            // TODO
             dbRef.child("Employees").child(currentEmployee.getId()).child("Conversations").child(id).setValue(newConversation);
+//            dbRef.child("Companies").child(currentCompany.getId()).child("Conversations").child(id).setValue(newConversation);
+        }
+
+        // Add the newConversation's counterpart to the user/company it is with
+
+        if (matchedStudentUsername != null) {
+            dbRef.child("Students").child(matchedStudentUsername.getId()).child("Conversations").child(id).setValue(newConversation);
+        } else {
+            // TODO
+            dbRef.child("Employees").child(matchedEmployeeUsername.getId()).child("Conversations").child(id).setValue(newConversation);
         }
 
         conversationAdapter.add(newConversation);
@@ -296,7 +311,9 @@ public class MessagesActivity extends AppCompatActivity {
         if (currentStudent != null) {
             conversationsRef = dbRef.child("Students").child(currentStudent.getId()).child("Conversations");
         } else {
+            // TODO
             conversationsRef = dbRef.child("Employees").child(currentEmployee.getId()).child("Conversations");
+//            conversationsRef = dbRef.child("Companies").child(currentCompany.getId()).child("Conversations");
         }
 
         conversationsRef.addValueEventListener(myConversationsListener);
@@ -306,6 +323,7 @@ public class MessagesActivity extends AppCompatActivity {
     private void findAndSetCurrentUser() {
         if (((PursuitApplication) this.getApplication()).getCurrentStudent() != null) {
             currentStudent = ((PursuitApplication) this.getApplication()).getCurrentStudent();
+            // TODO
         } else if (((PursuitApplication) this.getApplication()).getCurrentEmployee() != null) {
             currentEmployee = ((PursuitApplication) this.getApplication()).getCurrentEmployee();
         } else {
