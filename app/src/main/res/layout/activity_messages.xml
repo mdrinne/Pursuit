@@ -53,11 +53,14 @@
 
     <ListView
         android:id="@+id/conversations_view"
-        android:layout_width="wrap_content"
+        android:layout_width="180dp"
+        android:maxWidth="180dp"
+        android:minWidth="180dp"
         android:layout_height="wrap_content"
         android:divider="#fff"
+        android:dividerHeight="10.0sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/createConversationButton" />
+        app:layout_constraintTop_toBottomOf="@+id/messageActivityTitle" />
 
     <FrameLayout
         android:id="@+id/container"
