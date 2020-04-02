@@ -41,7 +41,6 @@ public class CompanyRegistration extends AppCompatActivity {
     EditText companyField;
 
     Company newCompany;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
