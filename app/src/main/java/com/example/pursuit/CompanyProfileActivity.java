@@ -49,8 +49,6 @@ public class CompanyProfileActivity extends AppCompatActivity{
     FirebaseStorage storage;
     StorageReference storageReference;
 
-    BitmapFactory profilePicBmp;
-
     private final int PICK_IMAGE_REQUEST = 22;
 
     String currentRole;
@@ -221,10 +219,14 @@ public class CompanyProfileActivity extends AppCompatActivity{
     }
 
     public void editPicture(View v) {
-        Intent intent = new Intent();
-        intent.setType("image/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent,"Select Image from here..."), PICK_IMAGE_REQUEST);
+        if (currentRole.equals("Employee")) {
+            Toast.makeText(v.getContext(), "Only Admin Has Access To Invite", Toast.LENGTH_SHORT).show();
+        } else {
+            Intent intent = new Intent();
+            intent.setType("image/*");
+            intent.setAction(Intent.ACTION_GET_CONTENT);
+            startActivityForResult(Intent.createChooser(intent, "Select Image from here..."), PICK_IMAGE_REQUEST);
+        }
     }
 
     @Override
