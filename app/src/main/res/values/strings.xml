@@ -135,4 +135,7 @@
     <string name="txtCompanyField">Field</string>
     <string name="txtViewOpportunities">View Opportunities</string>
     <string name="txtDeleteButton">Delete Button</string>
+    <string name="strWith">Who is it with? (Optional)</string>
+    <string name="strDescription">Description</string>
+    <string name="strAdd">Add</string>
 </resources>

@@ -228,9 +228,6 @@ public class CompanyProfileActivity extends AppCompatActivity{
                             finish();
                             return true;
                         case R.id.navigation_profile:
-                            Intent i2 = new Intent(CompanyProfileActivity.this, CompanyProfileActivity.class);
-                            startActivity(i2);
-                            finish();
                             return true;
                     }
                     return false;
