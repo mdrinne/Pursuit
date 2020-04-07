@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/profile_bg3"
     tools:context=".myProfileActivity">
 
     <ImageView
@@ -25,6 +26,7 @@
         android:layout_marginLeft="6dp"
         android:layout_marginTop="24dp"
         android:text="@string/strStudent"
+        android:textColor="@color/accent1"
         android:textSize="36sp"
         app:layout_constraintStart_toEndOf="@+id/imgStudentProfilePic"
         app:layout_constraintTop_toTopOf="parent" />
@@ -36,6 +38,7 @@
         android:layout_marginStart="6dp"
         android:layout_marginLeft="6dp"
         android:text="@string/strUniversity"
+        android:textColor="@color/accent1"
         android:textSize="18sp"
         app:layout_constraintStart_toEndOf="@+id/imgStudentProfilePic"
         app:layout_constraintTop_toBottomOf="@+id/studentFullName" />
@@ -47,6 +50,7 @@
         android:layout_marginStart="6dp"
         android:layout_marginLeft="6dp"
         android:text="@string/strMajors"
+        android:textColor="@color/accent1"
         app:layout_constraintStart_toEndOf="@+id/imgStudentProfilePic"
         app:layout_constraintTop_toBottomOf="@+id/studentUniversity" />
 
@@ -57,6 +61,7 @@
         android:layout_marginStart="6dp"
         android:layout_marginLeft="6dp"
         android:text="@string/strGPA"
+        android:textColor="@color/accent1"
         app:layout_constraintStart_toEndOf="@+id/imgStudentProfilePic"
         app:layout_constraintTop_toBottomOf="@+id/txtStudentMinor" />
 
@@ -67,17 +72,20 @@
         android:layout_marginStart="6dp"
         android:layout_marginLeft="6dp"
         android:text="@string/strMinors"
+        android:textColor="@color/accent1"
         app:layout_constraintStart_toEndOf="@+id/imgStudentProfilePic"
         app:layout_constraintTop_toBottomOf="@+id/studentMajor" />
 
     <Button
         android:id="@+id/buttonLoadPicture"
-        android:layout_width="wrap_content"
+        android:layout_width="110dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginLeft="32dp"
+        android:background="@color/accent1"
         android:onClick="editPicture"
         android:text="@string/txtEditPic"
+        android:textColor="@color/colorPrimary"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imgStudentProfilePic" />
 
@@ -89,6 +97,7 @@
         android:layout_marginLeft="16dp"
         android:layout_marginTop="72dp"
         android:text="@string/strBio"
+        android:textColor="@color/accent1"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imgStudentProfilePic" />
