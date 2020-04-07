@@ -4,4 +4,8 @@
     <color name="colorPrimaryDark">#101022</color>
     <color name="colorAccent">#D81B60</color>
     <color name="white">#FFFFFF</color>
+    <color name="navbar">#1b1b3a</color>
+    <color name="accent1">#A8A5A5</color>
+    <color name="cardView1">#1F1F2C</color>
+    <color name="delteButton">#6e0303</color>
 </resources>

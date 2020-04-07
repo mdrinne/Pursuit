@@ -11,6 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
+        app:cardBackgroundColor="#00FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.6"
         app:layout_constraintStart_toStartOf="parent"
@@ -29,7 +30,7 @@
                 android:paddingLeft="5dp"
                 android:paddingEnd="5dp"
                 android:paddingRight="5dp"
-                android:text="Email"
+                android:textColor="@color/accent1"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
@@ -45,7 +46,7 @@
                 android:paddingLeft="15dp"
                 android:paddingEnd="15dp"
                 android:paddingRight="15dp"
-                android:text="Code"
+                android:textColor="@color/accent1"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/txtCompanyCode"
@@ -53,14 +54,15 @@
 
             <ImageView
                 android:id="@+id/imgDeleteInvite"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:layout_marginEnd="10dp"
                 android:layout_marginRight="10dp"
-                android:src="@drawable/ic_delete"
+                android:contentDescription="@string/txtDeleteButton"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_delete_button" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>

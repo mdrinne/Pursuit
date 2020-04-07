@@ -4,11 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/gradient_bg"
     tools:context=".CompanyRegistration">
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginRight="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -17,82 +22,108 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" >
+            android:orientation="vertical">
 
             <EditText
                 android:id="@+id/companyName"
-                android:layout_width="300dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="50dp"
+                android:backgroundTint="@color/accent1"
                 android:ems="10"
                 android:hint="@string/strCompanyName"
+                android:importantForAutofill="no"
                 android:inputType="textPersonName"
-                android:importantForAutofill="no" />
+                android:textColor="@color/accent1"
+                android:textColorHint="@color/accent1"
+                tools:targetApi="lollipop" />
 
             <EditText
                 android:id="@+id/companyEmail"
-                android:layout_width="300dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="40dp"
+                android:backgroundTint="@color/accent1"
                 android:ems="10"
                 android:hint="@string/strCompanyEmail"
+                android:importantForAutofill="no"
                 android:inputType="textEmailAddress"
-                android:importantForAutofill="no" />
+                android:textColor="@color/accent1"
+                android:textColorHint="@color/accent1"
+                tools:targetApi="lollipop" />
 
             <EditText
                 android:id="@+id/companyField"
-                android:layout_width="300dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="40dp"
+                android:backgroundTint="@color/accent1"
                 android:ems="10"
                 android:hint="@string/txtCompanyField"
+                android:importantForAutofill="no"
                 android:inputType="textPersonName"
-                android:importantForAutofill="no" />
+                android:textColor="@color/accent1"
+                android:textColorHint="@color/accent1"
+                tools:targetApi="lollipop" />
 
             <EditText
                 android:id="@+id/companyDescription"
-                android:layout_width="300dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="40dp"
+                android:backgroundTint="@color/accent1"
                 android:ems="10"
                 android:hint="@string/strCompanyDescription"
+                android:importantForAutofill="no"
                 android:inputType="textPersonName"
-                android:importantForAutofill="no" />
+                android:textColor="@color/accent1"
+                android:textColorHint="@color/accent1"
+                tools:targetApi="lollipop" />
 
             <EditText
                 android:id="@+id/companyPassword"
-                android:layout_width="300dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="40dp"
+                android:backgroundTint="@color/accent1"
                 android:ems="10"
                 android:hint="@string/strPassword"
+                android:importantForAutofill="no"
                 android:inputType="textPassword"
-                android:importantForAutofill="no" />
+                android:textColor="@color/accent1"
+                android:textColorHint="@color/accent1"
+                tools:targetApi="lollipop" />
 
             <EditText
                 android:id="@+id/companyReEnterPassword"
-                android:layout_width="300dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="40dp"
+                android:backgroundTint="@color/accent1"
                 android:ems="10"
                 android:hint="@string/strReEnterPassword"
+                android:importantForAutofill="no"
                 android:inputType="textPassword"
-                android:importantForAutofill="no" />
+                android:textColor="@color/accent1"
+                android:textColorHint="@color/accent1"
+                tools:targetApi="lollipop" />
 
             <Button
                 android:id="@+id/register"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="35dp"
+                android:layout_marginTop="40dp"
+                android:background="@color/accent1"
                 android:onClick="register"
-                android:text="@string/strRegister" />
+                android:text="@string/strRegister"
+                android:textColor="@color/colorPrimary" />
 
         </LinearLayout>
     </ScrollView>

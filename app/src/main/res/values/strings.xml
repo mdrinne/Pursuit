@@ -134,4 +134,5 @@
     <string name="upload_photo">Upload Photo</string>
     <string name="txtCompanyField">Field</string>
     <string name="txtViewOpportunities">View Opportunities</string>
+    <string name="txtDeleteButton">Delete Button</string>
 </resources>
