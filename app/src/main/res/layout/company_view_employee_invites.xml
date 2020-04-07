@@ -38,9 +38,10 @@
 
             <Button
                 android:id="@+id/btnInviteEmployee"
-                android:layout_width="130dp"
-                android:layout_height="wrap_content"
-                android:background="@color/accent1"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:background="@drawable/button_accent1"
+                android:fontFamily="@font/roboto_medium"
                 android:onClick="inviteEmployee"
                 android:text="@string/strInviteEmployee"
                 android:textColor="@color/colorPrimary"

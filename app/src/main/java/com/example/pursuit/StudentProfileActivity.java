@@ -12,7 +12,6 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.view.MenuItem;
 import android.widget.TextView;
@@ -47,7 +46,6 @@ public class StudentProfileActivity extends AppCompatActivity {
     TextView studentGPA;
     TextView studentBio;
     ImageView studentProfilePic;
-    Button btnSelect;
 
     private DatabaseReference dbref;
     Uri filePath;
@@ -95,20 +93,6 @@ public class StudentProfileActivity extends AppCompatActivity {
         studentProfilePic = findViewById(R.id.imgStudentProfilePic);
         loadStudentProfilePicture();
 
-        // profilePhoto = findViewById(R.id.profilePhoto);
-        // int width = 150;
-        // int height = 150;
-        // LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(width,height);
-        // profilePhoto.setLayoutParams(params);
-
-//        btnSelect = findViewById(R.id.buttonLoadPicture);
-//        btnSelect.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v)
-//            {
-//                SelectImage();
-//            }
-//        });
     }
 
     /* ********DATABASE******** */
