@@ -15,8 +15,7 @@
         android:layout_marginTop="24dp"
         android:contentDescription="@string/profile_photo"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_add_a_photo" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/studentFullName"
@@ -77,7 +76,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginLeft="32dp"
-        android:text="@string/upload_photo"
+        android:onClick="editPicture"
+        android:text="@string/txtEditPic"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imgStudentProfilePic" />
 

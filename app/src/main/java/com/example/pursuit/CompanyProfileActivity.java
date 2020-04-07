@@ -23,8 +23,12 @@ import com.example.pursuit.models.Company;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageException;
@@ -54,6 +58,7 @@ public class CompanyProfileActivity extends AppCompatActivity{
     private final int PICK_IMAGE_REQUEST = 22;
 
     String currentRole;
+    int hasPicture;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,7 +77,7 @@ public class CompanyProfileActivity extends AppCompatActivity{
         storage = FirebaseStorage.getInstance();
 
         companyProfilePic = findViewById(R.id.imgCompanyProfilePic);
-        downloadCompanyProfilePicture();
+        loadCompanyProfilePicture();
 
         Button viewOpps = findViewById(R.id.btnViewOpportunities);
         viewOpps.setOnClickListener(new View.OnClickListener() {
@@ -87,6 +92,24 @@ public class CompanyProfileActivity extends AppCompatActivity{
     }
 
     /* ********DATABASE******** */
+
+    ValueEventListener companyHasProfilePictureListener = new ValueEventListener() {
+        @Override
+        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+            hasPicture = 0;
+            if (dataSnapshot.exists()) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    hasPicture = 1;
+                }
+            }
+            postCompanyHasProfilePictureListener();
+        }
+
+        @Override
+        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+        }
+    };
 
     private void downloadCompanyProfilePicture() {
         StorageReference profilePic = storageReference.child("images").child("CompanyProfilePictures").child(currentCompany.getId());
@@ -166,9 +189,29 @@ public class CompanyProfileActivity extends AppCompatActivity{
                                 }
                             });
         }
+
+        updateProfilePicDatabase();
+    }
+
+    private void updateProfilePicDatabase() {
+        dbref.child("ProfilePicture").child("Companies").child(currentCompany.getId()).setValue(1);
     }
 
     /* ******END DATABASE****** */
+
+    private void loadCompanyProfilePicture() {
+        Query companyHasProfilePictureQuery = dbref.child("ProfilePicture").orderByChild(currentCompany.getId()).equalTo(1);
+
+        companyHasProfilePictureQuery.addListenerForSingleValueEvent(companyHasProfilePictureListener);
+    }
+
+    private void postCompanyHasProfilePictureListener() {
+        if (hasPicture == 1) {
+            downloadCompanyProfilePicture();
+        } else {
+            companyProfilePic.setImageDrawable(getResources().getDrawable(R.drawable.ic_add_a_photo));
+        }
+    }
 
     BottomNavigationView.OnNavigationItemSelectedListener navigationItemSelectedListener =
             new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -232,7 +275,7 @@ public class CompanyProfileActivity extends AppCompatActivity{
 
     public void editPicture(View v) {
         if (currentRole.equals("Employee")) {
-            Toast.makeText(v.getContext(), "Only Admin Has Access To Invite", Toast.LENGTH_SHORT).show();
+            Toast.makeText(v.getContext(), "Only Admin Has Profile Picture Edit Rights", Toast.LENGTH_SHORT).show();
         } else {
             Intent intent = new Intent();
             intent.setType("image/*");

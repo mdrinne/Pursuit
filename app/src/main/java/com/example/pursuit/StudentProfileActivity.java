@@ -21,8 +21,12 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.pursuit.models.Student;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageException;
@@ -53,6 +57,8 @@ public class StudentProfileActivity extends AppCompatActivity {
     BottomNavigationView bottomNavigation;
     Student currentStudent;
     private static int RESULT_LOAD_IMAGE = 1;
+
+    int hasPicture;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,7 +93,7 @@ public class StudentProfileActivity extends AppCompatActivity {
         storage = FirebaseStorage.getInstance();
 
         studentProfilePic = findViewById(R.id.imgStudentProfilePic);
-        downloadStudentProfilePicture();
+        loadStudentProfilePicture();
 
         // profilePhoto = findViewById(R.id.profilePhoto);
         // int width = 150;
@@ -95,17 +101,35 @@ public class StudentProfileActivity extends AppCompatActivity {
         // LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(width,height);
         // profilePhoto.setLayoutParams(params);
 
-        btnSelect = findViewById(R.id.buttonLoadPicture);
-        btnSelect.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v)
-            {
-                SelectImage();
-            }
-        });
+//        btnSelect = findViewById(R.id.buttonLoadPicture);
+//        btnSelect.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v)
+//            {
+//                SelectImage();
+//            }
+//        });
     }
 
     /* ********DATABASE******** */
+
+    ValueEventListener studentHasProfilePictureListene = new ValueEventListener() {
+        @Override
+        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+            hasPicture = 0;
+            if (dataSnapshot.exists()) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    hasPicture = 1;
+                }
+            }
+            postStudentHasProfilePictureListener();
+        }
+
+        @Override
+        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+        }
+    };
 
     private void downloadStudentProfilePicture() {
         StorageReference profilePic = storageReference.child("images").child("StudentProfilePictures").child(currentStudent.getId());
@@ -185,22 +209,35 @@ public class StudentProfileActivity extends AppCompatActivity {
                                 }
                             });
         }
+
+        updateProfilePicDatabase();
+    }
+
+    private void updateProfilePicDatabase() {
+        dbref.child("ProfilePicture").child("Students").child(currentStudent.getId()).setValue(1);
     }
 
     /* ******END DATABASE****** */
 
-    private void SelectImage()
-    {
+    private void loadStudentProfilePicture() {
+        Query studentHasProfilePictureQuery = dbref.child("ProfilePicture").orderByChild(currentStudent.getId()).equalTo(1);
 
-        // Defining Implicit Intent to mobile gallery
+        studentHasProfilePictureQuery.addListenerForSingleValueEvent(studentHasProfilePictureListene);
+    }
+
+    private void postStudentHasProfilePictureListener() {
+        if( hasPicture == 1) {
+            downloadStudentProfilePicture();
+        } else {
+            studentProfilePic.setImageDrawable(getResources().getDrawable(R.drawable.ic_add_a_photo));
+        }
+    }
+
+    public void editPicture(View v) {
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(
-                Intent.createChooser(
-                        intent,
-                        "Select Image from here..."),
-                PICK_IMAGE_REQUEST);
+        startActivityForResult(Intent.createChooser(intent, "Select Image from here..."), PICK_IMAGE_REQUEST);
     }
 
     @Override
