@@ -3,7 +3,9 @@ package com.example.pursuit;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.text.TextUtils;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.MenuItem;
 import android.view.View;
 import android.os.Bundle;
@@ -176,12 +178,24 @@ public class InviteEmployeeActivity extends AppCompatActivity {
         currentCompany = ((PursuitApplication) this.getApplicationContext()).getCurrentCompany();
     }
 
+    boolean isEmail(EditText text) {
+        CharSequence email = text.getText().toString();
+        if (!(!TextUtils.isEmpty(email) && Patterns.EMAIL_ADDRESS.matcher(email).matches())) {
+            Toast.makeText(view.getContext(), "Invalid Email", Toast.LENGTH_SHORT).show();
+            return false;
+        } else
+            return true;
+    }
+
     public void createEmployeeInvite(View v) {
         view = v;
         employeeEmail = findViewById(R.id.txtCompanyCode);
 
-        Query employeeEmailQuery = dbRef.child("Employees").orderByChild("email").equalTo(toString(employeeEmail));
-        employeeEmailQuery.addListenerForSingleValueEvent(employeeEmailListener);
+        if (isEmail(employeeEmail)) {
+            Query employeeEmailQuery = dbRef.child("Employees").orderByChild("email").equalTo(toString(employeeEmail));
+            employeeEmailQuery.addListenerForSingleValueEvent(employeeEmailListener);
+        }
+        
     }
 
     private void postEmployeeEmailListener() {
