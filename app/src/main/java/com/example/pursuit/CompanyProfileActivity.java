@@ -208,8 +208,7 @@ public class CompanyProfileActivity extends AppCompatActivity{
     private void postCompanyHasProfilePictureListener() {
         if (hasPicture == 1) {
             downloadCompanyProfilePicture();
-        }
-        else {
+        } else {
             companyProfilePic.setImageDrawable(getResources().getDrawable(R.drawable.ic_add_a_photo));
         }
     }
