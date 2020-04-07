@@ -20,14 +20,13 @@
             android:name=".MessagesActivity"
             android:label="@string/title_activity_messages"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".viewCompaniesActivity" /> <!-- <activity android:name=".myProfileActivity" /> -->
+        <activity android:name=".viewCompaniesActivity" />
         <activity android:name=".StudentProfileActivity" />
         <activity android:name=".aboutPursuitActivity" />
         <activity android:name=".LandingActivity" />
         <activity android:name=".RegistrationActivity" />
         <activity android:name=".CompanyRegistration" />
         <activity android:name=".StudentRegistration" />
-        <activity android:name=".RegistrationPage" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
