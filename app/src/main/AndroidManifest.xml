@@ -40,6 +40,10 @@
         <activity android:name=".viewCompanyEmployeeInvites" />
         <activity android:name=".EmployeeRegistration1" />
         <activity android:name=".EmployeeRegistration2" />
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
     </application>
 
 </manifest>
