@@ -268,7 +268,7 @@ public class StudentRegistration extends AppCompatActivity {
         university = findViewById(R.id.txtUniversity);
         major = findViewById(R.id.txtMajor);
         minor = findViewById(R.id.txtMinor);
-        gpa = findViewById(R.id.txtStudentGPA);
+        gpa = findViewById(R.id.txtStudentGPA2);
         bio = findViewById(R.id.txtBio);
         email = findViewById(R.id.txtEmail);
         username = findViewById(R.id.txtUsername);
