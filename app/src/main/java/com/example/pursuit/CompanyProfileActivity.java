@@ -24,6 +24,7 @@ import android.widget.Button;
 import com.example.pursuit.adapters.OpportunityAdapter;
 import com.example.pursuit.models.Company;
 import com.example.pursuit.models.CompanyOpportunity;
+import com.example.pursuit.models.Employee;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -51,6 +52,7 @@ public class CompanyProfileActivity extends AppCompatActivity{
     TextView companyField;
     TextView companyDescription;
     Company currentCompany;
+    Employee currentEmployee;
     BottomNavigationView bottomNavigation;
     ImageView companyProfilePic;
     Uri filePath;
@@ -77,8 +79,7 @@ public class CompanyProfileActivity extends AppCompatActivity{
         bottomNavigation = findViewById(R.id.bottom_navigation);
         bottomNavigation.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
 
-        initializeCurrentCompany();
-        initializeCurrentRole();
+        setCurrentUser();
 
         populateTextFields();
 
@@ -252,7 +253,11 @@ public class CompanyProfileActivity extends AppCompatActivity{
         mAdapter.setOpportunityOnItemClickListener(new OpportunityAdapter.OpportunityOnItemClickListener() {
             @Override
             public void onApproveClick(int position) {
-                approveOpportunity(position);
+                if (currentRole.equals("Company") || (currentRole.equals("Employee") && currentEmployee.admin == 1)) {
+                    approveOpportunity(position);
+                } else {
+                    Toast.makeText(getApplicationContext(), "Non-Admin: Access Restricted", Toast.LENGTH_SHORT).show();
+                }
             }
 
             @Override
@@ -296,6 +301,14 @@ public class CompanyProfileActivity extends AppCompatActivity{
                     return false;
                 }
             };
+
+    private void setCurrentUser() {
+        initializeCurrentCompany();
+        initializeCurrentRole();
+        if (currentRole.equals("Employee")) {
+            currentEmployee = ((PursuitApplication) this.getApplicationContext()).getCurrentEmployee();
+        }
+    }
 
     private void initializeCurrentCompany() {
         Log.d(TAG, "initializing company");
