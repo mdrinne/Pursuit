@@ -1,6 +1,5 @@
-package com.example.pursuit;
+package com.example.pursuit.adapters;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +9,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.pursuit.R;
 import com.example.pursuit.models.EmployeeInvite;
 
 import java.util.ArrayList;

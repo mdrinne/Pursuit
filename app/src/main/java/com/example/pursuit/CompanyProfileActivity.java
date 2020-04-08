@@ -2,6 +2,8 @@ package com.example.pursuit;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -19,7 +21,9 @@ import android.widget.Toast;
 import android.widget.Button;
 
 
+import com.example.pursuit.adapters.OpportunityAdapter;
 import com.example.pursuit.models.Company;
+import com.example.pursuit.models.CompanyOpportunity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -37,6 +41,7 @@ import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class CompanyProfileActivity extends AppCompatActivity{
 
@@ -60,6 +65,11 @@ public class CompanyProfileActivity extends AppCompatActivity{
     String currentRole;
     int hasPicture;
 
+    private ArrayList<CompanyOpportunity> companyOpportunities;
+    private RecyclerView allOpportunities;
+    private OpportunityAdapter mAdapter;
+    private RecyclerView.LayoutManager mLayoutManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,9 +89,35 @@ public class CompanyProfileActivity extends AppCompatActivity{
         companyProfilePic = findViewById(R.id.imgCompanyProfilePic);
         loadCompanyProfilePicture();
 
+        Query opportunityQuery = dbref.child("CompanyOpportunities").child(currentCompany.getId()).orderByKey();
+
+        opportunityQuery.addListenerForSingleValueEvent(companyOpportunityListener);
+
     }
 
     /* ********DATABASE******** */
+
+    ValueEventListener companyOpportunityListener = new ValueEventListener() {
+        @Override
+        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+            companyOpportunities = new ArrayList<>();
+            companyOpportunities.clear();
+
+            if (dataSnapshot.exists()) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    CompanyOpportunity opportunity = snapshot.getValue(CompanyOpportunity.class);
+                    companyOpportunities.add(opportunity);
+                }
+            }
+            Log.d(TAG, String.valueOf(companyOpportunities.size()));
+            buildRecyclerView();
+        }
+
+        @Override
+        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+        }
+    };
 
     ValueEventListener companyHasProfilePictureListener = new ValueEventListener() {
         @Override
@@ -188,6 +224,20 @@ public class CompanyProfileActivity extends AppCompatActivity{
     }
 
     /* ******END DATABASE****** */
+
+    private void buildRecyclerView() {
+        allOpportunities = findViewById(R.id.rcycOpportunities);
+        allOpportunities.setHasFixedSize(false);
+        mLayoutManager = new LinearLayoutManager(this);
+        mAdapter = new OpportunityAdapter(companyOpportunities);
+
+        allOpportunities.setLayoutManager(mLayoutManager);
+        allOpportunities.setAdapter(mAdapter);
+
+        mAdapter.setOpportunityOnItemClickListener(new OpportunityAdapter.OpportunityOnItemClickListener() {
+
+        });
+    }
 
     private void loadCompanyProfilePicture() {
         Query companyHasProfilePictureQuery = dbref.child("ProfilePicture").orderByChild(currentCompany.getId()).equalTo(1);

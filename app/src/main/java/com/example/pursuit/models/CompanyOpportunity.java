@@ -11,6 +11,7 @@ public class CompanyOpportunity {
     public String description;
     public Integer approved;
 
+
     public CompanyOpportunity() {
         this.id = "";
     }

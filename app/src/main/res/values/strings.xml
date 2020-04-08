@@ -139,4 +139,6 @@
     <string name="strDescription">Description</string>
     <string name="strAdd">Add</string>
     <string name="strAddOpportunity">Add Opportunity</string>
+    <string name="strApprove">Approve</string>
+    <string name="strOpportunities">Opportunities</string>
 </resources>

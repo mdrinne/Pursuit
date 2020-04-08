@@ -1,5 +1,6 @@
 package com.example.pursuit;
 
+import com.example.pursuit.adapters.inviteAdapter;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 
