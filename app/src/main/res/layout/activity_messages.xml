@@ -6,6 +6,17 @@
     android:layout_height="match_parent"
     tools:context=".MessagesActivity">
 
+    <ListView
+        android:id="@+id/conversations_view"
+        android:layout_width="180dp"
+        android:layout_height="wrap_content"
+        android:divider="#fff"
+        android:dividerHeight="10.0sp"
+        android:maxWidth="180dp"
+        android:minWidth="180dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/messageActivityTitle" />
+
     <TextView
         android:id="@+id/messageActivityTitle"
         android:layout_width="148dp"
@@ -50,17 +61,6 @@
         android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/newConversationUsername" />
-
-    <ListView
-        android:id="@+id/conversations_view"
-        android:layout_width="180dp"
-        android:maxWidth="180dp"
-        android:minWidth="180dp"
-        android:layout_height="wrap_content"
-        android:divider="#fff"
-        android:dividerHeight="10.0sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/messageActivityTitle" />
 
     <FrameLayout
         android:id="@+id/container"

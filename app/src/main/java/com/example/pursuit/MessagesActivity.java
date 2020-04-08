@@ -28,6 +28,7 @@ import androidx.annotation.NonNull;
 
 import com.example.pursuit.models.Company;
 import com.example.pursuit.models.Student;
+import com.example.pursuit.NewConversationDialogFragment;
 
 import java.util.ArrayList;
 
@@ -178,17 +179,18 @@ public class MessagesActivity extends AppCompatActivity {
     }
 
     public void showCreateConversation(View v) {
-        newConversationUsername = findViewById(R.id.newConversationUsername);
-        Button createConversationButton = findViewById(R.id.createConversationButton);
+//        newConversationUsername = findViewById(R.id.newConversationUsername);
+//        Button createConversationButton = findViewById(R.id.createConversationButton);
+//
+//        if (newConversationUsername.getVisibility() == View.INVISIBLE && createConversationButton.getVisibility() == View.INVISIBLE) {
+//            newConversationUsername.setVisibility(View.VISIBLE);
+//            createConversationButton.setVisibility(View.VISIBLE);
+//        } else {
+//            newConversationUsername.setVisibility(View.INVISIBLE);
+//            createConversationButton.setVisibility(View.INVISIBLE);
+//        }
 
-        if (newConversationUsername.getVisibility() == View.INVISIBLE && createConversationButton.getVisibility() == View.INVISIBLE) {
-            newConversationUsername.setVisibility(View.VISIBLE);
-            createConversationButton.setVisibility(View.VISIBLE);
-        } else {
-            newConversationUsername.setVisibility(View.INVISIBLE);
-            createConversationButton.setVisibility(View.INVISIBLE);
-        }
-
+        NewConversationDialogFragment newConversationDialogFragment = new NewConversationDialogFragment(this);
     }
 
     public void createConversation(View v) {

@@ -16,7 +16,6 @@
             android:name=".ViewOpportunities"
             android:label="@string/title_activity_view_opportunities"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".viewCompaniesActivity" />
         <activity android:name=".StudentProfileActivity" />
         <activity android:name=".aboutPursuitActivity" />
         <activity android:name=".LandingActivity" />
