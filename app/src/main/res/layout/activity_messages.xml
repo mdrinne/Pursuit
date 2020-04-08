@@ -37,31 +37,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_add_circle_outline_black_24dp" />
 
-    <EditText
-        android:id="@+id/newConversationUsername"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="@string/strUsername"
-        android:importantForAutofill="no"
-        android:inputType="textPersonName"
-        android:text="@string/strUsername"
-        android:visibility="invisible"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/newMessage" />
-
-    <Button
-        android:id="@+id/createConversationButton"
-        android:layout_width="88dp"
-        android:layout_height="48dp"
-        android:layout_marginEnd="125dp"
-        android:layout_marginRight="125dp"
-        android:onClick="createConversation"
-        android:text="@string/create_string"
-        android:visibility="invisible"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/newConversationUsername" />
-
     <FrameLayout
         android:id="@+id/container"
         android:layout_width="match_parent"

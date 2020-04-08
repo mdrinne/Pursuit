@@ -140,4 +140,5 @@
     <string name="txtDeleteButton">Delete Button</string>
     <string name="new_conversation_dialog_title">Start a Conversation</string>
     <string name="cancel">Cancel</string>
+    <string name="confirm">Confirm</string>
 </resources>

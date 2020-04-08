@@ -18,12 +18,11 @@
         android:id="@+id/newConversationTitle"/>
 
     <EditText
-        android:id="@+id/username"
+        android:id="@+id/newConversationUsername"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/strUsername"
         android:inputType="textEmailAddress"
         app:layout_constraintTop_toBottomOf="@+id/newConversationTitle"
-        tools:layout_editor_absoluteX="4dp" />
-
+        tools:layout_editor_absoluteX="4dp"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

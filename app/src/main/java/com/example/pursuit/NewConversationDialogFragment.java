@@ -18,7 +18,7 @@ public class NewConversationDialogFragment extends DialogFragment {
 
         builder.setView(inflater.inflate(R.layout.dialog_new_conversation, null));
 
-        builder.setPositiveButton(R.string.new_conversation_button, new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
 
             }
@@ -30,4 +30,5 @@ public class NewConversationDialogFragment extends DialogFragment {
         });
         return builder.create();
     }
+
 }
