@@ -132,5 +132,10 @@
     <string name="tab_text_1">Tab 1</string>
     <string name="tab_text_2">Tab 2</string>
     <string name="title_activity_view_opportunities">ViewOpportunities</string>
-
+    <string name="txtCompanyProfilePic">Company Profile Picture</string>
+    <string name="txtEditPic">Edit Picture</string>
+    <string name="upload_photo">Upload Photo</string>
+    <string name="txtCompanyField">Field</string>
+    <string name="txtViewOpportunities">View Opportunities</string>
+    <string name="txtDeleteButton">Delete Button</string>
 </resources>

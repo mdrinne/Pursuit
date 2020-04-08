@@ -4,84 +4,128 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".myProfileActivity">
+    android:background="@drawable/profile_bg3">
 
-    <ImageView
-        android:id="@+id/imageView6"
-        android:layout_width="160dp"
-        android:layout_height="160dp"
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
-        android:layout_marginTop="24dp"
-        android:contentDescription="@string/profile_photo"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/container"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/colin" />
+        app:layout_constraintVertical_bias="0.0">
 
-    <TextView
-        android:id="@+id/studentFullName"
-        android:layout_width="223dp"
-        android:layout_height="45dp"
-        android:layout_marginStart="6dp"
-        android:layout_marginLeft="6dp"
-        android:layout_marginTop="24dp"
-        android:text="@string/strStudent"
-        android:textSize="36sp"
-        app:layout_constraintStart_toEndOf="@+id/imageView6"
-        app:layout_constraintTop_toTopOf="parent" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingBottom="50dp">
 
-    <TextView
-        android:id="@+id/studentUniversity"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="6dp"
-        android:layout_marginLeft="6dp"
-        android:text="@string/strUniversity"
-        android:textSize="18sp"
-        app:layout_constraintStart_toEndOf="@+id/imageView6"
-        app:layout_constraintTop_toBottomOf="@+id/studentFullName" />
+            <ImageView
+                android:id="@+id/imgStudentProfilePic"
+                android:layout_width="140dp"
+                android:layout_height="140dp"
+                android:layout_marginTop="30dp"
+                android:contentDescription="@string/profile_photo"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_add_a_photo" />
 
-    <TextView
-        android:id="@+id/studentMajor"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="6dp"
-        android:layout_marginLeft="6dp"
-        android:text="@string/strMajors"
-        app:layout_constraintStart_toEndOf="@+id/imageView6"
-        app:layout_constraintTop_toBottomOf="@+id/studentUniversity" />
+            <Button
+                android:id="@+id/buttonLoadPicture"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/button_accent1"
+                android:fontFamily="@font/roboto_medium"
+                android:onClick="editPicture"
+                android:text="@string/txtEditPic"
+                android:textColor="@color/colorPrimary"
+                android:textSize="12sp"
+                app:layout_constraintEnd_toEndOf="@+id/imgStudentProfilePic"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imgStudentProfilePic" />
 
-    <TextView
-        android:id="@+id/txtStudentGPA"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="6dp"
-        android:layout_marginLeft="6dp"
-        android:text="@string/strGPA"
-        app:layout_constraintStart_toEndOf="@+id/imageView6"
-        app:layout_constraintTop_toBottomOf="@+id/txtStudentMinor" />
+            <TextView
+                android:id="@+id/studentFullName"
+                android:layout_width="0dp"
+                android:layout_height="47dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="30dp"
+                android:fontFamily="@font/roboto_medium"
+                android:textColor="@color/accent1"
+                android:textSize="36sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/imgStudentProfilePic"
+                app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/txtStudentMinor"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="6dp"
-        android:layout_marginLeft="6dp"
-        android:text="@string/strMinors"
-        app:layout_constraintStart_toEndOf="@+id/imageView6"
-        app:layout_constraintTop_toBottomOf="@+id/studentMajor" />
+            <TextView
+                android:id="@+id/studentUniversity"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginLeft="20dp"
+                android:fontFamily="@font/roboto"
+                android:textColor="@color/accent1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/imgStudentProfilePic"
+                app:layout_constraintTop_toBottomOf="@+id/studentFullName" />
 
-    <TextView
-        android:id="@+id/txtStudentBio"
-        android:layout_width="379dp"
-        android:layout_height="72dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="24dp"
-        android:text="@string/strBio"
-        android:textSize="20sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView6" />
+            <TextView
+                android:id="@+id/studentMajor"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginLeft="20dp"
+                android:fontFamily="@font/roboto"
+                android:textColor="@color/accent1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/imgStudentProfilePic"
+                app:layout_constraintTop_toBottomOf="@+id/studentUniversity" />
+
+            <TextView
+                android:id="@+id/txtStudentMinor"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginLeft="20dp"
+                android:fontFamily="@font/roboto"
+                android:textColor="@color/accent1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/imgStudentProfilePic"
+                app:layout_constraintTop_toBottomOf="@+id/studentMajor" />
+
+            <TextView
+                android:id="@+id/txtStudentGPA"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginLeft="20dp"
+                android:fontFamily="@font/roboto"
+                android:textColor="@color/accent1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/imgStudentProfilePic"
+                app:layout_constraintTop_toBottomOf="@+id/txtStudentMinor" />
+
+            <TextView
+                android:id="@+id/txtStudentBio"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:fontFamily="@font/roboto"
+                android:textColor="@color/accent1"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/buttonLoadPicture" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 
     <FrameLayout
         android:id="@+id/container"
@@ -95,7 +139,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            android:background="@color/colorPrimary"
+            android:background="@color/navbar"
             app:itemIconTint="@color/white"
             app:itemTextColor="@color/white"
             app:menu="@menu/bottom_navigation_menu" />

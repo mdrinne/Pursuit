@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/gradient_bg"
     tools:context=".RegistrationActivity">
 
     <RadioGroup
@@ -19,19 +20,31 @@
             android:id="@+id/radioBtnStudent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/strStudent" />
+            android:buttonTint="@color/accent1"
+            android:fontFamily="@font/roboto"
+            android:text="@string/strStudent"
+            android:textColor="@color/accent1"
+            tools:targetApi="lollipop" />
 
         <RadioButton
             android:id="@+id/radioBtnCompany"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/strCompany" />
+            android:buttonTint="@color/accent1"
+            android:fontFamily="@font/roboto"
+            android:text="@string/strCompany"
+            android:textColor="@color/accent1"
+            tools:targetApi="lollipop" />
 
         <RadioButton
             android:id="@+id/radioBtnEmployee"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/strEmployee" />
+            android:buttonTint="@color/accent1"
+            android:fontFamily="@font/roboto"
+            android:text="@string/strEmployee"
+            android:textColor="@color/accent1"
+            tools:targetApi="lollipop" />
     </RadioGroup>
 
     <TextView
@@ -39,7 +52,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
+        android:fontFamily="@font/roboto"
         android:text="@string/strIamA"
+        android:textColor="@color/accent1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -47,10 +62,13 @@
     <Button
         android:id="@+id/btnContinue"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:layout_marginTop="50dp"
+        android:background="@drawable/button_accent1"
+        android:fontFamily="@font/roboto_medium"
         android:onClick="continueToRegistration"
         android:text="@string/strContinue"
+        android:textColor="@color/colorPrimary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/studentOrCompany" />

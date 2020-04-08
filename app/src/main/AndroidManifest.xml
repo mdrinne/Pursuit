@@ -16,15 +16,13 @@
             android:name=".ViewOpportunities"
             android:label="@string/title_activity_view_opportunities"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".CreateMessageActivity" />
-        <activity android:name=".viewCompaniesActivity" /> <!-- <activity android:name=".myProfileActivity" /> -->
+        <activity android:name=".viewCompaniesActivity" />
         <activity android:name=".StudentProfileActivity" />
         <activity android:name=".aboutPursuitActivity" />
         <activity android:name=".LandingActivity" />
         <activity android:name=".RegistrationActivity" />
         <activity android:name=".CompanyRegistration" />
         <activity android:name=".StudentRegistration" />
-        <activity android:name=".RegistrationPage" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -38,6 +36,12 @@
         <activity android:name=".MessagesActivity" />
         <activity android:name=".EmployeeRegistration1" />
         <activity android:name=".EmployeeRegistration2" />
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
     </application>
+
+    <uses-permission android:name="android.permission.INTERNET" />
 
 </manifest>
