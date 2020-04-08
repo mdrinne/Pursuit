@@ -138,4 +138,5 @@
     <string name="strWith">Who is it with? (Optional)</string>
     <string name="strDescription">Description</string>
     <string name="strAdd">Add</string>
+    <string name="strAddOpportunity">Add Opportunity</string>
 </resources>

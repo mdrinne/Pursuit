@@ -26,6 +26,7 @@ public class CreateOpportunity extends AppCompatActivity {
     EditText opportunityPosition;
     EditText opportunityWithWho;
     EditText opportunityDescription;
+    BottomNavigationView bottomNavigation;
 
     CompanyOpportunity newOpportunity;
 
@@ -37,6 +38,9 @@ public class CreateOpportunity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_opportunity);
+
+        bottomNavigation = findViewById(R.id.bottom_navigation);
+        bottomNavigation.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
 
         dbref = FirebaseDatabase.getInstance().getReference();
         setCurrentUser();

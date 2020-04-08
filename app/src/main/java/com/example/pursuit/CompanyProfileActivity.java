@@ -79,16 +79,6 @@ public class CompanyProfileActivity extends AppCompatActivity{
         companyProfilePic = findViewById(R.id.imgCompanyProfilePic);
         loadCompanyProfilePicture();
 
-        Button viewOpps = findViewById(R.id.btnViewOpportunities);
-        viewOpps.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(CompanyProfileActivity.this, ViewOpportunities.class);
-                startActivity(i);
-
-            }
-        });
-
     }
 
     /* ********DATABASE******** */
@@ -315,6 +305,11 @@ public class CompanyProfileActivity extends AppCompatActivity{
                 e.printStackTrace();
             }
         }
+    }
+
+    public void addOpportunity(View v) {
+        Intent intent = new Intent(this, CreateOpportunity.class);
+        startActivity(intent);
     }
 
 }
