@@ -185,15 +185,15 @@ public class MessagesActivity extends AppCompatActivity {
         newConversationDialogFragment.show(getSupportFragmentManager(), "newConversation");
     }
 
-    public void createConversation(View v) {
+    public void createConversation() {
         newConversationUsername = findViewById(R.id.newConversationUsername);
 
-        view = v;
+//        view = v;
         checkUsername = toString(newConversationUsername);
         if (currentStudent != null && checkUsername.equals(currentStudent.getUsername())) {
-            Toast.makeText(view.getContext(), "You can't message yourself!", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "You can't message yourself!", Toast.LENGTH_LONG).show();
         } else if (currentEmployee != null && checkUsername.equals(currentEmployee.getUsername())) {
-            Toast.makeText(view.getContext(), "You can't message yourself!", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "You can't message yourself!", Toast.LENGTH_LONG).show();
         } else {
             Query studentUsernameQuery = dbRef.child("Students").orderByChild("username").equalTo(checkUsername);
             studentUsernameQuery.addListenerForSingleValueEvent(studentUsernameListener);

@@ -2,6 +2,7 @@ package com.example.pursuit;
 
 import androidx.fragment.app.DialogFragment;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -20,7 +21,8 @@ public class NewConversationDialogFragment extends DialogFragment {
 
         builder.setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
-
+                Activity messagesActivity = getActivity();
+                ((MessagesActivity)messagesActivity).createConversation();
             }
         });
         builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
