@@ -2,10 +2,9 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/constraintLayout2"
+    android:id="@+id/constraintLayout"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:layout_height="wrap_content">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
@@ -19,18 +18,17 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cardConstraintLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
             <TextView
-                android:id="@+id/txtCompanyCode"
+                android:id="@+id/txtPosition"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:fontFamily="@font/roboto_medium"
-                android:paddingStart="5dp"
+                android:fontFamily="@font/roboto"
                 android:paddingLeft="5dp"
-                android:paddingEnd="5dp"
                 android:paddingRight="5dp"
                 android:textColor="@color/accent1"
                 android:textSize="20sp"
@@ -39,35 +37,60 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/txtCode"
+                android:id="@+id/txtWith"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginLeft="10dp"
                 android:fontFamily="@font/roboto"
-                android:paddingStart="15dp"
-                android:paddingLeft="15dp"
-                android:paddingEnd="15dp"
-                android:paddingRight="15dp"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
                 android:textColor="@color/accent1"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txtCompanyCode"
-                app:layout_constraintVertical_bias="0.0" />
+                app:layout_constraintTop_toBottomOf="@+id/txtPosition" />
+
+            <TextView
+                android:id="@+id/txtDescription"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/roboto"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:paddingBottom="10dp"
+                android:textColor="@color/accent1"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toStartOf="@+id/imgDeleteOpportunity"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtWith" />
 
             <ImageView
-                android:id="@+id/imgDeleteInvite"
+                android:id="@+id/imgDeleteOpportunity"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginEnd="10dp"
                 android:layout_marginRight="10dp"
                 android:contentDescription="@string/txtDeleteButton"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/ic_delete_button" />
 
+            <Button
+                android:id="@+id/btnApprove"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginRight="5dp"
+                android:background="@drawable/button_accent1"
+                android:text="@string/strApprove"
+                android:textColor="@color/colorPrimary"
+                app:layout_constraintBottom_toBottomOf="@+id/imgDeleteOpportunity"
+                app:layout_constraintEnd_toStartOf="@+id/imgDeleteOpportunity"
+                app:layout_constraintTop_toTopOf="@+id/imgDeleteOpportunity" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

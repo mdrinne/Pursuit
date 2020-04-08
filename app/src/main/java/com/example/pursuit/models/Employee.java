@@ -10,10 +10,10 @@ public class Employee {
     public String email;
     public String password;
     public String username;
-
     public String position;
     public String companyName;
     public String inviteCode;
+    public Integer admin;
 
     public Employee() {
         // default constructor required for calls to
@@ -32,6 +32,7 @@ public class Employee {
         this.position = position;
         this.companyName = companyName;
         this.inviteCode = inviteCode;
+        this.admin = 0;
     }
 
     public String getId() {
@@ -104,5 +105,13 @@ public class Employee {
 
     public void setInviteCode(String inviteCode) {
         this.inviteCode = inviteCode;
+    }
+
+    public Integer getAdmin() {
+        return admin;
+    }
+
+    public void setAdmin(Integer admin) {
+        this.admin = admin;
     }
 }
