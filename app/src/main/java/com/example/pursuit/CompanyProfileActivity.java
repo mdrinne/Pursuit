@@ -223,6 +223,21 @@ public class CompanyProfileActivity extends AppCompatActivity{
         dbref.child("ProfilePicture").child("Companies").child(currentCompany.getId()).setValue(1);
     }
 
+    private void approveOpportunity(Integer position) {
+        CompanyOpportunity opportunity = companyOpportunities.get(position);
+        opportunity.setApproved(1);
+        companyOpportunities.set(position, opportunity);
+        dbref.child("CompanyOpportunities").child(currentCompany.getId()).child(opportunity.getId()).child("approved").setValue(1);
+        mAdapter.notifyItemChanged(position);
+    }
+
+    private void deleteOpportunity(Integer position) {
+        CompanyOpportunity opportunity = companyOpportunities.get(position);
+        dbref.child("CompanyOpportunities").child(currentCompany.getId()).child(opportunity.getId()).removeValue();
+        companyOpportunities.remove(opportunity);
+        mAdapter.notifyItemRemoved(position);
+    }
+
     /* ******END DATABASE****** */
 
     private void buildRecyclerView() {
@@ -235,7 +250,15 @@ public class CompanyProfileActivity extends AppCompatActivity{
         allOpportunities.setAdapter(mAdapter);
 
         mAdapter.setOpportunityOnItemClickListener(new OpportunityAdapter.OpportunityOnItemClickListener() {
+            @Override
+            public void onApproveClick(int position) {
+                approveOpportunity(position);
+            }
 
+            @Override
+            public void onDeleteClick(int position) {
+                deleteOpportunity(position);
+            }
         });
     }
 

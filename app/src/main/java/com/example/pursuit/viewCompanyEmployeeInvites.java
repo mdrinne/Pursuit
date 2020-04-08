@@ -82,6 +82,13 @@ public class viewCompanyEmployeeInvites extends AppCompatActivity {
         }
     };
 
+    public void removeInvite(Integer position) {
+        EmployeeInvite invite = companyInvites.get(position);
+        dbref.child("EmployeeInvites").child(currentCompany.getId()).child(invite.getCode()).removeValue();
+        companyInvites.remove(invite);
+        mAdapter.notifyItemRemoved(position);
+    }
+
     /* ******END DATABASE****** */
 
     BottomNavigationView.OnNavigationItemSelectedListener navigationItemSelectedListener =
@@ -112,14 +119,6 @@ public class viewCompanyEmployeeInvites extends AppCompatActivity {
     private void initializeCurrentRole() {
         currentRole = ((PursuitApplication) this.getApplicationContext()).getRole();
     }
-
-    public void removeInvite(Integer position) {
-        EmployeeInvite invite = companyInvites.get(position);
-        dbref.child("EmployeeInvites").child(currentCompany.getId()).child(invite.getCode()).removeValue();
-        companyInvites.remove(invite);
-        mAdapter.notifyItemRemoved(position);
-    }
-
 
     private void buildRecyclerView() {
         activeInvites = findViewById(R.id.rcycEmployeeInvites);

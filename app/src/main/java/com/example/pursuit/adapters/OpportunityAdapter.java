@@ -22,7 +22,8 @@ public class OpportunityAdapter extends RecyclerView.Adapter<OpportunityAdapter.
     private OpportunityOnItemClickListener mListener;
 
     public interface OpportunityOnItemClickListener {
-
+        void onApproveClick(int position);
+        void onDeleteClick(int position);
     }
 
     public void setOpportunityOnItemClickListener(OpportunityOnItemClickListener listener) {
@@ -39,6 +40,32 @@ public class OpportunityAdapter extends RecyclerView.Adapter<OpportunityAdapter.
             opportunityPosition = itemView.findViewById(R.id.txtPosition);
             opportunityWith = itemView.findViewById(R.id.txtWith);
             opportunityDescription = itemView.findViewById(R.id.txtDescription);
+            approve = itemView.findViewById(R.id.btnApprove);
+            deleteOpportunity = itemView.findViewById(R.id.imgDeleteOpportunity);
+
+            approve.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (listener != null) {
+                        int position = getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION) {
+                            listener.onApproveClick(position);
+                        }
+                    }
+                }
+            });
+
+            deleteOpportunity.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (listener != null) {
+                        int position = getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION) {
+                            listener.onDeleteClick(position);
+                        }
+                    }
+                }
+            });
         }
     }
 
@@ -56,6 +83,9 @@ public class OpportunityAdapter extends RecyclerView.Adapter<OpportunityAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull OpportunityViewHolder holder, int position) {
+        if (companyOpportunities.get(position).getApproved() == 1) {
+            holder.approve.setVisibility(View.GONE);
+        }
         holder.opportunityPosition.setText(companyOpportunities.get(position).getPosition());
         if (!companyOpportunities.get(position).getWithWho().equals("")) {
             holder.opportunityWith.setText("With: " + companyOpportunities.get(position).getWithWho());

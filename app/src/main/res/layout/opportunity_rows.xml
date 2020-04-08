@@ -18,6 +18,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cardConstraintLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -57,14 +58,15 @@
                 android:fontFamily="@font/roboto"
                 android:paddingLeft="5dp"
                 android:paddingRight="5dp"
+                android:paddingBottom="10dp"
                 android:textColor="@color/accent1"
                 android:textSize="16sp"
-                app:layout_constraintEnd_toStartOf="@+id/imageView"
+                app:layout_constraintEnd_toStartOf="@+id/imgDeleteOpportunity"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/txtWith" />
 
             <ImageView
-                android:id="@+id/imageView"
+                android:id="@+id/imgDeleteOpportunity"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_marginTop="10dp"
@@ -76,7 +78,7 @@
                 app:srcCompat="@drawable/ic_delete_button" />
 
             <Button
-                android:id="@+id/button"
+                android:id="@+id/btnApprove"
                 android:layout_width="wrap_content"
                 android:layout_height="20dp"
                 android:layout_marginEnd="5dp"
@@ -84,9 +86,9 @@
                 android:background="@drawable/button_accent1"
                 android:text="@string/strApprove"
                 android:textColor="@color/colorPrimary"
-                app:layout_constraintBottom_toBottomOf="@+id/imageView"
-                app:layout_constraintEnd_toStartOf="@+id/imageView"
-                app:layout_constraintTop_toTopOf="@+id/imageView" />
+                app:layout_constraintBottom_toBottomOf="@+id/imgDeleteOpportunity"
+                app:layout_constraintEnd_toStartOf="@+id/imgDeleteOpportunity"
+                app:layout_constraintTop_toTopOf="@+id/imgDeleteOpportunity" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 
