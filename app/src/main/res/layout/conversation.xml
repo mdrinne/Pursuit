@@ -6,14 +6,12 @@
 
     <TextView
         android:id="@+id/conversation_title"
-        android:layout_width="180dp"
-        android:maxWidth="180dp"
-        android:minWidth="180dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/conversation"
         android:padding="5dp"
         android:text="@string/message_activity_title"
         android:textColor="#000"
-        android:textSize="18dp" />
+        android:textSize="18sp" />
 
 </LinearLayout>

@@ -190,13 +190,7 @@ public class MessagesActivity extends AppCompatActivity implements NewConversati
     public void onDialogPositiveClick(DialogFragment dialog) {
         // create a conversation
         Log.d(TAG, "In positive click method in messagesActivity");
-        newConversationUsername = dialog.getDialog().findViewById(R.id.newConversationUsername);
-        checkUsername = toString(newConversationUsername);
-        if (checkUsername.isEmpty()) {
-            Log.d(TAG, "checkUsername is empty!");
-        } else {
-            Log.d("CHECK_USERNAME: ", checkUsername);
-        }
+
         createConversation(dialog);
     }
 
@@ -209,7 +203,6 @@ public class MessagesActivity extends AppCompatActivity implements NewConversati
     public void createConversation(DialogFragment dialog) {
         newConversationUsername = dialog.getDialog().findViewById(R.id.newConversationUsername);
 
-//        view = v;
         checkUsername = toString(newConversationUsername);
         if (currentStudent != null && checkUsername.equals(currentStudent.getUsername())) {
             Toast.makeText(this, "You can't message yourself!", Toast.LENGTH_LONG).show();
@@ -246,7 +239,7 @@ public class MessagesActivity extends AppCompatActivity implements NewConversati
         String id = RandomKeyGenerator.randomAlphaNumeric(16);
         newConversation = new Conversation(id, otherUserId, otherUserUsername, otherUserRole);
 
-        // Add the newConversation under the Student
+        // Add the newConversation under the Student/Employee
         // Students/Employees > id > Conversations > id > newConversation
         if (currentStudent != null) {
             dbRef.child("Students").child(currentStudent.getId()).child("Conversations").child(id).setValue(newConversation);
