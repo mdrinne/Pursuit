@@ -27,6 +27,7 @@ import com.google.firebase.database.Query;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.annotation.NonNull;
+import androidx.fragment.app.DialogFragment;
 
 import com.example.pursuit.models.Company;
 import com.example.pursuit.models.Student;
@@ -34,7 +35,7 @@ import com.example.pursuit.NewConversationDialogFragment;
 
 import java.util.ArrayList;
 
-public class MessagesActivity extends AppCompatActivity {
+public class MessagesActivity extends AppCompatActivity implements NewConversationDialogFragment.NewConversationDialogListener {
 
     private Student matchedStudentUsername;
     private Employee matchedEmployeeUsername;
@@ -48,7 +49,7 @@ public class MessagesActivity extends AppCompatActivity {
 
     private DatabaseReference dbRef;
 
-    private View view;
+//    private View view;
     private EditText newConversationUsername;
 
     private Student currentStudent = null;
@@ -102,7 +103,7 @@ public class MessagesActivity extends AppCompatActivity {
             conversationAdapter.add(newConversation);
             conversationsView.setSelection(conversationsView.getCount() - 1);
 
-            Toast.makeText(view.getContext(), "Conversation Created!", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Conversation Created!", Toast.LENGTH_LONG).show();
         } else {
             Query employeeUsernameQuery = dbRef.child("Employees").orderByChild("username").equalTo(checkUsername);
             employeeUsernameQuery.addListenerForSingleValueEvent(employeeUsernameListener);
@@ -136,9 +137,9 @@ public class MessagesActivity extends AppCompatActivity {
             conversationAdapter.add(newConversation);
             conversationsView.setSelection(conversationsView.getCount() - 1);
 
-            Toast.makeText(view.getContext(), "Conversation Created!", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Conversation Created!", Toast.LENGTH_LONG).show();
         } else {
-            Toast.makeText(view.getContext(), "This username does not exist!", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "This username does not exist!", Toast.LENGTH_LONG).show();
         }
     }
 
@@ -181,12 +182,32 @@ public class MessagesActivity extends AppCompatActivity {
     }
 
     public void showCreateConversation(View v) {
-        NewConversationDialogFragment newConversationDialogFragment = new NewConversationDialogFragment();
-        newConversationDialogFragment.show(getSupportFragmentManager(), "newConversation");
+        // open the new conversation fragment
+        DialogFragment dialog  = new NewConversationDialogFragment();
+        dialog.show(getSupportFragmentManager(), "newConversation");
     }
 
-    public void createConversation() {
-        newConversationUsername = findViewById(R.id.newConversationUsername);
+    public void onDialogPositiveClick(DialogFragment dialog) {
+        // create a conversation
+        Log.d(TAG, "In positive click method in messagesActivity");
+        newConversationUsername = dialog.getDialog().findViewById(R.id.newConversationUsername);
+        checkUsername = toString(newConversationUsername);
+        if (checkUsername.isEmpty()) {
+            Log.d(TAG, "checkUsername is empty!");
+        } else {
+            Log.d("CHECK_USERNAME: ", checkUsername);
+        }
+        createConversation(dialog);
+    }
+
+    public void onDialogNegativeClick(DialogFragment dialog) {
+        // close the dialog
+        Log.d(TAG, "In negative click method in messagesActivity");
+        dialog.getDialog().cancel();
+    }
+
+    public void createConversation(DialogFragment dialog) {
+        newConversationUsername = dialog.getDialog().findViewById(R.id.newConversationUsername);
 
 //        view = v;
         checkUsername = toString(newConversationUsername);
@@ -218,7 +239,7 @@ public class MessagesActivity extends AppCompatActivity {
             otherUserUsername = matchedEmployeeUsername.getUsername();
             otherUserRole = "Employee";
         } else {
-            Toast.makeText(view.getContext(), "Something went wrong!", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Something went wrong!", Toast.LENGTH_LONG).show();
             return;
         }
 
