@@ -2,7 +2,6 @@ package com.example.pursuit;
 
 import com.example.pursuit.models.Conversation;
 import com.example.pursuit.models.Employee;
-import com.example.pursuit.ConversationAdapter;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import android.content.Intent;
@@ -10,10 +9,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.MenuItem;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.app.Dialog;
 
 
 import android.widget.Toast;
@@ -34,7 +31,8 @@ import com.example.pursuit.models.Student;
 
 import java.util.ArrayList;
 
-public class MessagesActivity extends AppCompatActivity implements NewConversationDialogFragment.NewConversationDialogListener {
+public class MessagesActivity extends AppCompatActivity
+        implements NewConversationDialogFragment.NewConversationDialogListener, ConfirmDeleteDialogFragment.ConfirmDeleteDialogListener {
 
     private Student matchedStudentUsername;
     private Employee matchedEmployeeUsername;
@@ -77,8 +75,7 @@ public class MessagesActivity extends AppCompatActivity implements NewConversati
                 Log.d(TAG, "Snapshot exists");
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     Log.d(TAG, "looping in snapshot");
-                    Student student = snapshot.getValue(Student.class);
-                    matchedStudentUsername = student;
+                    matchedStudentUsername = snapshot.getValue(Student.class);
                 }
             }
 
@@ -112,8 +109,7 @@ public class MessagesActivity extends AppCompatActivity implements NewConversati
             matchedEmployeeUsername = null;
             if (dataSnapshot.exists()) {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    Employee employee = snapshot.getValue(Employee.class);
-                    matchedEmployeeUsername = employee;
+                    matchedEmployeeUsername = snapshot.getValue(Employee.class);
                 }
             }
             postEmployeeUsernameListener();
@@ -183,22 +179,35 @@ public class MessagesActivity extends AppCompatActivity implements NewConversati
         dialog.show(getSupportFragmentManager(), "newConversation");
     }
 
+    public void showDeleteConversation(View v) {
+        DialogFragment dialog = new ConfirmDeleteDialogFragment();
+        dialog.show(getSupportFragmentManager(), "confirmDelete");
+    }
+
     public void onDialogPositiveClick(DialogFragment dialog) {
         // create a conversation
-        Log.d(TAG, "In positive click method in messagesActivity");
-
         createConversation(dialog);
     }
 
     public void onDialogNegativeClick(DialogFragment dialog) {
         // close the dialog
-        Log.d(TAG, "In negative click method in messagesActivity");
-        dialog.getDialog().cancel();
+        Log.d(TAG, "in NEGATIVECLICK");
+        try {
+            dialog.getDialog().cancel();
+        } catch (NullPointerException e){
+            Log.d(TAG, "Unable to obtain dialog");
+        }
     }
 
     public void createConversation(DialogFragment dialog) {
-        EditText newConversationUsername = dialog.getDialog().findViewById(R.id.newConversationUsername);
+        EditText newConversationUsername = null;
+        try {
+            newConversationUsername = dialog.getDialog().findViewById(R.id.newConversationUsername);
+        } catch (NullPointerException e) {
+            Log.d(TAG, "Failed to obtain editText from newConversationDialog");
+        }
 
+        assert newConversationUsername != null;
         checkUsername = toString(newConversationUsername);
         if (currentStudent != null && checkUsername.equals(currentStudent.getUsername())) {
             Toast.makeText(this, "You can't message yourself!", Toast.LENGTH_LONG).show();
