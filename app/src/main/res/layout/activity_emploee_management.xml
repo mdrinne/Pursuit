@@ -5,7 +5,7 @@
     android:id="@+id/ConstraintLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/gradient_bg">
+    android:orientation="vertical">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -15,7 +15,8 @@
         app:layout_constraintBottom_toTopOf="@+id/container"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        android:id="@+id/scrollView2">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/ConstraintLayout2"
@@ -24,33 +25,8 @@
             android:paddingTop="10dp"
             android:paddingBottom="40dp">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rcycEmployeeInvites"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-
-            </androidx.recyclerview.widget.RecyclerView>
-
-            <Button
-                android:id="@+id/btnInviteEmployee"
-                android:layout_width="wrap_content"
-                android:layout_height="40dp"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/button_accent1"
-                android:fontFamily="@font/roboto_medium"
-                android:onClick="inviteEmployee"
-                android:text="@string/strInviteEmployee"
-                android:textColor="@color/colorPrimary"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/rcycEmployeeInvites" />
-
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
-
 
     <FrameLayout
         android:id="@+id/container"
@@ -70,6 +46,4 @@
             app:menu="@menu/bottom_navigation_menu" />
 
     </FrameLayout>
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>
