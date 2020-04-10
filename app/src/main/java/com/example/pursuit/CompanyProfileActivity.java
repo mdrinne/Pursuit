@@ -2,6 +2,8 @@ package com.example.pursuit;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -19,7 +21,10 @@ import android.widget.Toast;
 import android.widget.Button;
 
 
+import com.example.pursuit.adapters.OpportunityAdapter;
 import com.example.pursuit.models.Company;
+import com.example.pursuit.models.CompanyOpportunity;
+import com.example.pursuit.models.Employee;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -37,6 +42,7 @@ import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class CompanyProfileActivity extends AppCompatActivity{
 
@@ -46,6 +52,7 @@ public class CompanyProfileActivity extends AppCompatActivity{
     TextView companyField;
     TextView companyDescription;
     Company currentCompany;
+    Employee currentEmployee;
     BottomNavigationView bottomNavigation;
     ImageView companyProfilePic;
     Uri filePath;
@@ -60,6 +67,11 @@ public class CompanyProfileActivity extends AppCompatActivity{
     String currentRole;
     int hasPicture;
 
+    private ArrayList<CompanyOpportunity> companyOpportunities;
+    private RecyclerView allOpportunities;
+    private OpportunityAdapter mAdapter;
+    private RecyclerView.LayoutManager mLayoutManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,8 +79,7 @@ public class CompanyProfileActivity extends AppCompatActivity{
         bottomNavigation = findViewById(R.id.bottom_navigation);
         bottomNavigation.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
 
-        initializeCurrentCompany();
-        initializeCurrentRole();
+        setCurrentUser();
 
         populateTextFields();
 
@@ -79,19 +90,35 @@ public class CompanyProfileActivity extends AppCompatActivity{
         companyProfilePic = findViewById(R.id.imgCompanyProfilePic);
         loadCompanyProfilePicture();
 
-        Button viewOpps = findViewById(R.id.btnViewOpportunities);
-        viewOpps.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(CompanyProfileActivity.this, ViewOpportunities.class);
-                startActivity(i);
+        Query opportunityQuery = dbref.child("CompanyOpportunities").child(currentCompany.getId()).orderByKey();
 
-            }
-        });
+        opportunityQuery.addListenerForSingleValueEvent(companyOpportunityListener);
 
     }
 
     /* ********DATABASE******** */
+
+    ValueEventListener companyOpportunityListener = new ValueEventListener() {
+        @Override
+        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+            companyOpportunities = new ArrayList<>();
+            companyOpportunities.clear();
+
+            if (dataSnapshot.exists()) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    CompanyOpportunity opportunity = snapshot.getValue(CompanyOpportunity.class);
+                    companyOpportunities.add(opportunity);
+                }
+            }
+            Log.d(TAG, String.valueOf(companyOpportunities.size()));
+            buildRecyclerView();
+        }
+
+        @Override
+        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+        }
+    };
 
     ValueEventListener companyHasProfilePictureListener = new ValueEventListener() {
         @Override
@@ -197,7 +224,48 @@ public class CompanyProfileActivity extends AppCompatActivity{
         dbref.child("ProfilePicture").child("Companies").child(currentCompany.getId()).setValue(1);
     }
 
+    private void approveOpportunity(Integer position) {
+        CompanyOpportunity opportunity = companyOpportunities.get(position);
+        opportunity.setApproved(1);
+        companyOpportunities.set(position, opportunity);
+        dbref.child("CompanyOpportunities").child(currentCompany.getId()).child(opportunity.getId()).child("approved").setValue(1);
+        mAdapter.notifyItemChanged(position);
+    }
+
+    private void deleteOpportunity(Integer position) {
+        CompanyOpportunity opportunity = companyOpportunities.get(position);
+        dbref.child("CompanyOpportunities").child(currentCompany.getId()).child(opportunity.getId()).removeValue();
+        companyOpportunities.remove(opportunity);
+        mAdapter.notifyItemRemoved(position);
+    }
+
     /* ******END DATABASE****** */
+
+    private void buildRecyclerView() {
+        allOpportunities = findViewById(R.id.rcycOpportunities);
+        allOpportunities.setHasFixedSize(false);
+        mLayoutManager = new LinearLayoutManager(this);
+        mAdapter = new OpportunityAdapter(companyOpportunities);
+
+        allOpportunities.setLayoutManager(mLayoutManager);
+        allOpportunities.setAdapter(mAdapter);
+
+        mAdapter.setOpportunityOnItemClickListener(new OpportunityAdapter.OpportunityOnItemClickListener() {
+            @Override
+            public void onApproveClick(int position) {
+                if (currentRole.equals("Company") || (currentRole.equals("Employee") && currentEmployee.admin == 1)) {
+                    approveOpportunity(position);
+                } else {
+                    Toast.makeText(getApplicationContext(), "Non-Admin: Access Restricted", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onDeleteClick(int position) {
+                deleteOpportunity(position);
+            }
+        });
+    }
 
     private void loadCompanyProfilePicture() {
         Query companyHasProfilePictureQuery = dbref.child("ProfilePicture").orderByChild(currentCompany.getId()).equalTo(1);
@@ -228,14 +296,19 @@ public class CompanyProfileActivity extends AppCompatActivity{
                             finish();
                             return true;
                         case R.id.navigation_profile:
-                            Intent i2 = new Intent(CompanyProfileActivity.this, CompanyProfileActivity.class);
-                            startActivity(i2);
-                            finish();
                             return true;
                     }
                     return false;
                 }
             };
+
+    private void setCurrentUser() {
+        initializeCurrentCompany();
+        initializeCurrentRole();
+        if (currentRole.equals("Employee")) {
+            currentEmployee = ((PursuitApplication) this.getApplicationContext()).getCurrentEmployee();
+        }
+    }
 
     private void initializeCurrentCompany() {
         Log.d(TAG, "initializing company");
@@ -318,6 +391,11 @@ public class CompanyProfileActivity extends AppCompatActivity{
                 e.printStackTrace();
             }
         }
+    }
+
+    public void addOpportunity(View v) {
+        Intent intent = new Intent(this, CreateOpportunity.class);
+        startActivity(intent);
     }
 
 }

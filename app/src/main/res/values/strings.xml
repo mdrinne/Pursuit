@@ -141,4 +141,10 @@
     <string name="new_conversation_dialog_title">Start a Conversation</string>
     <string name="cancel">Cancel</string>
     <string name="confirm">Confirm</string>
+    <string name="strWith">Who is it with? (Optional)</string>
+    <string name="strDescription">Description</string>
+    <string name="strAdd">Add</string>
+    <string name="strAddOpportunity">Add Opportunity</string>
+    <string name="strApprove">Approve</string>
+    <string name="strOpportunities">Opportunities</string>
 </resources>
