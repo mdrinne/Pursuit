@@ -30,6 +30,7 @@
     <string name="strCreateInviteCode">Create Invite Code</string>
     <string name="profile_photo">Profile Photo</string>
     <string name="message_activity_title">Messaging</string>
+    <string name="conversation_title_placeholder">Employee: Ben</string>
     <string name="new_conversation_button">Start a Conversation</string>
     <string name="create_string">Create</string>
     <string name="strViewInvites">View Invites</string>
@@ -147,4 +148,5 @@
     <string name="strAddOpportunity">Add Opportunity</string>
     <string name="strApprove">Approve</string>
     <string name="strOpportunities">Opportunities</string>
+    <string name="conversation_delete_button_description">Button to delete a conversation</string>
 </resources>

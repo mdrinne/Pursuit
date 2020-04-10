@@ -31,7 +31,6 @@ import androidx.fragment.app.DialogFragment;
 
 import com.example.pursuit.models.Company;
 import com.example.pursuit.models.Student;
-import com.example.pursuit.NewConversationDialogFragment;
 
 import java.util.ArrayList;
 
@@ -48,9 +47,6 @@ public class MessagesActivity extends AppCompatActivity implements NewConversati
     private static final String TAG = "MessagesActivity";
 
     private DatabaseReference dbRef;
-
-//    private View view;
-    private EditText newConversationUsername;
 
     private Student currentStudent = null;
     private Employee currentEmployee = null;
@@ -201,7 +197,7 @@ public class MessagesActivity extends AppCompatActivity implements NewConversati
     }
 
     public void createConversation(DialogFragment dialog) {
-        newConversationUsername = dialog.getDialog().findViewById(R.id.newConversationUsername);
+        EditText newConversationUsername = dialog.getDialog().findViewById(R.id.newConversationUsername);
 
         checkUsername = toString(newConversationUsername);
         if (currentStudent != null && checkUsername.equals(currentStudent.getUsername())) {
@@ -257,9 +253,9 @@ public class MessagesActivity extends AppCompatActivity implements NewConversati
         String counterpartId = RandomKeyGenerator.randomAlphaNumeric(16);
         Conversation counterpart = new Conversation(counterpartId, counterpartOtherUserId, counterpartOtherUserUsername, counterpartOtherUserRole);
         if (matchedStudentUsername != null) {
-            dbRef.child("Students").child(matchedStudentUsername.getId()).child("Conversations").child(id).setValue(counterpart);
+            dbRef.child("Students").child(matchedStudentUsername.getId()).child("Conversations").child(counterpartId).setValue(counterpart);
         } else {
-            dbRef.child("Employees").child(matchedEmployeeUsername.getId()).child("Conversations").child(id).setValue(counterpart);
+            dbRef.child("Employees").child(matchedEmployeeUsername.getId()).child("Conversations").child(counterpartId).setValue(counterpart);
         }
 
         conversationAdapter.add(newConversation);
