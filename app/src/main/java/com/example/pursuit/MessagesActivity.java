@@ -186,7 +186,11 @@ public class MessagesActivity extends AppCompatActivity
 
     public void onDialogPositiveClick(DialogFragment dialog) {
         // create a conversation
-        createConversation(dialog);
+        if (dialog.getClass().getSimpleName() == "NewConversationDialogFragment") {
+            createConversation(dialog);
+        } else {
+
+        }
     }
 
     public void onDialogNegativeClick(DialogFragment dialog) {

@@ -1,19 +1,17 @@
 package com.example.pursuit;
 
+import android.annotation.SuppressLint;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.widget.ArrayAdapter;
 import android.content.Context;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.database.Query;
 
 import com.example.pursuit.models.Conversation;
 
@@ -60,6 +58,7 @@ public class ConversationAdapter extends ArrayAdapter<Conversation> {
         return i;
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public View getView(int i, View convertView, ViewGroup parent) {
         Log.d(TAG, "in getView");
@@ -83,6 +82,9 @@ public class ConversationAdapter extends ArrayAdapter<Conversation> {
         }
 
         viewHolder.conversationTitle.setText(conversation.getOtherUserRole() + ": " + conversation.getOtherUserUsername());
+
+        ImageButton deleteBtn = convertView.findViewById(R.id.deleteConversation);
+        deleteBtn.setTag(conversation.getId());
 
         return convertView;
     }
