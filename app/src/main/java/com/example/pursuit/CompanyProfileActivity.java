@@ -90,7 +90,7 @@ public class CompanyProfileActivity extends AppCompatActivity{
         companyProfilePic = findViewById(R.id.imgCompanyProfilePic);
         loadCompanyProfilePicture();
 
-        Query opportunityQuery = dbref.child("CompanyOpportunities").child(currentCompany.getId()).orderByKey();
+        Query opportunityQuery = dbref.child("CompanyOpportunities").child(currentCompany.getId()).orderByChild("timestamp");
 
         opportunityQuery.addListenerForSingleValueEvent(companyOpportunityListener);
 
