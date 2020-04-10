@@ -4,6 +4,7 @@ import com.example.pursuit.models.Conversation;
 import com.example.pursuit.models.Employee;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -22,6 +23,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.database.Query;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
@@ -180,22 +182,24 @@ public class MessagesActivity extends AppCompatActivity
     }
 
     public void showDeleteConversation(View v) {
-        DialogFragment dialog = new ConfirmDeleteDialogFragment();
+        DialogFragment dialog = new ConfirmDeleteDialogFragment((String) v.getTag());
+
         dialog.show(getSupportFragmentManager(), "confirmDelete");
     }
 
     public void onDialogPositiveClick(DialogFragment dialog) {
         // create a conversation
-        if (dialog.getClass().getSimpleName() == "NewConversationDialogFragment") {
-            createConversation(dialog);
-        } else {
-
-        }
+//        if (dialog.getClass().getSimpleName() == "NewConversationDialogFragment") {
+//            createConversation(dialog);
+//        } else {
+//
+//        }
     }
 
     public void onDialogNegativeClick(DialogFragment dialog) {
         // close the dialog
         Log.d(TAG, "in NEGATIVECLICK");
+        Log.d("CONVERSATION_ID", (String) dialog.getDialog().findViewById(Dialog.BUTTON_NEGATIVE).getTag());
         try {
             dialog.getDialog().cancel();
         } catch (NullPointerException e){

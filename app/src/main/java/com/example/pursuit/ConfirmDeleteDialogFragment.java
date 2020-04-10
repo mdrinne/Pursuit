@@ -6,14 +6,22 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.widget.ImageButton;
 
 import androidx.fragment.app.DialogFragment;
 
 public class ConfirmDeleteDialogFragment extends DialogFragment {
 
+    private String conversationId;
+
     public interface ConfirmDeleteDialogListener {
         void onDialogPositiveClick(DialogFragment dialog);
         void onDialogNegativeClick(DialogFragment dialog);
+    }
+
+    public ConfirmDeleteDialogFragment(String conversationId) {
+        super();
+        this.conversationId = conversationId;
     }
 
     ConfirmDeleteDialogFragment.ConfirmDeleteDialogListener listener;
@@ -46,6 +54,19 @@ public class ConfirmDeleteDialogFragment extends DialogFragment {
             }
         });
 
+//        Dialog dialog = builder.create();
+//        dialog.findViewById(Dialog.BUTTON_NEGATIVE).setTag(conversationId);
+//
+//        dialog.setOnShowListener(new DialogInterface.OnShowListener() {
+//
+//        });
+
         return builder.create();
+//        return dialog;
     }
+
+//    @Override
+//    public void onShow() {
+//
+//    }
 }
