@@ -232,9 +232,9 @@ public class MessagesActivity extends AppCompatActivity
         String otherUserUsername;
         String otherUserRole;
 
-        String counterpartOtherUserId;
-        String counterpartOtherUserUsername;
-        String counterpartOtherUserRole;
+//        String counterpartOtherUserId;
+//        String counterpartOtherUserUsername;
+//        String counterpartOtherUserRole;
 
         if (matchedStudentUsername != null) {
             otherUserId = matchedStudentUsername.getId();
@@ -256,24 +256,24 @@ public class MessagesActivity extends AppCompatActivity
         // Students/Employees > id > Conversations > id > newConversation
         if (currentStudent != null) {
             dbRef.child("Students").child(currentStudent.getId()).child("Conversations").child(id).setValue(newConversation);
-            counterpartOtherUserId = currentStudent.getId();
-            counterpartOtherUserUsername = currentStudent.getUsername();
-            counterpartOtherUserRole = "Student";
+//            counterpartOtherUserId = currentStudent.getId();
+//            counterpartOtherUserUsername = currentStudent.getUsername();
+//            counterpartOtherUserRole = "Student";
         } else {
             dbRef.child("Employees").child(currentEmployee.getId()).child("Conversations").child(id).setValue(newConversation);
-            counterpartOtherUserId = currentEmployee.getId();
-            counterpartOtherUserUsername = currentEmployee.getUsername();
-            counterpartOtherUserRole = "Employee";
+//            counterpartOtherUserId = currentEmployee.getId();
+//            counterpartOtherUserUsername = currentEmployee.getUsername();
+//            counterpartOtherUserRole = "Employee";
         }
 
-        // Add the newConversation's counterpart to the user/company it is with
-        String counterpartId = RandomKeyGenerator.randomAlphaNumeric(16);
-        Conversation counterpart = new Conversation(counterpartId, counterpartOtherUserId, counterpartOtherUserUsername, counterpartOtherUserRole);
-        if (matchedStudentUsername != null) {
-            dbRef.child("Students").child(matchedStudentUsername.getId()).child("Conversations").child(counterpartId).setValue(counterpart);
-        } else {
-            dbRef.child("Employees").child(matchedEmployeeUsername.getId()).child("Conversations").child(counterpartId).setValue(counterpart);
-        }
+//        // Add the newConversation's counterpart to the user/company it is with
+//        String counterpartId = RandomKeyGenerator.randomAlphaNumeric(16);
+//        Conversation counterpart = new Conversation(counterpartId, counterpartOtherUserId, counterpartOtherUserUsername, counterpartOtherUserRole);
+//        if (matchedStudentUsername != null) {
+//            dbRef.child("Students").child(matchedStudentUsername.getId()).child("Conversations").child(counterpartId).setValue(counterpart);
+//        } else {
+//            dbRef.child("Employees").child(matchedEmployeeUsername.getId()).child("Conversations").child(counterpartId).setValue(counterpart);
+//        }
 
         conversationAdapter.add(newConversation);
     }
