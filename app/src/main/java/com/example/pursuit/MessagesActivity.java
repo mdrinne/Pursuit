@@ -227,16 +227,6 @@ public class MessagesActivity extends AppCompatActivity
         }
     }
 
-    public void deleteConversations(String conversationId) {
-        Log.d(TAG, "in deleteConversation");
-
-        if (currentStudent != null) {
-            dbRef.child("Students").child(currentStudent.getId()).child("Conversations").child(conversationId).removeValue();
-        } else {
-            dbRef.child("Employees").child(currentEmployee.getId()).child("Conversations").child(conversationId).removeValue();
-        }
-    }
-
     public void writeNewConversations() {
         String otherUserId;
         String otherUserUsername;
@@ -286,6 +276,22 @@ public class MessagesActivity extends AppCompatActivity
         }
 
         conversationAdapter.add(newConversation);
+    }
+
+    public void deleteConversations(String conversationId) {
+        Log.d(TAG, "in deleteConversation");
+
+        if (currentStudent != null) {
+            DatabaseReference conversationRef = dbRef.child("Students").child(currentStudent.getId()).child("Conversations").child(conversationId);
+
+            // remove the conversation
+            conversationRef.removeValue();
+        } else {
+            DatabaseReference conversationRef = dbRef.child("Employees").child(currentEmployee.getId()).child("Conversations").child(conversationId);
+
+            // remove the conversation
+            conversationRef.removeValue();
+        }
     }
 
     public void getMyConversations() {
