@@ -184,22 +184,23 @@ public class MessagesActivity extends AppCompatActivity
     public void showDeleteConversation(View v) {
         DialogFragment dialog = new ConfirmDeleteDialogFragment((String) v.getTag());
 
-        dialog.show(getSupportFragmentManager(), "confirmDelete");
+        dialog.show(getSupportFragmentManager(), (String) v.getTag());
+        Log.d("TAG", "can do stuff after");
     }
 
     public void onDialogPositiveClick(DialogFragment dialog) {
         // create a conversation
-//        if (dialog.getClass().getSimpleName() == "NewConversationDialogFragment") {
-//            createConversation(dialog);
-//        } else {
-//
-//        }
+//        Log.d("SIMPLE_NAME", dialog.getClass().getSimpleName());
+        if (dialog.getClass().getSimpleName().equals("NewConversationDialogFragment")) {
+            createConversation(dialog);
+        } else {
+            deleteConversation(dialog.getTag());
+        }
     }
 
     public void onDialogNegativeClick(DialogFragment dialog) {
         // close the dialog
-        Log.d(TAG, "in NEGATIVECLICK");
-        Log.d("CONVERSATION_ID", (String) dialog.getDialog().findViewById(Dialog.BUTTON_NEGATIVE).getTag());
+        Log.d("CONVERSATION_ID", (String) dialog.getTag());
         try {
             dialog.getDialog().cancel();
         } catch (NullPointerException e){
@@ -224,6 +225,16 @@ public class MessagesActivity extends AppCompatActivity
         } else {
             Query studentUsernameQuery = dbRef.child("Students").orderByChild("username").equalTo(checkUsername);
             studentUsernameQuery.addListenerForSingleValueEvent(studentUsernameListener);
+        }
+    }
+
+    public void deleteConversation(String conversationId) {
+        Log.d(TAG, "in deleteConversation");
+
+        if (currentStudent != null) {
+            dbRef.child("Students").child(currentStudent.getId()).child("Conversations").child(conversationId).removeValue();
+        } else {
+            dbRef.child("Employees").child(currentEmployee.getId()).child("Conversations").child(conversationId).removeValue();
         }
     }
 
