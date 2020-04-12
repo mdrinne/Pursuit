@@ -190,11 +190,10 @@ public class MessagesActivity extends AppCompatActivity
 
     public void onDialogPositiveClick(DialogFragment dialog) {
         // create a conversation
-//        Log.d("SIMPLE_NAME", dialog.getClass().getSimpleName());
         if (dialog.getClass().getSimpleName().equals("NewConversationDialogFragment")) {
             createConversation(dialog);
         } else {
-            deleteConversation(dialog.getTag());
+            deleteConversations(dialog.getTag());
         }
     }
 
@@ -228,7 +227,7 @@ public class MessagesActivity extends AppCompatActivity
         }
     }
 
-    public void deleteConversation(String conversationId) {
+    public void deleteConversations(String conversationId) {
         Log.d(TAG, "in deleteConversation");
 
         if (currentStudent != null) {
