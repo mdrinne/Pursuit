@@ -192,15 +192,15 @@ public class ConversationsActivity extends AppCompatActivity
         conversationsView = findViewById(R.id.conversations_view);
         conversationsView.setAdapter(conversationAdapter);
         conversationAdapter.addAll(myConversations);
-        conversationsView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Log.d(TAG, "in onItemClick !");
-                Intent messagesActivity = new Intent(ConversationsActivity.this, MessagesActivity.class);
-                messagesActivity.putExtra("CONVERSATION_ID", myConversations.get(position).getId());
-                startActivity(messagesActivity);
-            }
-        });
+//        conversationsView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                Log.d(TAG, "in onItemClick !");
+//                Intent messagesActivity = new Intent(ConversationsActivity.this, MessagesActivity.class);
+//                messagesActivity.putExtra("CONVERSATION_ID", myConversations.get(position).getId());
+//                startActivity(messagesActivity);
+//            }
+//        });
     }
 
     public void openConversation(View v) {
