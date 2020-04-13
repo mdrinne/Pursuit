@@ -203,6 +203,13 @@ public class ConversationsActivity extends AppCompatActivity
         });
     }
 
+    public void openConversation(View v) {
+        Log.d(TAG, "in onItemClick !");
+        Intent messagesActivity = new Intent(ConversationsActivity.this, MessagesActivity.class);
+        messagesActivity.putExtra("CONVERSATION_ID", (String) v.getTag());
+        startActivity(messagesActivity);
+    }
+
     public void showCreateConversation(View v) {
         // open the new conversation fragment
         DialogFragment dialog  = new NewConversationDialogFragment();

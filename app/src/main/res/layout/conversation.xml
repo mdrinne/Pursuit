@@ -22,7 +22,8 @@
                 android:textColor="#000"
                 android:textSize="18sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                android:onClick="openConversation"/>
 
             <ImageButton
                 android:id="@+id/deleteConversation"

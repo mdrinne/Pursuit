@@ -94,6 +94,9 @@ public class ConversationAdapter extends ArrayAdapter<Conversation> {
         ImageButton deleteBtn = convertView.findViewById(R.id.deleteConversation);
         deleteBtn.setTag(conversation.getId());
 
+        TextView title = convertView.findViewById(R.id.conversation_title);
+        title.setTag(conversation.getId());
+
         return convertView;
     }
 }
