@@ -1,6 +1,8 @@
 package com.example.pursuit.models;
 
 import com.google.firebase.database.IgnoreExtraProperties;
+
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 
 @IgnoreExtraProperties
@@ -11,6 +13,7 @@ public class Conversation {
     public String otherUserUsername;
     public String otherUserRole;
     public String createdAt;
+    public String updatedAt;
 
     public Conversation() {
         // default constructor required for calls to
@@ -18,11 +21,13 @@ public class Conversation {
     }
 
 //    public Conversation(String id, ArrayList<String> userIds) {
-    public Conversation(String id, String otherUserId, String otherUserUsername, String otherUserRole) {
+    public Conversation(String id, String otherUserId, String otherUserUsername, String otherUserRole, String createdAt, String updatedAt) {
       this.id = id;
       this.otherUserId = otherUserId;
       this.otherUserUsername = otherUserUsername;
       this.otherUserRole = otherUserRole;
+      this.createdAt = createdAt;
+      this.updatedAt = updatedAt;
     }
 
     public String getId() {
@@ -51,6 +56,22 @@ public class Conversation {
 
     public String getOtherUserRole() {
         return otherUserRole;
+    }
+
+    public void setCreatedAt(String createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public String getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setUpdatedAt(String updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    public String getUpdatedAt() {
+        return updatedAt;
     }
 
 }

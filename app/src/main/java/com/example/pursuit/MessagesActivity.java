@@ -4,8 +4,8 @@ import com.example.pursuit.models.Conversation;
 import com.example.pursuit.models.Employee;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import android.app.Dialog;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -23,7 +23,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.database.Query;
 
-import androidx.appcompat.app.AlertDialog;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
@@ -31,7 +31,11 @@ import androidx.fragment.app.DialogFragment;
 import com.example.pursuit.models.Company;
 import com.example.pursuit.models.Student;
 
+import java.text.ParseException;
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
+import java.util.Comparator;
 
 public class MessagesActivity extends AppCompatActivity
         implements NewConversationDialogFragment.NewConversationDialogListener, ConfirmDeleteDialogFragment.ConfirmDeleteDialogListener {
@@ -69,6 +73,7 @@ public class MessagesActivity extends AppCompatActivity
 
 
     ValueEventListener studentUsernameListener = new ValueEventListener() {
+        @RequiresApi(api = Build.VERSION_CODES.O)
         @Override
         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
             matchedStudentUsername = null;
@@ -90,6 +95,7 @@ public class MessagesActivity extends AppCompatActivity
         }
     };
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public void postStudentUsernameListener() {
         if (matchedStudentUsername != null) {
             // create new conversation with this student
@@ -106,6 +112,7 @@ public class MessagesActivity extends AppCompatActivity
     }
 
     ValueEventListener employeeUsernameListener = new ValueEventListener() {
+        @RequiresApi(api = Build.VERSION_CODES.O)
         @Override
         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
             matchedEmployeeUsername = null;
@@ -123,6 +130,7 @@ public class MessagesActivity extends AppCompatActivity
         }
     };
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public void postEmployeeUsernameListener() {
         if (matchedEmployeeUsername != null) {
             // create new conversation with this employee
@@ -138,6 +146,7 @@ public class MessagesActivity extends AppCompatActivity
     }
 
     ValueEventListener myConversationsListener = new ValueEventListener() {
+        @RequiresApi(api = Build.VERSION_CODES.N)
         @Override
         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
@@ -168,7 +177,16 @@ public class MessagesActivity extends AppCompatActivity
         }
     };
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     public void postMyConversationsListener() {
+        // sort the conversations, newest first
+        myConversations.sort(new Comparator<Conversation>() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
+            @Override
+            public int compare(Conversation o1, Conversation o2) {
+                return ZonedDateTime.parse(o2.getUpdatedAt()).compareTo(ZonedDateTime.parse(o1.getUpdatedAt()));
+            }
+        });
         conversationAdapter = new ConversationAdapter(this, myConversations);
         conversationsView = findViewById(R.id.conversations_view);
         conversationsView.setAdapter(conversationAdapter);
@@ -227,10 +245,13 @@ public class MessagesActivity extends AppCompatActivity
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public void writeNewConversations() {
         String otherUserId;
         String otherUserUsername;
         String otherUserRole;
+        String createdAt;
+        String updatedAt;
 
 //        String counterpartOtherUserId;
 //        String counterpartOtherUserUsername;
@@ -250,7 +271,9 @@ public class MessagesActivity extends AppCompatActivity
         }
 
         String id = RandomKeyGenerator.randomAlphaNumeric(16);
-        newConversation = new Conversation(id, otherUserId, otherUserUsername, otherUserRole);
+        createdAt = ZonedDateTime.now(ZoneOffset.UTC).toString();
+        updatedAt = ZonedDateTime.now(ZoneOffset.UTC).toString();
+        newConversation = new Conversation(id, otherUserId, otherUserUsername, otherUserRole, createdAt, updatedAt);
 
         // Add the newConversation under the Student/Employee
         // Students/Employees > id > Conversations > id > newConversation
@@ -296,14 +319,14 @@ public class MessagesActivity extends AppCompatActivity
 
     public void getMyConversations() {
         // get all conversations
-        DatabaseReference conversationsRef;
+        Query conversationsQuery;
         if (currentStudent != null) {
-            conversationsRef = dbRef.child("Students").child(currentStudent.getId()).child("Conversations");
+            conversationsQuery = dbRef.child("Students").child(currentStudent.getId()).child("Conversations");
         } else {
-            conversationsRef = dbRef.child("Employees").child(currentEmployee.getId()).child("Conversations");
+            conversationsQuery = dbRef.child("Employees").child(currentEmployee.getId()).child("Conversations");
         }
 
-        conversationsRef.addValueEventListener(myConversationsListener);
+        conversationsQuery.addValueEventListener(myConversationsListener);
     }
 
     private void findAndSetCurrentUser() {
