@@ -31,6 +31,7 @@
     <string name="profile_photo">Profile Photo</string>
     <string name="message_activity_title">Messaging</string>
     <string name="conversation_title_placeholder">Employee: Ben</string>
+    <string name="conversation_date_placeholder">12/28/1997</string>
     <string name="new_conversation_button">Start a Conversation</string>
     <string name="confirm_delete_conversation">Are you sure you want to delete this conversation?</string>
     <string name="create_string">Create</string>

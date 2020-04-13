@@ -1,6 +1,7 @@
 package com.example.pursuit;
 
 import android.annotation.SuppressLint;
+import android.os.Build;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.widget.ArrayAdapter;
@@ -10,11 +11,15 @@ import android.widget.TextView;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.RequiresApi;
+
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.DatabaseReference;
 
 import com.example.pursuit.models.Conversation;
 
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 public class ConversationAdapter extends ArrayAdapter<Conversation> {
@@ -56,6 +61,7 @@ public class ConversationAdapter extends ArrayAdapter<Conversation> {
         return i;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @SuppressLint("SetTextI18n")
     @Override
     public View getView(int i, View convertView, ViewGroup parent) {
@@ -72,14 +78,18 @@ public class ConversationAdapter extends ArrayAdapter<Conversation> {
             viewHolder = new ConversationViewHolder();
             LayoutInflater inflater = LayoutInflater.from(getContext());
             convertView = inflater.inflate(R.layout.conversation, parent, false);
-            viewHolder.conversationTitle = (TextView) convertView.findViewById(R.id.conversation_title);
+            viewHolder.conversationTitle = convertView.findViewById(R.id.conversation_title);
+            viewHolder.conversationUpdatedAt = convertView.findViewById(R.id.conversation_updated_at);
             convertView.setTag(viewHolder);
         } else {
             Log.d(TAG, "convertView is NOT null");
             viewHolder = (ConversationViewHolder) convertView.getTag();
         }
 
+        assert conversation != null;
         viewHolder.conversationTitle.setText(conversation.getOtherUserRole() + ": " + conversation.getOtherUserUsername());
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+        viewHolder.conversationUpdatedAt.setText(ZonedDateTime.parse(conversation.getUpdatedAt()).format(formatter));
 
         ImageButton deleteBtn = convertView.findViewById(R.id.deleteConversation);
         deleteBtn.setTag(conversation.getId());
@@ -90,4 +100,5 @@ public class ConversationAdapter extends ArrayAdapter<Conversation> {
 
 class ConversationViewHolder {
     public TextView conversationTitle;
+    public TextView conversationUpdatedAt;
 }

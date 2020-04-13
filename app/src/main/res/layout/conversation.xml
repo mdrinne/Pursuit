@@ -18,7 +18,6 @@
                 android:id="@+id/conversation_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="5dp"
                 android:text="@string/conversation_title_placeholder"
                 android:textColor="#000"
                 android:textSize="18sp"
@@ -37,6 +36,14 @@
                 android:contentDescription="@string/conversation_delete_button_description"
                 android:onClick="showDeleteConversation"/>
 
+            <TextView
+                android:id="@+id/conversation_updated_at"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/conversation_date_placeholder"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/conversation_title" />
+
             <View
                 android:id="@+id/divider"
                 android:layout_width="409dp"
@@ -45,7 +52,7 @@
                 android:layout_marginLeft="1dp"
                 android:background="?android:attr/listDivider"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/conversation_title" />
+                app:layout_constraintTop_toBottomOf="@+id/conversation_updated_at" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
