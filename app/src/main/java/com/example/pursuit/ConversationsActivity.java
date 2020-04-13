@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.MenuItem;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
 
@@ -191,6 +192,15 @@ public class ConversationsActivity extends AppCompatActivity
         conversationsView = findViewById(R.id.conversations_view);
         conversationsView.setAdapter(conversationAdapter);
         conversationAdapter.addAll(myConversations);
+        conversationsView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Log.d(TAG, "in onItemClick !");
+                Intent messagesActivity = new Intent(ConversationsActivity.this, MessagesActivity.class);
+                messagesActivity.putExtra("CONVERSATION_ID", myConversations.get(position).getId());
+                startActivity(messagesActivity);
+            }
+        });
     }
 
     public void showCreateConversation(View v) {
@@ -217,7 +227,6 @@ public class ConversationsActivity extends AppCompatActivity
 
     public void onDialogNegativeClick(DialogFragment dialog) {
         // close the dialog
-        Log.d("CONVERSATION_ID", (String) dialog.getTag());
         try {
             dialog.getDialog().cancel();
         } catch (NullPointerException e){

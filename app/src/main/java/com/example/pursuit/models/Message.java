@@ -11,14 +11,14 @@ public class Message {
     public String recipientId;
     public String subject;
     public String messageText;
-    public LocalDateTime createdAt;
+    public String createdAt;
 
     public Message() {
         // default constructor required for calls to
         // DataSnapshot.getValue(Company.class)
     }
 
-    public Message(String id, String senderId, String recipientId, String subject, String messageText, LocalDateTime createdAt) {
+    public Message(String id, String senderId, String recipientId, String subject, String messageText, String createdAt) {
         this.id = id;
         this.senderId = senderId;
         this.recipientId = recipientId;
@@ -43,7 +43,7 @@ public class Message {
         this.messageText = messageText;
     }
 
-    public void setCreatedAt(LocalDateTime createdAt) {
+    public void setCreatedAt(String createdAt) {
         this.createdAt = createdAt;
     }
 
@@ -67,7 +67,7 @@ public class Message {
         return messageText;
     }
 
-    public LocalDateTime getCreatedAt() {
+    public String getCreatedAt() {
         return createdAt;
     }
 

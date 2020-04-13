@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.pursuit">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:name=".PursuitApplication"
         android:allowBackup="true"
@@ -10,8 +12,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".MessagesActivity" />
         <activity android:name=".viewCompaniesActivity" />
-        <activity android:name=".CreateOpportunity"></activity>
+        <activity android:name=".CreateOpportunity" />
         <activity
             android:name=".ViewOpportunities"
             android:label="@string/title_activity_view_opportunities"
@@ -40,7 +43,5 @@
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
     </application>
-
-    <uses-permission android:name="android.permission.INTERNET" />
 
 </manifest>
