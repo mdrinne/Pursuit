@@ -37,9 +37,7 @@ public class ConversationAdapter extends ArrayAdapter<Conversation> {
 
     public void addAll(ArrayList<Conversation> conversations) {
         Log.d(TAG, "adding all");
-        for (int i = 0; i < conversations.size(); i++) {
-            this.conversations.add(conversations.get(i));
-        }
+        this.conversations.addAll(conversations);
         notifyDataSetChanged();
     }
 

@@ -7,10 +7,10 @@ import java.util.ArrayList;
 public class Conversation {
 
     public String id;
-//    public ArrayList<String> userIds;
     public String otherUserId;
     public String otherUserUsername;
     public String otherUserRole;
+    public String createdAt;
 
     public Conversation() {
         // default constructor required for calls to
@@ -52,13 +52,5 @@ public class Conversation {
     public String getOtherUserRole() {
         return otherUserRole;
     }
-
-//    public void setUserIds(ArrayList<String> userIds) {
-//        this.userIds = userIds;
-//    }
-//
-//    public ArrayList<String> getUserIds() {
-//        return userIds;
-//    }
 
 }
