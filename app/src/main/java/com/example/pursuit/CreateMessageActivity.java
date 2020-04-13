@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Button;
-import android.widget.Toast;
 
 
 public class CreateMessageActivity extends AppCompatActivity {
@@ -31,7 +30,7 @@ public class CreateMessageActivity extends AppCompatActivity {
         sendMessageBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(CreateMessageActivity.this, MessagesActivity.class);
+                Intent i = new Intent(CreateMessageActivity.this, ConversationsActivity.class);
                 startActivity(i);
                 finish();
             }
@@ -40,7 +39,7 @@ public class CreateMessageActivity extends AppCompatActivity {
         cancelBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(CreateMessageActivity.this, MessagesActivity.class);
+                Intent i = new Intent(CreateMessageActivity.this, ConversationsActivity.class);
                 startActivity(i);
                 finish();
             }

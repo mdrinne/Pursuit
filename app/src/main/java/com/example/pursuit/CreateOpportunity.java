@@ -65,7 +65,7 @@ public class CreateOpportunity extends AppCompatActivity {
                             finish();
                             return true;
                         case R.id.navigation_messages:
-                            Intent i1 = new Intent(CreateOpportunity.this, MessagesActivity.class);
+                            Intent i1 = new Intent(CreateOpportunity.this, ConversationsActivity.class);
                             startActivity(i1);
                             finish();
                             return true;

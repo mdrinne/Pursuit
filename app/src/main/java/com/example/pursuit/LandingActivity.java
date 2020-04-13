@@ -74,7 +74,7 @@ public class LandingActivity extends AppCompatActivity {
             case R.id.navigation_home:
                 return true;
             case R.id.navigation_messages:
-                Intent messages = new Intent(LandingActivity.this, MessagesActivity.class);
+                Intent messages = new Intent(LandingActivity.this, ConversationsActivity.class);
                 startActivity(messages);
                 finish();
                 return true;

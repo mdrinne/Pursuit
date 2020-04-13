@@ -31,13 +31,12 @@ import androidx.fragment.app.DialogFragment;
 import com.example.pursuit.models.Company;
 import com.example.pursuit.models.Student;
 
-import java.text.ParseException;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Comparator;
 
-public class MessagesActivity extends AppCompatActivity
+public class ConversationsActivity extends AppCompatActivity
         implements NewConversationDialogFragment.NewConversationDialogListener, ConfirmDeleteDialogFragment.ConfirmDeleteDialogListener {
 
     private Student matchedStudentUsername;
@@ -60,7 +59,7 @@ public class MessagesActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_messages);
+        setContentView(R.layout.activity_conversations);
         BottomNavigationView bottomNavigation = findViewById(R.id.bottom_navigation);
         bottomNavigation.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
 
@@ -187,6 +186,7 @@ public class MessagesActivity extends AppCompatActivity
                 return ZonedDateTime.parse(o2.getUpdatedAt()).compareTo(ZonedDateTime.parse(o1.getUpdatedAt()));
             }
         });
+
         conversationAdapter = new ConversationAdapter(this, myConversations);
         conversationsView = findViewById(R.id.conversations_view);
         conversationsView.setAdapter(conversationAdapter);
@@ -350,7 +350,7 @@ public class MessagesActivity extends AppCompatActivity
             @Override public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.navigation_home:
-                        Intent home = new Intent(MessagesActivity.this, LandingActivity.class);
+                        Intent home = new Intent(ConversationsActivity.this, LandingActivity.class);
                         startActivity(home);
                         finish();
                         return true;
@@ -358,11 +358,11 @@ public class MessagesActivity extends AppCompatActivity
                         return true;
                     case R.id.navigation_profile:
                         if (currentStudent != null) {
-                            Intent i = new Intent(MessagesActivity.this, StudentProfileActivity.class);
+                            Intent i = new Intent(ConversationsActivity.this, StudentProfileActivity.class);
                             startActivity(i);
                             finish();
                         } else {
-                            Intent profile = new Intent(MessagesActivity.this, CompanyProfileActivity.class);
+                            Intent profile = new Intent(ConversationsActivity.this, CompanyProfileActivity.class);
                             startActivity(profile);
                             finish();
                         }

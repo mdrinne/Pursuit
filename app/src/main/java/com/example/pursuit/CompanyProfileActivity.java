@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -18,7 +17,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.view.View;
 import android.widget.Toast;
-import android.widget.Button;
 
 
 import com.example.pursuit.adapters.OpportunityAdapter;
@@ -291,7 +289,7 @@ public class CompanyProfileActivity extends AppCompatActivity{
                             finish();
                             return true;
                         case R.id.navigation_messages:
-                            Intent i1 = new Intent(CompanyProfileActivity.this, MessagesActivity.class);
+                            Intent i1 = new Intent(CompanyProfileActivity.this, ConversationsActivity.class);
                             startActivity(i1);
                             finish();
                             return true;

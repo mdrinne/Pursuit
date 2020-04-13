@@ -264,7 +264,7 @@ public class StudentProfileActivity extends AppCompatActivity {
                     finish();
                     return true;
                 case R.id.navigation_messages:
-                    Intent messages = new Intent(StudentProfileActivity.this, MessagesActivity.class);
+                    Intent messages = new Intent(StudentProfileActivity.this, ConversationsActivity.class);
                     startActivity(messages);
                     finish();
                     return true;
