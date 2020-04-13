@@ -18,7 +18,6 @@
                 android:id="@+id/conversation_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/conversation"
                 android:padding="5dp"
                 android:text="@string/conversation_title_placeholder"
                 android:textColor="#000"
@@ -37,6 +36,16 @@
                 app:srcCompat="@drawable/ic_delete"
                 android:contentDescription="@string/conversation_delete_button_description"
                 android:onClick="showDeleteConversation"/>
+
+            <View
+                android:id="@+id/divider"
+                android:layout_width="409dp"
+                android:layout_height="2dp"
+                android:layout_marginStart="1dp"
+                android:layout_marginLeft="1dp"
+                android:background="?android:attr/listDivider"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/conversation_title" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
