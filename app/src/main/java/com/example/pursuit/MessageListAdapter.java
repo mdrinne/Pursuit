@@ -33,11 +33,6 @@ public class MessageListAdapter extends RecyclerView.Adapter {
     }
 
     @Override
-    public int getItemCount() {
-        return messageList.size();
-    }
-
-    @Override
     public int getItemViewType(int position) {
         Message message = messageList.get(position);
         Log.d(TAG, "getting itemviewtype");
@@ -87,6 +82,12 @@ public class MessageListAdapter extends RecyclerView.Adapter {
             // the other user sent this message
             ((ReceivedMessageHolder) holder).bind(message);
         }
+    }
+
+    @Override
+    public int getItemCount() {
+        Log.d("ITEM_COUNT", Integer.toString(messageList.size()));
+        return messageList.size();
     }
 
 }

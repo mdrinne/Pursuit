@@ -29,6 +29,6 @@ public class ReceivedMessageHolder extends RecyclerView.ViewHolder {
     public void bind(Message message) {
         messageText.setText(message.getMessageText());
         timeText.setText(ZonedDateTime.parse(message.getCreatedAt()).format(formatter));
-        nameText.setText(message.getSenderId());
+        nameText.setText(message.getSenderUsername());
     }
 }

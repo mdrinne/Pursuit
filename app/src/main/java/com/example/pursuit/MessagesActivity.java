@@ -77,7 +77,7 @@ public class MessagesActivity extends AppCompatActivity {
                         Log.d(TAG, "Message is null");
                     } else {
                         Log.d(TAG, "Message is not null");
-                        messageList.add(message);
+                        messageList.add(0, message);
                     }
                 }
             }
@@ -97,7 +97,7 @@ public class MessagesActivity extends AppCompatActivity {
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public int compare(Message o1, Message o2) {
-                return ZonedDateTime.parse(o2.getCreatedAt()).compareTo(ZonedDateTime.parse(o1.getCreatedAt()));
+                return ZonedDateTime.parse(o1.getCreatedAt()).compareTo(ZonedDateTime.parse(o2.getCreatedAt()));
             }
         });
 
@@ -257,22 +257,28 @@ public class MessagesActivity extends AppCompatActivity {
         Log.d(TAG, "in writeNewMessage");
         DatabaseReference newMessageReference;
         String senderId;
+        String senderUsername;
         String recipientId;
+        String recipientUsername;
         String messageText;
         String createdAt;
 
         if (currentStudent != null) {
             senderId = currentStudent.getId();
+            senderUsername = currentStudent.getUsername();
             newMessageReference = dbRef.child("Students").child(currentStudent.getId());
         } else {
             senderId = currentEmployee.getId();
+            senderUsername = currentEmployee.getUsername();
             newMessageReference = dbRef.child("Employees").child(currentEmployee.getId());
         }
+
         recipientId = currentConversation.getOtherUserId();
+        recipientUsername = currentConversation.getOtherUserUsername();
         messageText = message;
         createdAt = ZonedDateTime.now(ZoneOffset.UTC).toString();
         String id = RandomKeyGenerator.randomAlphaNumeric(16);
-        Message newMessage = new Message(id, senderId, recipientId, messageText, createdAt);
+        Message newMessage = new Message(id, senderId, senderUsername, recipientId, recipientUsername, messageText, createdAt);
 
         Log.d(TAG, "created the new Message");
 
