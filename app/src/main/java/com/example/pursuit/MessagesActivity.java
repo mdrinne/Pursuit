@@ -93,14 +93,6 @@ public class MessagesActivity extends AppCompatActivity {
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     public void postMessagesListener() {
-        messageList.sort(new Comparator<Message>() {
-            @RequiresApi(api = Build.VERSION_CODES.O)
-            @Override
-            public int compare(Message o1, Message o2) {
-                return ZonedDateTime.parse(o1.getCreatedAt()).compareTo(ZonedDateTime.parse(o2.getCreatedAt()));
-            }
-        });
-
         messageRecycler = findViewById(R.id.messages_recycler);
         String currentUserId;
         if (currentStudent != null) {
