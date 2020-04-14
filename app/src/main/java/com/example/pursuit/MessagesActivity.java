@@ -113,6 +113,8 @@ public class MessagesActivity extends AppCompatActivity {
         messageListAdapter = new MessageListAdapter(this, messageList, currentUserId);
         messageRecycler.setAdapter(messageListAdapter);
         messageRecycler.setLayoutManager(new LinearLayoutManager(this));
+        RecyclerView rv = findViewById(R.id.messages_recycler);
+        rv.smoothScrollToPosition(messageList.size()-1);
     }
 
     ValueEventListener currentConversationListener = new ValueEventListener() {
@@ -303,7 +305,7 @@ public class MessagesActivity extends AppCompatActivity {
         counterpartReference.child("Messages").child(message.getId()).setValue(message);
         counterpartReference.child("updatedAt").setValue(message.getCreatedAt());
 
-        hideKeyboard(this);
+//        hideKeyboard(this);
 
         EditText editText = findViewById(R.id.message_box);
         editText.getText().clear();
