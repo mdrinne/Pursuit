@@ -9,7 +9,6 @@ public class Message {
     public String id;
     public String senderId;
     public String recipientId;
-    public String subject;
     public String messageText;
     public String createdAt;
 
@@ -18,11 +17,10 @@ public class Message {
         // DataSnapshot.getValue(Company.class)
     }
 
-    public Message(String id, String senderId, String recipientId, String subject, String messageText, String createdAt) {
+    public Message(String id, String senderId, String recipientId, String messageText, String createdAt) {
         this.id = id;
         this.senderId = senderId;
         this.recipientId = recipientId;
-        this.subject = subject;
         this.messageText = messageText;
         this.createdAt = createdAt;
     }
@@ -33,10 +31,6 @@ public class Message {
 
     public void setRecipientId(String recipientId) {
         this.recipientId = recipientId;
-    }
-
-    public void setSubject(String subject) {
-        this.subject = subject;
     }
 
     public void setMessageText(String messageText) {
@@ -57,10 +51,6 @@ public class Message {
 
     public String getRecipientId() {
         return recipientId;
-    }
-
-    public String getSubject() {
-        return subject;
     }
 
     public String getMessageText() {

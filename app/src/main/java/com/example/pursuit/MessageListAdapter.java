@@ -2,6 +2,7 @@ package com.example.pursuit;
 
 import android.content.Context;
 import android.os.Build;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 public class MessageListAdapter extends RecyclerView.Adapter {
+
+    private static final String TAG = "MESSAGE_LIST_ADAPTER";
 
     private static final int VIEW_TYPE_MESSAGE_SENT = 1;
     private static final int VIEW_TYPE_MESSAGE_RECEIVED = 2;
@@ -37,6 +40,18 @@ public class MessageListAdapter extends RecyclerView.Adapter {
     @Override
     public int getItemViewType(int position) {
         Message message = messageList.get(position);
+        Log.d(TAG, "getting itemviewtype");
+        if (message == null) {
+            Log.d(TAG, "message is null");
+        }
+        Log.d("LIST_SIZE", Integer.toString(messageList.size()));
+        Log.d("POSITION", Integer.toString(position));
+        String id = message.getId();
+        if (id == null) {
+            Log.d(TAG, "id is NULL");
+        } else {
+            Log.d(TAG, id);
+        }
 
         if (message.getSenderId().equals(currentUserId)) {
             return VIEW_TYPE_MESSAGE_SENT;
