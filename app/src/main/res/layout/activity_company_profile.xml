@@ -31,7 +31,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintVertical_bias="0.285">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -98,14 +98,12 @@
                 android:layout_width="128dp"
                 android:layout_height="30dp"
                 android:layout_gravity="center"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="24dp"
                 android:background="@drawable/button_accent1"
                 android:fontFamily="@font/roboto_medium"
                 android:onClick="viewInvites"
                 android:text="@string/strViewInvites"
                 android:textSize="12sp"
-                app:layout_constraintBottom_toBottomOf="@+id/imgCompanyProfilePic"
+                app:layout_constraintBottom_toTopOf="@+id/btnViewEmployee"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.511"
                 app:layout_constraintStart_toEndOf="@+id/imgCompanyProfilePic"
@@ -171,6 +169,20 @@
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/txtCompanyDescription" />
+
+            <Button
+                android:id="@+id/btnViewEmployee"
+                android:layout_width="128dp"
+                android:layout_height="30dp"
+                android:background="@drawable/button_accent1"
+                android:fontFamily="@font/roboto_medium"
+                android:onClick="viewEmployees"
+                android:text="@string/strViewEmployees"
+                android:textColor="@color/colorPrimary"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="@+id/imgCompanyProfilePic"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/imgCompanyProfilePic" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

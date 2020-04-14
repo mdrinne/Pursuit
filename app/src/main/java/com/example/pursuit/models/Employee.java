@@ -12,6 +12,7 @@ public class Employee {
     public String username;
     public String position;
     public String companyName;
+    public String companyID;
     public String inviteCode;
     public Integer admin;
 
@@ -21,8 +22,7 @@ public class Employee {
         this.id = "";
     }
 
-
-    public Employee(String id, String firstName, String lastName, String email, String password, String username, String position, String companyName, String inviteCode) {
+    public Employee(String id, String firstName, String lastName, String email, String password, String username, String position, String companyName, String companyID, String inviteCode) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -31,6 +31,7 @@ public class Employee {
         this.username = username;
         this.position = position;
         this.companyName = companyName;
+        this.companyID = companyID;
         this.inviteCode = inviteCode;
         this.admin = 0;
     }
@@ -97,6 +98,14 @@ public class Employee {
 
     public void setCompanyName(String companyName) {
         this.companyName = companyName;
+    }
+
+    public String getCompanyID() {
+        return companyID;
+    }
+
+    public void setCompanyID(String companyID) {
+        this.companyID = companyID;
     }
 
     public String getInviteCode() {
