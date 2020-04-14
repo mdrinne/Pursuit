@@ -6,10 +6,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Activity;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
 import com.example.pursuit.models.Conversation;
@@ -93,6 +95,14 @@ public class MessagesActivity extends AppCompatActivity {
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     public void postMessagesListener() {
+        messageList.sort(new Comparator<Message>() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
+            @Override
+            public int compare(Message o1, Message o2) {
+                return ZonedDateTime.parse(o1.getCreatedAt()).compareTo(ZonedDateTime.parse(o2.getCreatedAt()));
+            }
+        });
+
         messageRecycler = findViewById(R.id.messages_recycler);
         String currentUserId;
         if (currentStudent != null) {
@@ -292,6 +302,11 @@ public class MessagesActivity extends AppCompatActivity {
 
         counterpartReference.child("Messages").child(message.getId()).setValue(message);
         counterpartReference.child("updatedAt").setValue(message.getCreatedAt());
+
+        hideKeyboard(this);
+
+        EditText editText = findViewById(R.id.message_box);
+        editText.getText().clear();
     }
 
     private void findAndSetCurrentUser() {
@@ -303,6 +318,17 @@ public class MessagesActivity extends AppCompatActivity {
             currentCompany = ((PursuitApplication) this.getApplication()).getCurrentCompany();
         }
         currentRole = ((PursuitApplication) this.getApplication()).getRole();
+    }
+
+    public static void hideKeyboard(Activity activity) {
+        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        //Find the currently focused view, so we can grab the correct window token from it.
+        View view = activity.getCurrentFocus();
+        //If no view currently has focus, create a new one, just so we can grab a window token from it
+        if (view == null) {
+            view = new View(activity);
+        }
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 }
 
