@@ -110,7 +110,6 @@ public class CompanyProfileActivity extends AppCompatActivity{
                     companyOpportunities.add(opportunity);
                 }
             }
-            Log.d(TAG, String.valueOf(companyOpportunities.size()));
             buildRecyclerView();
         }
 
@@ -395,6 +394,11 @@ public class CompanyProfileActivity extends AppCompatActivity{
 
     public void addOpportunity(View v) {
         Intent intent = new Intent(this, CreateOpportunity.class);
+        startActivity(intent);
+    }
+
+    public void viewEmployees(View v) {
+        Intent intent = new Intent(this, EmployeeManagement.class);
         startActivity(intent);
     }
 

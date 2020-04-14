@@ -109,11 +109,11 @@ public class OpportunityAdapter extends RecyclerView.Adapter<OpportunityAdapter.
                     Long hours = hmsSeconds / 3600;
                     holder.opportunityTimeStamp.setText(hours.toString() + "h");
                 } else if (ymdDiff.getYears() > 0) {
-                    holder.opportunityTimeStamp.setText(ymdDiff.getYears() + "y");
+                    holder.opportunityTimeStamp.setText(ymdDiff.getYears() + "Y");
                 } else if (ymdDiff.getMonths() > 0) {
-                    holder.opportunityTimeStamp.setText(ymdDiff.getMonths() + "m");
+                    holder.opportunityTimeStamp.setText(ymdDiff.getMonths() + "M");
                 } else {
-                    holder.opportunityTimeStamp.setText(ymdDiff.getDays() + "d");
+                    holder.opportunityTimeStamp.setText(ymdDiff.getDays() + "D");
                 }
             }
         }
