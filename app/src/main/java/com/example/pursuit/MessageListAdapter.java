@@ -35,18 +35,6 @@ public class MessageListAdapter extends RecyclerView.Adapter {
     @Override
     public int getItemViewType(int position) {
         Message message = messageList.get(position);
-        Log.d(TAG, "getting itemviewtype");
-        if (message == null) {
-            Log.d(TAG, "message is null");
-        }
-        Log.d("LIST_SIZE", Integer.toString(messageList.size()));
-        Log.d("POSITION", Integer.toString(position));
-        String id = message.getId();
-        if (id == null) {
-            Log.d(TAG, "id is NULL");
-        } else {
-            Log.d(TAG, id);
-        }
 
         if (message.getSenderId().equals(currentUserId)) {
             return VIEW_TYPE_MESSAGE_SENT;

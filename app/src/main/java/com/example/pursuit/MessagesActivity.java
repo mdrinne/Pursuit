@@ -114,7 +114,9 @@ public class MessagesActivity extends AppCompatActivity {
         messageRecycler.setAdapter(messageListAdapter);
         messageRecycler.setLayoutManager(new LinearLayoutManager(this));
         RecyclerView rv = findViewById(R.id.messages_recycler);
-        rv.smoothScrollToPosition(messageList.size()-1);
+        if (messageList.size() > 0) {
+            rv.smoothScrollToPosition(messageList.size() - 1);
+        }
     }
 
     ValueEventListener currentConversationListener = new ValueEventListener() {
@@ -232,7 +234,7 @@ public class MessagesActivity extends AppCompatActivity {
             conversationQuery = dbRef.child("Students").child(currentStudent.getId()).child("Conversations")
                     .orderByChild("id").equalTo(getIntent().getStringExtra("CONVERSATION_ID"));
         } else {
-            conversationQuery = dbRef.child("Students").child(currentStudent.getId()).child("Conversations")
+            conversationQuery = dbRef.child("Employees").child(currentEmployee.getId()).child("Conversations")
                     .orderByChild("id").equalTo(getIntent().getStringExtra("CONVERSATION_ID"));
         }
         conversationQuery.addListenerForSingleValueEvent(currentConversationListener);
