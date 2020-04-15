@@ -20,6 +20,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.database.Query;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 
 public class StudentRegistration extends AppCompatActivity {
@@ -135,12 +137,38 @@ public class StudentRegistration extends AppCompatActivity {
     private void writeNewStudent(String fname, String lname, String university, String major, String minor, String gpa,
                                  String bio, String email, String username, String password) {
         String id = RandomKeyGenerator.randomAlphaNumeric(16);
+        password = md5(password);
         newStudent = new Student(id, fname, lname, university, major, minor, gpa, bio, email, username, password);
 
         mRef.child("Students").child(id).setValue(newStudent);
     }
 
     /* ******END DATABASE****** */
+
+    public static String md5(final String s) {
+        final String MD5 = "MD5";
+        try {
+            // Create MD5 Hash
+            MessageDigest digest = java.security.MessageDigest
+                    .getInstance(MD5);
+            digest.update(s.getBytes());
+            byte messageDigest[] = digest.digest();
+
+            // Create Hex String
+            StringBuilder hexString = new StringBuilder();
+            for (byte aMessageDigest : messageDigest) {
+                String h = Integer.toHexString(0xFF & aMessageDigest);
+                while (h.length() < 2)
+                    h = "0" + h;
+                hexString.append(h);
+            }
+            return hexString.toString();
+
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
 
     // Checks If Given Username Already Exists
     private boolean usernameExists(String username) {

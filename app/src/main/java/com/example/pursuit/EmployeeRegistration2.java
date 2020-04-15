@@ -20,6 +20,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
 public class EmployeeRegistration2 extends AppCompatActivity {
 
     private static final String TAG = "EmployeeRegistration2";
@@ -172,7 +175,7 @@ public class EmployeeRegistration2 extends AppCompatActivity {
             continuedEmployee.setLastName(toString(lastName));
             continuedEmployee.setPosition(toString(position));
             continuedEmployee.setUsername(toString(username));
-            continuedEmployee.setPassword(toString(password));
+            continuedEmployee.setPassword(md5(toString(password)));
 
             writeNewEmployee(continuedEmployee);
             ((PursuitApplication) this.getApplication()).setCurrentEmployee(continuedEmployee);
@@ -181,6 +184,31 @@ public class EmployeeRegistration2 extends AppCompatActivity {
             Intent intent = new Intent(this, LandingActivity.class);
             startActivity(intent);
         }
+    }
+
+    public static String md5(final String s) {
+        final String MD5 = "MD5";
+        try {
+            // Create MD5 Hash
+            MessageDigest digest = java.security.MessageDigest
+                    .getInstance(MD5);
+            digest.update(s.getBytes());
+            byte messageDigest[] = digest.digest();
+
+            // Create Hex String
+            StringBuilder hexString = new StringBuilder();
+            for (byte aMessageDigest : messageDigest) {
+                String h = Integer.toHexString(0xFF & aMessageDigest);
+                while (h.length() < 2)
+                    h = "0" + h;
+                hexString.append(h);
+            }
+            return hexString.toString();
+
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        return "";
     }
 
 }

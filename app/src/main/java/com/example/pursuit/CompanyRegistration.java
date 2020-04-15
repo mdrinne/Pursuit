@@ -22,6 +22,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.database.Query;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 
 public class CompanyRegistration extends AppCompatActivity {
@@ -83,11 +85,37 @@ public class CompanyRegistration extends AppCompatActivity {
 
     private void writeNewCompany(String name, String email, String password, String field, String description) {
         String id = RandomKeyGenerator.randomAlphaNumeric(16);
+        password = md5(password);
         newCompany = new Company(id, name, email, password, field, description);
         mRef.child("Companies").child(id).setValue(newCompany);
     }
 
     /* ******END DATABASE****** */
+
+    public static String md5(final String s) {
+        final String MD5 = "MD5";
+        try {
+            // Create MD5 Hash
+            MessageDigest digest = java.security.MessageDigest
+                    .getInstance(MD5);
+            digest.update(s.getBytes());
+            byte messageDigest[] = digest.digest();
+
+            // Create Hex String
+            StringBuilder hexString = new StringBuilder();
+            for (byte aMessageDigest : messageDigest) {
+                String h = Integer.toHexString(0xFF & aMessageDigest);
+                while (h.length() < 2)
+                    h = "0" + h;
+                hexString.append(h);
+            }
+            return hexString.toString();
+
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
 
     private boolean emailExists(String email) {
         Log.d(TAG, "In emailExists; email: " + email);
