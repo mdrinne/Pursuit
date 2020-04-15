@@ -204,7 +204,6 @@ public class ConversationsActivity extends AppCompatActivity
     }
 
     public void openConversation(View v) {
-        Log.d(TAG, "in onItemClick !");
         Intent messagesActivity = new Intent(ConversationsActivity.this, MessagesActivity.class);
         messagesActivity.putExtra("CONVERSATION_ID", (String) v.getTag());
         startActivity(messagesActivity);
@@ -314,7 +313,10 @@ public class ConversationsActivity extends AppCompatActivity
 //            dbRef.child("Employees").child(matchedEmployeeUsername.getId()).child("Conversations").child(counterpartId).setValue(counterpart);
 //        }
 
-        conversationAdapter.add(newConversation);
+        Intent messagesActivity = new Intent(ConversationsActivity.this, MessagesActivity.class);
+        messagesActivity.putExtra("CONVERSATION_ID", (String) newConversation.getId());
+        startActivity(messagesActivity);
+//        conversationAdapter.add(newConversation);
     }
 
     public void deleteConversations(String conversationId) {
