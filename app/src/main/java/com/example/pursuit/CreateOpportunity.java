@@ -181,7 +181,7 @@ public class CreateOpportunity extends AppCompatActivity implements AdapterView.
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void addToDB() {
         id = RandomKeyGenerator.randomAlphaNumeric(16);
-        newOpportunity = new CompanyOpportunity(id, toString(opportunityPosition), toString(opportunityWithWho),
+        newOpportunity = new CompanyOpportunity(id, currentCompany.getId(), toString(opportunityPosition), toString(opportunityWithWho),
                 toString(opportunityDescription), toString(opportunityCity), selectedState,
                 toString(opportunityRequirements), keywordArrayList, 0, "");
         if (currentRole.equals("Company") || (currentRole.equals("Employee") && currentEmployee.admin == 1)) {
@@ -231,7 +231,7 @@ public class CreateOpportunity extends AppCompatActivity implements AdapterView.
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-//        String text = parent.getItemAtPosition(position).toString();
+
     }
 
     @Override

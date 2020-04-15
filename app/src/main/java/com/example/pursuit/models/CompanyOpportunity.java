@@ -8,6 +8,7 @@ import java.util.ArrayList;
 public class CompanyOpportunity {
 
     public String id;
+    public String companyID;
     public String position;
     public String withWho;
     public String description;
@@ -23,8 +24,9 @@ public class CompanyOpportunity {
         this.id = "";
     }
 
-    public CompanyOpportunity(String id, String position, String withWho, String description, String city, String state, String requirements, ArrayList<String> keywords, Integer approved, String timeStamp) {
+    public CompanyOpportunity(String id, String companyID, String position, String withWho, String description, String city, String state, String requirements, ArrayList<String> keywords, Integer approved, String timeStamp) {
         this.id = id;
+        this.companyID = companyID;
         this.position = position;
         this.withWho = withWho;
         this.description = description;
@@ -116,4 +118,11 @@ public class CompanyOpportunity {
         this.timeStamp = timeStamp;
     }
 
+    public String getCompanyID() {
+        return companyID;
+    }
+
+    public void setCompanyID(String companyID) {
+        this.companyID = companyID;
+    }
 }
