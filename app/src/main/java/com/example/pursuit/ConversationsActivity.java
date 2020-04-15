@@ -147,7 +147,7 @@ public class ConversationsActivity extends AppCompatActivity
     }
 
     ValueEventListener myConversationsListener = new ValueEventListener() {
-        @RequiresApi(api = Build.VERSION_CODES.N)
+        @RequiresApi(api = Build.VERSION_CODES.O)
         @Override
         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
@@ -178,7 +178,7 @@ public class ConversationsActivity extends AppCompatActivity
         }
     };
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public void postMyConversationsListener() {
         // sort the conversations, newest first
         myConversations.sort(new Comparator<Conversation>() {
