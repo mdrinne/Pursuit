@@ -25,6 +25,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
@@ -196,8 +198,8 @@ public class MessagesActivity extends AppCompatActivity {
         }
 
         String id = currentConversation.getId();
-        createdAt = ZonedDateTime.now(ZoneOffset.UTC).toString();
-        updatedAt = ZonedDateTime.now(ZoneOffset.UTC).toString();
+        createdAt = ZonedDateTime.of(LocalDateTime.now(), ZoneOffset.UTC).toString();
+        updatedAt = ZonedDateTime.of(LocalDateTime.now(), ZoneOffset.UTC).toString();
 
         Conversation counterpart = new Conversation(id, otherUserId, otherUserUsername, otherUserRole, createdAt, updatedAt);
         counterpartReference.child(id).setValue(counterpart);
@@ -269,7 +271,7 @@ public class MessagesActivity extends AppCompatActivity {
         recipientId = currentConversation.getOtherUserId();
         recipientUsername = currentConversation.getOtherUserUsername();
         messageText = message;
-        createdAt = ZonedDateTime.now(ZoneOffset.UTC).toString();
+        createdAt = ZonedDateTime.of(LocalDateTime.now(), ZoneOffset.UTC).toString();
         String id = RandomKeyGenerator.randomAlphaNumeric(16);
         Message newMessage = new Message(id, senderId, senderUsername, recipientId, recipientUsername, messageText, createdAt);
 

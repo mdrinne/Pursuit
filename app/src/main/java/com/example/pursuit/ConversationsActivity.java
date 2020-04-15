@@ -32,6 +32,7 @@ import androidx.fragment.app.DialogFragment;
 import com.example.pursuit.models.Company;
 import com.example.pursuit.models.Student;
 
+import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
@@ -282,8 +283,8 @@ public class ConversationsActivity extends AppCompatActivity
         }
 
         String id = RandomKeyGenerator.randomAlphaNumeric(16);
-        createdAt = ZonedDateTime.now(ZoneOffset.UTC).toString();
-        updatedAt = ZonedDateTime.now(ZoneOffset.UTC).toString();
+        createdAt = ZonedDateTime.of(LocalDateTime.now(), ZoneOffset.UTC).toString();
+        updatedAt = ZonedDateTime.of(LocalDateTime.now(), ZoneOffset.UTC).toString();
         newConversation = new Conversation(id, otherUserId, otherUserUsername, otherUserRole, createdAt, updatedAt);
 
         // Add the newConversation under the Student/Employee

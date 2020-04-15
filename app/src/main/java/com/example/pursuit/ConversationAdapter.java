@@ -18,10 +18,14 @@ import com.google.firebase.database.DatabaseReference;
 
 import com.example.pursuit.models.Conversation;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.TimeZone;
 
+@RequiresApi(api = Build.VERSION_CODES.O)
 public class ConversationAdapter extends ArrayAdapter<Conversation> {
     private String TAG = "ConversationAdapter";
 
@@ -29,19 +33,19 @@ public class ConversationAdapter extends ArrayAdapter<Conversation> {
 
     private DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference();
 
+    private ZoneId zoneId = TimeZone.getDefault().toZoneId();
+    private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+
     public ConversationAdapter(Context context, ArrayList<Conversation> conversations) {
         super(context, R.layout.conversation, conversations);
-        Log.d(TAG, "in ConversationAdapter constructor");
     }
 
     public void add(Conversation conversation) {
-        Log.d(TAG, "adding to the adapter");
         this.conversations.add(conversation);
         notifyDataSetChanged();
     }
 
     public void addAll(ArrayList<Conversation> conversations) {
-        Log.d(TAG, "adding all");
         this.conversations.addAll(conversations);
         notifyDataSetChanged();
     }
@@ -65,16 +69,11 @@ public class ConversationAdapter extends ArrayAdapter<Conversation> {
     @SuppressLint("SetTextI18n")
     @Override
     public View getView(int i, View convertView, ViewGroup parent) {
-        Log.d(TAG, "in getView");
         Conversation conversation = getItem(i);
-        if (conversation != null) {
-            Log.d(TAG, "conversation is not null");
-        }
 
         ConversationViewHolder viewHolder;
 
         if (convertView == null) {
-            Log.d(TAG, "convertView is null");
             viewHolder = new ConversationViewHolder();
             LayoutInflater inflater = LayoutInflater.from(getContext());
             convertView = inflater.inflate(R.layout.conversation, parent, false);
@@ -82,14 +81,15 @@ public class ConversationAdapter extends ArrayAdapter<Conversation> {
             viewHolder.conversationUpdatedAt = convertView.findViewById(R.id.conversation_updated_at);
             convertView.setTag(viewHolder);
         } else {
-            Log.d(TAG, "convertView is NOT null");
             viewHolder = (ConversationViewHolder) convertView.getTag();
         }
 
         assert conversation != null;
         viewHolder.conversationTitle.setText(conversation.getOtherUserRole() + ": " + conversation.getOtherUserUsername());
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
-        viewHolder.conversationUpdatedAt.setText(ZonedDateTime.parse(conversation.getUpdatedAt()).format(formatter));
+
+        ZonedDateTime utc = ZonedDateTime.parse(conversation.getUpdatedAt()).withZoneSameLocal(zoneId);
+        LocalDateTime local = utc.toLocalDateTime();
+        viewHolder.conversationUpdatedAt.setText(local.format(formatter));
 
         ImageButton deleteBtn = convertView.findViewById(R.id.deleteConversation);
         deleteBtn.setTag(conversation.getId());
