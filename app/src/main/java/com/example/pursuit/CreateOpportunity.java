@@ -11,7 +11,10 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.pursuit.models.Company;
@@ -25,8 +28,9 @@ import java.time.Instant;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
 
-public class CreateOpportunity extends AppCompatActivity {
+public class CreateOpportunity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     private final String TAG = "CreateOpportunity";
 
@@ -36,6 +40,15 @@ public class CreateOpportunity extends AppCompatActivity {
     EditText opportunityPosition;
     EditText opportunityWithWho;
     EditText opportunityDescription;
+    EditText opportunityCity;
+    Spinner opportunityState;
+    EditText opportunityRequirements;
+    EditText opportunityKeywords;
+
+    String[] keywordArray;
+    ArrayList<String> keywordArrayList;
+    String selectedState;
+
     BottomNavigationView bottomNavigation;
 
     CompanyOpportunity newOpportunity;
@@ -51,6 +64,12 @@ public class CreateOpportunity extends AppCompatActivity {
 
         bottomNavigation = findViewById(R.id.bottom_navigation);
         bottomNavigation.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
+
+        opportunityState = findViewById(R.id.spinnerSate);
+        ArrayAdapter<CharSequence> stateAdapter = ArrayAdapter.createFromResource(this, R.array.states, android.R.layout.simple_spinner_item);
+        stateAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        opportunityState.setAdapter(stateAdapter);
+        opportunityState.setOnItemSelectedListener(this);
 
         dbref = FirebaseDatabase.getInstance().getReference();
         setCurrentUser();
@@ -107,8 +126,8 @@ public class CreateOpportunity extends AppCompatActivity {
     }
 
     boolean checkForEmpties() {
-        if (isEmpty(opportunityPosition) || isEmpty(opportunityDescription)) {
-            Toast.makeText(view.getContext(), "Position And Description Are Required", Toast.LENGTH_SHORT).show();
+        if (isEmpty(opportunityPosition) || isEmpty(opportunityDescription) || isEmpty(opportunityCity) || selectedState.isEmpty()) {
+            Toast.makeText(view.getContext(), "Position, Description, City and State Are Required", Toast.LENGTH_SHORT).show();
             return false;
         }
         return true;
@@ -117,7 +136,9 @@ public class CreateOpportunity extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void addToDB() {
         String id = RandomKeyGenerator.randomAlphaNumeric(16);
-        newOpportunity = new CompanyOpportunity(id, toString(opportunityPosition), toString(opportunityWithWho), toString(opportunityDescription), 0, "");
+        newOpportunity = new CompanyOpportunity(id, toString(opportunityPosition), toString(opportunityWithWho),
+                toString(opportunityDescription), toString(opportunityCity), selectedState,
+                toString(opportunityRequirements), keywordArrayList, 0, "");
         if (currentRole.equals("Company") || (currentRole.equals("Employee") && currentEmployee.admin == 1)) {
             newOpportunity.setApproved(1);
                 ZonedDateTime now = ZonedDateTime.now(ZoneOffset.UTC);
@@ -127,7 +148,7 @@ public class CreateOpportunity extends AppCompatActivity {
             newOpportunity.setTimeStamp("");
         }
 
-        writeNewCompanyOpportunity(id);
+        writeNewCompanyOpportunity(id); 
 
         Intent intent = new Intent(this, CompanyProfileActivity.class);
         startActivity(intent);
@@ -139,9 +160,29 @@ public class CreateOpportunity extends AppCompatActivity {
         opportunityPosition = findViewById(R.id.txtPosition);
         opportunityWithWho = findViewById(R.id.txtWith);
         opportunityDescription = findViewById(R.id.txtDescription);
+        opportunityCity = findViewById(R.id.txtCity);
+        selectedState = opportunityState.getSelectedItem().toString();
+        opportunityRequirements = findViewById(R.id.txtRequirements);
+        opportunityKeywords = findViewById(R.id.txtKeywords);
+
+        keywordArray = toString(opportunityKeywords).split(",");
+        keywordArrayList = new ArrayList<>();
+        for (int i=0; i<keywordArray.length; i++) {
+            keywordArrayList.add(keywordArray[i].trim());
+        }
 
         if (checkForEmpties()) {
             addToDB();
         }
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+//        String text = parent.getItemAtPosition(position).toString();
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
     }
 }

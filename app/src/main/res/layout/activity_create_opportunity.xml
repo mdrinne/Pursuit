@@ -22,7 +22,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingBottom="80dp">
 
             <EditText
                 android:id="@+id/txtPosition"
@@ -63,6 +64,90 @@
                 android:ems="10"
                 android:fontFamily="@font/roboto"
                 android:hint="@string/strDescription"
+                android:importantForAutofill="no"
+                android:inputType="text"
+                android:textColor="@color/accent1"
+                android:textColorHint="@color/accent1"
+                tools:targetApi="lollipop" />
+
+            <EditText
+                android:id="@+id/txtCity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:backgroundTint="@color/accent1"
+                android:hint="@string/strCity"
+                android:importantForAutofill="no"
+                android:inputType="text"
+                android:textColor="@color/accent1"
+                android:textColorHint="@color/accent1"
+                tools:targetApi="lollipop" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp">
+
+                <EditText
+                    android:id="@+id/txtState"
+                    android:layout_width="55dp"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/accent1"
+                    android:ems="10"
+                    android:focusable="false"
+                    android:fontFamily="@font/roboto"
+                    android:importantForAutofill="no"
+                    android:inputType="none"
+                    android:text="@string/strState"
+                    android:textColor="@color/accent1"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:targetApi="lollipop" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:background="@color/accent1"
+                    app:layout_constraintBottom_toBottomOf="@+id/txtState"
+                    app:layout_constraintStart_toEndOf="@+id/txtState"
+                    app:layout_constraintTop_toTopOf="@+id/txtState">
+
+                    <Spinner
+                        android:id="@+id/spinnerSate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:dropDownWidth="50dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <EditText
+                android:id="@+id/txtRequirements"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:backgroundTint="@color/accent1"
+                android:hint="@string/strRequirements"
+                android:importantForAutofill="no"
+                android:inputType="text"
+                android:textColor="@color/accent1"
+                android:textColorHint="@color/accent1"
+                tools:targetApi="lollipop" />
+
+            <EditText
+                android:id="@+id/txtKeywords"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:backgroundTint="@color/accent1"
+                android:hint="@string/strKeywords"
                 android:importantForAutofill="no"
                 android:inputType="text"
                 android:textColor="@color/accent1"
