@@ -294,29 +294,13 @@ public class ConversationsActivity extends AppCompatActivity
         // Students/Employees > id > Conversations > id > newConversation
         if (currentStudent != null) {
             dbRef.child("Students").child(currentStudent.getId()).child("Conversations").child(id).setValue(newConversation);
-//            counterpartOtherUserId = currentStudent.getId();
-//            counterpartOtherUserUsername = currentStudent.getUsername();
-//            counterpartOtherUserRole = "Student";
         } else {
             dbRef.child("Employees").child(currentEmployee.getId()).child("Conversations").child(id).setValue(newConversation);
-//            counterpartOtherUserId = currentEmployee.getId();
-//            counterpartOtherUserUsername = currentEmployee.getUsername();
-//            counterpartOtherUserRole = "Employee";
         }
 
-//        // Add the newConversation's counterpart to the user/company it is with
-//        String counterpartId = RandomKeyGenerator.randomAlphaNumeric(16);
-//        Conversation counterpart = new Conversation(counterpartId, counterpartOtherUserId, counterpartOtherUserUsername, counterpartOtherUserRole);
-//        if (matchedStudentUsername != null) {
-//            dbRef.child("Students").child(matchedStudentUsername.getId()).child("Conversations").child(counterpartId).setValue(counterpart);
-//        } else {
-//            dbRef.child("Employees").child(matchedEmployeeUsername.getId()).child("Conversations").child(counterpartId).setValue(counterpart);
-//        }
-
         Intent messagesActivity = new Intent(ConversationsActivity.this, MessagesActivity.class);
-        messagesActivity.putExtra("CONVERSATION_ID", (String) newConversation.getId());
+        messagesActivity.putExtra("CONVERSATION_ID", newConversation.getId());
         startActivity(messagesActivity);
-//        conversationAdapter.add(newConversation);
     }
 
     public void deleteConversations(String conversationId) {

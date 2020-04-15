@@ -272,7 +272,7 @@ public class MessagesActivity extends AppCompatActivity {
         createdAt = ZonedDateTime.now(ZoneOffset.UTC).toString();
         String id = RandomKeyGenerator.randomAlphaNumeric(16);
         Message newMessage = new Message(id, senderId, senderUsername, recipientId, recipientUsername, messageText, createdAt);
-        
+
         newMessageReference.child("Conversations").child(currentConversation.getId()).child("Messages").child(id).setValue(newMessage);
         newMessageReference.child("Conversations").child(currentConversation.getId()).child("updatedAt").setValue(createdAt);
 
