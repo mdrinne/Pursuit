@@ -268,10 +268,6 @@ public class ConversationsActivity extends AppCompatActivity
         String createdAt;
         String updatedAt;
 
-//        String counterpartOtherUserId;
-//        String counterpartOtherUserUsername;
-//        String counterpartOtherUserRole;
-
         if (matchedStudentUsername != null) {
             otherUserId = matchedStudentUsername.getId();
             otherUserUsername = matchedStudentUsername.getUsername();
