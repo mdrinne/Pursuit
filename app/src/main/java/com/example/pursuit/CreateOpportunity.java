@@ -20,10 +20,16 @@ import android.widget.Toast;
 import com.example.pursuit.models.Company;
 import com.example.pursuit.models.CompanyOpportunity;
 import com.example.pursuit.models.Employee;
+import com.example.pursuit.models.Keyword;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
+import java.security.Key;
 import java.time.Instant;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
@@ -56,6 +62,8 @@ public class CreateOpportunity extends AppCompatActivity implements AdapterView.
     Company currentCompany;
     Employee currentEmployee;
     String currentRole;
+    String id;
+    String currentKeyword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,6 +88,43 @@ public class CreateOpportunity extends AppCompatActivity implements AdapterView.
 
     private void writeNewCompanyOpportunity(String id) {
         dbref.child("CompanyOpportunities").child(currentCompany.getId()).child(id).setValue(newOpportunity);
+    }
+
+    ValueEventListener keywordListener = new ValueEventListener() {
+        @Override
+        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+            int flag = 0;
+            Keyword keyword = null;
+            if (dataSnapshot.exists()) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    keyword = snapshot.getValue(Keyword.class);
+                }
+            }
+            if (keyword == null) {
+                writeNewKeyword();
+            } else {
+                updateKeyword(keyword);
+            }
+        }
+
+        @Override
+        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+        }
+    };
+
+    private void updateKeyword(Keyword keyword) {
+        ArrayList<String> temp = keyword.getOpportunities();
+        temp.add(id);
+        dbref.child("Keywords").child(keyword.getId()).child("opportunities").setValue(temp);
+    }
+
+    private void writeNewKeyword() {
+        ArrayList<String> opportunities = new ArrayList<>();
+        opportunities.add(id);
+        String keywordID = RandomKeyGenerator.randomAlphaNumeric(16);
+        Keyword keyword = new Keyword(keywordID, currentKeyword, opportunities, null);
+        dbref.child("Keywords").child(keywordID).setValue(keyword);
     }
 
     /* ******END DATABASE****** */
@@ -135,7 +180,7 @@ public class CreateOpportunity extends AppCompatActivity implements AdapterView.
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void addToDB() {
-        String id = RandomKeyGenerator.randomAlphaNumeric(16);
+        id = RandomKeyGenerator.randomAlphaNumeric(16);
         newOpportunity = new CompanyOpportunity(id, toString(opportunityPosition), toString(opportunityWithWho),
                 toString(opportunityDescription), toString(opportunityCity), selectedState,
                 toString(opportunityRequirements), keywordArrayList, 0, "");
@@ -148,7 +193,12 @@ public class CreateOpportunity extends AppCompatActivity implements AdapterView.
             newOpportunity.setTimeStamp("");
         }
 
-        writeNewCompanyOpportunity(id); 
+        for (int i=0; i<keywordArrayList.size(); i++ ) {
+            currentKeyword = keywordArrayList.get(i);
+            Query keywordQuery = dbref.child("Keywords").orderByChild("text").equalTo(currentKeyword);
+            keywordQuery.addListenerForSingleValueEvent(keywordListener);
+        }
+        writeNewCompanyOpportunity(id);
 
         Intent intent = new Intent(this, CompanyProfileActivity.class);
         startActivity(intent);
@@ -168,7 +218,10 @@ public class CreateOpportunity extends AppCompatActivity implements AdapterView.
         keywordArray = toString(opportunityKeywords).split(",");
         keywordArrayList = new ArrayList<>();
         for (int i=0; i<keywordArray.length; i++) {
-            keywordArrayList.add(keywordArray[i].trim());
+            String word = keywordArray[i].trim().toLowerCase();
+            if (!keywordArrayList.contains(word)) {
+                keywordArrayList.add(word);
+            }
         }
 
         if (checkForEmpties()) {
