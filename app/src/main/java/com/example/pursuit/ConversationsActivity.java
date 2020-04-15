@@ -99,7 +99,7 @@ public class ConversationsActivity extends AppCompatActivity
     public void postStudentUsernameListener() {
         if (matchedStudentUsername != null) {
             // create new conversation with this student
-            writeNewConversations();
+            writeNewConversation();
 
             conversationAdapter.add(newConversation);
             conversationsView.setSelection(conversationsView.getCount() - 1);
@@ -134,7 +134,7 @@ public class ConversationsActivity extends AppCompatActivity
     public void postEmployeeUsernameListener() {
         if (matchedEmployeeUsername != null) {
             // create new conversation with this employee
-            writeNewConversations();
+            writeNewConversation();
 
             conversationAdapter.add(newConversation);
             conversationsView.setSelection(conversationsView.getCount() - 1);
@@ -261,7 +261,7 @@ public class ConversationsActivity extends AppCompatActivity
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public void writeNewConversations() {
+    public void writeNewConversation() {
         String otherUserId;
         String otherUserUsername;
         String otherUserRole;
