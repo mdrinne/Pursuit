@@ -114,9 +114,8 @@ public class MessagesActivity extends AppCompatActivity {
         messageListAdapter = new MessageListAdapter(this, messageList, currentUserId);
         messageRecycler.setAdapter(messageListAdapter);
         messageRecycler.setLayoutManager(new LinearLayoutManager(this));
-        RecyclerView rv = findViewById(R.id.messages_recycler);
         if (messageList.size() > 0) {
-            rv.smoothScrollToPosition(messageList.size() - 1);
+            messageRecycler.smoothScrollToPosition(messageList.size() - 1);
         }
     }
 
@@ -252,12 +251,13 @@ public class MessagesActivity extends AppCompatActivity {
         assert messageEditText != null;
 
         String messageText = messageEditText.getText().toString();
-        Log.d("MESSAGE_TEXT", messageText);
         Message newMessage = writeNewMessage(messageText);
         if (counterpartConversation == null) {
             writeCounterpartConversation();
-            writeCounterpartMessage(newMessage);
+
         }
+
+        writeCounterpartMessage(newMessage);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
