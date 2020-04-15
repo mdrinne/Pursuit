@@ -6,6 +6,16 @@
     android:layout_height="match_parent"
     tools:context=".MessagesActivity">
 
+    <TextView
+        android:id="@+id/other_user_username"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/strUsername"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/messages_recycler"
         android:layout_width="0dp"
@@ -16,7 +26,7 @@
         app:layout_constraintBottom_toTopOf="@id/divider2"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@id/other_user_username">
 
     </androidx.recyclerview.widget.RecyclerView>
 

@@ -17,18 +17,16 @@ import java.time.format.DateTimeFormatter;
 public class ReceivedMessageHolder extends RecyclerView.ViewHolder {
 
     private TextView messageText, timeText, nameText;
-    private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("H:m a");
+    private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("H:mm a");
 
     public ReceivedMessageHolder(@NonNull View itemView) {
         super(itemView);
         messageText = itemView.findViewById(R.id.text_message_body);
         timeText = itemView.findViewById(R.id.text_message_time);
-        nameText = itemView.findViewById(R.id.text_message_name);
     }
 
     public void bind(Message message) {
         messageText.setText(message.getMessageText());
         timeText.setText(ZonedDateTime.parse(message.getCreatedAt()).format(formatter));
-        nameText.setText(message.getSenderUsername());
     }
 }

@@ -17,7 +17,7 @@ import java.time.format.DateTimeFormatter;
 public class SentMessageHolder extends RecyclerView.ViewHolder {
 
     private TextView messageText, timeText;
-    private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("H:m a");
+    private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("H:mm a");
 
     public SentMessageHolder(@NonNull View itemView) {
         super(itemView);

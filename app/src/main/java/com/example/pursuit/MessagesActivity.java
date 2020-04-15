@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.example.pursuit.models.Conversation;
 import com.example.pursuit.models.Message;
@@ -147,6 +148,9 @@ public class MessagesActivity extends AppCompatActivity {
     };
 
     private void postCurrentConversationListener() {
+        TextView otherUserUsername = findViewById(R.id.other_user_username);
+        otherUserUsername.setText(currentConversation.getOtherUserUsername());
+
         Query counterpartConversationQuery;
         if (currentConversation.otherUserRole.equals("Student")) {
             counterpartConversationQuery = dbRef.child("Students").child(currentConversation.getOtherUserId()).child("Conversations")
