@@ -173,9 +173,9 @@ public class MessagesActivity extends AppCompatActivity {
                     // if the counterpart conversation exists, set it
                     counterpartConversation = snapshot.getValue(Conversation.class);
                 }
-            } else {
-                // if the counterpart conversation doesn't already exist, write it
-                writeCounterpartConversation();
+//            } else {
+////                // if the counterpart conversation doesn't already exist, write it
+////                writeCounterpartConversation();
             }
         }
 
@@ -247,23 +247,21 @@ public class MessagesActivity extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void sendMessage(View v) {
         Log.d(TAG, "in sendMessage");
-        EditText messageEditText = null;
-        try {
-            messageEditText = findViewById(R.id.message_box);
-            Log.d(TAG, "found the message_box");
-        } catch (NullPointerException e) {
-            Log.d(TAG, "Failed to obtain editText messageText");
-        }
+        EditText messageEditText = findViewById(R.id.message_box);
 
         assert messageEditText != null;
-        Log.d(TAG, "messageEditText is not null");
+
         String messageText = messageEditText.getText().toString();
         Log.d("MESSAGE_TEXT", messageText);
-        writeNewMessage(messageText);
+        Message newMessage = writeNewMessage(messageText);
+        if (counterpartConversation == null) {
+            writeCounterpartConversation();
+            writeCounterpartMessage(newMessage);
+        }
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    private void writeNewMessage(String message) {
+    private Message writeNewMessage(String message) {
         Log.d(TAG, "in writeNewMessage");
         DatabaseReference newMessageReference;
         String senderId;
@@ -295,7 +293,8 @@ public class MessagesActivity extends AppCompatActivity {
         newMessageReference.child("Conversations").child(currentConversation.getId()).child("Messages").child(id).setValue(newMessage);
         Log.d(TAG, "inserted the new message in the db");
         newMessageReference.child("Conversations").child(currentConversation.getId()).child("updatedAt").setValue(createdAt);
-        writeCounterpartMessage(newMessage);
+
+        return newMessage;
     }
 
     private void writeCounterpartMessage(Message message) {
@@ -311,8 +310,6 @@ public class MessagesActivity extends AppCompatActivity {
         counterpartReference.child("Messages").child(message.getId()).setValue(message);
         counterpartReference.child("updatedAt").setValue(message.getCreatedAt());
 
-//        hideKeyboard(this);
-
         EditText editText = findViewById(R.id.message_box);
         editText.getText().clear();
     }
@@ -326,17 +323,6 @@ public class MessagesActivity extends AppCompatActivity {
             currentCompany = ((PursuitApplication) this.getApplication()).getCurrentCompany();
         }
         currentRole = ((PursuitApplication) this.getApplication()).getRole();
-    }
-
-    public static void hideKeyboard(Activity activity) {
-        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
-        //Find the currently focused view, so we can grab the correct window token from it.
-        View view = activity.getCurrentFocus();
-        //If no view currently has focus, create a new one, just so we can grab a window token from it
-        if (view == null) {
-            view = new View(activity);
-        }
-        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 }
 
