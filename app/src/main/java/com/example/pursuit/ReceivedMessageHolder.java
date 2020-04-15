@@ -16,7 +16,7 @@ import java.time.format.DateTimeFormatter;
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class ReceivedMessageHolder extends RecyclerView.ViewHolder {
 
-    private TextView messageText, timeText, nameText;
+    private TextView messageText, timeText;
     private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("H:mm a");
 
     public ReceivedMessageHolder(@NonNull View itemView) {
