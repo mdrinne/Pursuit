@@ -6,12 +6,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.app.Activity;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -76,10 +74,7 @@ public class MessagesActivity extends AppCompatActivity {
 
                     Message message = snapshot.getValue(Message.class);
 
-                    if (message == null) {
-                        Log.d(TAG, "Message is null");
-                    } else {
-                        Log.d(TAG, "Message is not null");
+                    if (message != null) {
                         messageList.add(0, message);
                     }
                 }
@@ -129,11 +124,6 @@ public class MessagesActivity extends AppCompatActivity {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     Log.d(TAG, "Looping in snapshot");
                     currentConversation = snapshot.getValue(Conversation.class);
-
-                    if (currentConversation != null) {
-                        Log.d(TAG, "got the current conversation");
-                        Log.d("CURRENT_ID", currentConversation.getId());
-                    }
                 }
             }
 
@@ -172,9 +162,6 @@ public class MessagesActivity extends AppCompatActivity {
                     // if the counterpart conversation exists, set it
                     counterpartConversation = snapshot.getValue(Conversation.class);
                 }
-//            } else {
-////                // if the counterpart conversation doesn't already exist, write it
-////                writeCounterpartConversation();
             }
         }
 
@@ -245,7 +232,6 @@ public class MessagesActivity extends AppCompatActivity {
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void sendMessage(View v) {
-        Log.d(TAG, "in sendMessage");
         EditText messageEditText = findViewById(R.id.message_box);
 
         assert messageEditText != null;
@@ -262,7 +248,6 @@ public class MessagesActivity extends AppCompatActivity {
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     private Message writeNewMessage(String message) {
-        Log.d(TAG, "in writeNewMessage");
         DatabaseReference newMessageReference;
         String senderId;
         String senderUsername;
@@ -287,18 +272,14 @@ public class MessagesActivity extends AppCompatActivity {
         createdAt = ZonedDateTime.now(ZoneOffset.UTC).toString();
         String id = RandomKeyGenerator.randomAlphaNumeric(16);
         Message newMessage = new Message(id, senderId, senderUsername, recipientId, recipientUsername, messageText, createdAt);
-
-        Log.d(TAG, "created the new Message");
-
+        
         newMessageReference.child("Conversations").child(currentConversation.getId()).child("Messages").child(id).setValue(newMessage);
-        Log.d(TAG, "inserted the new message in the db");
         newMessageReference.child("Conversations").child(currentConversation.getId()).child("updatedAt").setValue(createdAt);
 
         return newMessage;
     }
 
     private void writeCounterpartMessage(Message message) {
-        Log.d(TAG, "writing the counterpart");
         DatabaseReference counterpartReference;
 
         if (currentConversation.getOtherUserRole().equals("Student")) {
