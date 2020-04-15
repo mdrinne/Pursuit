@@ -37,6 +37,7 @@ public class OpportunityAdapter extends RecyclerView.Adapter<OpportunityAdapter.
 
     public class OpportunityViewHolder extends RecyclerView.ViewHolder {
         TextView opportunityPosition, opportunityDescription, opportunityWith, opportunityTimeStamp;
+        TextView opportunityCity, opportunityState;
         ImageView deleteOpportunity;
         Button approve;
 
@@ -48,6 +49,8 @@ public class OpportunityAdapter extends RecyclerView.Adapter<OpportunityAdapter.
             opportunityTimeStamp = itemView.findViewById(R.id.txtTimeStamp);
             approve = itemView.findViewById(R.id.btnApprove);
             deleteOpportunity = itemView.findViewById(R.id.imgDeleteOpportunity);
+            opportunityCity = itemView.findViewById(R.id.txtCity);
+            opportunityState = itemView.findViewById(R.id.txtState);
 
             approve.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -96,9 +99,6 @@ public class OpportunityAdapter extends RecyclerView.Adapter<OpportunityAdapter.
                 ZonedDateTime approvedTime = ZonedDateTime.parse(companyOpportunities.get(position).getTimeStamp());
                 Period ymdDiff = Period.between(approvedTime.toLocalDate(), now.toLocalDate());
                 Duration hmsDiff = Duration.between(approvedTime.toLocalDateTime(), now.toLocalDateTime());
-                Log.d("oppAdapter ymd", Integer.toString(ymdDiff.getDays()));
-//                Log.d("oppAdapter hms", hmsDiff.toString());
-//                Log.d("oppAdapter seconds", Long.toString(0 - hmsDiff.getSeconds()));
                 Long hmsSeconds = hmsDiff.getSeconds();
                 if (hmsSeconds < 60) {
                     holder.opportunityTimeStamp.setText(hmsSeconds.toString() + "s");
@@ -118,6 +118,8 @@ public class OpportunityAdapter extends RecyclerView.Adapter<OpportunityAdapter.
             }
         }
         holder.opportunityPosition.setText(companyOpportunities.get(position).getPosition());
+        holder.opportunityCity.setText(companyOpportunities.get(position).getCity() + ", ");
+        holder.opportunityState.setText(companyOpportunities.get(position).getState());
         if (!companyOpportunities.get(position).getWithWho().equals("")) {
             holder.opportunityWith.setText("With: " + companyOpportunities.get(position).getWithWho());
         }

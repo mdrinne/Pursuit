@@ -204,4 +204,5 @@
         <item>WI</item>
         <item>WY</item>
     </string-array>
+    <string name="strLocationIcon">Location Icon</string>
 </resources>
