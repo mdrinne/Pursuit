@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -17,6 +18,7 @@ import com.example.pursuit.adapters.CompanyKeywordAdapter;
 import com.example.pursuit.models.Company;
 import com.example.pursuit.models.CompanyOpportunity;
 import com.example.pursuit.models.Employee;
+import com.example.pursuit.models.Keyword;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -45,6 +47,8 @@ public class ViewOpportunity extends AppCompatActivity {
     private RecyclerView opportunityKeywords;
     private CompanyKeywordAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
+
+//    private String removeFrom;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -118,6 +122,25 @@ public class ViewOpportunity extends AppCompatActivity {
         }
     };
 
+    ValueEventListener deleteFromKeywordListener = new ValueEventListener() {
+        @Override
+        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+            if (dataSnapshot.exists()) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    Keyword key = snapshot.getValue(Keyword.class);
+                    ArrayList<String> opportunitiesArray = key.getOpportunities();
+                    opportunitiesArray.remove(currentOpportunity.getId());
+                    dbref.child("Keywords").child(key.id).child("opportunities").setValue(opportunitiesArray);
+                }
+            }
+        }
+
+        @Override
+        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+        }
+    };
+
     /* ******END DATABASE****** */
 
     private void buildRecyclerView() {
@@ -145,6 +168,8 @@ public class ViewOpportunity extends AppCompatActivity {
         String str = keywords.get(position);
         keywords.remove(str);
         dbref.child("CompanyOpportunities").child(currentCompany.getId()).child(currentOpportunity.getId()).child("keywords").setValue(keywords);
+        Query deleteFromKeywordQuery = dbref.child("Keywords").orderByChild("text").equalTo(str);
+        deleteFromKeywordQuery.addListenerForSingleValueEvent(deleteFromKeywordListener);
         mAdapter.notifyItemRemoved(position);
     }
 
