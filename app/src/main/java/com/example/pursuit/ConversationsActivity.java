@@ -97,13 +97,18 @@ public class ConversationsActivity extends AppCompatActivity
     };
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public void postStudentUsernameListener() {
+    private void postStudentUsernameListener() {
         if (matchedStudentUsername != null) {
-            // create new conversation with this student
-            writeNewConversation();
+            Query existingConversationQuery = dbRef.child("Students").child(matchedStudentUsername.getId()).child("Conversations");
+            existingConversationQuery.addListenerForSingleValueEvent(existingConversationListener);
 
-            conversationAdapter.add(newConversation);
-            conversationsView.setSelection(conversationsView.getCount() - 1);
+
+
+//            // create new conversation with this student
+//            writeNewConversation();
+//
+//            conversationAdapter.add(newConversation);
+//            conversationsView.setSelection(conversationsView.getCount() - 1);
 
             Toast.makeText(this, "Conversation Created!", Toast.LENGTH_LONG).show();
         } else {
@@ -132,18 +137,88 @@ public class ConversationsActivity extends AppCompatActivity
     };
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public void postEmployeeUsernameListener() {
+    private void postEmployeeUsernameListener() {
         if (matchedEmployeeUsername != null) {
+            Query existingConversationQuery = dbRef.child("Employees").child(matchedEmployeeUsername.getId()).child("Conversations");
+            existingConversationQuery.addListenerForSingleValueEvent(existingConversationListener);
             // create new conversation with this employee
-            writeNewConversation();
-
-            conversationAdapter.add(newConversation);
-            conversationsView.setSelection(conversationsView.getCount() - 1);
+//            writeNewConversation();
+//
+//            conversationAdapter.add(newConversation);
+//            conversationsView.setSelection(conversationsView.getCount() - 1);
 
             Toast.makeText(this, "Conversation Created!", Toast.LENGTH_LONG).show();
         } else {
             Toast.makeText(this, "This username does not exist!", Toast.LENGTH_LONG).show();
         }
+    }
+
+    ValueEventListener existingConversationListener = new ValueEventListener() {
+        @RequiresApi(api = Build.VERSION_CODES.O)
+        @Override
+        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+            Conversation existingConversation = null;
+
+            if (dataSnapshot.exists()) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    Conversation temp = snapshot.getValue(Conversation.class);
+                    assert temp != null;
+                    if (currentStudent != null) {
+                        if (temp.getOtherUserId().equals(currentStudent.getId())) {
+                            existingConversation = temp;
+                        }
+                    } else {
+                        if (temp.getOtherUserId().equals(currentEmployee.getId())) {
+                            existingConversation = temp;
+                        }
+                    }
+                }
+            }
+
+            postExistingConversationListener(existingConversation);
+        }
+
+        @Override
+        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+        }
+    };
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private void postExistingConversationListener(Conversation existing) {
+        if (existing != null) {
+            writeExistingCounterpartConversation(existing);
+
+        } else {
+            writeNewConversation();
+
+            conversationAdapter.add(newConversation);
+            conversationsView.setSelection(conversationsView.getCount() - 1);
+        }
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private void writeExistingCounterpartConversation(Conversation existing) {
+        if (matchedStudentUsername != null) {
+            existing.setOtherUserId(matchedStudentUsername.getId());
+            existing.setOtherUserUsername(matchedStudentUsername.getUsername());
+            existing.setOtherUserRole("Student");
+        } else {
+            existing.setOtherUserId(matchedEmployeeUsername.getId());
+            existing.setOtherUserUsername(matchedEmployeeUsername.getUsername());
+            existing.setOtherUserRole("Employee");
+        }
+        existing.setCreatedAt(ZonedDateTime.of(LocalDateTime.now(), ZoneOffset.UTC).toString());
+        existing.setUpdatedAt(ZonedDateTime.of(LocalDateTime.now(), ZoneOffset.UTC).toString());
+        if (currentStudent != null) {
+            dbRef.child("Students").child(currentStudent.getId()).child("Conversations").child(existing.getId()).setValue(existing);
+        } else {
+            dbRef.child("Employees").child(currentEmployee.getId()).child("Conversations").child(existing.getId()).setValue(existing);
+        }
+
+        Intent messagesActivity = new Intent(ConversationsActivity.this, MessagesActivity.class);
+        messagesActivity.putExtra("CONVERSATION_ID", existing.getId());
+        startActivity(messagesActivity);
     }
 
     ValueEventListener myConversationsListener = new ValueEventListener() {
