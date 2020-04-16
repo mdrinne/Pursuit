@@ -102,14 +102,6 @@ public class ConversationsActivity extends AppCompatActivity
             Query existingConversationQuery = dbRef.child("Students").child(matchedStudentUsername.getId()).child("Conversations");
             existingConversationQuery.addListenerForSingleValueEvent(existingConversationListener);
 
-
-
-//            // create new conversation with this student
-//            writeNewConversation();
-//
-//            conversationAdapter.add(newConversation);
-//            conversationsView.setSelection(conversationsView.getCount() - 1);
-
             Toast.makeText(this, "Conversation Created!", Toast.LENGTH_LONG).show();
         } else {
             Query employeeUsernameQuery = dbRef.child("Employees").orderByChild("username").equalTo(checkUsername);
@@ -141,11 +133,6 @@ public class ConversationsActivity extends AppCompatActivity
         if (matchedEmployeeUsername != null) {
             Query existingConversationQuery = dbRef.child("Employees").child(matchedEmployeeUsername.getId()).child("Conversations");
             existingConversationQuery.addListenerForSingleValueEvent(existingConversationListener);
-            // create new conversation with this employee
-//            writeNewConversation();
-//
-//            conversationAdapter.add(newConversation);
-//            conversationsView.setSelection(conversationsView.getCount() - 1);
 
             Toast.makeText(this, "Conversation Created!", Toast.LENGTH_LONG).show();
         } else {
