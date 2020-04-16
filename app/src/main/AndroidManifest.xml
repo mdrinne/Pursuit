@@ -38,6 +38,7 @@
         <activity android:name=".ConversationsActivity" />
         <activity android:name=".EmployeeRegistration1" />
         <activity android:name=".EmployeeRegistration2" />
+        <activity android:name=".EmployeeManagement" />
 
         <meta-data
             android:name="preloaded_fonts"

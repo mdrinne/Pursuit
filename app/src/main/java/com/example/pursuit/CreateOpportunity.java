@@ -1,11 +1,14 @@
 package com.example.pursuit;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
@@ -18,7 +21,14 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.time.Instant;
+import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
+
 public class CreateOpportunity extends AppCompatActivity {
+
+    private final String TAG = "CreateOpportunity";
 
     DatabaseReference dbref;
 
@@ -104,11 +114,17 @@ public class CreateOpportunity extends AppCompatActivity {
         return true;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public void addToDB() {
         String id = RandomKeyGenerator.randomAlphaNumeric(16);
-        newOpportunity = new CompanyOpportunity(id, toString(opportunityPosition), toString(opportunityWithWho), toString(opportunityDescription), 0);
+        newOpportunity = new CompanyOpportunity(id, toString(opportunityPosition), toString(opportunityWithWho), toString(opportunityDescription), 0, "");
         if (currentRole.equals("Company") || (currentRole.equals("Employee") && currentEmployee.admin == 1)) {
             newOpportunity.setApproved(1);
+                ZonedDateTime now = ZonedDateTime.now(ZoneOffset.UTC);
+                Log.d(TAG, now.toString());
+                newOpportunity.setTimeStamp(now.toString());
+        } else {
+            newOpportunity.setTimeStamp("");
         }
 
         writeNewCompanyOpportunity(id);
@@ -117,6 +133,7 @@ public class CreateOpportunity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public void addOpportunity(View v) {
         view = v;
         opportunityPosition = findViewById(R.id.txtPosition);

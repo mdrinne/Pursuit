@@ -88,7 +88,7 @@ public class CompanyProfileActivity extends AppCompatActivity{
         companyProfilePic = findViewById(R.id.imgCompanyProfilePic);
         loadCompanyProfilePicture();
 
-        Query opportunityQuery = dbref.child("CompanyOpportunities").child(currentCompany.getId()).orderByKey();
+        Query opportunityQuery = dbref.child("CompanyOpportunities").child(currentCompany.getId()).orderByChild("timestamp");
 
         opportunityQuery.addListenerForSingleValueEvent(companyOpportunityListener);
 
@@ -108,7 +108,6 @@ public class CompanyProfileActivity extends AppCompatActivity{
                     companyOpportunities.add(opportunity);
                 }
             }
-            Log.d(TAG, String.valueOf(companyOpportunities.size()));
             buildRecyclerView();
         }
 
@@ -393,6 +392,11 @@ public class CompanyProfileActivity extends AppCompatActivity{
 
     public void addOpportunity(View v) {
         Intent intent = new Intent(this, CreateOpportunity.class);
+        startActivity(intent);
+    }
+
+    public void viewEmployees(View v) {
+        Intent intent = new Intent(this, EmployeeManagement.class);
         startActivity(intent);
     }
 

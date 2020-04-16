@@ -151,4 +151,10 @@
     <string name="strApprove">Approve</string>
     <string name="strOpportunities">Opportunities</string>
     <string name="conversation_delete_button_description">Button to delete a conversation</string>
+    <string name="strConfirmDelete">Confirm Delete</string>
+    <string name="strConfirm">Confirm</string>
+    <string name="strCancel">Cancel</string>
+    <string name="strViewEmployees">View Employees</string>
+    <string name="strMakeAdmin">Make Admin</string>
+    <string name="strRevokeAdmin">Revoke Admin</string>
 </resources>

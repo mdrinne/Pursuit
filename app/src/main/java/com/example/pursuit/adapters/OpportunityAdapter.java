@@ -1,5 +1,6 @@
 package com.example.pursuit.adapters;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.pursuit.R;
 import com.example.pursuit.models.CompanyOpportunity;
 
+import java.time.Duration;
+import java.time.Period;
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 
 public class OpportunityAdapter extends RecyclerView.Adapter<OpportunityAdapter.OpportunityViewHolder> {
@@ -31,7 +36,7 @@ public class OpportunityAdapter extends RecyclerView.Adapter<OpportunityAdapter.
     }
 
     public class OpportunityViewHolder extends RecyclerView.ViewHolder {
-        TextView opportunityPosition, opportunityDescription, opportunityWith;
+        TextView opportunityPosition, opportunityDescription, opportunityWith, opportunityTimeStamp;
         ImageView deleteOpportunity;
         Button approve;
 
@@ -40,6 +45,7 @@ public class OpportunityAdapter extends RecyclerView.Adapter<OpportunityAdapter.
             opportunityPosition = itemView.findViewById(R.id.txtPosition);
             opportunityWith = itemView.findViewById(R.id.txtWith);
             opportunityDescription = itemView.findViewById(R.id.txtDescription);
+            opportunityTimeStamp = itemView.findViewById(R.id.txtTimeStamp);
             approve = itemView.findViewById(R.id.btnApprove);
             deleteOpportunity = itemView.findViewById(R.id.imgDeleteOpportunity);
 
@@ -85,6 +91,31 @@ public class OpportunityAdapter extends RecyclerView.Adapter<OpportunityAdapter.
     public void onBindViewHolder(@NonNull OpportunityViewHolder holder, int position) {
         if (companyOpportunities.get(position).getApproved() == 1) {
             holder.approve.setVisibility(View.GONE);
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                ZonedDateTime now = ZonedDateTime.now(ZoneOffset.UTC);
+                ZonedDateTime approvedTime = ZonedDateTime.parse(companyOpportunities.get(position).getTimeStamp());
+                Period ymdDiff = Period.between(approvedTime.toLocalDate(), now.toLocalDate());
+                Duration hmsDiff = Duration.between(approvedTime.toLocalDateTime(), now.toLocalDateTime());
+                Log.d("oppAdapter ymd", Integer.toString(ymdDiff.getDays()));
+//                Log.d("oppAdapter hms", hmsDiff.toString());
+//                Log.d("oppAdapter seconds", Long.toString(0 - hmsDiff.getSeconds()));
+                Long hmsSeconds = hmsDiff.getSeconds();
+                if (hmsSeconds < 60) {
+                    holder.opportunityTimeStamp.setText(hmsSeconds.toString() + "s");
+                } else if (hmsSeconds < 3600){
+                    Long minutes = hmsSeconds / 60;
+                    holder.opportunityTimeStamp.setText(minutes.toString() + "m");
+                } else if (hmsSeconds < 86400) {
+                    Long hours = hmsSeconds / 3600;
+                    holder.opportunityTimeStamp.setText(hours.toString() + "h");
+                } else if (ymdDiff.getYears() > 0) {
+                    holder.opportunityTimeStamp.setText(ymdDiff.getYears() + "Y");
+                } else if (ymdDiff.getMonths() > 0) {
+                    holder.opportunityTimeStamp.setText(ymdDiff.getMonths() + "M");
+                } else {
+                    holder.opportunityTimeStamp.setText(ymdDiff.getDays() + "D");
+                }
+            }
         }
         holder.opportunityPosition.setText(companyOpportunities.get(position).getPosition());
         if (!companyOpportunities.get(position).getWithWho().equals("")) {

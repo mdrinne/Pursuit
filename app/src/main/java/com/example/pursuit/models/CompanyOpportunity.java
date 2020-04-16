@@ -10,18 +10,20 @@ public class CompanyOpportunity {
     public String withWho;
     public String description;
     public Integer approved;
+    public String timeStamp;
 
 
     public CompanyOpportunity() {
         this.id = "";
     }
 
-    public CompanyOpportunity(String id, String position, String withWho, String description, Integer approved) {
+    public CompanyOpportunity(String id, String position, String withWho, String description, Integer approved, String timeStamp) {
         this.id = id;
         this.position = position;
         this.withWho = withWho;
         this.description = description;
         this.approved = approved;
+        this.timeStamp = timeStamp;
     }
 
     public String getId() {
@@ -62,6 +64,14 @@ public class CompanyOpportunity {
 
     public void setApproved(Integer approved) {
         this.approved = approved;
+    }
+
+    public String getTimeStamp() {
+        return timeStamp;
+    }
+
+    public void setTimeStamp(String timeStamp) {
+        this.timeStamp = timeStamp;
     }
 
 }
