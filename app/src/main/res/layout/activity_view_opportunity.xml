@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/gradient_bg">
 
 
     <ScrollView
@@ -20,45 +20,41 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/innerConstraintLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <TextView
                 android:id="@+id/txtPosition"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:fontFamily="@font/roboto"
-                android:paddingLeft="5dp"
-                android:paddingRight="5dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginRight="10dp"
+                android:fontFamily="@font/roboto_medium"
                 android:textColor="@color/accent1"
                 android:textSize="20sp"
                 android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/imgDeleteOpportunity"
+                app:layout_constraintEnd_toStartOf="@+id/btnApprove"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="@+id/imgDeleteOpportunity" />
 
             <TextView
                 android:id="@+id/txtWith"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginLeft="10dp"
                 android:fontFamily="@font/roboto"
-                android:paddingLeft="5dp"
-                android:paddingRight="5dp"
                 android:textColor="@color/accent1"
                 android:textSize="16sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageView" />
+                app:layout_constraintStart_toStartOf="@id/txtCity"
+                app:layout_constraintTop_toBottomOf="@+id/imgLocationIcon" />
 
             <TextView
                 android:id="@+id/txtDescription"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="15dp"
                 android:fontFamily="@font/roboto"
-                android:paddingLeft="5dp"
-                android:paddingRight="5dp"
                 android:paddingBottom="10dp"
                 android:textColor="@color/accent1"
                 android:textSize="16sp"
@@ -70,9 +66,9 @@
                 android:id="@+id/imgDeleteOpportunity"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginRight="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginRight="5dp"
                 android:contentDescription="@string/txtDeleteButton"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -103,11 +99,12 @@
                 app:layout_constraintTop_toTopOf="@+id/imgDeleteOpportunity" />
 
             <ImageView
-                android:id="@+id/imageView"
+                android:id="@+id/imgLocationIcon"
                 android:layout_width="21dp"
                 android:layout_height="21dp"
-                android:layout_marginStart="5dp"
-                android:layout_marginLeft="5dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="5dp"
                 android:contentDescription="@string/strLocationIcon"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/txtPosition"
@@ -117,13 +114,14 @@
                 android:id="@+id/txtCity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="1dp"
-                android:layout_marginLeft="1dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginLeft="5dp"
                 android:fontFamily="@font/roboto"
                 android:textColor="@color/accent1"
                 android:textSize="16sp"
-                app:layout_constraintStart_toEndOf="@+id/imageView"
-                app:layout_constraintTop_toBottomOf="@+id/txtPosition" />
+                app:layout_constraintBottom_toBottomOf="@id/imgLocationIcon"
+                app:layout_constraintStart_toEndOf="@+id/imgLocationIcon"
+                app:layout_constraintTop_toTopOf="@id/imgLocationIcon" />
 
             <TextView
                 android:id="@+id/txtState"
@@ -153,6 +151,9 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
+                android:fontFamily="@font/roboto"
+                android:textColor="@color/accent1"
+                android:textSize="16sp"
                 app:layout_constraintEnd_toStartOf="@+id/imgDeleteOpportunity"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/txtRequirements" />

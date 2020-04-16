@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pursuit.R;
@@ -29,6 +30,7 @@ public class OpportunityAdapter extends RecyclerView.Adapter<OpportunityAdapter.
     public interface OpportunityOnItemClickListener {
         void onApproveClick(int position);
         void onDeleteClick(int position);
+        void onCardClick(int position);
     }
 
     public void setOpportunityOnItemClickListener(OpportunityOnItemClickListener listener) {
@@ -40,6 +42,7 @@ public class OpportunityAdapter extends RecyclerView.Adapter<OpportunityAdapter.
         TextView opportunityCity, opportunityState;
         ImageView deleteOpportunity;
         Button approve;
+        CardView card;
 
         public OpportunityViewHolder(@NonNull View itemView, final OpportunityOnItemClickListener listener) {
             super(itemView);
@@ -51,6 +54,7 @@ public class OpportunityAdapter extends RecyclerView.Adapter<OpportunityAdapter.
             deleteOpportunity = itemView.findViewById(R.id.imgDeleteOpportunity);
             opportunityCity = itemView.findViewById(R.id.txtCity);
             opportunityState = itemView.findViewById(R.id.txtState);
+            card = itemView.findViewById(R.id.crdOpportunity);
 
             approve.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -71,6 +75,18 @@ public class OpportunityAdapter extends RecyclerView.Adapter<OpportunityAdapter.
                         int position = getAdapterPosition();
                         if (position != RecyclerView.NO_POSITION) {
                             listener.onDeleteClick(position);
+                        }
+                    }
+                }
+            });
+
+            card.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (listener != null) {
+                        int position = getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION) {
+                            listener.onCardClick(position);
                         }
                     }
                 }

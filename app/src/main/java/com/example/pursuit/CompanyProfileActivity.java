@@ -294,6 +294,11 @@ public class CompanyProfileActivity extends AppCompatActivity{
             public void onDeleteClick(int position) {
                 deleteOpportunity(position);
             }
+
+            @Override
+            public void onCardClick(int position) {
+                viewOpportunity(position);
+            }
         });
     }
 
@@ -425,6 +430,12 @@ public class CompanyProfileActivity extends AppCompatActivity{
 
     public void addOpportunity(View v) {
         Intent intent = new Intent(this, CreateOpportunity.class);
+        startActivity(intent);
+    }
+
+    public void viewOpportunity(int position) {
+        Intent intent = new Intent(this, ViewOpportunity.class);
+        intent.putExtra("EXTRA_OPPORTUNITY_ID", companyOpportunities.get(position).getId());
         startActivity(intent);
     }
 

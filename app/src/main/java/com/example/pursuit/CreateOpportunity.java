@@ -39,6 +39,8 @@ import java.util.ArrayList;
 public class CreateOpportunity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     private final String TAG = "CreateOpportunity";
+    int mutex;
+    int keywordParser;
 
     DatabaseReference dbref;
 
@@ -93,7 +95,7 @@ public class CreateOpportunity extends AppCompatActivity implements AdapterView.
     ValueEventListener keywordListener = new ValueEventListener() {
         @Override
         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-            int flag = 0;
+//            mutex = 1;
             Keyword keyword = null;
             if (dataSnapshot.exists()) {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
@@ -117,6 +119,8 @@ public class CreateOpportunity extends AppCompatActivity implements AdapterView.
         ArrayList<String> temp = keyword.getOpportunities();
         temp.add(id);
         dbref.child("Keywords").child(keyword.getId()).child("opportunities").setValue(temp);
+        keywordParser++;
+        addKeywordToDB();
     }
 
     private void writeNewKeyword() {
@@ -125,6 +129,8 @@ public class CreateOpportunity extends AppCompatActivity implements AdapterView.
         String keywordID = RandomKeyGenerator.randomAlphaNumeric(16);
         Keyword keyword = new Keyword(keywordID, currentKeyword, opportunities, null);
         dbref.child("Keywords").child(keywordID).setValue(keyword);
+        keywordParser++;
+        addKeywordToDB();
     }
 
     /* ******END DATABASE****** */
@@ -193,15 +199,25 @@ public class CreateOpportunity extends AppCompatActivity implements AdapterView.
             newOpportunity.setTimeStamp("");
         }
 
-        for (int i=0; i<keywordArrayList.size(); i++ ) {
-            currentKeyword = keywordArrayList.get(i);
-            Query keywordQuery = dbref.child("Keywords").orderByChild("text").equalTo(currentKeyword);
-            keywordQuery.addListenerForSingleValueEvent(keywordListener);
-        }
+        keywordParser = 0;
+        addKeywordToDB();
+//        for (int i=0; i<keywordArrayList.size(); i++ ) {
+//            currentKeyword = keywordArrayList.get(i);
+//            Query keywordQuery = dbref.child("Keywords").orderByChild("text").equalTo(currentKeyword);
+//            keywordQuery.addListenerForSingleValueEvent(keywordListener);
+//        }
         writeNewCompanyOpportunity(id);
 
         Intent intent = new Intent(this, CompanyProfileActivity.class);
         startActivity(intent);
+    }
+
+    private void addKeywordToDB() {
+        if (keywordParser < keywordArrayList.size()) {
+            currentKeyword = keywordArrayList.get(keywordParser);
+            Query keywordQuery = dbref.child("Keywords").orderByChild("text").equalTo(currentKeyword);
+            keywordQuery.addListenerForSingleValueEvent(keywordListener);
+        }
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
