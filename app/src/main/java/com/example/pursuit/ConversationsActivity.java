@@ -12,7 +12,6 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.view.MenuItem;
-import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
 
@@ -61,7 +60,7 @@ public class ConversationsActivity extends AppCompatActivity
     private String  currentRole = null;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_conversations);
         BottomNavigationView bottomNavigation = findViewById(R.id.bottom_navigation);
@@ -71,7 +70,6 @@ public class ConversationsActivity extends AppCompatActivity
         dbRef = FirebaseDatabase.getInstance().getReference();
 
         getMyConversations();
-
     }
 
 
