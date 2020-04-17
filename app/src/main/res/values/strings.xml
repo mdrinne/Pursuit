@@ -157,4 +157,5 @@
     <string name="strViewEmployees">View Employees</string>
     <string name="strMakeAdmin">Make Admin</string>
     <string name="strRevokeAdmin">Revoke Admin</string>
+    <string name="filter">Type to filter</string>
 </resources>

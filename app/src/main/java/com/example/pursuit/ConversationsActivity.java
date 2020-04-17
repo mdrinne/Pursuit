@@ -7,6 +7,8 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.view.MenuItem;
@@ -254,6 +256,21 @@ public class ConversationsActivity extends AppCompatActivity
         conversationAdapter = new ConversationAdapter(this, myConversations);
         conversationsView = findViewById(R.id.conversations_view);
         conversationsView.setAdapter(conversationAdapter);
+        conversationsView.setTextFilterEnabled(true);
+        EditText conversationsFilter = findViewById(R.id.conversations_filter);
+        conversationsFilter.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                conversationAdapter.getFilter().filter(s);
+            }
+        });
         conversationAdapter.addAll(myConversations);
 //        conversationsView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 //            @Override
