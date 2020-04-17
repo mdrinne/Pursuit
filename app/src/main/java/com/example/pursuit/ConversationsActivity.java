@@ -328,12 +328,26 @@ public class ConversationsActivity extends AppCompatActivity
 
         assert newConversationUsername != null;
         checkUsername = toString(newConversationUsername);
-        if (currentStudent != null && checkUsername.equals(currentStudent.getUsername())) {
+
+        buildConversationQuery(checkUsername);
+
+//        if (currentStudent != null && checkUsername.equals(currentStudent.getUsername())) {
+//            Toast.makeText(this, "You can't message yourself!", Toast.LENGTH_LONG).show();
+//        } else if (currentEmployee != null && checkUsername.equals(currentEmployee.getUsername())) {
+//            Toast.makeText(this, "You can't message yourself!", Toast.LENGTH_LONG).show();
+//        } else {
+//            Query studentUsernameQuery = dbRef.child("Students").orderByChild("username").equalTo(checkUsername);
+//            studentUsernameQuery.addListenerForSingleValueEvent(studentUsernameListener);
+//        }
+    }
+
+    public void buildConversationQuery(String username) {
+        if (currentStudent != null && username.equals(currentStudent.getUsername())) {
             Toast.makeText(this, "You can't message yourself!", Toast.LENGTH_LONG).show();
-        } else if (currentEmployee != null && checkUsername.equals(currentEmployee.getUsername())) {
+        } else if (currentEmployee != null && username.equals(currentEmployee.getUsername())) {
             Toast.makeText(this, "You can't message yourself!", Toast.LENGTH_LONG).show();
         } else {
-            Query studentUsernameQuery = dbRef.child("Students").orderByChild("username").equalTo(checkUsername);
+            Query studentUsernameQuery = dbRef.child("Students").orderByChild("username").equalTo(username);
             studentUsernameQuery.addListenerForSingleValueEvent(studentUsernameListener);
         }
     }

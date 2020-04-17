@@ -10,15 +10,20 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 
+import java.util.ArrayList;
+
 
 public class NewConversationDialogFragment extends DialogFragment {
 
     public interface NewConversationDialogListener {
         void onDialogPositiveClick(DialogFragment dialog);
         void onDialogNegativeClick(DialogFragment dialog);
+        public void
     }
 
     NewConversationDialogListener listener;
+
+    ArrayList<String> allUsernames;
 
     @Override
     public void onAttach(Context context) {
@@ -47,6 +52,15 @@ public class NewConversationDialogFragment extends DialogFragment {
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 listener.onDialogNegativeClick(NewConversationDialogFragment.this);
+            }
+        });
+        final UsernameAdapter adapter = new UsernameAdapter(this, allUsernames);
+        builder.setAdapter(adapter, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // TODO: build conversation creation such that only a list item can be clicked in order to start a conversation
+                String username = adapter.getItem(which);
+
             }
         });
 
