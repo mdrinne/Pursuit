@@ -179,6 +179,19 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/txtKeywords" />
 
+            <Button
+                android:id="@+id/button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/button_accent1"
+                android:onClick="addKeywords"
+                android:text="@string/strAddKeywords"
+                android:textColor="@color/colorPrimary"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/rcycKeywords" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 

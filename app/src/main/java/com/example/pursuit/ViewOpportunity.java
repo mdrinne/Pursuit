@@ -1,5 +1,6 @@
 package com.example.pursuit;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -48,7 +49,7 @@ public class ViewOpportunity extends AppCompatActivity {
     private CompanyKeywordAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
 
-//    private String removeFrom;
+    Dialog addKeywordsDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -179,6 +180,10 @@ public class ViewOpportunity extends AppCompatActivity {
         if (currentRole.equals("Employee")) {
             currentEmployee = ((PursuitApplication) this.getApplicationContext()).getCurrentEmployee();
         }
+    }
+
+    public void addKeywords(View v) {
+
     }
 
     BottomNavigationView.OnNavigationItemSelectedListener navigationItemSelectedListener =

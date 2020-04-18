@@ -208,4 +208,5 @@
     <string name="strRequirements">Requirements</string>
     <string name="strKeywords">Keywords</string>
     <string name="strDeleteIcon">Delete Icon</string>
+    <string name="strAddKeywords">Add Keywords</string>
 </resources>
