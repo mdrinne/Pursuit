@@ -36,6 +36,7 @@ public class ViewOpportunity extends AppCompatActivity {
 
     TextView opportunityPosition, opportunityWith, opportunityCity, opportunityState;
     TextView opportunityDescription, opportunityRequirements;
+    Button approveBtn;
 
     BottomNavigationView bottomNavigation;
 
@@ -77,6 +78,12 @@ public class ViewOpportunity extends AppCompatActivity {
     }
 
     private void continueOnCreate() {
+
+        approveBtn = findViewById(R.id.btnApprove);
+        if (currentOpportunity.getApproved() == 1) {
+            approveBtn.setVisibility(View.GONE);
+        }
+
         opportunityPosition = findViewById(R.id.txtPosition);
         opportunityPosition.setText(currentOpportunity.getPosition());
 
@@ -111,6 +118,12 @@ public class ViewOpportunity extends AppCompatActivity {
         keywords = currentOpportunity.getKeywords();
         buildRecyclerView();
 
+    }
+
+    public void approveOpportunity(View v) {
+        currentOpportunity.setApproved(1);
+        dbref.child("CompanyOpportunities").child(currentCompany.getId()).child(currentOpportunity.getId()).child("approved").setValue(1);
+        approveBtn.setVisibility(View.GONE);
     }
 
     /* ********DATABASE******** */
