@@ -14,6 +14,7 @@ import android.content.Intent;
 import android.widget.Toast;
 
 import com.example.pursuit.models.Company;
+import com.example.pursuit.models.EmailCredentials;
 import com.example.pursuit.models.Employee;
 import com.example.pursuit.models.EmployeeInvite;
 import com.example.pursuit.models.Student;
@@ -38,8 +39,7 @@ public class InviteEmployeeActivity extends AppCompatActivity {
     Student matchedStudentEmail;
     EmployeeInvite matchedEmployeeInviteEmail;
 
-    private final String appEmail = "pursuitappdev@gmail.com";
-    private final String appPassword = "Cs495spring2020";
+    EmailCredentials senderEmail;
     String body;
 
     BottomNavigationView bottomNavigation;
@@ -148,6 +148,24 @@ public class InviteEmployeeActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    ValueEventListener getEmailListener = new ValueEventListener() {
+        @Override
+        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+            if (dataSnapshot.exists()) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    senderEmail = snapshot.getValue(EmailCredentials.class);
+                }
+            }
+
+            createEmailThread();
+        }
+
+        @Override
+        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+        }
+    };
+
     /* ******END DATABASE****** */
 
     BottomNavigationView.OnNavigationItemSelectedListener navigationItemSelectedListener =
@@ -184,11 +202,17 @@ public class InviteEmployeeActivity extends AppCompatActivity {
         body = "Company Code: " + currentCompany.getId() +
                         "\nInvite Code: " + newInvite.getCode();
         Log.d(TAG, "Trying to send email");
+        Query getEmailQuery = dbRef.child("EmailCredentials").orderByChild("email").equalTo("pursuitappdev@gmail.com");
+        getEmailQuery.addValueEventListener(getEmailListener);
+    }
+
+    private void createEmailThread() {
+        Log.d(TAG, employeeEmail.getText().toString());
         Thread emailThread = new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
-                    GMailSender sender = new GMailSender(appEmail, appPassword);
+                    GMailSender sender = new GMailSender(senderEmail.getEmail(), senderEmail.getPassword());
                     sender.sendMail("Pursuit Invite <DO NOT REPLY>", body, "<DO_NOT_REPLY>@pursuit.com", employeeEmail.getText().toString());
                 } catch (Exception e) {
                     Log.e("SendMail", e.getMessage(), e);

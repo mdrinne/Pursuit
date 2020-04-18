@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pursuit.adapters.ManageEmployeeAdapter;
 import com.example.pursuit.models.Company;
+import com.example.pursuit.models.EmailCredentials;
 import com.example.pursuit.models.Employee;
 //import com.example.pursuit.popUpWindows.DeleteEmployeePopUp;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -34,6 +35,10 @@ public class EmployeeManagement extends AppCompatActivity {
     Company currentCompany;
     Employee currentEmployee;
     String currentRole;
+
+    EmailCredentials senderEmail;
+    String receivingEmail;
+    String body;
 
     private DatabaseReference dbref;
 
@@ -100,6 +105,24 @@ public class EmployeeManagement extends AppCompatActivity {
         dbref.child("Employees").child(employee.getId()).child("admin").setValue(0);
         mAdapter.notifyItemChanged(position);
     }
+
+    ValueEventListener getEmailListener = new ValueEventListener() {
+        @Override
+        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+            if (dataSnapshot.exists()) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    senderEmail = snapshot.getValue(EmailCredentials.class);
+                }
+            }
+
+            createEmailThread();
+        }
+
+        @Override
+        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+        }
+    };
 
     /* ******END DATABASE****** */
 
@@ -172,16 +195,20 @@ public class EmployeeManagement extends AppCompatActivity {
 
     }
 
-    private void sendEmail(final String recievingEmail) {
-        final String appEmail = "pursuitappdev@gmail.com";
-        final String appPassword = "Cs495spring2020";
-        final String body = "Your Pursuit account has been deleted.";
+    private void sendEmail(final String recEmail) {
+        receivingEmail = recEmail;
+        body = "Your Pursuit account has been deleted.";
+        Query getEmailQuery = dbref.child("EmailCredentials").orderByChild("email").equalTo("pursuitappdev@gmail.com");
+        getEmailQuery.addValueEventListener(getEmailListener);
+    }
+
+    private void createEmailThread() {
         Thread emailThread = new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
-                    GMailSender sender = new GMailSender(appEmail, appPassword);
-                    sender.sendMail("Pursuit Invite <DO NOT REPLY>", body, "<DO_NOT_REPLY>@pursuit.com", recievingEmail);
+                    GMailSender sender = new GMailSender(senderEmail.getEmail(), senderEmail.getPassword());
+                    sender.sendMail("Pursuit: Account Deleted <DO NOT REPLY>", body, "<DO_NOT_REPLY>@pursuit.com", receivingEmail);
                 } catch (Exception e) {
                     Log.e("SendMail", e.getMessage(), e);
                 }
