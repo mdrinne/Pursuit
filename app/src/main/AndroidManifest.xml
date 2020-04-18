@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.pursuit">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:name=".PursuitApplication"
         android:allowBackup="true"
@@ -12,11 +14,12 @@
         android:theme="@style/AppTheme">
         <activity android:name=".CreateOpportunity"></activity>
         <activity android:name=".CreateMessageActivity" />
-        <activity
-            android:name=".MessagesActivity"
-            android:label="@string/title_activity_messages"
-            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".viewCompaniesActivity" />
+        <activity android:name=".MessagesActivity" />
+        <activity
+            android:name=".ViewOpportunities"
+            android:label="@string/title_activity_view_opportunities"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".StudentProfileActivity" />
         <activity android:name=".aboutPursuitActivity" />
         <activity android:name=".LandingActivity" />
@@ -33,6 +36,7 @@
         <activity android:name=".CompanyProfileActivity" />
         <activity android:name=".InviteEmployeeActivity" />
         <activity android:name=".viewCompanyEmployeeInvites" />
+        <activity android:name=".ConversationsActivity" />
         <activity android:name=".EmployeeRegistration1" />
         <activity android:name=".EmployeeRegistration2" />
         <activity android:name=".EmployeeManagement" />
@@ -41,7 +45,5 @@
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
     </application>
-
-    <uses-permission android:name="android.permission.INTERNET" />
 
 </manifest>
