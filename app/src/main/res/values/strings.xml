@@ -151,6 +151,7 @@
     <string name="strState">State:</string>
     <string name="strRequirementsHint">Requirements (Optional)</string>
     <string name="strKeywordsHint">Keywords (Optional: Separated By Commas)</string>
+    <string name="strKeywordsHint2">Keywords (Separated By Commas)</string>
     <string-array name="states">
         <item></item>
         <item>AL</item>

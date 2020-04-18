@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -49,6 +51,12 @@ public class ViewOpportunity extends AppCompatActivity {
     private CompanyKeywordAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
 
+    ArrayList<String> currentOpportunityKeywords;
+
+    private ArrayList<String> keywordsArrayList;
+    private int keywordParser;
+    private String currentKeyword;
+
     Dialog addKeywordsDialog;
 
     @Override
@@ -59,6 +67,7 @@ public class ViewOpportunity extends AppCompatActivity {
         bottomNavigation.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
 
         setCurrentUser();
+        addKeywordsDialog = new Dialog(this);
 
         dbref = FirebaseDatabase.getInstance().getReference();
 
@@ -142,6 +151,48 @@ public class ViewOpportunity extends AppCompatActivity {
         }
     };
 
+    ValueEventListener keywordListener = new ValueEventListener() {
+        @Override
+        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+            Keyword keyword = null;
+            if (dataSnapshot.exists()) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    keyword = snapshot.getValue(Keyword.class);
+                }
+            }
+            if (keyword == null) {
+                writeNewKeyword();
+            } else {
+                updateKeyword(keyword);
+            }
+        }
+
+        @Override
+        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+        }
+    };
+
+    private void updateKeyword(Keyword keyword) {
+        ArrayList<String> temp = keyword.getOpportunities();
+        temp.add(currentOpportunity.getId());
+        dbref.child("Keywords").child(keyword.getId()).child("opportunities").setValue(temp);
+        currentOpportunityKeywords.add(keyword.getText());
+        keywordParser++;
+        addKeywordsToDB();
+    }
+
+    private void writeNewKeyword() {
+        ArrayList<String> opportunities = new ArrayList<>();
+        opportunities.add(currentOpportunity.getId());
+        String keywordID = RandomKeyGenerator.randomAlphaNumeric(16);
+        Keyword keyword = new Keyword(keywordID, keywordsArrayList.get(keywordParser), opportunities, null);
+        dbref.child("Keywords").child(keywordID).setValue(keyword);
+        currentOpportunityKeywords.add(keywordsArrayList.get(keywordParser));
+        keywordParser++;
+        addKeywordsToDB();
+    }
+
     /* ******END DATABASE****** */
 
     private void buildRecyclerView() {
@@ -183,7 +234,56 @@ public class ViewOpportunity extends AppCompatActivity {
     }
 
     public void addKeywords(View v) {
+        final EditText txtAddKeywords;
+        Button cancel, confirm;
 
+        addKeywordsDialog.setContentView(R.layout.add_keywords_pop_up);
+
+        cancel = addKeywordsDialog.findViewById(R.id.btnCancel);
+        confirm = addKeywordsDialog.findViewById(R.id.btnConfirm);
+        txtAddKeywords = addKeywordsDialog.findViewById(R.id.txtAddKeywords);
+
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addKeywordsDialog.dismiss();
+            }
+        });
+
+        confirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                currentOpportunityKeywords = currentOpportunity.getKeywords();
+                String[] keywordsArray = txtAddKeywords.getText().toString().split(",");
+                keywordsArrayList = new ArrayList<>();
+                for (int i=0; i<keywordsArray.length; i++) {
+                    String word = keywordsArray[i].trim().toLowerCase();
+                    if(!keywordsArrayList.contains(word) && !currentOpportunity.getKeywords().contains(word)) {
+                        keywordsArrayList.add(word);
+                    }
+                }
+
+                currentOpportunityKeywords = currentOpportunity.getKeywords();
+                keywordParser = 0;
+                addKeywordsToDB();
+                addKeywordsDialog.dismiss();
+            }
+        });
+
+        addKeywordsDialog.show();
+    }
+
+    private void addKeywordsToDB() {
+        if (keywordParser < keywordsArrayList.size()) {
+            currentKeyword = keywordsArrayList.get(keywordParser);
+            Query keywordQuery = dbref.child("Keywords").orderByChild("text").equalTo(currentKeyword);
+            keywordQuery.addListenerForSingleValueEvent(keywordListener);
+        } else {
+            dbref.child("CompanyOpportunities").child(currentCompany.getId()).child(currentOpportunity.getId()).child("keywords").setValue(currentOpportunityKeywords);
+            mAdapter.notifyDataSetChanged();
+            return;
+        }
     }
 
     BottomNavigationView.OnNavigationItemSelectedListener navigationItemSelectedListener =

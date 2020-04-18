@@ -39,7 +39,6 @@ import java.util.ArrayList;
 public class CreateOpportunity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     private final String TAG = "CreateOpportunity";
-    int mutex;
     int keywordParser;
 
     DatabaseReference dbref;
@@ -201,11 +200,7 @@ public class CreateOpportunity extends AppCompatActivity implements AdapterView.
 
         keywordParser = 0;
         addKeywordToDB();
-//        for (int i=0; i<keywordArrayList.size(); i++ ) {
-//            currentKeyword = keywordArrayList.get(i);
-//            Query keywordQuery = dbref.child("Keywords").orderByChild("text").equalTo(currentKeyword);
-//            keywordQuery.addListenerForSingleValueEvent(keywordListener);
-//        }
+
         writeNewCompanyOpportunity(id);
 
         Intent intent = new Intent(this, CompanyProfileActivity.class);

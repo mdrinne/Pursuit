@@ -20,8 +20,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/txtDeleteMessage"
+    <EditText
+        android:id="@+id/txtAddKeywords"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
@@ -29,6 +29,11 @@
         android:layout_marginTop="5dp"
         android:layout_marginEnd="20dp"
         android:layout_marginRight="20dp"
+        android:ems="10"
+        android:fontFamily="@font/roboto"
+        android:hint="@string/strKeywordsHint2"
+        android:importantForAutofill="no"
+        android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtConfirmDelete" />
@@ -39,7 +44,7 @@
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtDeleteMessage">
+        app:layout_constraintTop_toBottomOf="@id/txtAddKeywords">
 
         <Button
             android:id="@+id/btnConfirm"
@@ -61,16 +66,5 @@
             android:layout_marginBottom="15dp"
             android:text="@string/strCancel" />
     </LinearLayout>
-
-    <EditText
-        android:id="@+id/editText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:ems="10"
-        android:fontFamily="@font/roboto"
-        android:inputType="textPersonName"
-        app:layout_constraintTop_toBottomOf="@+id/txtConfirmDelete"
-        tools:layout_editor_absoluteX="166dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
