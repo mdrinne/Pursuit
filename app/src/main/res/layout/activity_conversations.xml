@@ -26,15 +26,24 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_add_circle_outline_black_24dp" />
 
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/conversations_filter"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/conversations_view"
+        app:layout_constraintTop_toBottomOf="@id/messageActivityTitle"
+        android:hint="@string/filter"
+        android:autofillHints="@string/filter" />
+
     <ListView
         android:id="@+id/conversations_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
         android:divider="#fff"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/messageActivityTitle" />
+        app:layout_constraintTop_toBottomOf="@+id/conversations_filter" />
 
     <FrameLayout
         android:id="@+id/container"
