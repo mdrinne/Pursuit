@@ -221,4 +221,5 @@
     <string name="strKeywords">Keywords</string>
     <string name="strDeleteIcon">Delete Icon</string>
     <string name="strAddKeywords">Add Keywords</string>
+    <string name="enter_a_username">Enter a username</string>
 </resources>

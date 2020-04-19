@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -22,8 +23,10 @@
         android:id="@+id/usernames_filter"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/newConversationTitle"
-        android:hint="Type to filter usernames"
-        android:autofillHints="Type to filter usernames" />
+        android:autofillHints="Type to filter usernames"
+        android:inputType="text"
+        tools:ignore="LabelFor"
+        android:hint="@string/enter_a_username"/>
 
     <ListView
         android:id="@+id/usernames_view"
