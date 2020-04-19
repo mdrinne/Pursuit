@@ -2,6 +2,7 @@ package com.example.pursuit;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,8 +13,6 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
-import com.example.pursuit.models.Conversation;
-
 import java.util.ArrayList;
 
 public class UsernameAdapter extends ArrayAdapter<String> implements Filterable {
@@ -22,8 +21,11 @@ public class UsernameAdapter extends ArrayAdapter<String> implements Filterable 
     private ArrayList<String> usernames = new ArrayList<>();
     private ArrayList<String> storedUsernames;
 
-    public UsernameAdapter(@NonNull NewConversationDialogFragment context, ArrayList<String> usernames) {
+
+    public UsernameAdapter(Context context, ArrayList<String> usernames) {
         super(context, R.layout.username, usernames);
+        Log.d(TAG, "in UsernameAdapter constructor");
+        Log.d("SIZE", Integer.toString(usernames.size()));
         this.storedUsernames = usernames;
     }
 
@@ -38,17 +40,24 @@ public class UsernameAdapter extends ArrayAdapter<String> implements Filterable 
     }
 
     @Override
-    public int getCount() { return usernames.size(); }
+    public int getCount() {
+        return usernames.size();
+    }
 
     @Override
-    public String getItem(int i) { return usernames.get(i); }
+    public String getItem(int i) {
+        return usernames.get(i);
+    }
 
     @Override
-    public long getItemId(int i) { return i; }
+    public long getItemId(int i) {
+        return i;
+    }
 
     @Override
     public View getView(int i, View convertView, ViewGroup parent) {
         String username = getItem(i);
+        Log.d(TAG, username);
 
         UsernameViewHolder viewHolder;
 

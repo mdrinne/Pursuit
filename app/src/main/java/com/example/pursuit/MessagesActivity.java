@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -61,6 +62,11 @@ public class MessagesActivity extends AppCompatActivity {
 
         getCurrentConversations();
         getMessages();
+    }
+
+    public void leaveMessages(View v) {
+        Intent conversationsActivity = new Intent(MessagesActivity.this, ConversationsActivity.class);
+        startActivity(conversationsActivity);
     }
 
     ValueEventListener messagesListener = new ValueEventListener() {
