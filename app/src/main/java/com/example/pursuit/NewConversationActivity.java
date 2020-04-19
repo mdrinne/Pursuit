@@ -43,7 +43,6 @@ public class NewConversationActivity extends AppCompatActivity {
     private Student matchedStudentUsername;
     private Employee matchedEmployeeUsername;
     private String checkUsername;
-    private Conversation newConversation;
 
     private ArrayList<String> allUsernames;
     private UsernameAdapter usernameAdapter;
@@ -328,7 +327,7 @@ public class NewConversationActivity extends AppCompatActivity {
         String id = RandomKeyGenerator.randomAlphaNumeric(16);
         createdAt = ZonedDateTime.of(LocalDateTime.now(), ZoneOffset.UTC).toString();
         updatedAt = ZonedDateTime.of(LocalDateTime.now(), ZoneOffset.UTC).toString();
-        newConversation = new Conversation(id, otherUserId, otherUserUsername, otherUserRole, createdAt, updatedAt);
+        Conversation newConversation = new Conversation(id, otherUserId, otherUserUsername, otherUserRole, createdAt, updatedAt);
 
         // Add the newConversation under the Student/Employee
         // Students/Employees > id > Conversations > id > newConversation

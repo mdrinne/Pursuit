@@ -8,12 +8,12 @@
 
     <androidx.appcompat.widget.AppCompatImageButton
         android:id="@+id/back_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="36sp"
+        android:layout_height="36sp"
         android:background="@drawable/ic_arrow_back_black_24dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:onClick="leaveMessages"/>
+        android:onClick="leaveMessages" />
 
     <TextView
         android:id="@+id/other_user_username"
