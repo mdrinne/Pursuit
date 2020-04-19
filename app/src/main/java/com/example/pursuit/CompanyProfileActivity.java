@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -13,6 +14,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.MenuItem;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.view.View;
@@ -70,6 +72,8 @@ public class CompanyProfileActivity extends AppCompatActivity{
     private OpportunityAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
 
+    Dialog deleteDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,6 +82,7 @@ public class CompanyProfileActivity extends AppCompatActivity{
         bottomNavigation.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
 
         setCurrentUser();
+        deleteDialog = new Dialog(this);
 
         populateTextFields();
 
@@ -229,11 +234,38 @@ public class CompanyProfileActivity extends AppCompatActivity{
         mAdapter.notifyItemChanged(position);
     }
 
-    private void deleteOpportunity(Integer position) {
-        CompanyOpportunity opportunity = companyOpportunities.get(position);
-        dbref.child("CompanyOpportunities").child(currentCompany.getId()).child(opportunity.getId()).removeValue();
-        companyOpportunities.remove(opportunity);
-        mAdapter.notifyItemRemoved(position);
+    private void deleteOpportunity(final int position) {
+
+        final TextView deleteMessage;
+        Button cancel, confirm;
+        deleteDialog.setContentView(R.layout.delete_opportunity_pop_up);
+
+        cancel = deleteDialog.findViewById(R.id.btnCancel);
+        confirm = deleteDialog.findViewById(R.id.btnConfirm);
+        deleteMessage = deleteDialog.findViewById(R.id.txtDeleteMessage);
+
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                deleteDialog.dismiss();
+            }
+        });
+
+        confirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CompanyOpportunity opportunity = companyOpportunities.get(position);
+                dbref.child("CompanyOpportunities").child(currentCompany.getId()).child(opportunity.getId()).removeValue();
+                companyOpportunities.remove(opportunity);
+                mAdapter.notifyItemRemoved(position);
+                deleteDialog.dismiss();
+            }
+        });
+
+        String message = "Are you sure you want to delete " + companyOpportunities.get(position).getPosition() + "?";
+        deleteMessage.setText(message);
+        deleteDialog.show();
+
     }
 
     /* ******END DATABASE****** */
@@ -260,6 +292,11 @@ public class CompanyProfileActivity extends AppCompatActivity{
             @Override
             public void onDeleteClick(int position) {
                 deleteOpportunity(position);
+            }
+
+            @Override
+            public void onCardClick(int position) {
+                viewOpportunity(position);
             }
         });
     }
@@ -392,6 +429,12 @@ public class CompanyProfileActivity extends AppCompatActivity{
 
     public void addOpportunity(View v) {
         Intent intent = new Intent(this, CreateOpportunity.class);
+        startActivity(intent);
+    }
+
+    public void viewOpportunity(int position) {
+        Intent intent = new Intent(this, ViewOpportunity.class);
+        intent.putExtra("EXTRA_OPPORTUNITY_ID", companyOpportunities.get(position).getId());
         startActivity(intent);
     }
 
