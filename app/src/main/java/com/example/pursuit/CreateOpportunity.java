@@ -231,10 +231,12 @@ public class CreateOpportunity extends AppCompatActivity implements AdapterView.
 
         keywordArray = toString(opportunityKeywords).split(",");
         keywordArrayList = new ArrayList<>();
-        for (int i=0; i<keywordArray.length; i++) {
-            String word = keywordArray[i].trim().toLowerCase();
-            if (!keywordArrayList.contains(word)) {
-                keywordArrayList.add(word);
+        if (!toString(opportunityKeywords).equals("")) {
+            for (int i = 0; i < keywordArray.length; i++) {
+                String word = keywordArray[i].trim().toLowerCase();
+                if (!keywordArrayList.contains(word)) {
+                    keywordArrayList.add(word);
+                }
             }
         }
 
