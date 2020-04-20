@@ -211,6 +211,9 @@ public class ViewOpportunity extends AppCompatActivity {
     /* ******END DATABASE****** */
 
     private void buildRecyclerView() {
+        if (keywords == null) {
+            keywords = new ArrayList<>();
+        }
         opportunityKeywords = findViewById(R.id.rcycKeywords);
         opportunityKeywords.setHasFixedSize(false);
         mLayoutManager = new LinearLayoutManager(this);

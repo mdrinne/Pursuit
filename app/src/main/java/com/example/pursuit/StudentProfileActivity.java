@@ -300,6 +300,9 @@ public class StudentProfileActivity extends AppCompatActivity {
     /* ******END DATABASE****** */
 
     private void buildRecyclerView() {
+        if (interests == null) {
+            interests = new ArrayList<>();
+        }
         studentInterests = findViewById(R.id.rcycStudentInterests);
         studentInterests.setHasFixedSize(false);
         mLayoutManager = new LinearLayoutManager(this);

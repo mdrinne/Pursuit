@@ -285,10 +285,12 @@ public class StudentRegistration extends AppCompatActivity {
                             Log.d(TAG, "email not taken");
                             String[] interestKeywordArray = toString(interestKeywords).split(",");
                             interestKeywordArrayList = new ArrayList<>();
-                            for (int i=0; i<interestKeywordArray.length; i++) {
-                                String word = interestKeywordArray[i].trim().toLowerCase();
-                                if (!interestKeywordArrayList.contains(word)) {
-                                    interestKeywordArrayList.add(word);
+                            if (!toString(interestKeywords).equals("")) {
+                                for (int i = 0; i < interestKeywordArray.length; i++) {
+                                    String word = interestKeywordArray[i].trim().toLowerCase();
+                                    if (!interestKeywordArrayList.contains(word)) {
+                                        interestKeywordArrayList.add(word);
+                                    }
                                 }
                             }
                             writeNewStudent(toString(firstName), toString(lastName), toString(university),
