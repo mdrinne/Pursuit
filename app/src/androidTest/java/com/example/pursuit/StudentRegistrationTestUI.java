@@ -31,12 +31,12 @@ public class StudentRegistrationTestUI {
         onView(withId(R.id.txtStudentGPA2)).perform(typeText("gpa"), closeSoftKeyboard());
         onView(withId(R.id.txtBio)).perform(typeText("bio"), closeSoftKeyboard());
         //must change username and email below after each test
-        onView(withId(R.id.txtEmail)).perform(typeText("student9@google.com"), closeSoftKeyboard());
-        onView(withId(R.id.txtUsername)).perform(typeText("usernamestudent9"), closeSoftKeyboard());
+        onView(withId(R.id.txtEmail)).perform(typeText("student15@google.com"), closeSoftKeyboard());
+        onView(withId(R.id.txtUsername)).perform(typeText("usernamestudent15"), closeSoftKeyboard());
         onView(withId(R.id.txtPassword)).perform(typeText("pass"), closeSoftKeyboard());
         onView(withId(R.id.txtReEnterPassword)).perform(typeText("pass"), closeSoftKeyboard());
         onView(withId(R.id.btnRegister)).perform(click());
-        onView(withId(R.id.aboutPursuitBtn)).check(matches(isDisplayed()));
+        onView(withId(R.id.logOutBtn)).check(matches(isDisplayed()));
     }
 
 
