@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.pursuit.models.Keyword;
 import com.example.pursuit.models.Student;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -33,19 +34,15 @@ public class StudentRegistration extends AppCompatActivity {
     private boolean match;
     private String checkEmail;
 
-    EditText firstName;
-    EditText lastName;
-    EditText university;
-    EditText major;
-    EditText minor;
-    EditText gpa;
-    EditText bio;
-    EditText email;
-    EditText username;
-    EditText studentPassword;
-    EditText studentReEnterPassword;
+    EditText firstName, lastName, university, major, minor, gpa, bio, email, username;
+    EditText studentPassword, studentReEnterPassword, interestKeywords;
+
+    private ArrayList<String> interestKeywordArrayList;
+    private int keywordParser;
+    private String currentKeyword;
 
     Student newStudent;
+    String id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -133,11 +130,57 @@ public class StudentRegistration extends AppCompatActivity {
     };
 
     private void writeNewStudent(String fname, String lname, String university, String major, String minor, String gpa,
-                                 String bio, String email, String username, String password) {
-        String id = RandomKeyGenerator.randomAlphaNumeric(16);
-        newStudent = new Student(id, fname, lname, university, major, minor, gpa, bio, email, username, password);
+                                 String bio, String email, String username, String password, ArrayList<String> interests) {
+        id = RandomKeyGenerator.randomAlphaNumeric(16);
+        newStudent = new Student(id, fname, lname, university, major, minor, gpa, bio, email, username, password, interests);
 
         mRef.child("Students").child(id).setValue(newStudent);
+    }
+
+    ValueEventListener keywordListener = new ValueEventListener() {
+        @Override
+        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+            Keyword keyword = null;
+            if (dataSnapshot.exists()) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    keyword = snapshot.getValue(Keyword.class);
+                }
+            }
+
+            if (keyword == null) {
+                Log.d(TAG, currentKeyword + "does not exist");
+                writeNeKeyword();
+            } else {
+                Log.d(TAG, currentKeyword + " exists, updating");
+                updateKeyword(keyword);
+            }
+        }
+
+        @Override
+        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+        }
+    };
+
+    private void updateKeyword(Keyword keyword) {
+        ArrayList<String> temp = keyword.getStudents();
+        if (temp == null) {
+            temp = new ArrayList<>();
+        }
+        temp.add(id);
+        mRef.child("Keywords").child(keyword.getId()).child("students").setValue(temp);
+        keywordParser++;
+        addKeywordToDB();
+    }
+
+    private void writeNeKeyword() {
+        ArrayList<String> students = new ArrayList<>();
+        students.add(id);
+        String keywordID = RandomKeyGenerator.randomAlphaNumeric(16);
+        Keyword keyword = new Keyword(keywordID, currentKeyword, null, students);
+        mRef.child("Keywords").child(keywordID).setValue(keyword);
+        keywordParser++;
+        addKeywordToDB();
     }
 
     /* ******END DATABASE****** */
@@ -215,6 +258,15 @@ public class StudentRegistration extends AppCompatActivity {
         return false;
     }
 
+    private void addKeywordToDB() {
+        if (keywordParser < interestKeywordArrayList.size()) {
+            currentKeyword = interestKeywordArrayList.get(keywordParser);
+            Log.d(TAG, "adding " + currentKeyword);
+            Query keywordQuery = mRef.child("Keywords").orderByChild("text").equalTo(currentKeyword);
+            keywordQuery.addListenerForSingleValueEvent(keywordListener);
+        }
+    }
+
     // Completes Necessary Checks For Registering A New Student
     public void processRequest() {
         match = false;
@@ -231,9 +283,22 @@ public class StudentRegistration extends AppCompatActivity {
                         Log.d(TAG, "username not taken");
                         if (!emailExists(toString(email))) {
                             Log.d(TAG, "email not taken");
+                            String[] interestKeywordArray = toString(interestKeywords).split(",");
+                            interestKeywordArrayList = new ArrayList<>();
+                            if (!toString(interestKeywords).equals("")) {
+                                for (int i = 0; i < interestKeywordArray.length; i++) {
+                                    String word = interestKeywordArray[i].trim().toLowerCase();
+                                    if (!interestKeywordArrayList.contains(word)) {
+                                        interestKeywordArrayList.add(word);
+                                    }
+                                }
+                            }
                             writeNewStudent(toString(firstName), toString(lastName), toString(university),
                                     toString(major), toString(minor), toString(gpa), toString(bio), toString(email),
-                                    toString(username), toString(studentPassword));
+                                    toString(username), toString(studentPassword), interestKeywordArrayList);
+
+                            keywordParser = 0;
+                            addKeywordToDB();
 
                             // set the Current User
                             ((PursuitApplication) this.getApplication()).setCurrentStudent(newStudent);
@@ -274,6 +339,7 @@ public class StudentRegistration extends AppCompatActivity {
         username = findViewById(R.id.txtUsername);
         studentPassword = findViewById(R.id.txtPassword);
         studentReEnterPassword = findViewById(R.id.txtReEnterPassword);
+        interestKeywords = findViewById(R.id.txtInterests);
 
         checkEmail = toString(email);
 

@@ -29,10 +29,10 @@ public class CompanyRegistrationTestUI {
         onView(withId(R.id.companyPassword)).perform(typeText("pass"), closeSoftKeyboard());
         onView(withId(R.id.companyName)).perform(typeText("CompanyName"), closeSoftKeyboard());
         //must change email below after each test
-        onView(withId(R.id.companyEmail)).perform(typeText("CompanyEmail9@google.com"), closeSoftKeyboard());
+        onView(withId(R.id.companyEmail)).perform(typeText("CompanyEmail14@google.com"), closeSoftKeyboard());
         onView(withId(R.id.companyReEnterPassword)).perform(typeText("pass"), closeSoftKeyboard());
         onView(withId(R.id.register)).perform(click());
-        onView(withId(R.id.logOutBtn)).check(matches(isDisplayed()));
+        onView(withId(R.id.currentUserName)).check(matches(isDisplayed()));
     }
 
 

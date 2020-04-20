@@ -116,6 +116,9 @@ public class CreateOpportunity extends AppCompatActivity implements AdapterView.
 
     private void updateKeyword(Keyword keyword) {
         ArrayList<String> temp = keyword.getOpportunities();
+        if (temp == null) {
+            temp = new ArrayList<>();
+        }
         temp.add(id);
         dbref.child("Keywords").child(keyword.getId()).child("opportunities").setValue(temp);
         keywordParser++;
@@ -228,10 +231,12 @@ public class CreateOpportunity extends AppCompatActivity implements AdapterView.
 
         keywordArray = toString(opportunityKeywords).split(",");
         keywordArrayList = new ArrayList<>();
-        for (int i=0; i<keywordArray.length; i++) {
-            String word = keywordArray[i].trim().toLowerCase();
-            if (!keywordArrayList.contains(word)) {
-                keywordArrayList.add(word);
+        if (!toString(opportunityKeywords).equals("")) {
+            for (int i = 0; i < keywordArray.length; i++) {
+                String word = keywordArray[i].trim().toLowerCase();
+                if (!keywordArrayList.contains(word)) {
+                    keywordArrayList.add(word);
+                }
             }
         }
 

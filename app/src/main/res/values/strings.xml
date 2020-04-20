@@ -221,6 +221,10 @@
     <string name="strKeywords">Keywords</string>
     <string name="strDeleteIcon">Delete Icon</string>
     <string name="strAddKeywords">Add Keywords</string>
+    <string name="strInterestsHint">Interests (Optional: separated by commas)</string>
+    <string name="strInterestsHint2">Interests (Separated By Commas)</string>
+    <string name="strInterests">Interests</string>
+    <string name="strAddInterests">Add Interests</string>
     <string name="enter_a_username">Enter a username</string>
     <string name="about_pursuit">About Pursuit</string>
     <string name="view_companies">View Companies</string>

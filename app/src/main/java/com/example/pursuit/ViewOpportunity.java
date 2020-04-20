@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -188,6 +187,9 @@ public class ViewOpportunity extends AppCompatActivity {
 
     private void updateKeyword(Keyword keyword) {
         ArrayList<String> temp = keyword.getOpportunities();
+        if (temp == null) {
+            temp = new ArrayList<>();
+        }
         temp.add(currentOpportunity.getId());
         dbref.child("Keywords").child(keyword.getId()).child("opportunities").setValue(temp);
         currentOpportunityKeywords.add(keyword.getText());
@@ -209,6 +211,9 @@ public class ViewOpportunity extends AppCompatActivity {
     /* ******END DATABASE****** */
 
     private void buildRecyclerView() {
+        if (keywords == null) {
+            keywords = new ArrayList<>();
+        }
         opportunityKeywords = findViewById(R.id.rcycKeywords);
         opportunityKeywords.setHasFixedSize(false);
         mLayoutManager = new LinearLayoutManager(this);
@@ -254,7 +259,7 @@ public class ViewOpportunity extends AppCompatActivity {
 
         cancel = addKeywordsDialog.findViewById(R.id.btnCancel);
         confirm = addKeywordsDialog.findViewById(R.id.btnConfirm);
-        txtAddKeywords = addKeywordsDialog.findViewById(R.id.txtAddKeywords);
+        txtAddKeywords = addKeywordsDialog.findViewById(R.id.txtAddInterests);
 
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -272,12 +277,11 @@ public class ViewOpportunity extends AppCompatActivity {
                 keywordsArrayList = new ArrayList<>();
                 for (int i=0; i<keywordsArray.length; i++) {
                     String word = keywordsArray[i].trim().toLowerCase();
-                    if(!keywordsArrayList.contains(word) && !currentOpportunity.getKeywords().contains(word)) {
+                    if (!keywordsArrayList.contains(word) && !currentOpportunity.getKeywords().contains(word)) {
                         keywordsArrayList.add(word);
                     }
                 }
 
-                currentOpportunityKeywords = currentOpportunity.getKeywords();
                 keywordParser = 0;
                 addKeywordsToDB();
                 addKeywordsDialog.dismiss();
