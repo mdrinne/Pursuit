@@ -222,4 +222,13 @@
     <string name="strDeleteIcon">Delete Icon</string>
     <string name="strAddKeywords">Add Keywords</string>
     <string name="enter_a_username">Enter a username</string>
+    <string name="about_pursuit">About Pursuit</string>
+    <string name="view_companies">View Companies</string>
+    <string name="log_out">Log Out</string>
+    <string name="share_something">Share something</string>
+    <string name="subject">Subject</string>
+    <string name="what_are_you_talking_about">What are you talking about?</string>
+    <string name="add_a_subject">Add a subject</string>
+    <string name="say_some_more">Say some more...</string>
+    <string name="share">Share</string>
 </resources>

@@ -7,28 +7,26 @@
     android:background="@drawable/gradient_bg"
     tools:context=".LandingActivity">
 
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="397dp"
-        android:layout_height="130dp"
-        android:layout_marginTop="16dp"
-        android:contentDescription="PursuitLogo"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/logo" />
-
     <TextView
         android:id="@+id/currentUserName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="171dp"
-        android:layout_marginLeft="171dp"
-        android:layout_marginTop="32dp"
         android:gravity="center|center_horizontal"
         android:text="@string/strUsername"
+        android:textColor="#fff"
+        android:textSize="28sp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@drawable/ic_create_white_36dp"
+        android:contentDescription="@string/share_something"
+        android:onClick="newShare"/>
 
     <Button
         android:id="@+id/aboutPursuitBtn"
@@ -38,7 +36,7 @@
         android:layout_marginLeft="140dp"
         android:layout_marginTop="32dp"
         android:gravity="center"
-        android:text="About Pursuit"
+        android:text="@string/about_pursuit"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/currentUserName" />
 
@@ -49,7 +47,7 @@
         android:layout_marginStart="135dp"
         android:layout_marginLeft="135dp"
         android:layout_marginTop="32dp"
-        android:text="View Companies"
+        android:text="@string/view_companies"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/aboutPursuitBtn" />
 
@@ -62,7 +60,7 @@
         android:layout_marginTop="32dp"
         android:foregroundGravity="clip_horizontal"
         android:onClick="logoutCurrentUser"
-        android:text="Log Out"
+        android:text="@string/log_out"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/viewCompaniesBtn" />
 

@@ -9,23 +9,29 @@ public class Share {
 
     public String id;
     public String userId;
+    public String userFullName;
+    public String userRole;
     public String type;
     public String subject;
     public String message;
     public ArrayList<String> interestKeywords;
+    private int likes;
 
     public Share() {
         // default constructor required for calls to
         // DataSnapshot.getValue(Share.class)
     }
 
-    public Share(String id, String userId, String type, String subject, String message, ArrayList<String> interestKeywords) {
+    public Share(String id, String userId, String userFullName, String userRole, String type, String subject, String message, ArrayList<String> interestKeywords, int likes) {
         this.id = id;
         this.userId = userId;
+        this.userFullName = userFullName;
+        this.userRole = userRole;
         this.type = type;
         this.subject = subject;
         this.message = message;
         this.interestKeywords = interestKeywords;
+        this.likes = likes;
     }
 
     public String getId() {
@@ -42,6 +48,22 @@ public class Share {
 
     public void setUserId(String userId) {
         this.userId = userId;
+    }
+
+    public String getUserFullName() {
+        return userFullName;
+    }
+
+    public void setUserFullName(String userFullName) {
+        this.userFullName = userFullName;
+    }
+
+    public String getUserRole() {
+        return userRole;
+    }
+
+    public void setUserRole(String userRole) {
+        this.userRole = userRole;
     }
 
     public String getType() {
@@ -74,5 +96,13 @@ public class Share {
 
     public void setInterestKeywords(ArrayList<String> interestKeywords) {
         this.interestKeywords = interestKeywords;
+    }
+
+    public int getLikes() {
+        return likes;
+    }
+
+    public void setLikes(int likes) {
+        this.likes = likes;
     }
 }

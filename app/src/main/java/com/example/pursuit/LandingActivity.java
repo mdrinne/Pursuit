@@ -2,6 +2,7 @@ package com.example.pursuit;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -26,6 +27,7 @@ public class LandingActivity extends AppCompatActivity {
     Company currentCompany = null;
     String  currentRole = null;
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,6 +67,11 @@ public class LandingActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    public void newShare() {
+        Intent newShareActivity = new Intent(LandingActivity.this, NewShareActivity.class);
+        startActivity(newShareActivity);
     }
 
     BottomNavigationView.OnNavigationItemSelectedListener navigationItemSelectedListener =
