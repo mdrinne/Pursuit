@@ -2,6 +2,8 @@ package com.example.pursuit.models;
 
 import com.google.firebase.database.IgnoreExtraProperties;
 
+import java.util.ArrayList;
+
 @IgnoreExtraProperties
 public class Student {
     public String id;
@@ -15,6 +17,7 @@ public class Student {
     public String email;
     public String username;
     public String password;
+    public ArrayList<String> interestKeywords;
 
     public Student() {
         this.id = "";
@@ -24,7 +27,7 @@ public class Student {
 
     // constructor
     public Student(String id, String fname, String lname, String university, String major, String minor, String gpa,
-            String bio, String email, String username, String password) {
+            String bio, String email, String username, String password, ArrayList<String> interestKeywords) {
         this.id = id;
         this.firstName = fname;
         this.lastName = lname;
@@ -36,6 +39,7 @@ public class Student {
         this.email = email;
         this.username = username;
         this.password = password;
+        this.interestKeywords = interestKeywords;
     }
 
     public String getId() {
@@ -124,5 +128,13 @@ public class Student {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public ArrayList<String> getInterestKeywords() {
+        return interestKeywords;
+    }
+
+    public void setInterestKeywords(ArrayList<String> interestKeywords) {
+        this.interestKeywords = interestKeywords;
     }
 }

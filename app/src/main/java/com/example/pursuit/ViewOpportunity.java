@@ -188,6 +188,9 @@ public class ViewOpportunity extends AppCompatActivity {
 
     private void updateKeyword(Keyword keyword) {
         ArrayList<String> temp = keyword.getOpportunities();
+        if (temp == null) {
+            temp = new ArrayList<>();
+        }
         temp.add(currentOpportunity.getId());
         dbref.child("Keywords").child(keyword.getId()).child("opportunities").setValue(temp);
         currentOpportunityKeywords.add(keyword.getText());

@@ -15,8 +15,9 @@
         android:layout_marginEnd="10dp"
         android:layout_marginRight="10dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="0dp">
+        tools:layout_editor_absoluteY="-251dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -149,6 +150,25 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/txtStudentGPA2"
+                tools:targetApi="lollipop" />
+
+            <EditText
+                android:id="@+id/txtInterests"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:backgroundTint="@color/accent1"
+                android:ems="10"
+                android:fontFamily="@font/roboto"
+                android:hint="@string/strInterestsHint"
+                android:importantForAutofill="no"
+                android:inputType="text"
+                android:textColor="@color/accent1"
+                android:textColorHint="@color/accent1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtPassword"
                 tools:targetApi="lollipop" />
 
             <EditText
