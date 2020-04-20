@@ -245,7 +245,6 @@ public class MessagesActivity extends AppCompatActivity {
         Message newMessage = writeNewMessage(messageText);
         if (counterpartConversation == null) {
             writeCounterpartConversation();
-
         }
 
         writeCounterpartMessage(newMessage);
