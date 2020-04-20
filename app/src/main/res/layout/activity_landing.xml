@@ -7,62 +7,52 @@
     android:background="@drawable/gradient_bg"
     tools:context=".LandingActivity">
 
-    <TextView
-        android:id="@+id/currentUserName"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center|center_horizontal"
-        android:text="@string/strUsername"
-        android:textColor="#fff"
-        android:textSize="28sp"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:orientation="horizontal"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:background="@drawable/ic_create_white_36dp"
-        android:contentDescription="@string/share_something"
-        android:onClick="newShare"/>
+        android:weightSum="1">
 
-    <Button
-        android:id="@+id/aboutPursuitBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="140dp"
-        android:layout_marginLeft="140dp"
-        android:layout_marginTop="32dp"
-        android:gravity="center"
-        android:text="@string/about_pursuit"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/currentUserName" />
+        <Button
+            android:id="@+id/logOutBtn"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:foregroundGravity="clip_horizontal"
+            android:onClick="logoutCurrentUser"
+            android:text="@string/log_out"
+            android:textSize="8sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_weight=".1"/>
 
-    <Button
-        android:id="@+id/viewCompaniesBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="135dp"
-        android:layout_marginLeft="135dp"
-        android:layout_marginTop="32dp"
-        android:text="@string/view_companies"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/aboutPursuitBtn" />
+        <TextView
+            android:id="@+id/currentUserName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center|center_horizontal"
+            android:text="@string/strUsername"
+            android:textColor="#fff"
+            android:textSize="28sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_weight=".8"/>
 
-    <Button
-        android:id="@+id/logOutBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="161dp"
-        android:layout_marginLeft="161dp"
-        android:layout_marginTop="32dp"
-        android:foregroundGravity="clip_horizontal"
-        android:onClick="logoutCurrentUser"
-        android:text="@string/log_out"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/viewCompaniesBtn" />
+        <ImageButton
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:background="@drawable/ic_create_white_36dp"
+            android:contentDescription="@string/share_something"
+            android:onClick="newShare"
+            android:layout_weight=".1"/>
+        
+    </LinearLayout>
+
+
 
     <FrameLayout
         android:id="@+id/container"

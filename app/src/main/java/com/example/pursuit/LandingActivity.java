@@ -20,8 +20,8 @@ import com.example.pursuit.models.Student;
 public class LandingActivity extends AppCompatActivity {
     private final String TAG = "LandingActivity";
 
-    Button aboutPursuitBtn;
-    Button viewCompaniesBtn;
+//    Button aboutPursuitBtn;
+//    Button viewCompaniesBtn;
     TextView currentUserNameText;
     BottomNavigationView bottomNavigation;
 
@@ -49,25 +49,25 @@ public class LandingActivity extends AppCompatActivity {
         currentUserNameText = findViewById(R.id.currentUserName);
         currentUserNameText.setText("Welcome, " + currentUserNameString);
 
-        aboutPursuitBtn = findViewById(R.id.aboutPursuitBtn);
-        viewCompaniesBtn = findViewById(R.id.viewCompaniesBtn);
+//        aboutPursuitBtn = findViewById(R.id.aboutPursuitBtn);
+//        viewCompaniesBtn = findViewById(R.id.viewCompaniesBtn);
 
 
-        aboutPursuitBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(LandingActivity.this, aboutPursuitActivity.class);
-                startActivity(i);
-            }
-        });
-
-        viewCompaniesBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(LandingActivity.this, viewCompaniesActivity.class);
-                startActivity(i);
-            }
-        });
+//        aboutPursuitBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent i = new Intent(LandingActivity.this, aboutPursuitActivity.class);
+//                startActivity(i);
+//            }
+//        });
+//
+//        viewCompaniesBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent i = new Intent(LandingActivity.this, viewCompaniesActivity.class);
+//                startActivity(i);
+//            }
+//        });
 
     }
 
