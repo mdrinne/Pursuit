@@ -33,8 +33,7 @@
                 android:layout_marginTop="30dp"
                 android:contentDescription="@string/profile_photo"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_add_a_photo" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <Button
                 android:id="@+id/buttonLoadPicture"
@@ -54,7 +53,7 @@
             <TextView
                 android:id="@+id/studentFullName"
                 android:layout_width="0dp"
-                android:layout_height="47dp"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="30dp"
@@ -124,6 +123,41 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/buttonLoadPicture" />
+
+            <TextView
+                android:id="@+id/txtInterests"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:fontFamily="@font/roboto_medium"
+                android:text="@string/strInterests"
+                android:textColor="@color/accent1"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtStudentBio" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rcycStudentInterests"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtInterests" />
+
+            <Button
+                android:id="@+id/btnAddInterests"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/button_accent1"
+                android:fontFamily="@font/roboto_medium"
+                android:onClick="addInterests"
+                android:text="@string/strAddInterests"
+                android:textColor="@color/colorPrimary"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/rcycStudentInterests" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 
