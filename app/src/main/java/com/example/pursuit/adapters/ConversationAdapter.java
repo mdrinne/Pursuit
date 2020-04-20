@@ -1,11 +1,12 @@
-package com.example.pursuit;
+package com.example.pursuit.adapters;
 
 import android.annotation.SuppressLint;
 import android.os.Build;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.widget.ArrayAdapter;
 import android.content.Context;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.view.View;
@@ -13,9 +14,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.RequiresApi;
 
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.DatabaseReference;
-
+import com.example.pursuit.R;
 import com.example.pursuit.models.Conversation;
 
 import java.time.LocalDateTime;
@@ -26,18 +25,18 @@ import java.util.ArrayList;
 import java.util.TimeZone;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
-public class ConversationAdapter extends ArrayAdapter<Conversation> {
+public class ConversationAdapter extends ArrayAdapter<Conversation> implements Filterable {
     private String TAG = "ConversationAdapter";
 
     private ArrayList<Conversation> conversations = new ArrayList<>();
-
-    private DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference();
+    private ArrayList<Conversation> storedConversations;
 
     private ZoneId zoneId = TimeZone.getDefault().toZoneId();
     private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
 
     public ConversationAdapter(Context context, ArrayList<Conversation> conversations) {
         super(context, R.layout.conversation, conversations);
+        this.storedConversations = conversations;
     }
 
     public void add(Conversation conversation) {
@@ -98,6 +97,39 @@ public class ConversationAdapter extends ArrayAdapter<Conversation> {
         title.setTag(conversation.getId());
 
         return convertView;
+    }
+
+    @Override
+    public Filter getFilter() {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence constraint) {
+                FilterResults filterResults = new FilterResults();
+                ArrayList<Conversation> temp = new ArrayList<>();
+                constraint = constraint.toString().toLowerCase();
+
+                if (constraint.toString().length() == 0) {
+                    temp = storedConversations;
+                } else {
+                    for (int i = 0; i < conversations.size(); i++) {
+                        String conversationUsername = conversations.get(i).getOtherUserUsername();
+                        if (conversationUsername.contains(constraint.toString())) {
+                            temp.add(conversations.get(i));
+                        }
+                    }
+                }
+
+                filterResults.count = temp.size();
+                filterResults.values = temp;
+                return filterResults;
+            }
+
+            @Override
+            protected void publishResults(CharSequence constraint, FilterResults results) {
+                conversations = (ArrayList<Conversation>) results.values;
+                notifyDataSetChanged();
+            }
+        };
     }
 }
 

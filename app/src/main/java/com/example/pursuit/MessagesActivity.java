@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -25,7 +26,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
@@ -46,8 +46,6 @@ public class MessagesActivity extends AppCompatActivity {
 
     private DatabaseReference dbRef;
 
-    private RecyclerView messageRecycler;
-    private MessageListAdapter messageListAdapter;
     private ArrayList<Message> messageList;
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
@@ -61,6 +59,11 @@ public class MessagesActivity extends AppCompatActivity {
 
         getCurrentConversations();
         getMessages();
+    }
+
+    public void leaveMessages(View v) {
+        Intent conversationsActivity = new Intent(MessagesActivity.this, ConversationsActivity.class);
+        startActivity(conversationsActivity);
     }
 
     ValueEventListener messagesListener = new ValueEventListener() {
@@ -101,14 +104,14 @@ public class MessagesActivity extends AppCompatActivity {
             }
         });
 
-        messageRecycler = findViewById(R.id.messages_recycler);
+        RecyclerView messageRecycler = findViewById(R.id.messages_recycler);
         String currentUserId;
         if (currentStudent != null) {
             currentUserId = currentStudent.getId();
         } else {
             currentUserId = currentEmployee.getId();
         }
-        messageListAdapter = new MessageListAdapter(this, messageList, currentUserId);
+        MessageListAdapter messageListAdapter = new MessageListAdapter(this, messageList, currentUserId);
         messageRecycler.setAdapter(messageListAdapter);
         messageRecycler.setLayoutManager(new LinearLayoutManager(this));
         if (messageList.size() > 0) {

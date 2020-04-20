@@ -54,19 +54,7 @@ public class ConfirmDeleteDialogFragment extends DialogFragment {
             }
         });
 
-//        Dialog dialog = builder.create();
-//        dialog.findViewById(Dialog.BUTTON_NEGATIVE).setTag(conversationId);
-//
-//        dialog.setOnShowListener(new DialogInterface.OnShowListener() {
-//
-//        });
-
         return builder.create();
-//        return dialog;
     }
 
-//    @Override
-//    public void onShow() {
-//
-//    }
 }

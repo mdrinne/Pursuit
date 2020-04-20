@@ -157,6 +157,7 @@
     <string name="strViewEmployees">View Employees</string>
     <string name="strMakeAdmin">Make Admin</string>
     <string name="strRevokeAdmin">Revoke Admin</string>
+    <string name="filter">Type to filter</string>
     <string name="strCity">City</string>
     <string name="strState">State:</string>
     <string name="strRequirementsHint">Requirements (Optional)</string>
@@ -224,4 +225,5 @@
     <string name="strInterestsHint2">Interests (Separated By Commas)</string>
     <string name="strInterests">Interests</string>
     <string name="strAddInterests">Add Interests</string>
+    <string name="enter_a_username">Enter a username</string>
 </resources>
