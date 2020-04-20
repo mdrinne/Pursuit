@@ -221,5 +221,7 @@
     <string name="strDeleteIcon">Delete Icon</string>
     <string name="strAddKeywords">Add Keywords</string>
     <string name="strInterestsHint">Interests (Optional: separated by commas)</string>
+    <string name="strInterestsHint2">Interests (Separated By Commas)</string>
     <string name="strInterests">Interests</string>
+    <string name="strAddInterests">Add Interests</string>
 </resources>

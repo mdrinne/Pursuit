@@ -6,6 +6,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -14,6 +15,8 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.view.MenuItem;
 import android.widget.TextView;
@@ -67,6 +70,11 @@ public class StudentProfileActivity extends AppCompatActivity {
     private RecyclerView.LayoutManager mLayoutManager;
 
     int hasPicture;
+    
+    Dialog addInterestsDialog;
+    private int interestsParser;
+    private ArrayList<String> interestsArrayList;
+    private String currentInterest;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +84,7 @@ public class StudentProfileActivity extends AppCompatActivity {
         bottomNavigation.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
 
         initializeCurrentStudent();
+        addInterestsDialog = new Dialog(this);
 
         String studentFullNameString = currentStudent.getFirstName() + " " + currentStudent.getLastName();
         studentFullName = findViewById(R.id.studentFullName);
@@ -241,6 +250,52 @@ public class StudentProfileActivity extends AppCompatActivity {
         deleteFromKeywordQuery.addListenerForSingleValueEvent(deleteFromKeywordListener);
         mAdapter.notifyItemRemoved(position);
     }
+    
+    ValueEventListener keywordListener = new ValueEventListener() {
+        @Override
+        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+            Keyword keyword = null;
+            if (dataSnapshot.exists()) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    keyword = snapshot.getValue(Keyword.class);
+                }
+            }
+            
+            if (keyword == null) {
+                writeNewKeyword();
+            } else {
+                updateKeyword(keyword);
+            }
+        }
+
+        @Override
+        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+        }
+    };
+    
+    private void updateKeyword(Keyword keyword) {
+        ArrayList<String> temp = keyword.getStudents();
+        if (temp == null) {
+            temp = new ArrayList<>();
+        }
+        temp.add(currentStudent.getId());
+        dbref.child("Keywords").child(keyword.getId()).child("students").setValue(temp);
+        interests.add(keyword.getText());
+        interestsParser++;
+        addInterestsToDB();
+    }
+    
+    private void writeNewKeyword() {
+        ArrayList<String> students = new ArrayList<>();
+        students.add(currentStudent.getId());
+        String keywordID = RandomKeyGenerator.randomAlphaNumeric(16);
+        Keyword keyword = new Keyword(keywordID, interestsArrayList.get(interestsParser), null, students);
+        dbref.child("Keywords").child(keywordID).setValue(keyword);
+        interests.add(interestsArrayList.get(interestsParser));
+        interestsParser++;
+        addInterestsToDB();
+    }
 
     /* ******END DATABASE****** */
 
@@ -336,4 +391,55 @@ public class StudentProfileActivity extends AppCompatActivity {
     private void initializeCurrentStudent() {
         currentStudent = ((PursuitApplication) this.getApplication()).getCurrentStudent();
     }
+    
+    public void addInterests(View v) {
+        final EditText txtAddInterests;
+        Button cancel, confirm;
+        
+        addInterestsDialog.setContentView(R.layout.add_interests_pop_up);
+        
+        cancel = addInterestsDialog.findViewById(R.id.btnCancel);
+        confirm = addInterestsDialog.findViewById(R.id.btnConfirm);
+        txtAddInterests = addInterestsDialog.findViewById(R.id.txtAddInterests);
+        
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addInterestsDialog.dismiss();
+            }
+        });
+        
+        confirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String[] interestsArray = txtAddInterests.getText().toString().split(",");
+                interestsArrayList = new ArrayList<>();
+                for (int i=0; i<interestsArray.length; i++) {
+                    String word = interestsArray[i].trim().toLowerCase();
+                    if (!interestsArrayList.contains(word) && !interests.contains(word)) {
+                        interestsArrayList.add(word);
+                    }
+                }
+                
+                interestsParser = 0;
+                addInterestsToDB();
+                addInterestsDialog.dismiss();
+            }
+        });
+        
+        addInterestsDialog.show();
+    }
+    
+    private void addInterestsToDB() {
+        if (interestsParser < interestsArrayList.size()) {
+            currentInterest = interestsArrayList.get(interestsParser);
+            Query keywordQuery = dbref.child("Keywords").orderByChild("text").equalTo(currentInterest);
+            keywordQuery.addListenerForSingleValueEvent(keywordListener);
+        } else {
+            dbref.child("Students").child(currentStudent.getId()).child("interestKeywords").setValue(interests);
+            mAdapter.notifyDataSetChanged();
+            return;
+        }
+    }
+    
 }

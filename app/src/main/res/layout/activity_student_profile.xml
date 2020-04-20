@@ -144,6 +144,20 @@
                 android:layout_marginTop="10dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/txtInterests" />
+
+            <Button
+                android:id="@+id/btnAddInterests"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/button_accent1"
+                android:fontFamily="@font/roboto_medium"
+                android:onClick="addInterests"
+                android:text="@string/strAddInterests"
+                android:textColor="@color/colorPrimary"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/rcycStudentInterests" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 
