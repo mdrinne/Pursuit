@@ -1,5 +1,7 @@
 package com.example.pursuit;
 
+import com.example.pursuit.adapters.ShareListAdapter;
+import com.example.pursuit.models.Employee;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import android.annotation.SuppressLint;
@@ -8,14 +10,25 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.MenuItem;
-import android.widget.Button;
 import android.widget.TextView;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pursuit.models.Company;
 import com.example.pursuit.models.Student;
+import com.example.pursuit.models.Share;
+
+import java.util.ArrayList;
 
 public class LandingActivity extends AppCompatActivity {
     private final String TAG = "LandingActivity";
@@ -25,9 +38,14 @@ public class LandingActivity extends AppCompatActivity {
     TextView currentUserNameText;
     BottomNavigationView bottomNavigation;
 
-    Student currentStudent = null;
-    Company currentCompany = null;
-    String  currentRole = null;
+    private Student currentStudent;
+    private Employee currentEmployee;
+    private Company currentCompany;
+    private String currentRole;
+
+    private ArrayList<Share> shareList;
+
+    private DatabaseReference dbRef;
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -38,6 +56,9 @@ public class LandingActivity extends AppCompatActivity {
         bottomNavigation.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
 
         findAndSetCurrentUser();
+        dbRef = FirebaseDatabase.getInstance().getReference();
+
+        getShares();
 
         String currentUserNameString;
         if (currentRole.equals("Student")) {
@@ -77,6 +98,49 @@ public class LandingActivity extends AppCompatActivity {
         this.startActivity(newShareActivity);
     }
 
+    ValueEventListener sharesListener = new ValueEventListener() {
+        @Override
+        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+            shareList = new ArrayList<>();
+
+            if (dataSnapshot.exists()) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    Share share = snapshot.getValue(Share.class);
+
+                    if (share != null) {
+                        shareList.add(0, share);
+                    }
+                }
+            }
+
+            postSharesListener();
+        }
+
+        @Override
+        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+        }
+    };
+
+    private void postSharesListener() {
+        Log.d("LIST_SIZE", Integer.toString(shareList.size()));
+        RecyclerView sharesRecycler = findViewById(R.id.shares_recycler);
+        ShareListAdapter shareListAdapter = new ShareListAdapter(this, shareList);
+        sharesRecycler.setAdapter(shareListAdapter);
+        sharesRecycler.setLayoutManager(new LinearLayoutManager(this));
+    }
+
+    private void getShares() {
+        Query sharesQuery;
+        if (currentStudent != null) {
+            sharesQuery = dbRef.child("Students").child(currentStudent.getId()).child("Shares").orderByChild("id");
+        } else {
+            sharesQuery = dbRef.child("Employees").child(currentEmployee.getId()).child("Shares").orderByChild("id");
+        }
+
+        sharesQuery.addValueEventListener(sharesListener);
+    }
+
     BottomNavigationView.OnNavigationItemSelectedListener navigationItemSelectedListener =
       new BottomNavigationView.OnNavigationItemSelectedListener() {
         @Override public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -107,6 +171,8 @@ public class LandingActivity extends AppCompatActivity {
     private void findAndSetCurrentUser() {
         if (((PursuitApplication) this.getApplication()).getCurrentStudent() != null) {
             currentStudent = ((PursuitApplication) this.getApplication()).getCurrentStudent();
+        } else if (((PursuitApplication) this.getApplication()).getCurrentEmployee() != null) {
+            currentEmployee = ((PursuitApplication) this.getApplication()).getCurrentEmployee();
         } else {
             currentCompany = ((PursuitApplication) this.getApplication()).getCurrentCompany();
         }

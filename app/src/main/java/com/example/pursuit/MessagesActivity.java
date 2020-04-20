@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.pursuit.adapters.MessageListAdapter;
 import com.example.pursuit.models.Conversation;
 import com.example.pursuit.models.Message;
 import com.example.pursuit.models.Student;
