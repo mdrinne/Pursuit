@@ -1,4 +1,4 @@
-package com.example.pursuit;
+package com.example.pursuit.adapters;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -11,7 +11,7 @@ import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
+import com.example.pursuit.R;
 
 import java.util.ArrayList;
 

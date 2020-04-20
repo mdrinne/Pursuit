@@ -1,8 +1,7 @@
-package com.example.pursuit;
+package com.example.pursuit.adapters;
 
 import android.annotation.SuppressLint;
 import android.os.Build;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.widget.ArrayAdapter;
 import android.content.Context;
@@ -15,6 +14,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.RequiresApi;
 
+import com.example.pursuit.R;
 import com.example.pursuit.models.Conversation;
 
 import java.time.LocalDateTime;

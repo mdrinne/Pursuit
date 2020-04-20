@@ -1,5 +1,6 @@
 package com.example.pursuit;
 
+import com.example.pursuit.adapters.ConversationAdapter;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import android.content.Intent;
