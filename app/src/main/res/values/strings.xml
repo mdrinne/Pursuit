@@ -220,5 +220,6 @@
     <string name="strKeywords">Keywords</string>
     <string name="strDeleteIcon">Delete Icon</string>
     <string name="strAddKeywords">Add Keywords</string>
-    <string name="strInterestsHint">Intersts (Optional: separated by commas)</string>
+    <string name="strInterestsHint">Interests (Optional: separated by commas)</string>
+    <string name="strInterests">Interests</string>
 </resources>

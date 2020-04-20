@@ -97,7 +97,7 @@ public class StudentProfileActivity extends AppCompatActivity {
 
     /* ********DATABASE******** */
 
-    ValueEventListener studentHasProfilePictureListene = new ValueEventListener() {
+    ValueEventListener studentHasProfilePictureListener = new ValueEventListener() {
         @Override
         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
             hasPicture = 0;
@@ -206,7 +206,7 @@ public class StudentProfileActivity extends AppCompatActivity {
     private void loadStudentProfilePicture() {
         Query studentHasProfilePictureQuery = dbref.child("ProfilePicture").orderByChild(currentStudent.getId()).equalTo(1);
 
-        studentHasProfilePictureQuery.addListenerForSingleValueEvent(studentHasProfilePictureListene);
+        studentHasProfilePictureQuery.addListenerForSingleValueEvent(studentHasProfilePictureListener);
     }
 
     private void postStudentHasProfilePictureListener() {
