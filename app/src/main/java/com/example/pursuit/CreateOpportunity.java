@@ -191,7 +191,7 @@ public class CreateOpportunity extends AppCompatActivity implements AdapterView.
         id = RandomKeyGenerator.randomAlphaNumeric(16);
         newOpportunity = new CompanyOpportunity(id, currentCompany.getId(), toString(opportunityPosition), toString(opportunityWithWho),
                 toString(opportunityDescription), toString(opportunityCity), selectedState,
-                toString(opportunityRequirements), keywordArrayList, 0, "");
+                toString(opportunityRequirements), keywordArrayList, 0, "", currentCompany.getName());
         if (currentRole.equals("Company") || (currentRole.equals("Employee") && currentEmployee.admin == 1)) {
             newOpportunity.setApproved(1);
                 ZonedDateTime now = ZonedDateTime.now(ZoneOffset.UTC);

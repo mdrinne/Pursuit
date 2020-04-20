@@ -18,13 +18,14 @@ public class CompanyOpportunity {
     public ArrayList<String> keywords;
     public Integer approved;
     public String timeStamp;
+    public String companyName;
 
 
     public CompanyOpportunity() {
         this.id = "";
     }
 
-    public CompanyOpportunity(String id, String companyID, String position, String withWho, String description, String city, String state, String requirements, ArrayList<String> keywords, Integer approved, String timeStamp) {
+    public CompanyOpportunity(String id, String companyID, String position, String withWho, String description, String city, String state, String requirements, ArrayList<String> keywords, Integer approved, String timeStamp, String companyName) {
         this.id = id;
         this.companyID = companyID;
         this.position = position;
@@ -36,6 +37,7 @@ public class CompanyOpportunity {
         this.keywords = keywords;
         this.approved = approved;
         this.timeStamp = timeStamp;
+        this.companyName = companyName;
     }
 
     public String getId() {
@@ -124,5 +126,13 @@ public class CompanyOpportunity {
 
     public void setCompanyID(String companyID) {
         this.companyID = companyID;
+    }
+
+    public String getCompanyName() {
+        return companyName;
+    }
+
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
     }
 }
