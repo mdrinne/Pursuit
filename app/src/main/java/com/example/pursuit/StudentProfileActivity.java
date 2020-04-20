@@ -1,5 +1,7 @@
 package com.example.pursuit;
 
+import com.example.pursuit.adapters.StudentInterestAdapter;
+import com.example.pursuit.models.Keyword;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -18,6 +20,8 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pursuit.models.Student;
 import com.google.firebase.database.DataSnapshot;
@@ -34,6 +38,7 @@ import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class StudentProfileActivity extends AppCompatActivity {
 
@@ -55,6 +60,11 @@ public class StudentProfileActivity extends AppCompatActivity {
     BottomNavigationView bottomNavigation;
     Student currentStudent;
     private static int RESULT_LOAD_IMAGE = 1;
+
+    private ArrayList<String> interests;
+    private RecyclerView studentInterests;
+    private StudentInterestAdapter mAdapter;
+    private RecyclerView.LayoutManager mLayoutManager;
 
     int hasPicture;
 
@@ -85,6 +95,9 @@ public class StudentProfileActivity extends AppCompatActivity {
 
         studentBio = findViewById(R.id.txtStudentBio);
         studentBio.setText(currentStudent.getBio());
+
+        interests = currentStudent.getInterestKeywords();
+        buildRecyclerView();
 
         dbref = FirebaseDatabase.getInstance().getReference();
         storageReference = FirebaseStorage.getInstance().getReference();
@@ -200,8 +213,53 @@ public class StudentProfileActivity extends AppCompatActivity {
     private void updateProfilePicDatabase() {
         dbref.child("ProfilePicture").child("Students").child(currentStudent.getId()).setValue(1);
     }
+    
+    ValueEventListener deleteFromKeywordListener = new ValueEventListener() {
+        @Override
+        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+            if (dataSnapshot.exists()) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    Keyword key = snapshot.getValue(Keyword.class);
+                    ArrayList<String> studentsArray = key.getStudents();
+                    studentsArray.remove(currentStudent.getId());
+                    dbref.child("Keywords").child(key.getId()).child("students").setValue(studentsArray);
+                }
+            }
+        }
+
+        @Override
+        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+        }
+    };
+    
+    private void deleteKeyword(int position) {
+        String str = interests.get(position);
+        interests.remove(str);
+        dbref.child("Students").child(currentStudent.getId()).child("interestKeywords").setValue(interests);
+        Query deleteFromKeywordQuery = dbref.child("Keywords").orderByChild("text").equalTo(str);
+        deleteFromKeywordQuery.addListenerForSingleValueEvent(deleteFromKeywordListener);
+        mAdapter.notifyItemRemoved(position);
+    }
 
     /* ******END DATABASE****** */
+
+    private void buildRecyclerView() {
+        studentInterests = findViewById(R.id.rcycStudentInterests);
+        studentInterests.setHasFixedSize(false);
+        mLayoutManager = new LinearLayoutManager(this);
+        mAdapter = new StudentInterestAdapter(interests);
+        
+        studentInterests.setLayoutManager(mLayoutManager);
+        studentInterests.setAdapter(mAdapter);
+        
+        mAdapter.setStudentInterestOnItemClickListener(new StudentInterestAdapter.StudentInterestOnItemClickListener() {
+            @Override
+            public void onDeleteClick(int position) {
+                deleteKeyword(position);
+            }
+        });
+    }
 
     private void loadStudentProfilePicture() {
         Query studentHasProfilePictureQuery = dbref.child("ProfilePicture").orderByChild(currentStudent.getId()).equalTo(1);
