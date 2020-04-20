@@ -91,19 +91,22 @@ public class StudentProfileActivity extends AppCompatActivity {
         studentFullName.setText(studentFullNameString);
 
         studentUniversity = findViewById(R.id.studentUniversity);
-        studentUniversity.setText("University: " + currentStudent.getUniversity());
+        studentUniversity.setText(currentStudent.getUniversity());
 
         studentMajor = findViewById(R.id.studentMajor);
-        studentMajor.setText("Major: " + currentStudent.getMajor());
+        studentMajor.setText(currentStudent.getMajor());
 
         studentMinor = findViewById(R.id.txtStudentMinor);
-        studentMinor.setText("Minor: " + currentStudent.getMinor());
+        studentMinor.setText(currentStudent.getMinor());
 
         studentGPA = findViewById(R.id.txtStudentGPA);
-        studentGPA.setText("GPA: " + currentStudent.getGpa());
+        studentGPA.setText(currentStudent.getGpa());
 
         studentBio = findViewById(R.id.txtStudentBio);
         studentBio.setText(currentStudent.getBio());
+
+        //IMPLEMENT
+        //EditTexts and two buttons and hardcoded edittexts and Interests textview
 
         interests = currentStudent.getInterestKeywords();
         buildRecyclerView();

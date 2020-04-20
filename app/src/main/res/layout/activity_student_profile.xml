@@ -18,7 +18,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintVertical_bias="0.625">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -65,52 +65,56 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/studentUniversity"
-                android:layout_width="0dp"
+                android:id="@+id/studentUniversityHardcode"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_marginLeft="20dp"
                 android:fontFamily="@font/roboto"
+                android:text="@string/txtUniversityColon"
                 android:textColor="@color/accent1"
-                app:layout_constraintEnd_toEndOf="parent"
+                android:textSize="16sp"
                 app:layout_constraintStart_toEndOf="@+id/imgStudentProfilePic"
                 app:layout_constraintTop_toBottomOf="@+id/studentFullName" />
 
             <TextView
-                android:id="@+id/studentMajor"
-                android:layout_width="0dp"
+                android:id="@+id/studentMajorHardcode"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_marginLeft="20dp"
                 android:fontFamily="@font/roboto"
+                android:text="@string/txtMajorColon"
                 android:textColor="@color/accent1"
-                app:layout_constraintEnd_toEndOf="parent"
+                android:textSize="16sp"
                 app:layout_constraintStart_toEndOf="@+id/imgStudentProfilePic"
-                app:layout_constraintTop_toBottomOf="@+id/studentUniversity" />
+                app:layout_constraintTop_toBottomOf="@id/studentUniversity" />
 
             <TextView
-                android:id="@+id/txtStudentMinor"
-                android:layout_width="0dp"
+                android:id="@+id/txtStudentMinorHardcode"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_marginLeft="20dp"
                 android:fontFamily="@font/roboto"
+                android:text="@string/txtMinorColon"
                 android:textColor="@color/accent1"
-                app:layout_constraintEnd_toEndOf="parent"
+                android:textSize="16sp"
                 app:layout_constraintStart_toEndOf="@+id/imgStudentProfilePic"
-                app:layout_constraintTop_toBottomOf="@+id/studentMajor" />
+                app:layout_constraintTop_toBottomOf="@id/studentMajor" />
 
             <TextView
-                android:id="@+id/txtStudentGPA"
-                android:layout_width="0dp"
+                android:id="@+id/txtStudentGPAHardcode"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_marginLeft="20dp"
                 android:fontFamily="@font/roboto"
+                android:text="@string/txtGPAColon"
                 android:textColor="@color/accent1"
-                app:layout_constraintEnd_toEndOf="parent"
+                android:textSize="16sp"
                 app:layout_constraintStart_toEndOf="@+id/imgStudentProfilePic"
-                app:layout_constraintTop_toBottomOf="@+id/txtStudentMinor" />
+                app:layout_constraintTop_toBottomOf="@id/txtStudentMinor" />
 
             <TextView
                 android:id="@+id/txtStudentBio"
@@ -122,7 +126,7 @@
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/buttonLoadPicture" />
+                app:layout_constraintTop_toBottomOf="@id/btnEditProfile" />
 
             <TextView
                 android:id="@+id/txtInterests"
@@ -158,6 +162,160 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/rcycStudentInterests" />
+
+            <TextView
+                android:id="@+id/studentUniversity"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto"
+                android:textColor="@color/accent1"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/studentUniversityHardcode"
+                app:layout_constraintTop_toBottomOf="@+id/studentFullName" />
+
+            <TextView
+                android:id="@+id/studentMajor"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto"
+                android:textColor="@color/accent1"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/studentMajorHardcode"
+                app:layout_constraintTop_toBottomOf="@+id/studentUniversity" />
+
+            <TextView
+                android:id="@+id/txtStudentMinor"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto"
+                android:textColor="@color/accent1"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/txtStudentMinorHardcode"
+                app:layout_constraintTop_toBottomOf="@+id/studentMajor" />
+
+            <TextView
+                android:id="@+id/txtStudentGPA"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto"
+                android:textColor="@color/accent1"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/txtStudentGPAHardcode"
+                app:layout_constraintTop_toBottomOf="@+id/txtStudentMinor" />
+
+            <Button
+                android:id="@+id/btnEditProfile"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/button_accent1"
+                android:fontFamily="@font/roboto_medium"
+                android:text="@string/txtEditProfile"
+                android:textColor="@color/colorPrimary"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/txtStudentGPAHardcode"
+                app:layout_constraintTop_toBottomOf="@+id/txtStudentGPA" />
+
+            <EditText
+                android:id="@+id/editStudentUniversity"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/accent1"
+                android:ems="10"
+                android:fontFamily="@font/roboto"
+                android:inputType="textPersonName"
+                android:textColor="@color/accent1"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/studentUniversityHardcode"
+                app:layout_constraintTop_toTopOf="@id/studentUniversity" />
+
+            <EditText
+                android:id="@+id/editStudentMajor"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/accent1"
+                android:ems="10"
+                android:fontFamily="@font/roboto"
+                android:inputType="textPersonName"
+                android:textColor="@color/accent1"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/studentMajorHardcode"
+                app:layout_constraintTop_toBottomOf="@id/editStudentUniversity" />
+
+            <EditText
+                android:id="@+id/editStudentMinor"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/accent1"
+                android:ems="10"
+                android:fontFamily="@font/roboto"
+                android:inputType="textPersonName"
+                android:textColor="@color/accent1"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/txtStudentMinorHardcode"
+                app:layout_constraintTop_toBottomOf="@id/editStudentMajor" />
+
+            <EditText
+                android:id="@+id/editStudentGPA"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/accent1"
+                android:ems="10"
+                android:fontFamily="@font/roboto"
+                android:inputType="textPersonName"
+                android:textColor="@color/accent1"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/txtStudentGPAHardcode"
+                app:layout_constraintTop_toBottomOf="@id/editStudentMinor" />
+
+            <Button
+                android:id="@+id/btnConfirm"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/button_accent1"
+                android:fontFamily="@font/roboto_medium"
+                android:text="@string/strConfirm"
+                android:textColor="@color/colorPrimary"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/txtStudentGPAHardcode"
+                app:layout_constraintTop_toBottomOf="@id/editStudentGPA" />
+
+            <EditText
+                android:id="@+id/editStudentBio"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:backgroundTint="@color/accent1"
+                android:ems="10"
+                android:fontFamily="@font/roboto"
+                android:inputType="textPersonName"
+                android:textColor="@color/accent1"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/btnCancel" />
+
+            <Button
+                android:id="@+id/btnCancel"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/button_accent1"
+                android:fontFamily="@font/roboto_medium"
+                android:text="@string/strCancel"
+                android:textColor="@color/colorPrimary"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/txtStudentGPAHardcode"
+                app:layout_constraintTop_toBottomOf="@+id/btnConfirm" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
