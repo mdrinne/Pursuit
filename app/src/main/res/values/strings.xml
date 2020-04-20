@@ -237,4 +237,5 @@
     <string name="share">Share</string>
     <string name="full_name">Full Name</string>
     <string name="message">The message content</string>
+    <string name="date">12/28/97</string>
 </resources>

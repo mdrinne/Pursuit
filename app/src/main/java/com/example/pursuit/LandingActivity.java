@@ -6,6 +6,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -19,6 +20,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -28,7 +30,9 @@ import com.example.pursuit.models.Company;
 import com.example.pursuit.models.Student;
 import com.example.pursuit.models.Share;
 
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
+import java.util.Comparator;
 
 public class LandingActivity extends AppCompatActivity {
     private final String TAG = "LandingActivity";
@@ -64,7 +68,7 @@ public class LandingActivity extends AppCompatActivity {
         if (currentRole.equals("Student")) {
             currentUserNameString = currentStudent.getUsername();
         } else {
-            currentUserNameString = currentCompany.getName();
+            currentUserNameString = currentEmployee.getUsername();
         }
 
         currentUserNameText = findViewById(R.id.currentUserName);
@@ -99,6 +103,7 @@ public class LandingActivity extends AppCompatActivity {
     }
 
     ValueEventListener sharesListener = new ValueEventListener() {
+        @RequiresApi(api = Build.VERSION_CODES.N)
         @Override
         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
             shareList = new ArrayList<>();
@@ -122,8 +127,16 @@ public class LandingActivity extends AppCompatActivity {
         }
     };
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     private void postSharesListener() {
-        Log.d("LIST_SIZE", Integer.toString(shareList.size()));
+        shareList.sort(new Comparator<Share>() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
+            @Override
+            public int compare(Share o1, Share o2) {
+                return ZonedDateTime.parse(o1.getCreatedAt()).compareTo(ZonedDateTime.parse(o2.getCreatedAt()));
+            }
+        });
+
         RecyclerView sharesRecycler = findViewById(R.id.shares_recycler);
         ShareListAdapter shareListAdapter = new ShareListAdapter(this, shareList);
         sharesRecycler.setAdapter(shareListAdapter);

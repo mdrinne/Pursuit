@@ -17,13 +17,14 @@ public class Share {
     public String message;
     public ArrayList<String> interestKeywords;
     private int likes;
+    private String createdAt;
 
     public Share() {
         // default constructor required for calls to
         // DataSnapshot.getValue(Share.class)
     }
 
-    public Share(String id, String userId, String userFullName, String userUsername, String userRole, String type, String subject, String message, ArrayList<String> interestKeywords, int likes) {
+    public Share(String id, String userId, String userFullName, String userUsername, String userRole, String type, String subject, String message, ArrayList<String> interestKeywords, int likes, String createdAt) {
         this.id = id;
         this.userId = userId;
         this.userFullName = userFullName;
@@ -34,6 +35,7 @@ public class Share {
         this.message = message;
         this.interestKeywords = interestKeywords;
         this.likes = likes;
+        this.createdAt = createdAt;
     }
 
     public String getId() {
@@ -114,5 +116,13 @@ public class Share {
 
     public void setUserUsername(String userUsername) {
         this.userUsername = userUsername;
+    }
+
+    public String getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(String createdAt) {
+        this.createdAt = createdAt;
     }
 }

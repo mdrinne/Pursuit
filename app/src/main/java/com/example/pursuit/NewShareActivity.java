@@ -1,6 +1,7 @@
 package com.example.pursuit;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -14,8 +15,12 @@ import com.example.pursuit.models.Student;
 import com.example.pursuit.models.Employee;
 import com.example.pursuit.models.Share;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 
 public class NewShareActivity extends AppCompatActivity {
@@ -44,6 +49,7 @@ public class NewShareActivity extends AppCompatActivity {
         dbRef = FirebaseDatabase.getInstance().getReference();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public void createShare(View v) {
         subject = findViewById(R.id.subject);
         message = findViewById(R.id.message);
@@ -60,6 +66,7 @@ public class NewShareActivity extends AppCompatActivity {
         startActivity(landingActivity);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     private void writeNewStudentShare() {
         String id = RandomKeyGenerator.randomAlphaNumeric(16);
         String userId = currentStudent.getId();
@@ -71,12 +78,14 @@ public class NewShareActivity extends AppCompatActivity {
         String message = messageText;
         ArrayList<String> interestKeywords = new ArrayList<>();
         int likes = 0;
+        String createdAt = ZonedDateTime.of(LocalDateTime.now(), ZoneOffset.UTC).toString();
 
-        newShare = new Share(id, userId, userFullName, userUsername, userRole, type, subject, message, interestKeywords, likes);
+        newShare = new Share(id, userId, userFullName, userUsername, userRole, type, subject, message, interestKeywords, likes, createdAt);
 
         dbRef.child("Students").child(userId).child("Shares").child(id).setValue(newShare);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     private void writeNewEmployeeShare() {
         String id = RandomKeyGenerator.randomAlphaNumeric(16);
         String userId = currentEmployee.getId();
@@ -88,8 +97,9 @@ public class NewShareActivity extends AppCompatActivity {
         String message = messageText;
         ArrayList<String> interestKeywords = new ArrayList<>();
         int likes = 0;
+        String createdAt = ZonedDateTime.of(LocalDateTime.now(), ZoneOffset.UTC).toString();
 
-        newShare = new Share(id, userId, userFullName, userUsername, userRole, type, subject, message, interestKeywords, likes);
+        newShare = new Share(id, userId, userFullName, userUsername, userRole, type, subject, message, interestKeywords, likes, createdAt);
 
         dbRef.child("Employees").child(userId).child("Shares").child(id).setValue(newShare);
     }
