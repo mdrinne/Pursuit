@@ -5,6 +5,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.MenuItem;
 import android.widget.Button;
@@ -17,6 +18,7 @@ import com.example.pursuit.models.Company;
 import com.example.pursuit.models.Student;
 
 public class LandingActivity extends AppCompatActivity {
+    private final String TAG = "LandingActivity";
 
     Button aboutPursuitBtn;
     Button viewCompaniesBtn;
@@ -69,9 +71,10 @@ public class LandingActivity extends AppCompatActivity {
 
     }
 
-    public void newShare() {
-        Intent newShareActivity = new Intent(LandingActivity.this, NewShareActivity.class);
-        startActivity(newShareActivity);
+    public void newShare(View v) {
+        Intent newShareActivity;
+        newShareActivity = new Intent(LandingActivity.this, NewShareActivity.class);
+        this.startActivity(newShareActivity);
     }
 
     BottomNavigationView.OnNavigationItemSelectedListener navigationItemSelectedListener =

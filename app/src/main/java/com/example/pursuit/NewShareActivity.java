@@ -14,12 +14,11 @@ import com.example.pursuit.models.Student;
 import com.example.pursuit.models.Employee;
 import com.example.pursuit.models.Share;
 
-
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
 
-class NewShareActivity extends AppCompatActivity {
+public class NewShareActivity extends AppCompatActivity {
     private final String TAG = "NewShareActivity";
 
     private DatabaseReference dbRef;
@@ -38,6 +37,7 @@ class NewShareActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.d(TAG, "in onCreate in NewShare");
         setContentView(R.layout.activity_new_share);
 
         findAndSetCurrentUser();
@@ -58,11 +58,10 @@ class NewShareActivity extends AppCompatActivity {
 
         Intent landingActivity = new Intent(NewShareActivity.this, LandingActivity.class);
         startActivity(landingActivity);
-        finish();
     }
 
     private void writeNewStudentShare() {
-        String id = RandomKeyGenerator.randomAlphaNumeric(16);;
+        String id = RandomKeyGenerator.randomAlphaNumeric(16);
         String userId = currentStudent.getId();
         String userFullName = currentStudent.getFirstName() + " " + currentStudent.getLastName();
         String userRole = "Student";
@@ -74,11 +73,11 @@ class NewShareActivity extends AppCompatActivity {
 
         newShare = new Share(id, userId, userFullName, userRole, type, subject, message, interestKeywords, likes);
 
-        dbRef.child("Students").child(userId).child("Shares").child("id").setValue(newShare);
+        dbRef.child("Students").child(userId).child("Shares").child(id).setValue(newShare);
     }
 
     private void writeNewEmployeeShare() {
-        String id = RandomKeyGenerator.randomAlphaNumeric(16);;
+        String id = RandomKeyGenerator.randomAlphaNumeric(16);
         String userId = currentEmployee.getId();
         String userFullName = currentEmployee.getFirstName() + " " + currentEmployee.getLastName();
         String userRole = "Employee";
@@ -90,7 +89,7 @@ class NewShareActivity extends AppCompatActivity {
 
         newShare = new Share(id, userId, userFullName, userRole, type, subject, message, interestKeywords, likes);
 
-        dbRef.child("Employees").child(userId).child("Shares").child("id").setValue(newShare);
+        dbRef.child("Employees").child(userId).child("Shares").child(id).setValue(newShare);
     }
 
     private void findAndSetCurrentUser() {
