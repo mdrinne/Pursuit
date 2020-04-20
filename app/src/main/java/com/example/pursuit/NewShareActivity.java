@@ -64,6 +64,7 @@ public class NewShareActivity extends AppCompatActivity {
         String id = RandomKeyGenerator.randomAlphaNumeric(16);
         String userId = currentStudent.getId();
         String userFullName = currentStudent.getFirstName() + " " + currentStudent.getLastName();
+        String userUsername = currentStudent.getUsername();
         String userRole = "Student";
         String type = "Post";
         String subject = subjectText;
@@ -71,7 +72,7 @@ public class NewShareActivity extends AppCompatActivity {
         ArrayList<String> interestKeywords = new ArrayList<>();
         int likes = 0;
 
-        newShare = new Share(id, userId, userFullName, userRole, type, subject, message, interestKeywords, likes);
+        newShare = new Share(id, userId, userFullName, userUsername, userRole, type, subject, message, interestKeywords, likes);
 
         dbRef.child("Students").child(userId).child("Shares").child(id).setValue(newShare);
     }
@@ -80,6 +81,7 @@ public class NewShareActivity extends AppCompatActivity {
         String id = RandomKeyGenerator.randomAlphaNumeric(16);
         String userId = currentEmployee.getId();
         String userFullName = currentEmployee.getFirstName() + " " + currentEmployee.getLastName();
+        String userUsername = currentEmployee.getUsername();
         String userRole = "Employee";
         String type = "Post";
         String subject = subjectText;
@@ -87,7 +89,7 @@ public class NewShareActivity extends AppCompatActivity {
         ArrayList<String> interestKeywords = new ArrayList<>();
         int likes = 0;
 
-        newShare = new Share(id, userId, userFullName, userRole, type, subject, message, interestKeywords, likes);
+        newShare = new Share(id, userId, userFullName, userUsername, userRole, type, subject, message, interestKeywords, likes);
 
         dbRef.child("Employees").child(userId).child("Shares").child(id).setValue(newShare);
     }

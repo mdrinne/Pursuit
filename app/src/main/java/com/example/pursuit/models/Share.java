@@ -10,6 +10,7 @@ public class Share {
     public String id;
     public String userId;
     public String userFullName;
+    public String userUsername;
     public String userRole;
     public String type;
     public String subject;
@@ -22,10 +23,11 @@ public class Share {
         // DataSnapshot.getValue(Share.class)
     }
 
-    public Share(String id, String userId, String userFullName, String userRole, String type, String subject, String message, ArrayList<String> interestKeywords, int likes) {
+    public Share(String id, String userId, String userFullName, String userUsername, String userRole, String type, String subject, String message, ArrayList<String> interestKeywords, int likes) {
         this.id = id;
         this.userId = userId;
         this.userFullName = userFullName;
+        this.userUsername = userUsername;
         this.userRole = userRole;
         this.type = type;
         this.subject = subject;
@@ -104,5 +106,13 @@ public class Share {
 
     public void setLikes(int likes) {
         this.likes = likes;
+    }
+
+    public String getUserUsername() {
+        return userUsername;
+    }
+
+    public void setUserUsername(String userUsername) {
+        this.userUsername = userUsername;
     }
 }
