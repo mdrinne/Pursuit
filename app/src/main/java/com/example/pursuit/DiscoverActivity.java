@@ -12,6 +12,13 @@ import com.example.pursuit.models.Employee;
 import com.example.pursuit.models.Student;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
+
 public class DiscoverActivity extends AppCompatActivity {
     private final String TAG = "DiscoverActivity";
 
@@ -20,12 +27,17 @@ public class DiscoverActivity extends AppCompatActivity {
     private Company currentCompany;
     private String currentRole;
 
+    private DatabaseReference dbRef;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_discover);
         BottomNavigationView bottomNavigation = findViewById(R.id.bottom_navigation);
         bottomNavigation.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
+
+        findAndSetCurrentUser();
+        dbRef = FirebaseDatabase.getInstance().getReference();
     }
 
     private void findAndSetCurrentUser() {
