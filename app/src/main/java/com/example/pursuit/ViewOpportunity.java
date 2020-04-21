@@ -313,7 +313,7 @@ public class ViewOpportunity extends AppCompatActivity {
                             finish();
                             return true;
                         case R.id.navigation_messages:
-                            Intent i1 = new Intent(ViewOpportunity.this, MessagesActivity.class);
+                            Intent i1 = new Intent(ViewOpportunity.this, ConversationsActivity.class);
                             startActivity(i1);
                             finish();
                             return true;

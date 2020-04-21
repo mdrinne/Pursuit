@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.MenuItem;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
@@ -74,26 +75,10 @@ public class LandingActivity extends AppCompatActivity {
         currentUserNameText = findViewById(R.id.currentUserName);
         currentUserNameText.setText("Welcome, " + currentUserNameString);
 
-//        aboutPursuitBtn = findViewById(R.id.aboutPursuitBtn);
-//        viewCompaniesBtn = findViewById(R.id.viewCompaniesBtn);
-
-
-//        aboutPursuitBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent i = new Intent(LandingActivity.this, aboutPursuitActivity.class);
-//                startActivity(i);
-//            }
-//        });
-//
-//        viewCompaniesBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent i = new Intent(LandingActivity.this, viewCompaniesActivity.class);
-//                startActivity(i);
-//            }
-//        });
-
+        ImageButton newShare = findViewById(R.id.new_share);
+        if (currentRole.equals("Employee") && currentEmployee.getAdmin() == 0) {
+            newShare.setVisibility(View.GONE);
+        }
     }
 
     public void newShare(View v) {
@@ -184,9 +169,8 @@ public class LandingActivity extends AppCompatActivity {
     private void findAndSetCurrentUser() {
         if (((PursuitApplication) this.getApplication()).getCurrentStudent() != null) {
             currentStudent = ((PursuitApplication) this.getApplication()).getCurrentStudent();
-        } else if (((PursuitApplication) this.getApplication()).getCurrentEmployee() != null) {
-            currentEmployee = ((PursuitApplication) this.getApplication()).getCurrentEmployee();
         } else {
+            currentEmployee = ((PursuitApplication) this.getApplication()).getCurrentEmployee();
             currentCompany = ((PursuitApplication) this.getApplication()).getCurrentCompany();
         }
         currentRole = ((PursuitApplication) this.getApplication()).getRole();
