@@ -3,7 +3,9 @@ package com.example.pursuit;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.text.TextUtils;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.MenuItem;
 import android.view.View;
 import android.os.Bundle;
@@ -35,6 +37,10 @@ public class InviteEmployeeActivity extends AppCompatActivity {
     Company matchedCompanyEmail;
     Student matchedStudentEmail;
     EmployeeInvite matchedEmployeeInviteEmail;
+
+    private final String appEmail = "pursuitappdev@gmail.com";
+    private final String appPassword = "Cs495spring2020";
+    String body;
 
     BottomNavigationView bottomNavigation;
 
@@ -132,12 +138,10 @@ public class InviteEmployeeActivity extends AppCompatActivity {
         }
     };
 
-    private void writeNewEmployeeInvite(String companyName, String employeeEmail) {
-        Log.d(TAG, "in writeNewEmployeeInvite, company: " + companyName + "; email: " + employeeEmail);
+    private void writeNewEmployeeInvite(String employeeEmail) {
         String code = RandomKeyGenerator.randomLowerNumeric(25);
-        Log.d(TAG, "code: " + code);
         newInvite = new EmployeeInvite(code, employeeEmail);
-        Log.d(TAG, "new invite created");
+        sendEmail();
         dbRef.child("EmployeeInvites").child(currentCompany.getId()).child(code).setValue(newInvite);
 
         Intent intent = new Intent(this, viewCompanyEmployeeInvites.class);
@@ -176,12 +180,43 @@ public class InviteEmployeeActivity extends AppCompatActivity {
         currentCompany = ((PursuitApplication) this.getApplicationContext()).getCurrentCompany();
     }
 
+    private void sendEmail() {
+        body = "Company Code: " + currentCompany.getId() +
+                        "\nInvite Code: " + newInvite.getCode();
+        Log.d(TAG, "Trying to send email");
+        Thread emailThread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    GMailSender sender = new GMailSender(appEmail, appPassword);
+                    sender.sendMail("Pursuit Invite <DO NOT REPLY>", body, "<DO_NOT_REPLY>@pursuit.com", employeeEmail.getText().toString());
+                } catch (Exception e) {
+                    Log.e("SendMail", e.getMessage(), e);
+                }
+            }
+        });
+
+        emailThread.start();
+    }
+
+    boolean isEmail(EditText text) {
+        CharSequence email = text.getText().toString();
+        if (!(!TextUtils.isEmpty(email) && Patterns.EMAIL_ADDRESS.matcher(email).matches())) {
+            Toast.makeText(view.getContext(), "Invalid Email", Toast.LENGTH_SHORT).show();
+            return false;
+        } else
+            return true;
+    }
+
     public void createEmployeeInvite(View v) {
         view = v;
         employeeEmail = findViewById(R.id.txtCompanyCode);
 
-        Query employeeEmailQuery = dbRef.child("Employees").orderByChild("email").equalTo(toString(employeeEmail));
-        employeeEmailQuery.addListenerForSingleValueEvent(employeeEmailListener);
+        if (isEmail(employeeEmail)) {
+            Query employeeEmailQuery = dbRef.child("Employees").orderByChild("email").equalTo(toString(employeeEmail));
+            employeeEmailQuery.addListenerForSingleValueEvent(employeeEmailListener);
+        }
+        
     }
 
     private void postEmployeeEmailListener() {
@@ -215,7 +250,7 @@ public class InviteEmployeeActivity extends AppCompatActivity {
         if (matchedEmployeeInviteEmail != null) {
             Toast.makeText(view.getContext(), "Email Already Has An Active Invite", Toast.LENGTH_SHORT).show();
         } else {
-            writeNewEmployeeInvite(currentCompany.getName(), employeeEmail.getText().toString());
+            writeNewEmployeeInvite(employeeEmail.getText().toString());
         }
     }
 

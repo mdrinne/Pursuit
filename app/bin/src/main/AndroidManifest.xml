@@ -12,7 +12,6 @@
         <activity android:name=".CompanyRegistration"></activity>
         <activity android:name=".StudentRegistration" />
         <activity android:name=".FirstActivity" />
-        <activity android:name=".RegistrationPage" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

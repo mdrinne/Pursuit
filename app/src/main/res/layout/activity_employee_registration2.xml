@@ -1,13 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/gradient_bg">
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginRight="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -16,82 +21,115 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" >
+            android:orientation="vertical">
 
             <EditText
                 android:id="@+id/txtFirstName"
-                android:layout_width="300dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="50dp"
+                android:backgroundTint="@color/accent1"
                 android:ems="10"
+                android:fontFamily="@font/roboto"
                 android:hint="@string/strFirstName"
+                android:importantForAutofill="no"
                 android:inputType="textPersonName"
-                android:importantForAutofill="no" />
+                android:textColor="@color/accent1"
+                android:textColorHint="@color/accent1"
+                tools:targetApi="lollipop" />
 
             <EditText
                 android:id="@+id/txtLastName"
-                android:layout_width="300dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="40dp"
+                android:backgroundTint="@color/accent1"
                 android:ems="10"
+                android:fontFamily="@font/roboto"
                 android:hint="@string/strLastName"
+                android:importantForAutofill="no"
                 android:inputType="textPersonName"
-                android:importantForAutofill="no" />
+                android:textColor="@color/accent1"
+                android:textColorHint="@color/accent1"
+                tools:targetApi="lollipop" />
 
             <EditText
                 android:id="@+id/txtPosition"
-                android:layout_width="300dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="40dp"
+                android:backgroundTint="@color/accent1"
                 android:ems="10"
+                android:fontFamily="@font/roboto"
                 android:hint="@string/strPosition"
+                android:importantForAutofill="no"
                 android:inputType="textPersonName"
-                android:importantForAutofill="no" />
+                android:textColor="@color/accent1"
+                android:textColorHint="@color/accent1"
+                tools:targetApi="lollipop" />
 
             <EditText
                 android:id="@+id/txtUsername"
-                android:layout_width="300dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="40dp"
+                android:backgroundTint="@color/accent1"
                 android:ems="10"
+                android:fontFamily="@font/roboto"
                 android:hint="@string/strUsername"
+                android:importantForAutofill="no"
                 android:inputType="textPersonName"
-                android:importantForAutofill="no" />
+                android:textColor="@color/accent1"
+                android:textColorHint="@color/accent1"
+                tools:targetApi="lollipop" />
 
             <EditText
                 android:id="@+id/txtPassword"
-                android:layout_width="300dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="40dp"
+                android:backgroundTint="@color/accent1"
                 android:ems="10"
+                android:fontFamily="@font/roboto"
                 android:hint="@string/strPassword"
+                android:importantForAutofill="no"
                 android:inputType="textPassword"
-                android:importantForAutofill="no" />
+                android:textColor="@color/accent1"
+                android:textColorHint="@color/accent1"
+                tools:targetApi="lollipop" />
 
             <EditText
                 android:id="@+id/txtReEnterPassword"
-                android:layout_width="300dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="40dp"
+                android:backgroundTint="@color/accent1"
                 android:ems="10"
+                android:fontFamily="@font/roboto"
                 android:hint="@string/strReEnterPassword"
+                android:importantForAutofill="no"
                 android:inputType="textPassword"
-                android:importantForAutofill="no" />
+                android:textColor="@color/accent1"
+                android:textColorHint="@color/accent1"
+                tools:targetApi="lollipop" />
 
             <Button
                 android:id="@+id/btnRegister"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
                 android:layout_gravity="center"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="40dp"
+                android:background="@drawable/button_accent1"
+                android:fontFamily="@font/roboto_medium"
                 android:onClick="register"
-                android:text="@string/strRegister" />
+                android:text="@string/strRegister"
+                android:textColor="@color/colorPrimary" />
         </LinearLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

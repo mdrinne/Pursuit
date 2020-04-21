@@ -14,7 +14,6 @@ import static androidx.test.espresso.action.ViewActions.typeText;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
-import static org.junit.Assert.*;
 
 
 @RunWith(AndroidJUnit4.class)
@@ -29,7 +28,7 @@ public class StudentRegistrationTestUI {
         onView(withId(R.id.txtUniversity)).perform(typeText("uni"), closeSoftKeyboard());
         onView(withId(R.id.txtMajor)).perform(typeText("major"), closeSoftKeyboard());
         onView(withId(R.id.txtMinor)).perform(typeText("minor"), closeSoftKeyboard());
-        onView(withId(R.id.txtStudentGPA)).perform(typeText("gpa"), closeSoftKeyboard());
+        onView(withId(R.id.txtStudentGPA2)).perform(typeText("gpa"), closeSoftKeyboard());
         onView(withId(R.id.txtBio)).perform(typeText("bio"), closeSoftKeyboard());
         //must change username and email below after each test
         onView(withId(R.id.txtEmail)).perform(typeText("student15@google.com"), closeSoftKeyboard());

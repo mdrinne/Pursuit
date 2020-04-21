@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.pursuit">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:name=".PursuitApplication"
         android:allowBackup="true"
@@ -10,24 +12,19 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".CreateOpportunity"></activity>
+        <activity android:name=".CreateOpportunity" />
+        <activity android:name=".viewCompaniesActivity" />
+        <activity android:name=".MessagesActivity" />
         <activity
             android:name=".ViewOpportunities"
             android:label="@string/title_activity_view_opportunities"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".CreateMessageActivity" />
-        <activity
-            android:name=".MessagesActivity"
-            android:label="@string/title_activity_messages"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".viewCompaniesActivity" /> <!-- <activity android:name=".myProfileActivity" /> -->
         <activity android:name=".StudentProfileActivity" />
         <activity android:name=".aboutPursuitActivity" />
         <activity android:name=".LandingActivity" />
         <activity android:name=".RegistrationActivity" />
         <activity android:name=".CompanyRegistration" />
         <activity android:name=".StudentRegistration" />
-        <activity android:name=".RegistrationPage" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -38,8 +35,17 @@
         <activity android:name=".CompanyProfileActivity" />
         <activity android:name=".InviteEmployeeActivity" />
         <activity android:name=".viewCompanyEmployeeInvites" />
+        <activity android:name=".ConversationsActivity" />
         <activity android:name=".EmployeeRegistration1" />
         <activity android:name=".EmployeeRegistration2" />
+        <activity android:name=".EmployeeManagement" />
+        <activity android:name=".NewConversationActivity" />
+        <activity android:name=".NewShareActivity" />
+
+        <activity android:name=".ViewOpportunity" />
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
     </application>
 
 </manifest>

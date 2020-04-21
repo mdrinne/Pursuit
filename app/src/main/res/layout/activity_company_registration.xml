@@ -4,89 +4,135 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/gradient_bg"
     tools:context=".CompanyRegistration">
 
-    <EditText
-        android:id="@+id/companyField"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="96dp"
-        android:layout_marginLeft="96dp"
-        android:layout_marginTop="32dp"
-        android:ems="10"
-        android:gravity="start|top"
-        android:hint="@string/strFieldOfBusiness"
-        android:inputType="textMultiLine"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/companyReEnterPassword" />
-
-    <EditText
-        android:id="@+id/companyPassword"
-        android:layout_width="wrap_content"
-        android:layout_height="45dp"
-        android:layout_marginStart="94dp"
-        android:layout_marginLeft="94dp"
-        android:layout_marginTop="32dp"
-        android:ems="10"
-        android:hint="@string/strPassword"
-        android:inputType="textPassword"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/companyEmail" />
-
-    <EditText
-        android:id="@+id/companyName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="94dp"
-        android:layout_marginLeft="94dp"
-        android:layout_marginTop="32dp"
-        android:ems="10"
-        android:hint="Company Name"
-        android:inputType="textPersonName"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <EditText
-        android:id="@+id/companyEmail"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="94dp"
-        android:layout_marginLeft="94dp"
-        android:layout_marginTop="32dp"
-        android:ems="10"
-        android:hint="Company Email"
-        android:inputType="textEmailAddress"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/companyName" />
-
-    <EditText
-        android:id="@+id/companyReEnterPassword"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="94dp"
-        android:layout_marginLeft="94dp"
-        android:layout_marginTop="32dp"
-        android:ems="10"
-        android:gravity="start|top"
-        android:hint="@string/strReEnterPassword"
-        android:inputType="textPassword"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/companyPassword" />
-
-    <Button
-        android:id="@+id/register"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="161dp"
-        android:layout_marginLeft="161dp"
-        android:layout_marginTop="35dp"
-        android:layout_marginEnd="162dp"
-        android:layout_marginRight="162dp"
-        android:onClick="register"
-        android:text="@string/strRegister"
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginRight="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/companyField" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <EditText
+                android:id="@+id/companyName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="50dp"
+                android:backgroundTint="@color/accent1"
+                android:ems="10"
+                android:fontFamily="@font/roboto"
+                android:hint="@string/strCompanyName"
+                android:importantForAutofill="no"
+                android:inputType="textPersonName"
+                android:textColor="@color/accent1"
+                android:textColorHint="@color/accent1"
+                tools:targetApi="lollipop" />
+
+            <EditText
+                android:id="@+id/companyEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="40dp"
+                android:backgroundTint="@color/accent1"
+                android:ems="10"
+                android:fontFamily="@font/roboto"
+                android:hint="@string/strCompanyEmail"
+                android:importantForAutofill="no"
+                android:inputType="textEmailAddress"
+                android:textColor="@color/accent1"
+                android:textColorHint="@color/accent1"
+                tools:targetApi="lollipop" />
+
+            <EditText
+                android:id="@+id/companyField"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="40dp"
+                android:backgroundTint="@color/accent1"
+                android:ems="10"
+                android:fontFamily="@font/roboto"
+                android:hint="@string/txtCompanyField"
+                android:importantForAutofill="no"
+                android:inputType="textPersonName"
+                android:textColor="@color/accent1"
+                android:textColorHint="@color/accent1"
+                tools:targetApi="lollipop" />
+
+            <EditText
+                android:id="@+id/companyDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="40dp"
+                android:backgroundTint="@color/accent1"
+                android:ems="10"
+                android:fontFamily="@font/roboto"
+                android:hint="@string/strCompanyDescription"
+                android:importantForAutofill="no"
+                android:inputType="textPersonName"
+                android:textColor="@color/accent1"
+                android:textColorHint="@color/accent1"
+                tools:targetApi="lollipop" />
+
+            <EditText
+                android:id="@+id/companyPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="40dp"
+                android:backgroundTint="@color/accent1"
+                android:ems="10"
+                android:fontFamily="@font/roboto"
+                android:hint="@string/strPassword"
+                android:importantForAutofill="no"
+                android:inputType="textPassword"
+                android:textColor="@color/accent1"
+                android:textColorHint="@color/accent1"
+                tools:targetApi="lollipop" />
+
+            <EditText
+                android:id="@+id/companyReEnterPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="40dp"
+                android:backgroundTint="@color/accent1"
+                android:ems="10"
+                android:fontFamily="@font/roboto"
+                android:hint="@string/strReEnterPassword"
+                android:importantForAutofill="no"
+                android:inputType="textPassword"
+                android:textColor="@color/accent1"
+                android:textColorHint="@color/accent1"
+                tools:targetApi="lollipop" />
+
+            <Button
+                android:id="@+id/register"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="40dp"
+                android:background="@drawable/button_accent1"
+                android:fontFamily="@font/roboto_medium"
+                android:onClick="register"
+                android:text="@string/strRegister"
+                android:textColor="@color/colorPrimary" />
+
+        </LinearLayout>
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

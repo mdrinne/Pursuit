@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/gradient_bg">
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginRight="10dp"
+        app:layout_constraintBottom_toTopOf="@+id/container"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/innerConstraintLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/txtPosition"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:layout_marginRight="10dp"
+                android:fontFamily="@font/roboto_medium"
+                android:textColor="@color/accent1"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/imgDeleteOpportunity"
+                app:layout_constraintEnd_toStartOf="@+id/btnApprove"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/imgDeleteOpportunity" />
+
+            <TextView
+                android:id="@+id/txtWith"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto"
+                android:textColor="@color/accent1"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="@id/txtCity"
+                app:layout_constraintTop_toBottomOf="@+id/imgLocationIcon" />
+
+            <TextView
+                android:id="@+id/txtDescription"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:fontFamily="@font/roboto"
+                android:paddingBottom="10dp"
+                android:textColor="@color/accent1"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toStartOf="@+id/imgDeleteOpportunity"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtWith" />
+
+            <ImageView
+                android:id="@+id/imgDeleteOpportunity"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginRight="5dp"
+                android:contentDescription="@string/txtDeleteButton"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_delete_button" />
+
+            <Button
+                android:id="@+id/btnApprove"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginRight="5dp"
+                android:background="@drawable/button_accent1"
+                android:onClick="approveOpportunity"
+                android:text="@string/strApprove"
+                android:textColor="@color/colorPrimary"
+                app:layout_constraintBottom_toBottomOf="@+id/imgDeleteOpportunity"
+                app:layout_constraintEnd_toStartOf="@+id/imgDeleteOpportunity"
+                app:layout_constraintTop_toTopOf="@+id/imgDeleteOpportunity" />
+
+            <TextView
+                android:id="@+id/txtTimeStamp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="5dp"
+                android:layout_marginRight="5dp"
+                android:fontFamily="@font/roboto"
+                android:textColor="@color/accent1"
+                app:layout_constraintEnd_toStartOf="@+id/imgDeleteOpportunity"
+                app:layout_constraintTop_toTopOf="@+id/imgDeleteOpportunity" />
+
+            <ImageView
+                android:id="@+id/imgLocationIcon"
+                android:layout_width="21dp"
+                android:layout_height="21dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="5dp"
+                android:contentDescription="@string/strLocationIcon"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtPosition"
+                app:srcCompat="@drawable/location" />
+
+            <TextView
+                android:id="@+id/txtCity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginLeft="5dp"
+                android:fontFamily="@font/roboto"
+                android:textColor="@color/accent1"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="@id/imgLocationIcon"
+                app:layout_constraintStart_toEndOf="@+id/imgLocationIcon"
+                app:layout_constraintTop_toTopOf="@id/imgLocationIcon" />
+
+            <TextView
+                android:id="@+id/txtState"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto"
+                android:textColor="@color/accent1"
+                android:textSize="16sp"
+                app:layout_constraintStart_toEndOf="@+id/txtCity"
+                app:layout_constraintTop_toTopOf="@+id/txtCity" />
+
+            <TextView
+                android:id="@+id/txtRequirements"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:fontFamily="@font/roboto_medium"
+                android:text="@string/strRequirements"
+                android:textColor="@color/accent1"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/txtDescription" />
+
+            <TextView
+                android:id="@+id/txtOpportunityRequirements"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/roboto"
+                android:textColor="@color/accent1"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toStartOf="@+id/imgDeleteOpportunity"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/txtRequirements" />
+
+            <TextView
+                android:id="@+id/txtKeywords"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:fontFamily="@font/roboto_medium"
+                android:text="@string/strKeywords"
+                android:textColor="@color/accent1"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtOpportunityRequirements" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rcycKeywords"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/txtKeywords" />
+
+            <Button
+                android:id="@+id/button"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/button_accent1"
+                android:onClick="addKeywords"
+                android:text="@string/strAddKeywords"
+                android:textColor="@color/colorPrimary"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/rcycKeywords" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+    <FrameLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bottom_navigation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:background="@color/navbar"
+            app:itemIconTint="@color/white"
+            app:itemTextColor="@color/white"
+            app:menu="@menu/bottom_navigation_menu" />
+
+    </FrameLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

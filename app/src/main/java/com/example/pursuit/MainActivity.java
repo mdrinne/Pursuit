@@ -210,6 +210,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setCurrentCompany() {
+        Log.d(TAG, getEmployeeCompany.getName());
         ((PursuitApplication) this.getApplication()).setCurrentCompany(getEmployeeCompany);
         ((PursuitApplication) this.getApplication()).setCurrentRole("Employee");
 
@@ -240,9 +241,10 @@ public class MainActivity extends AppCompatActivity {
     private void postEmployeeUsernameListener() {
         if (matchedEmployeeUsername != null) {
             if (passwordsMatch(matchedEmployeeUsername.getPassword(), checkPassword)) {
-                ((PursuitApplication) this.getApplication()).setCurrentEmployee(matchedEmployeeEmail);
+                ((PursuitApplication) this.getApplication()).setCurrentEmployee(matchedEmployeeUsername);
 
-                Query employeeCompanyQuery = dbRef.child("Companies").orderByChild("name").equalTo(matchedEmployeeUsername.getCompanyName());
+                Query employeeCompanyQuery = dbRef.child("Companies").orderByChild("id").equalTo(matchedEmployeeUsername.getCompanyID());
+                Log.d(TAG, matchedEmployeeUsername.getCompanyID());
                 employeeCompanyQuery.addListenerForSingleValueEvent(getEmployeeCompanyListener);
             } else {
                 Toast.makeText(view.getContext(), "Incorrect Password", Toast.LENGTH_LONG).show();
@@ -258,7 +260,7 @@ public class MainActivity extends AppCompatActivity {
             if (passwordsMatch(matchedEmployeeEmail.getPassword(), checkPassword)) {
                 ((PursuitApplication) this.getApplication()).setCurrentEmployee(matchedEmployeeEmail);
 
-                Query employeeCompanyQuery = dbRef.child("Companies").orderByChild("name").equalTo(matchedEmployeeEmail.getCompanyName());
+                Query employeeCompanyQuery = dbRef.child("Companies").orderByChild("id").equalTo(matchedEmployeeUsername.getCompanyID());
                 employeeCompanyQuery.addListenerForSingleValueEvent(getEmployeeCompanyListener);
             } else {
                 Toast.makeText(view.getContext(), "Incorrect Password", Toast.LENGTH_LONG).show();

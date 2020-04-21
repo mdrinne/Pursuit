@@ -1,31 +1,58 @@
 package com.example.pursuit;
 
+import com.example.pursuit.adapters.ShareListAdapter;
+import com.example.pursuit.models.Employee;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.MenuItem;
-import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
+
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pursuit.models.Company;
 import com.example.pursuit.models.Student;
+import com.example.pursuit.models.Share;
+
+import java.time.ZonedDateTime;
+import java.util.ArrayList;
+import java.util.Comparator;
 
 public class LandingActivity extends AppCompatActivity {
+    private final String TAG = "LandingActivity";
 
-    Button aboutPursuitBtn;
-    Button viewCompaniesBtn;
+//    Button aboutPursuitBtn;
+//    Button viewCompaniesBtn;
     TextView currentUserNameText;
     BottomNavigationView bottomNavigation;
 
-    Student currentStudent = null;
-    Company currentCompany = null;
-    String  currentRole = null;
+    private Student currentStudent;
+    private Employee currentEmployee;
+    private Company currentCompany;
+    private String currentRole;
 
+    private ArrayList<Share> shareList;
+
+    private DatabaseReference dbRef;
+
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,37 +61,82 @@ public class LandingActivity extends AppCompatActivity {
         bottomNavigation.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
 
         findAndSetCurrentUser();
+        dbRef = FirebaseDatabase.getInstance().getReference();
+
+        getShares();
 
         String currentUserNameString;
         if (currentRole.equals("Student")) {
             currentUserNameString = currentStudent.getUsername();
         } else {
-            currentUserNameString = currentCompany.getName();
+            currentUserNameString = currentEmployee.getUsername();
         }
 
         currentUserNameText = findViewById(R.id.currentUserName);
         currentUserNameText.setText("Welcome, " + currentUserNameString);
 
-        aboutPursuitBtn = findViewById(R.id.aboutPursuitBtn);
-        viewCompaniesBtn = findViewById(R.id.viewCompaniesBtn);
+        ImageButton newShare = findViewById(R.id.new_share);
+        if (currentRole.equals("Employee") && currentEmployee.getAdmin() == 0) {
+            newShare.setVisibility(View.GONE);
+        }
+    }
 
+    public void newShare(View v) {
+        Intent newShareActivity;
+        newShareActivity = new Intent(LandingActivity.this, NewShareActivity.class);
+        this.startActivity(newShareActivity);
+    }
 
-        aboutPursuitBtn.setOnClickListener(new View.OnClickListener() {
+    ValueEventListener sharesListener = new ValueEventListener() {
+        @RequiresApi(api = Build.VERSION_CODES.N)
+        @Override
+        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+            shareList = new ArrayList<>();
+
+            if (dataSnapshot.exists()) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    Share share = snapshot.getValue(Share.class);
+
+                    if (share != null) {
+                        shareList.add(0, share);
+                    }
+                }
+            }
+
+            postSharesListener();
+        }
+
+        @Override
+        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+        }
+    };
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    private void postSharesListener() {
+        shareList.sort(new Comparator<Share>() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
-            public void onClick(View v) {
-                Intent i = new Intent(LandingActivity.this, aboutPursuitActivity.class);
-                startActivity(i);
+            public int compare(Share o1, Share o2) {
+                return ZonedDateTime.parse(o1.getCreatedAt()).compareTo(ZonedDateTime.parse(o2.getCreatedAt()));
             }
         });
 
-        viewCompaniesBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(LandingActivity.this, viewCompaniesActivity.class);
-                startActivity(i);
-            }
-        });
+        RecyclerView sharesRecycler = findViewById(R.id.shares_recycler);
+        ShareListAdapter shareListAdapter = new ShareListAdapter(this, shareList);
+        sharesRecycler.setAdapter(shareListAdapter);
+        sharesRecycler.setLayoutManager(new LinearLayoutManager(this));
+    }
 
+    private void getShares() {
+        Query sharesQuery;
+        if (currentStudent != null) {
+            sharesQuery = dbRef.child("Students").child(currentStudent.getId()).child("Shares").orderByChild("id");
+        } else {
+            sharesQuery = dbRef.child("Companies").child(currentCompany.getId()).child("Shares").orderByChild("id");
+        }
+
+        sharesQuery.addValueEventListener(sharesListener);
     }
 
     BottomNavigationView.OnNavigationItemSelectedListener navigationItemSelectedListener =
@@ -72,22 +144,25 @@ public class LandingActivity extends AppCompatActivity {
         @Override public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
             case R.id.navigation_home:
-              return true;
+                return true;
             case R.id.navigation_messages:
-                Intent i1 = new Intent(LandingActivity.this, MessagesActivity.class);
-                startActivity(i1);
+                Intent messages = new Intent(LandingActivity.this, ConversationsActivity.class);
+                startActivity(messages);
+                finish();
                 return true;
             case R.id.navigation_profile:
                 if (currentStudent != null) {
-                    Intent i = new Intent(LandingActivity.this, StudentProfileActivity.class);
-                    startActivity(i);
+                    Intent profile = new Intent(LandingActivity.this, StudentProfileActivity.class);
+                    startActivity(profile);
+                    finish();
                 } else {
-                    Intent i = new Intent(LandingActivity.this, CompanyProfileActivity.class);
-                    startActivity(i);
+                    Intent profile = new Intent(LandingActivity.this, CompanyProfileActivity.class);
+                    startActivity(profile);
+                    finish();
                 }
-              return true;
-          }
-          return false;
+                return true;
+            }
+            return false;
         }
       };
 
@@ -95,20 +170,10 @@ public class LandingActivity extends AppCompatActivity {
         if (((PursuitApplication) this.getApplication()).getCurrentStudent() != null) {
             currentStudent = ((PursuitApplication) this.getApplication()).getCurrentStudent();
         } else {
+            currentEmployee = ((PursuitApplication) this.getApplication()).getCurrentEmployee();
             currentCompany = ((PursuitApplication) this.getApplication()).getCurrentCompany();
         }
         currentRole = ((PursuitApplication) this.getApplication()).getRole();
-    }
-
-    public void myProfile(View v) {
-        if (currentRole.equals("Student")) {
-            Intent i = new Intent(LandingActivity.this, StudentProfileActivity.class);
-            startActivity(i);
-        } else {
-            /* ***** HAVING AN ISSUE WITH THIS ***** */
-            Intent i = new Intent(LandingActivity.this, CompanyProfileActivity.class);
-            startActivity(i);
-        }
     }
 
     private void removeCurrentUser() {

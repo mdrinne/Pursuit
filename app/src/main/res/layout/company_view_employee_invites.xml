@@ -4,11 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/ConstraintLayout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/gradient_bg">
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
         app:layout_constraintBottom_toTopOf="@+id/container"
@@ -21,14 +22,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingTop="10dp"
-            android:paddingBottom="20dp">
+            android:paddingBottom="40dp">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rcycEmployeeInvites"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="11dp"
-                app:layout_constraintBottom_toTopOf="@+id/btnInviteEmployee"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
@@ -38,12 +37,16 @@
             <Button
                 android:id="@+id/btnInviteEmployee"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/button_accent1"
+                android:fontFamily="@font/roboto_medium"
                 android:onClick="inviteEmployee"
                 android:text="@string/strInviteEmployee"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:textColor="@color/colorPrimary"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/rcycEmployeeInvites" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
@@ -61,7 +64,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            android:background="@color/colorPrimary"
+            android:background="@color/navbar"
             app:itemIconTint="@color/white"
             app:itemTextColor="@color/white"
             app:menu="@menu/bottom_navigation_menu" />

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/conversation_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/conversation_title_placeholder"
+                android:textColor="#000"
+                android:textSize="18sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:onClick="openConversation"/>
+
+            <ImageButton
+                android:id="@+id/deleteConversation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#FFF"
+                android:layout_margin="5dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/conversation_title"
+                app:srcCompat="@drawable/ic_delete"
+                android:contentDescription="@string/conversation_delete_button_description"
+                android:onClick="showDeleteConversation"/>
+
+            <TextView
+                android:id="@+id/conversation_updated_at"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/conversation_date_placeholder"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/conversation_title" />
+
+            <View
+                android:id="@+id/divider"
+                android:layout_width="409dp"
+                android:layout_height="2dp"
+                android:layout_marginStart="1dp"
+                android:layout_marginLeft="1dp"
+                android:background="?android:attr/listDivider"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/conversation_updated_at" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</LinearLayout>
