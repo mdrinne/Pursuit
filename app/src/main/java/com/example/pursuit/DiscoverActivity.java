@@ -14,6 +14,7 @@ import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.view.MenuItem;
+import android.view.View;
 
 import com.example.pursuit.ui.main.SectionsPagerAdapter;
 import com.google.firebase.database.DatabaseReference;
@@ -81,6 +82,10 @@ public class DiscoverActivity extends AppCompatActivity {
 //        TabLayout tabs = findViewById(R.id.tabs);
 //
 //        tabs.setupWithViewPager(viewPager);
+    }
+
+    public void toggleFollow(View view) {
+
     }
 
     private void findAndSetCurrentUser() {

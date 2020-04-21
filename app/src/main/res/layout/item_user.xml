@@ -53,9 +53,11 @@
                     android:layout_weight="1"/>
 
                 <ImageButton
+                    android:id="@+id/toggle_follow_btn"
                     android:layout_width="36dp"
                     android:layout_height="36dp"
-                    android:background="@drawable/ic_add_black_24dp"/>
+                    android:background="@drawable/ic_add_black_24dp"
+                    android:onClick="toggleFollow"/>
 
             </LinearLayout>
 

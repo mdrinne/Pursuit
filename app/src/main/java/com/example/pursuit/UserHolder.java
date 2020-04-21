@@ -2,6 +2,7 @@ package com.example.pursuit;
 
 import android.annotation.SuppressLint;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -12,6 +13,7 @@ import com.example.pursuit.models.Student;
 public class UserHolder extends RecyclerView.ViewHolder {
 
     private TextView fullName, username, major, university, bio;
+    private ImageButton toggleFollow;
 
     public UserHolder(@NonNull View itemView) {
         super(itemView);
@@ -20,6 +22,7 @@ public class UserHolder extends RecyclerView.ViewHolder {
         university = itemView.findViewById(R.id.university);
         major = itemView.findViewById(R.id.major);
         bio = itemView.findViewById(R.id.bio);
+        toggleFollow = itemView.findViewById(R.id.toggle_follow_btn);
     }
 
     @SuppressLint("SetTextI18n")
@@ -29,5 +32,6 @@ public class UserHolder extends RecyclerView.ViewHolder {
         university.setText("University: " + student.getUniversity());
         major.setText("Major: " + student.getMajor());
         bio.setText(student.getBio());
+        toggleFollow.setTag(student);
     }
 }
