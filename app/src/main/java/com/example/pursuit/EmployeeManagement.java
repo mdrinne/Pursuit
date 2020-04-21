@@ -43,7 +43,6 @@ public class EmployeeManagement extends AppCompatActivity {
     private RecyclerView.LayoutManager mLayoutManager;
 
     Dialog deleteDialog;
-    View v;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

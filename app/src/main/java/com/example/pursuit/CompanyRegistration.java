@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.example.pursuit.models.Company;
 import com.example.pursuit.RandomKeyGenerator;
+import com.example.pursuit.models.CompanyOpportunity;
 import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -83,7 +84,7 @@ public class CompanyRegistration extends AppCompatActivity {
 
     private void writeNewCompany(String name, String email, String password, String field, String description) {
         String id = RandomKeyGenerator.randomAlphaNumeric(16);
-        newCompany = new Company(id, name, email, password, field, description);
+        newCompany = new Company(id, name, email, password, field, description, new ArrayList<CompanyOpportunity>());
         mRef.child("Companies").child(id).setValue(newCompany);
     }
 

@@ -1,6 +1,5 @@
 package com.example.pursuit.adapters;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,7 +53,7 @@ public class OpportunityAdapter extends RecyclerView.Adapter<OpportunityAdapter.
             deleteOpportunity = itemView.findViewById(R.id.imgDeleteOpportunity);
             opportunityCity = itemView.findViewById(R.id.txtCity);
             opportunityState = itemView.findViewById(R.id.txtState);
-            card = itemView.findViewById(R.id.crdOpportunity);
+            card = itemView.findViewById(R.id.crdStudentOpportunity);
 
             approve.setOnClickListener(new View.OnClickListener() {
                 @Override
