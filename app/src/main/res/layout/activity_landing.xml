@@ -7,64 +7,61 @@
     android:background="@drawable/gradient_bg"
     tools:context=".LandingActivity">
 
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="397dp"
-        android:layout_height="130dp"
-        android:layout_marginTop="16dp"
-        android:contentDescription="PursuitLogo"
-        app:layout_constraintEnd_toEndOf="parent"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/logo" />
+        android:weightSum="1"
+        android:id="@+id/title_bar">
 
-    <TextView
-        android:id="@+id/currentUserName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="171dp"
-        android:layout_marginLeft="171dp"
-        android:layout_marginTop="32dp"
-        android:gravity="center|center_horizontal"
-        android:text="@string/strUsername"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+        <Button
+            android:id="@+id/logOutBtn"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:foregroundGravity="clip_horizontal"
+            android:onClick="logoutCurrentUser"
+            android:text="@string/log_out"
+            android:textSize="8sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_weight=".1"/>
 
-    <Button
-        android:id="@+id/aboutPursuitBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="140dp"
-        android:layout_marginLeft="140dp"
-        android:layout_marginTop="32dp"
-        android:gravity="center"
-        android:text="About Pursuit"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/currentUserName" />
+        <TextView
+            android:id="@+id/currentUserName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center|center_horizontal"
+            android:text="@string/strUsername"
+            android:textColor="#fff"
+            android:textSize="28sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_weight=".8"/>
 
-    <Button
-        android:id="@+id/viewCompaniesBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="135dp"
-        android:layout_marginLeft="135dp"
-        android:layout_marginTop="32dp"
-        android:text="View Companies"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/aboutPursuitBtn" />
+        <ImageButton
+            android:id="@+id/new_share"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:background="@drawable/ic_create_white_36dp"
+            android:contentDescription="@string/share_something"
+            android:onClick="newShare"
+            android:layout_weight=".1"/>
 
-    <Button
-        android:id="@+id/logOutBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="161dp"
-        android:layout_marginLeft="161dp"
-        android:layout_marginTop="32dp"
-        android:foregroundGravity="clip_horizontal"
-        android:onClick="logoutCurrentUser"
-        android:text="Log Out"
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/shares_recycler"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/title_bar"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/viewCompaniesBtn" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/container"/>
 
     <FrameLayout
         android:id="@+id/container"
