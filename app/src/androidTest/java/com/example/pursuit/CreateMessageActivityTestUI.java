@@ -16,13 +16,13 @@ import static org.junit.Assert.*;
 
 @RunWith(AndroidJUnit4.class)
 public class CreateMessageActivityTestUI {
-    @Rule
-    public ActivityTestRule<CreateMessageActivity> activityRule = new ActivityTestRule<>(CreateMessageActivity.class);
+    //@Rule
+    //public ActivityTestRule<CreateMessageActivity> activityRule = new ActivityTestRule<>(CreateMessageActivity.class);
 
-    @Test
-    public void test_create_message_backbtn(){
-        onView(withId(R.id.cancelBtn)).perform(click());
-        onView(withId(R.id.fab)).check(matches(isDisplayed()));
-    }
+    //@Test
+    //public void test_create_message_backbtn(){
+     //   onView(withId(R.id.cancelBtn)).perform(click());
+      //  onView(withId(R.id.fab)).check(matches(isDisplayed()));
+   // }
 
 }
