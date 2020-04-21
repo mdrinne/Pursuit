@@ -1,4 +1,4 @@
-package com.example.pursuit;
+package com.example.pursuit.adapters;
 
 import android.content.Context;
 import android.os.Build;
@@ -7,6 +7,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.pursuit.R;
+import com.example.pursuit.ReceivedMessageHolder;
+import com.example.pursuit.SentMessageHolder;
 import com.example.pursuit.models.Message;
 
 import androidx.annotation.NonNull;

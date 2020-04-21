@@ -2,8 +2,6 @@ package com.example.pursuit.models;
 
 import com.google.firebase.database.IgnoreExtraProperties;
 
-import java.time.ZonedDateTime;
-import java.util.ArrayList;
 
 @IgnoreExtraProperties
 public class Conversation {

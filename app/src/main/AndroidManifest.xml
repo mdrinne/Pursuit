@@ -12,8 +12,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".CreateOpportunity"></activity>
-        <activity android:name=".CreateMessageActivity" />
+        <activity android:name=".CreateOpportunity" />
         <activity android:name=".viewCompaniesActivity" />
         <activity android:name=".MessagesActivity" />
         <activity
@@ -41,6 +40,7 @@
         <activity android:name=".EmployeeRegistration2" />
         <activity android:name=".EmployeeManagement" />
         <activity android:name=".NewConversationActivity" />
+        <activity android:name=".NewShareActivity" />
 
         <activity android:name=".ViewOpportunity" />
         <meta-data
