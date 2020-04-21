@@ -74,6 +74,8 @@ public class CompanyProfileActivity extends AppCompatActivity{
 
     Dialog deleteDialog;
 
+//    CompanyProfileActivity THIS;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -93,9 +95,12 @@ public class CompanyProfileActivity extends AppCompatActivity{
         companyProfilePic = findViewById(R.id.imgCompanyProfilePic);
         loadCompanyProfilePicture();
 
-        Query opportunityQuery = dbref.child("CompanyOpportunities").child(currentCompany.getId()).orderByChild("timestamp");
+        companyOpportunities = currentCompany.getOpportunities();
+        buildRecyclerView();
 
-        opportunityQuery.addListenerForSingleValueEvent(companyOpportunityListener);
+//        Query opportunityQuery = dbref.child("CompanyOpportunities").child(currentCompany.getId()).orderByChild("timestamp");
+//
+//        opportunityQuery.addListenerForSingleValueEvent(companyOpportunityListener);
 
         String newTitle = "Pursuit (" + "Company" + ")";
         setTitle(newTitle);
@@ -257,8 +262,7 @@ public class CompanyProfileActivity extends AppCompatActivity{
             @Override
             public void onClick(View v) {
                 CompanyOpportunity opportunity = companyOpportunities.get(position);
-                dbref.child("CompanyOpportunities").child(currentCompany.getId()).child(opportunity.getId()).removeValue();
-                companyOpportunities.remove(opportunity);
+                removeOpportunity(opportunity.getId(), opportunity);
                 mAdapter.notifyItemRemoved(position);
                 deleteDialog.dismiss();
             }
@@ -270,11 +274,22 @@ public class CompanyProfileActivity extends AppCompatActivity{
 
     }
 
+    private void removeOpportunity(String id, CompanyOpportunity opportunity) {
+        dbref.child("CompanyOpportunities").child(id).removeValue();
+        companyOpportunities.remove(opportunity);
+        currentCompany.setOpportunities(companyOpportunities);
+        dbref.child("Companies").child(currentCompany.getId()).child("opportunities").setValue(companyOpportunities);
+        ((PursuitApplication) this.getApplication()).setCurrentCompany(currentCompany);
+    }
+
     /* ******END DATABASE****** */
 
     private void buildRecyclerView() {
         allOpportunities = findViewById(R.id.rcycOpportunities);
         allOpportunities.setHasFixedSize(false);
+        if (companyOpportunities == null) {
+            companyOpportunities = new ArrayList<>();
+        }
         mLayoutManager = new LinearLayoutManager(this);
         mAdapter = new OpportunityAdapter(companyOpportunities);
 
