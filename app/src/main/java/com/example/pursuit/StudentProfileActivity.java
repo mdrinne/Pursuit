@@ -443,6 +443,8 @@ public class StudentProfileActivity extends AppCompatActivity {
             currentStudent.setInterestKeywords(interests);
             ((PursuitApplication) this.getApplication()).setCurrentStudent(currentStudent);
             mAdapter.notifyDataSetChanged();
+            currentStudent.setInterestKeywords(interests);
+            ((PursuitApplication) this.getApplication()).setCurrentStudent(currentStudent);
             return;
         }
     }

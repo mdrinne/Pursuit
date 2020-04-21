@@ -2,11 +2,14 @@ package com.example.pursuit.models;
 
 import org.junit.Test;
 
+import java.util.ArrayList;
+
 import static org.junit.Assert.*;
 
 public class StudentTest {
 
-    Student newStudent = new Student("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11");
+    ArrayList<String> x;
+    Student newStudent = new Student("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", x);
 
     @Test
     public void getIdTest() {

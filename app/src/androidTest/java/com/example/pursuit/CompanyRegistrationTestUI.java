@@ -25,14 +25,15 @@ public class CompanyRegistrationTestUI {
 
     @Test
     public void test_register_company() {
+        onView(withId(R.id.companyName)).perform(typeText("CompanyNamez"), closeSoftKeyboard());
         onView(withId(R.id.companyField)).perform(typeText("field"), closeSoftKeyboard());
         onView(withId(R.id.companyPassword)).perform(typeText("pass"), closeSoftKeyboard());
-        onView(withId(R.id.companyName)).perform(typeText("CompanyName"), closeSoftKeyboard());
         //must change email below after each test
-        onView(withId(R.id.companyEmail)).perform(typeText("CompanyEmail9@google.com"), closeSoftKeyboard());
+        onView(withId(R.id.companyEmail)).perform(typeText("CompanyEmail16@google.com"), closeSoftKeyboard());
         onView(withId(R.id.companyReEnterPassword)).perform(typeText("pass"), closeSoftKeyboard());
+        onView(withId(R.id.companyDescription)).perform(typeText("description"), closeSoftKeyboard());
         onView(withId(R.id.register)).perform(click());
-        onView(withId(R.id.logOutBtn)).check(matches(isDisplayed()));
+        onView(withId(R.id.new_share)).check(matches(isDisplayed()));
     }
 
 
