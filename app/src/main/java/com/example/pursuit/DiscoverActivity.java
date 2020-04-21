@@ -46,7 +46,13 @@ public class DiscoverActivity extends AppCompatActivity {
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
         final ViewPager viewPager = findViewById(R.id.view_pager);
-        SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(this, getSupportFragmentManager(), tabLayout.getTabCount());
+        String currentUserId;
+        if (currentStudent != null) {
+            currentUserId = currentStudent.getId();
+        } else {
+            currentUserId = currentEmployee.getId();
+        }
+        SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(this, getSupportFragmentManager(), tabLayout.getTabCount(), currentUserId);
         viewPager.setAdapter(sectionsPagerAdapter);
 
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));

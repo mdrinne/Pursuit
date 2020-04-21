@@ -37,8 +37,6 @@ import java.util.Comparator;
 public class LandingActivity extends AppCompatActivity {
     private final String TAG = "LandingActivity";
 
-//    Button aboutPursuitBtn;
-//    Button viewCompaniesBtn;
     TextView currentUserNameText;
     BottomNavigationView bottomNavigation;
 
