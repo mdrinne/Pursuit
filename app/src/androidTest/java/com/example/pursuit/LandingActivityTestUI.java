@@ -14,28 +14,18 @@ import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static org.junit.Assert.*;
 
-<<<<<<< HEAD
+public class LandingActivityTestUI {
 
-
-public class aboutPursuitActivityTestUI {
-=======
-public class aboutPursuitActivityTestUI {
-
->>>>>>> f6bea3b4c1fcb779dc82cc46c45ae64c7b994592
     @Rule
     public ActivityTestRule<MainActivity> activityRule = new ActivityTestRule<>(MainActivity.class);
 
     @Test
-    public void test_about_pursuit() {
+    public void test_landing() {
         onView(withId(R.id.txtUsernameEmail)).perform(typeText("big@company.com"), closeSoftKeyboard());
         onView(withId(R.id.txtPassword)).perform(typeText("bigcompany"), closeSoftKeyboard());
         onView(withId(R.id.btnLogin)).perform(click());
-<<<<<<< HEAD
-        //onView(withId(R.id.aboutPursuitBtn)).perform(click());
-=======
-        onView(withId(R.id.aboutPursuitBtn)).perform(click());
->>>>>>> f6bea3b4c1fcb779dc82cc46c45ae64c7b994592
-        onView(withId(R.id.backToLandingBtn)).check(matches(isDisplayed()));
+        onView(withId(R.id.new_share)).perform(click());
+        onView(withId(R.id.createShareButton)).check(matches(isDisplayed()));
     }
 
 }
