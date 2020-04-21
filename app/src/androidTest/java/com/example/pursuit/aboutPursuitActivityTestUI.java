@@ -25,7 +25,7 @@ public class aboutPursuitActivityTestUI {
         onView(withId(R.id.txtUsernameEmail)).perform(typeText("big@company.com"), closeSoftKeyboard());
         onView(withId(R.id.txtPassword)).perform(typeText("bigcompany"), closeSoftKeyboard());
         onView(withId(R.id.btnLogin)).perform(click());
-        onView(withId(R.id.aboutPursuitBtn)).perform(click());
+        //onView(withId(R.id.aboutPursuitBtn)).perform(click());
         onView(withId(R.id.backToLandingBtn)).check(matches(isDisplayed()));
     }
 
