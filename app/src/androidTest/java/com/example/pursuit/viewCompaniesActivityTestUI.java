@@ -24,7 +24,11 @@ public class viewCompaniesActivityTestUI {
         onView(withId(R.id.txtUsernameEmail)).perform(typeText("big@company.com"), closeSoftKeyboard());
         onView(withId(R.id.txtPassword)).perform(typeText("bigcompany"), closeSoftKeyboard());
         onView(withId(R.id.btnLogin)).perform(click());
+<<<<<<< HEAD
         //onView(withId(R.id.viewCompaniesBtn)).perform(click());
+=======
+        onView(withId(R.id.viewCompaniesBtn)).perform(click());
+>>>>>>> f6bea3b4c1fcb779dc82cc46c45ae64c7b994592
         onView(withId(R.id.backBtnCompanies)).check(matches(isDisplayed()));
     }
 }
