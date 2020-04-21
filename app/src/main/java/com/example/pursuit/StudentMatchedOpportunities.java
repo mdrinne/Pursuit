@@ -1,11 +1,13 @@
 package com.example.pursuit;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pursuit.adapters.StudentOpportunityAdapter;
@@ -22,6 +24,8 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 public class StudentMatchedOpportunities extends AppCompatActivity {
+
+    private final String TAG = "StudentMAtchedOpps";
 
     Student currentStudent;
 
@@ -57,9 +61,11 @@ public class StudentMatchedOpportunities extends AppCompatActivity {
         allMatchedOpportunities = new ArrayList<>();
 
         if (interests == null) {
+            Log.d(TAG, "NULLLLLLLLLLLL");
             opportunitiesRecycler.setVisibility(View.GONE);
             noInterests.setText("No available opportunities match your interests");
         } else {
+            Log.d(TAG, "intersts not null");
             dbref = FirebaseDatabase.getInstance().getReference();
             opportunityIds = new ArrayList<>();
             interestsParser = 0;
@@ -76,9 +82,10 @@ public class StudentMatchedOpportunities extends AppCompatActivity {
             if (opportunityIds.size() == 0) {
                 opportunitiesRecycler.setVisibility(View.GONE);
                 noInterests.setText("No available opportunities match your interests");
+            } else {
+                getOpportunitiesParser = 0;
+                getOpportunities();
             }
-            getOpportunitiesParser = 0;
-            getOpportunities();
         }
     }
 
@@ -87,7 +94,26 @@ public class StudentMatchedOpportunities extends AppCompatActivity {
             currentOpportunityID = opportunityIds.get(getOpportunitiesParser);
             Query opportunityQuery = dbref.child("CompanyOpportunities").orderByKey().equalTo(currentOpportunityID);
             opportunityQuery.addListenerForSingleValueEvent(opportunityListener);
+        } else {
+            buildRecyclerView();
         }
+    }
+
+    public void buildRecyclerView() {
+        viewMatchedEmployees = findViewById(R.id.rcycOpportunities);
+        viewMatchedEmployees.setHasFixedSize(false);
+        mLayoutManager = new LinearLayoutManager(this);
+        mAdapter = new StudentOpportunityAdapter(allMatchedOpportunities);
+
+        viewMatchedEmployees.setLayoutManager(mLayoutManager);
+        viewMatchedEmployees.setAdapter(mAdapter);
+
+        mAdapter.setStudentOpportunityOnItemClickListener(new StudentOpportunityAdapter.StudentOpportunityOnItemClickListener() {
+            @Override
+            public void onCardClick(int position) {
+
+            }
+        });
     }
 
     /* ********DATABASE******** */
@@ -99,8 +125,12 @@ public class StudentMatchedOpportunities extends AppCompatActivity {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     Keyword keyword = snapshot.getValue(Keyword.class);
                     ArrayList<String> opportunities = keyword.getOpportunities();
+                    if (opportunities == null) {
+                        opportunities = new ArrayList<>();
+                    }
                     for (int i=0; i<opportunities.size(); i++) {
                         if (!opportunityIds.contains(opportunities.get(i))) {
+                            Log.d(TAG, "ADDDDING " + opportunities.get(i));
                             opportunityIds.add(opportunities.get(i));
                         }
                     }
@@ -122,7 +152,9 @@ public class StudentMatchedOpportunities extends AppCompatActivity {
             if (dataSnapshot.exists()) {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     CompanyOpportunity opportunity = snapshot.getValue(CompanyOpportunity.class);
-                    allMatchedOpportunities.add(opportunity);
+                    if (opportunity.getApproved() == 1) {
+                        allMatchedOpportunities.add(opportunity);
+                    }
                 }
             }
             getOpportunitiesParser++;
