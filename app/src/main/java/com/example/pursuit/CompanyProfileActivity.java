@@ -74,6 +74,8 @@ public class CompanyProfileActivity extends AppCompatActivity{
 
     Dialog deleteDialog;
 
+    CompanyProfileActivity THIS;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -93,9 +95,12 @@ public class CompanyProfileActivity extends AppCompatActivity{
         companyProfilePic = findViewById(R.id.imgCompanyProfilePic);
         loadCompanyProfilePicture();
 
-        Query opportunityQuery = dbref.child("CompanyOpportunities").child(currentCompany.getId()).orderByChild("timestamp");
+        companyOpportunities = currentCompany.getOpportunities();
+        buildRecyclerView();
 
-        opportunityQuery.addListenerForSingleValueEvent(companyOpportunityListener);
+//        Query opportunityQuery = dbref.child("CompanyOpportunities").child(currentCompany.getId()).orderByChild("timestamp");
+//
+//        opportunityQuery.addListenerForSingleValueEvent(companyOpportunityListener);
 
     }
 
@@ -255,8 +260,10 @@ public class CompanyProfileActivity extends AppCompatActivity{
             @Override
             public void onClick(View v) {
                 CompanyOpportunity opportunity = companyOpportunities.get(position);
-                dbref.child("CompanyOpportunities").child(currentCompany.getId()).child(opportunity.getId()).removeValue();
+                dbref.child("CompanyOpportunities").child(opportunity.getId()).removeValue();
                 companyOpportunities.remove(opportunity);
+                currentCompany.setOpportunities(companyOpportunities);
+                ((PursuitApplication) THIS.getApplication()).setCurrentCompany(currentCompany);
                 mAdapter.notifyItemRemoved(position);
                 deleteDialog.dismiss();
             }
@@ -273,6 +280,9 @@ public class CompanyProfileActivity extends AppCompatActivity{
     private void buildRecyclerView() {
         allOpportunities = findViewById(R.id.rcycOpportunities);
         allOpportunities.setHasFixedSize(false);
+        if (companyOpportunities == null) {
+            companyOpportunities = new ArrayList<>();
+        }
         mLayoutManager = new LinearLayoutManager(this);
         mAdapter = new OpportunityAdapter(companyOpportunities);
 

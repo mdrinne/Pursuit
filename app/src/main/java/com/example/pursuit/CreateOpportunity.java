@@ -88,7 +88,16 @@ public class CreateOpportunity extends AppCompatActivity implements AdapterView.
     /* ********DATABASE******** */
 
     private void writeNewCompanyOpportunity(String id) {
-        dbref.child("CompanyOpportunities").child(currentCompany.getId()).child(id).setValue(newOpportunity);
+        dbref.child("CompanyOpportunities").child(id).setValue(newOpportunity);
+        ArrayList<CompanyOpportunity> currentCompanyOpportunities;
+        currentCompanyOpportunities = currentCompany.getOpportunities();
+        if (currentCompanyOpportunities == null) {
+            currentCompanyOpportunities = new ArrayList<>();
+        }
+        currentCompanyOpportunities.add(newOpportunity);
+        dbref.child("Companies").child(currentCompany.getId()).child("opportunities").setValue(currentCompanyOpportunities);
+        currentCompany.setOpportunities(currentCompanyOpportunities);
+        ((PursuitApplication) this.getApplication()).setCurrentCompany(currentCompany);
     }
 
     ValueEventListener keywordListener = new ValueEventListener() {
@@ -190,7 +199,7 @@ public class CreateOpportunity extends AppCompatActivity implements AdapterView.
     public void addToDB() {
         id = RandomKeyGenerator.randomAlphaNumeric(16);
         newOpportunity = new CompanyOpportunity(id, currentCompany.getId(), toString(opportunityPosition), toString(opportunityWithWho),
-                toString(opportunityDescription), toString(opportunityCity), selectedState,
+                toString(opportunityDescription), toString(opportunityCity).toLowerCase(), selectedState,
                 toString(opportunityRequirements), keywordArrayList, 0, "", currentCompany.getName());
         if (currentRole.equals("Company") || (currentRole.equals("Employee") && currentEmployee.admin == 1)) {
             newOpportunity.setApproved(1);
