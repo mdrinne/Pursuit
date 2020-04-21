@@ -532,27 +532,24 @@ public class StudentProfileActivity extends AppCompatActivity {
         studentMinor.setVisibility(View.GONE);
         studentMajor.setVisibility(View.GONE);
         studentUniversity.setVisibility(View.GONE);
+
+        editStudentUniversity.setText(currentStudent.getUniversity());
+        editStudentMajor.setText(currentStudent.getMajor());
+        editStudentMinor.setText(currentStudent.getMinor());
+        editStudentGPA.setText(currentStudent.getGpa());
+        editStudentBio.setText(currentStudent.getBio());
     }
 
     public void submitChanges(View view) {
-        //Enter data into firebase
-        if (!isEmpty(editStudentUniversity)) {
-            dbref.child("Students").child(currentStudent.getId()).child("university").setValue(editStudentUniversity.getText().toString());
-        }
-        if (!isEmpty(editStudentMajor)) {
-            dbref.child("Students").child(currentStudent.getId()).child("major").setValue(editStudentMajor.getText().toString());
-        }
-        if (!isEmpty(editStudentMinor)) {
-            dbref.child("Students").child(currentStudent.getId()).child("minor").setValue(editStudentMinor.getText().toString());
-        }
-        if (!isEmpty(editStudentGPA)) {
-            dbref.child("Students").child(currentStudent.getId()).child("gpa").setValue(editStudentGPA.getText().toString());
-        }
-        if (!isEmpty(editStudentBio)) {
-            dbref.child("Students").child(currentStudent.getId()).child("bio").setValue(editStudentBio.getText().toString());
-        }
-        
-        //((PursuitApplication) this.getApplication()).setCurrentStudent();
+        //Update currentStudent fields
+        currentStudent.setUniversity(editStudentUniversity.getText().toString());
+        currentStudent.setMajor(editStudentMajor.getText().toString());
+        currentStudent.setMinor(editStudentMinor.getText().toString());
+        currentStudent.setGpa(editStudentGPA.getText().toString());
+        currentStudent.setBio(editStudentBio.getText().toString());
+
+        //Submit changes to firebase
+        dbref.child("Students").child(currentStudent.getId()).setValue(currentStudent);
 
         exitProfileEditor(view);
     }
@@ -589,5 +586,13 @@ public class StudentProfileActivity extends AppCompatActivity {
         editStudentMinor.setVisibility(View.GONE);
         editStudentMajor.setVisibility(View.GONE);
         editStudentUniversity.setVisibility(View.GONE);
+
+        //Update TextViews
+        currentStudent = ((PursuitApplication) this.getApplication()).getCurrentStudent();
+        studentUniversity.setText(currentStudent.getUniversity());
+        studentMajor.setText(currentStudent.getMajor());
+        studentMinor.setText(currentStudent.getMinor());
+        studentGPA.setText(currentStudent.getGpa());
+        studentBio.setText(currentStudent.getBio());
     }
 }
