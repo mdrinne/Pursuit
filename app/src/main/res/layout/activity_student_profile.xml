@@ -216,6 +216,7 @@
                 android:fontFamily="@font/roboto_medium"
                 android:text="@string/txtEditProfile"
                 android:textColor="@color/colorPrimary"
+                android:onClick="editProfile"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/txtStudentGPAHardcode"
                 app:layout_constraintTop_toBottomOf="@+id/txtStudentGPA" />
@@ -285,6 +286,7 @@
                 android:fontFamily="@font/roboto_medium"
                 android:text="@string/strConfirm"
                 android:textColor="@color/colorPrimary"
+                android:onClick="submitChanges"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/txtStudentGPAHardcode"
                 app:layout_constraintTop_toBottomOf="@id/editStudentGPA" />
@@ -313,6 +315,7 @@
                 android:fontFamily="@font/roboto_medium"
                 android:text="@string/strCancel"
                 android:textColor="@color/colorPrimary"
+                android:onClick="exitProfileEditor"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/txtStudentGPAHardcode"
                 app:layout_constraintTop_toBottomOf="@+id/btnConfirm" />

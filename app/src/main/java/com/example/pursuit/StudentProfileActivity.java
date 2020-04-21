@@ -23,6 +23,8 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -54,6 +56,19 @@ public class StudentProfileActivity extends AppCompatActivity {
     TextView studentGPA;
     TextView studentBio;
     ImageView studentProfilePic;
+    TextView hardcodedUniversity;
+    TextView hardcodedMajor;
+    TextView hardcodedMinor;
+    TextView hardcodedGPA;
+    EditText editStudentUniversity;
+    EditText editStudentMajor;
+    EditText editStudentMinor;
+    EditText editStudentGPA;
+    EditText editStudentBio;
+    Button btnEditProfile;
+    Button btnSubmitChanges;
+    Button btnCancel;
+    TextView txtInterests;
 
     private DatabaseReference dbref;
     Uri filePath;
@@ -105,8 +120,38 @@ public class StudentProfileActivity extends AppCompatActivity {
         studentBio = findViewById(R.id.txtStudentBio);
         studentBio.setText(currentStudent.getBio());
 
-        //IMPLEMENT
-        //EditTexts and two buttons and hardcoded edittexts and Interests textview
+        btnEditProfile = findViewById(R.id.btnEditProfile);
+
+        //Hardcoded TextViews
+        hardcodedUniversity = findViewById(R.id.studentUniversityHardcode);
+        hardcodedMajor = findViewById(R.id.studentMajorHardcode);
+        hardcodedMinor = findViewById(R.id.txtStudentMinorHardcode);
+        hardcodedGPA = findViewById(R.id.txtStudentGPAHardcode);
+
+        // Edit profile EditTexts
+        editStudentBio= findViewById(R.id.editStudentBio);
+        editStudentBio.setVisibility(View.GONE);
+
+        btnCancel = findViewById(R.id.btnCancel);
+        btnCancel.setVisibility(View.GONE);
+
+        btnSubmitChanges = findViewById(R.id.btnConfirm);
+        btnSubmitChanges.setVisibility(View.GONE);
+
+        editStudentGPA = findViewById(R.id.editStudentGPA);
+        editStudentGPA.setVisibility(View.GONE);
+
+        editStudentMinor = findViewById(R.id.editStudentMinor);
+        editStudentMinor.setVisibility(View.GONE);
+
+        editStudentMajor = findViewById(R.id.editStudentMajor);
+        editStudentMajor.setVisibility(View.GONE);
+
+        editStudentUniversity = findViewById(R.id.editStudentUniversity);
+        editStudentUniversity.setVisibility(View.GONE);
+
+        //Interests TextView
+        txtInterests = findViewById(R.id.txtInterests);
 
         interests = currentStudent.getInterestKeywords();
         buildRecyclerView();
@@ -447,5 +492,51 @@ public class StudentProfileActivity extends AppCompatActivity {
             return;
         }
     }
-    
+
+
+    private void editProfile(View v) {
+        editStudentUniversity.setVisibility(View.VISIBLE);
+        editStudentMajor.setVisibility(View.VISIBLE);
+        editStudentMinor.setVisibility(View.VISIBLE);
+        editStudentGPA.setVisibility(View.VISIBLE);
+        editStudentBio.setVisibility(View.VISIBLE);
+        btnSubmitChanges.setVisibility(View.VISIBLE);
+        btnCancel.setVisibility(View.VISIBLE);
+
+        //Rewrite constraints here
+        
+
+        studentBio.setVisibility(View.GONE);
+        btnEditProfile.setVisibility(View.GONE);
+        studentGPA.setVisibility(View.GONE);
+        studentMinor.setVisibility(View.GONE);
+        studentMajor.setVisibility(View.GONE);
+        studentUniversity.setVisibility(View.GONE);
+    }
+
+    private void submitChanges(View v) {
+        //Enter data into firebase
+
+        exitProfileEditor(v);
+    }
+
+    private void exitProfileEditor(View v) {
+        studentUniversity.setVisibility(View.VISIBLE);
+        studentMajor.setVisibility(View.VISIBLE);
+        studentMinor.setVisibility(View.VISIBLE);
+        studentGPA.setVisibility(View.VISIBLE);
+        btnEditProfile.setVisibility(View.VISIBLE);
+        studentBio.setVisibility(View.VISIBLE);
+
+        //Rewrite constraints here
+
+        btnCancel.setVisibility(View.GONE);
+        btnSubmitChanges.setVisibility(View.GONE);
+        editStudentBio.setVisibility(View.GONE);
+        editStudentGPA.setVisibility(View.GONE);
+        editStudentMinor.setVisibility(View.GONE);
+        editStudentMajor.setVisibility(View.GONE);
+        editStudentUniversity.setVisibility(View.GONE);
+    }
+
 }
