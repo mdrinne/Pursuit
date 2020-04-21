@@ -74,7 +74,7 @@ public class CompanyProfileActivity extends AppCompatActivity{
 
     Dialog deleteDialog;
 
-    CompanyProfileActivity THIS;
+//    CompanyProfileActivity THIS;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -260,10 +260,7 @@ public class CompanyProfileActivity extends AppCompatActivity{
             @Override
             public void onClick(View v) {
                 CompanyOpportunity opportunity = companyOpportunities.get(position);
-                dbref.child("CompanyOpportunities").child(opportunity.getId()).removeValue();
-                companyOpportunities.remove(opportunity);
-                currentCompany.setOpportunities(companyOpportunities);
-                ((PursuitApplication) THIS.getApplication()).setCurrentCompany(currentCompany);
+                removeOpportunity(opportunity.getId(), opportunity);
                 mAdapter.notifyItemRemoved(position);
                 deleteDialog.dismiss();
             }
@@ -273,6 +270,14 @@ public class CompanyProfileActivity extends AppCompatActivity{
         deleteMessage.setText(message);
         deleteDialog.show();
 
+    }
+
+    private void removeOpportunity(String id, CompanyOpportunity opportunity) {
+        dbref.child("CompanyOpportunities").child(id).removeValue();
+        companyOpportunities.remove(opportunity);
+        currentCompany.setOpportunities(companyOpportunities);
+        dbref.child("Companies").child(currentCompany.getId()).child("opportunities").setValue(companyOpportunities);
+        ((PursuitApplication) this.getApplication()).setCurrentCompany(currentCompany);
     }
 
     /* ******END DATABASE****** */

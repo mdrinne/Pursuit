@@ -54,11 +54,14 @@ public class StudentMatchedOpportunities extends AppCompatActivity {
         noInterests = findViewById(R.id.txtNoInterests);
         opportunitiesRecycler = findViewById(R.id.rcycOpportunities);
 
+        allMatchedOpportunities = new ArrayList<>();
+
         if (interests == null) {
             opportunitiesRecycler.setVisibility(View.GONE);
             noInterests.setText("No available opportunities match your interests");
         } else {
             dbref = FirebaseDatabase.getInstance().getReference();
+            opportunityIds = new ArrayList<>();
             interestsParser = 0;
             cycleInterests();
         }
@@ -70,6 +73,10 @@ public class StudentMatchedOpportunities extends AppCompatActivity {
             Query keywordQuery = dbref.child("Keywords").orderByChild("text").equalTo(currentInterest);
             keywordQuery.addListenerForSingleValueEvent(keywordListener);
         } else {
+            if (opportunityIds.size() == 0) {
+                opportunitiesRecycler.setVisibility(View.GONE);
+                noInterests.setText("No available opportunities match your interests");
+            }
             getOpportunitiesParser = 0;
             getOpportunities();
         }
@@ -78,7 +85,8 @@ public class StudentMatchedOpportunities extends AppCompatActivity {
     public void getOpportunities() {
         if (getOpportunitiesParser < opportunityIds.size()) {
             currentOpportunityID = opportunityIds.get(getOpportunitiesParser);
-//            Query opportunityQuery = dbref.child("Comp")
+            Query opportunityQuery = dbref.child("CompanyOpportunities").orderByKey().equalTo(currentOpportunityID);
+            opportunityQuery.addListenerForSingleValueEvent(opportunityListener);
         }
     }
 
@@ -100,6 +108,25 @@ public class StudentMatchedOpportunities extends AppCompatActivity {
             }
             interestsParser++;
             cycleInterests();
+        }
+
+        @Override
+        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+        }
+    };
+
+    ValueEventListener opportunityListener = new ValueEventListener() {
+        @Override
+        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+            if (dataSnapshot.exists()) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    CompanyOpportunity opportunity = snapshot.getValue(CompanyOpportunity.class);
+                    allMatchedOpportunities.add(opportunity);
+                }
+            }
+            getOpportunitiesParser++;
+            getOpportunities();
         }
 
         @Override
