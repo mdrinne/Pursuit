@@ -146,7 +146,7 @@ public class LandingActivity extends AppCompatActivity {
             case R.id.navigation_home:
                 return true;
             case R.id.navigation_discover:
-                    Intent discover = new Intent(LandingActivity.this, DiscoverActivity.class);
+                    Intent discover = new Intent(LandingActivity.this, DiscoverActivity2.class);
                     startActivity(discover);
                     finish();
                     return true;

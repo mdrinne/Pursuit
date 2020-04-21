@@ -8,6 +8,18 @@
     android:background="@drawable/gradient_bg"
     tools:context=".DiscoverActivity">
 
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tab_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </androidx.viewpager.widget.ViewPager>
+
     <FrameLayout
         android:id="@+id/container"
         android:layout_width="match_parent"
