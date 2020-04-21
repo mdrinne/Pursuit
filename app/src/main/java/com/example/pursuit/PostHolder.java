@@ -1,5 +1,6 @@
 package com.example.pursuit;
 
+import android.annotation.SuppressLint;
 import android.os.Build;
 import android.view.View;
 import android.widget.TextView;
@@ -10,8 +11,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pursuit.models.Share;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
+import java.time.Period;
 import java.time.ZoneId;
+import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.TimeZone;
@@ -33,6 +37,7 @@ public class PostHolder extends RecyclerView.ViewHolder {
         date = itemView.findViewById(R.id.date);
     }
 
+    @SuppressLint("SetTextI18n")
     public void bind(Share share) {
         userFullName.setText(share.getUserFullName());
         userUsername.setText(share.getUserUsername());
@@ -42,8 +47,31 @@ public class PostHolder extends RecyclerView.ViewHolder {
             subject.setText(share.getSubject());
         }
         message.setText(share.getMessage());
-        ZonedDateTime utc = ZonedDateTime.parse(share.getCreatedAt()).withZoneSameLocal(zoneId);
-        LocalDateTime local = utc.toLocalDateTime();
-        date.setText(local.format(formatter));
+
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            ZonedDateTime now = ZonedDateTime.now(ZoneOffset.UTC);
+            ZonedDateTime approvedTime = ZonedDateTime.parse(share.getCreatedAt());
+            Period ymdDiff = Period.between(approvedTime.toLocalDate(), now.toLocalDate());
+            Duration hmsDiff = Duration.between(approvedTime.toLocalDateTime(), now.toLocalDateTime());
+            Long hmsSeconds = hmsDiff.getSeconds();
+            if (hmsSeconds < 60) {
+                date.setText(hmsSeconds.toString() + "s");
+            } else if (hmsSeconds < 3600){
+                Long minutes = hmsSeconds / 60;
+                date.setText(minutes.toString() + "m");
+            } else if (hmsSeconds < 86400) {
+                Long hours = hmsSeconds / 3600;
+                date.setText(hours.toString() + "h");
+            } else if (ymdDiff.getYears() > 0) {
+                date.setText(ymdDiff.getYears() + "Y");
+            } else if (ymdDiff.getMonths() > 0) {
+                date.setText(ymdDiff.getMonths() + "M");
+            } else {
+                date.setText(ymdDiff.getDays() + "D");
+            }
+        }
+//        ZonedDateTime utc = ZonedDateTime.parse(share.getCreatedAt()).withZoneSameLocal(zoneId);
+//        LocalDateTime local = utc.toLocalDateTime();
+//        date.setText(local.format(formatter));
     }
 }
