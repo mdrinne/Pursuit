@@ -73,15 +73,6 @@ public class DiscoverActivity extends AppCompatActivity {
 
             }
         });
-
-//        SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(this, getSupportFragmentManager(), 2);
-//
-//        ViewPager viewPager = findViewById(R.id.view_pager);
-//        viewPager.setAdapter(sectionsPagerAdapter);
-//
-//        TabLayout tabs = findViewById(R.id.tabs);
-//
-//        tabs.setupWithViewPager(viewPager);
     }
 
     public void toggleFollow(View view) {
