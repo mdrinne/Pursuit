@@ -493,8 +493,7 @@ public class StudentProfileActivity extends AppCompatActivity {
         }
     }
 
-
-    private void editProfile(View v) {
+    public void editProfile(View view) {
         editStudentUniversity.setVisibility(View.VISIBLE);
         editStudentMajor.setVisibility(View.VISIBLE);
         editStudentMinor.setVisibility(View.VISIBLE);
@@ -503,8 +502,22 @@ public class StudentProfileActivity extends AppCompatActivity {
         btnSubmitChanges.setVisibility(View.VISIBLE);
         btnCancel.setVisibility(View.VISIBLE);
 
-        //Rewrite constraints here
-        
+        //Rewrite constraints
+        ConstraintLayout.LayoutParams params = (ConstraintLayout.LayoutParams) txtInterests.getLayoutParams();
+        params.topToBottom = editStudentBio.getId();
+        txtInterests.setLayoutParams(params);
+
+        params = (ConstraintLayout.LayoutParams) hardcodedMajor.getLayoutParams();
+        params.topToBottom = editStudentUniversity.getId();
+        hardcodedMajor.setLayoutParams(params);
+
+        params = (ConstraintLayout.LayoutParams) hardcodedMinor.getLayoutParams();
+        params.topToBottom = editStudentMajor.getId();
+        hardcodedMinor.setLayoutParams(params);
+
+        params = (ConstraintLayout.LayoutParams) hardcodedGPA.getLayoutParams();
+        params.topToBottom = editStudentMinor.getId();
+        hardcodedGPA.setLayoutParams(params);
 
         studentBio.setVisibility(View.GONE);
         btnEditProfile.setVisibility(View.GONE);
@@ -514,13 +527,13 @@ public class StudentProfileActivity extends AppCompatActivity {
         studentUniversity.setVisibility(View.GONE);
     }
 
-    private void submitChanges(View v) {
+    public void submitChanges(View view) {
         //Enter data into firebase
 
-        exitProfileEditor(v);
+        exitProfileEditor(view);
     }
 
-    private void exitProfileEditor(View v) {
+    public void exitProfileEditor(View view) {
         studentUniversity.setVisibility(View.VISIBLE);
         studentMajor.setVisibility(View.VISIBLE);
         studentMinor.setVisibility(View.VISIBLE);
@@ -528,7 +541,22 @@ public class StudentProfileActivity extends AppCompatActivity {
         btnEditProfile.setVisibility(View.VISIBLE);
         studentBio.setVisibility(View.VISIBLE);
 
-        //Rewrite constraints here
+        //Rewrite constraints
+        ConstraintLayout.LayoutParams params = (ConstraintLayout.LayoutParams) txtInterests.getLayoutParams();
+        params.topToBottom = studentBio.getId();
+        txtInterests.setLayoutParams(params);
+
+        params = (ConstraintLayout.LayoutParams) hardcodedMajor.getLayoutParams();
+        params.topToBottom = studentUniversity.getId();
+        hardcodedMajor.setLayoutParams(params);
+
+        params = (ConstraintLayout.LayoutParams) hardcodedMinor.getLayoutParams();
+        params.topToBottom = studentMajor.getId();
+        hardcodedMinor.setLayoutParams(params);
+
+        params = (ConstraintLayout.LayoutParams) hardcodedGPA.getLayoutParams();
+        params.topToBottom = studentMinor.getId();
+        hardcodedGPA.setLayoutParams(params);
 
         btnCancel.setVisibility(View.GONE);
         btnSubmitChanges.setVisibility(View.GONE);
@@ -538,5 +566,4 @@ public class StudentProfileActivity extends AppCompatActivity {
         editStudentMajor.setVisibility(View.GONE);
         editStudentUniversity.setVisibility(View.GONE);
     }
-
 }
