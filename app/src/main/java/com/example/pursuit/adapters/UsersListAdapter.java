@@ -14,7 +14,6 @@ import com.example.pursuit.UserHolder;
 import com.example.pursuit.R;
 import com.example.pursuit.models.Student;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class UsersListAdapter extends RecyclerView.Adapter implements Filterable {
