@@ -70,8 +70,5 @@ public class PostHolder extends RecyclerView.ViewHolder {
                 date.setText(ymdDiff.getDays() + "D");
             }
         }
-//        ZonedDateTime utc = ZonedDateTime.parse(share.getCreatedAt()).withZoneSameLocal(zoneId);
-//        LocalDateTime local = utc.toLocalDateTime();
-//        date.setText(local.format(formatter));
     }
 }

@@ -133,7 +133,7 @@ public class LandingActivity extends AppCompatActivity {
         if (currentStudent != null) {
             sharesQuery = dbRef.child("Students").child(currentStudent.getId()).child("Shares").orderByChild("id");
         } else {
-            sharesQuery = dbRef.child("Employees").child(currentEmployee.getId()).child("Shares").orderByChild("id");
+            sharesQuery = dbRef.child("Companies").child(currentCompany.getId()).child("Shares").orderByChild("id");
         }
 
         sharesQuery.addValueEventListener(sharesListener);
@@ -175,7 +175,6 @@ public class LandingActivity extends AppCompatActivity {
         }
         currentRole = ((PursuitApplication) this.getApplication()).getRole();
     }
-
 
     private void removeCurrentUser() {
         ((PursuitApplication) this.getApplication()).removeCurrentUser();

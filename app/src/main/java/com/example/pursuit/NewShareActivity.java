@@ -88,10 +88,10 @@ public class NewShareActivity extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void writeNewEmployeeShare() {
         String id = RandomKeyGenerator.randomAlphaNumeric(16);
-        String userId = currentEmployee.getId();
-        String userFullName = currentEmployee.getFirstName() + " " + currentEmployee.getLastName();
-        String userUsername = currentEmployee.getUsername();
-        String userRole = "Employee";
+        String userId = currentCompany.getId();
+        String userFullName = currentCompany.getName();
+        String userUsername = currentCompany.getField();
+        String userRole = "Company";
         String type = "Post";
         String subject = subjectText;
         String message = messageText;
@@ -101,15 +101,14 @@ public class NewShareActivity extends AppCompatActivity {
 
         newShare = new Share(id, userId, userFullName, userUsername, userRole, type, subject, message, interestKeywords, likes, createdAt);
 
-        dbRef.child("Employees").child(userId).child("Shares").child(id).setValue(newShare);
+        dbRef.child("Companies").child(userId).child("Shares").child(id).setValue(newShare);
     }
 
     private void findAndSetCurrentUser() {
         if (((PursuitApplication) this.getApplication()).getCurrentStudent() != null) {
             currentStudent = ((PursuitApplication) this.getApplication()).getCurrentStudent();
-        } else if (((PursuitApplication) this.getApplication()).getCurrentEmployee() != null) {
-            currentEmployee = ((PursuitApplication) this.getApplication()).getCurrentEmployee();
         } else {
+            currentEmployee = ((PursuitApplication) this.getApplication()).getCurrentEmployee();
             currentCompany = ((PursuitApplication) this.getApplication()).getCurrentCompany();
         }
         currentRole = ((PursuitApplication) this.getApplication()).getRole();
