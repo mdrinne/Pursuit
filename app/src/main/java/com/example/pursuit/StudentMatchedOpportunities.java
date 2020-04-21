@@ -61,11 +61,9 @@ public class StudentMatchedOpportunities extends AppCompatActivity {
         allMatchedOpportunities = new ArrayList<>();
 
         if (interests == null) {
-            Log.d(TAG, "NULLLLLLLLLLLL");
             opportunitiesRecycler.setVisibility(View.GONE);
             noInterests.setText("No available opportunities match your interests");
         } else {
-            Log.d(TAG, "intersts not null");
             dbref = FirebaseDatabase.getInstance().getReference();
             opportunityIds = new ArrayList<>();
             interestsParser = 0;
@@ -130,7 +128,6 @@ public class StudentMatchedOpportunities extends AppCompatActivity {
                     }
                     for (int i=0; i<opportunities.size(); i++) {
                         if (!opportunityIds.contains(opportunities.get(i))) {
-                            Log.d(TAG, "ADDDDING " + opportunities.get(i));
                             opportunityIds.add(opportunities.get(i));
                         }
                     }
