@@ -159,6 +159,11 @@ public class InviteEmployeeActivity extends AppCompatActivity {
                             startActivity(i0);
                             finish();
                             return true;
+                        case R.id.navigation_discover:
+                            Intent discover = new Intent(InviteEmployeeActivity.this, DiscoverActivity.class);
+                            startActivity(discover);
+                            finish();
+                            return true;
                         case R.id.navigation_messages:
                             return true;
                         case R.id.navigation_profile:
