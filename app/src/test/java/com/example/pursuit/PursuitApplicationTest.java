@@ -6,13 +6,16 @@ import com.example.pursuit.models.Student;
 
 import org.junit.Test;
 
+import java.util.ArrayList;
+
 import static org.junit.Assert.*;
 
 public class PursuitApplicationTest {
 
-    Student testStudent = new Student("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11");
-    Company testCompany = new Company("1", "2", "3", "4", "5");
-    Employee testEmployee = new Employee("1", "2", "3", "4", "5", "6", "7", "8", "9");
+    ArrayList<String> x = new ArrayList<String>(0);
+    Student testStudent = new Student("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", x);
+    Company testCompany = new Company("1", "2", "3", "4", "5", "6");
+    Employee testEmployee = new Employee("1", "2", "3", "4", "5", "6", "7", "8", "9", "10");
     String testRole = "role";
 
     Student testStudentNew = new Student();

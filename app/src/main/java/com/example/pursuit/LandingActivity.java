@@ -82,6 +82,8 @@ public class LandingActivity extends AppCompatActivity {
         if (currentRole.equals("Employee") && currentEmployee.getAdmin() == 0) {
             newShare.setVisibility(View.GONE);
         }
+        String newTitle = "Pursuit (" + currentRole + ")";
+        setTitle(newTitle);
     }
 
     public void newShare(View v) {
