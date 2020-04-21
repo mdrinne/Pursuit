@@ -116,4 +116,11 @@ public class LandingActivity extends AppCompatActivity {
         finish();
     }
 
+    public void matchedOpportunities(View v) {
+        if (currentRole.equals("Student")) {
+            Intent intent = new Intent(LandingActivity.this, StudentMatchedOpportunities.class);
+            startActivity(intent);
+        }
+    }
+
 }
