@@ -441,6 +441,8 @@ public class StudentProfileActivity extends AppCompatActivity {
         } else {
             dbref.child("Students").child(currentStudent.getId()).child("interestKeywords").setValue(interests);
             mAdapter.notifyDataSetChanged();
+            currentStudent.setInterestKeywords(interests);
+            ((PursuitApplication) this.getApplication()).setCurrentStudent(currentStudent);
             return;
         }
     }
