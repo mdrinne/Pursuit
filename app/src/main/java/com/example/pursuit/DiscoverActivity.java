@@ -2,22 +2,22 @@ package com.example.pursuit;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.MenuItem;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.pursuit.models.Company;
 import com.example.pursuit.models.Employee;
 import com.example.pursuit.models.Student;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.tabs.TabLayout;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
+import androidx.annotation.NonNull;
+import androidx.viewpager.widget.ViewPager;
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.view.MenuItem;
+
+import com.example.pursuit.ui.main.SectionsPagerAdapter;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
-import com.google.firebase.database.ValueEventListener;
 
 public class DiscoverActivity extends AppCompatActivity {
     private final String TAG = "DiscoverActivity";
@@ -30,14 +30,51 @@ public class DiscoverActivity extends AppCompatActivity {
     private DatabaseReference dbRef;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_discover);
+
         BottomNavigationView bottomNavigation = findViewById(R.id.bottom_navigation);
         bottomNavigation.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
 
         findAndSetCurrentUser();
         dbRef = FirebaseDatabase.getInstance().getReference();
+
+        TabLayout tabLayout = findViewById(R.id.tabs);
+        tabLayout.addTab(tabLayout.newTab().setText("Users"));
+        tabLayout.addTab(tabLayout.newTab().setText("Companies"));
+        tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+
+        final ViewPager viewPager = findViewById(R.id.view_pager);
+        SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(this, getSupportFragmentManager(), tabLayout.getTabCount());
+        viewPager.setAdapter(sectionsPagerAdapter);
+
+        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                viewPager.setCurrentItem(tab.getPosition());
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+
+//        SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(this, getSupportFragmentManager(), 2);
+//
+//        ViewPager viewPager = findViewById(R.id.view_pager);
+//        viewPager.setAdapter(sectionsPagerAdapter);
+//
+//        TabLayout tabs = findViewById(R.id.tabs);
+//
+//        tabs.setupWithViewPager(viewPager);
     }
 
     private void findAndSetCurrentUser() {
@@ -81,5 +118,4 @@ public class DiscoverActivity extends AppCompatActivity {
                     return false;
                 }
             };
-
 }

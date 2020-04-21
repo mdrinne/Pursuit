@@ -13,8 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".DiscoverActivity2"
-            android:label="@string/title_activity_discover2"
+            android:name=".DiscoverActivity"
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity android:name=".CreateOpportunity" />
         <activity android:name=".viewCompaniesActivity" />
@@ -45,7 +44,6 @@
         <activity android:name=".EmployeeManagement" />
         <activity android:name=".NewConversationActivity" />
         <activity android:name=".NewShareActivity" />
-        <activity android:name=".DiscoverActivity" />
         <activity android:name=".ViewOpportunity" />
 
         <meta-data

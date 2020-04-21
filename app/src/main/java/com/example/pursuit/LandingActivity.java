@@ -8,7 +8,6 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.MenuItem;
 import android.widget.ImageButton;
@@ -146,7 +145,7 @@ public class LandingActivity extends AppCompatActivity {
             case R.id.navigation_home:
                 return true;
             case R.id.navigation_discover:
-                    Intent discover = new Intent(LandingActivity.this, DiscoverActivity2.class);
+                    Intent discover = new Intent(LandingActivity.this, DiscoverActivity.class);
                     startActivity(discover);
                     finish();
                     return true;
