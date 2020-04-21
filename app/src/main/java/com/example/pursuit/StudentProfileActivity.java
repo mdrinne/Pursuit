@@ -13,6 +13,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -493,6 +494,12 @@ public class StudentProfileActivity extends AppCompatActivity {
         }
     }
 
+    // Checks If TextField Is Empty
+    boolean isEmpty(EditText text) {
+        CharSequence str = text.getText().toString();
+        return TextUtils.isEmpty(str);
+    }
+
     public void editProfile(View view) {
         editStudentUniversity.setVisibility(View.VISIBLE);
         editStudentMajor.setVisibility(View.VISIBLE);
@@ -529,6 +536,23 @@ public class StudentProfileActivity extends AppCompatActivity {
 
     public void submitChanges(View view) {
         //Enter data into firebase
+        if (!isEmpty(editStudentUniversity)) {
+            dbref.child("Students").child(currentStudent.getId()).child("university").setValue(editStudentUniversity.getText().toString());
+        }
+        if (!isEmpty(editStudentMajor)) {
+            dbref.child("Students").child(currentStudent.getId()).child("major").setValue(editStudentMajor.getText().toString());
+        }
+        if (!isEmpty(editStudentMinor)) {
+            dbref.child("Students").child(currentStudent.getId()).child("minor").setValue(editStudentMinor.getText().toString());
+        }
+        if (!isEmpty(editStudentGPA)) {
+            dbref.child("Students").child(currentStudent.getId()).child("gpa").setValue(editStudentGPA.getText().toString());
+        }
+        if (!isEmpty(editStudentBio)) {
+            dbref.child("Students").child(currentStudent.getId()).child("bio").setValue(editStudentBio.getText().toString());
+        }
+        
+        //((PursuitApplication) this.getApplication()).setCurrentStudent();
 
         exitProfileEditor(view);
     }
