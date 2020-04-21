@@ -115,6 +115,9 @@ public class StudentProfileActivity extends AppCompatActivity {
         studentProfilePic = findViewById(R.id.imgStudentProfilePic);
         loadStudentProfilePicture();
 
+        String newTitle = "Pursuit (" + "Student" + ")";
+        setTitle(newTitle);
+
     }
 
     /* ********DATABASE******** */
@@ -129,6 +132,7 @@ public class StudentProfileActivity extends AppCompatActivity {
                 }
             }
             postStudentHasProfilePictureListener();
+
         }
 
         @Override

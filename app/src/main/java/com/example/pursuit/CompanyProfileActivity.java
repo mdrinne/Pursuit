@@ -97,6 +97,8 @@ public class CompanyProfileActivity extends AppCompatActivity{
 
         opportunityQuery.addListenerForSingleValueEvent(companyOpportunityListener);
 
+        String newTitle = "Pursuit (" + "Company" + ")";
+        setTitle(newTitle);
     }
 
     /* ********DATABASE******** */

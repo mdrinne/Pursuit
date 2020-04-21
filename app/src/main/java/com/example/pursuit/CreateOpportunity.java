@@ -83,6 +83,9 @@ public class CreateOpportunity extends AppCompatActivity implements AdapterView.
         dbref = FirebaseDatabase.getInstance().getReference();
         setCurrentUser();
 
+        String newTitle = "Pursuit (" + "Company" + ")";
+        setTitle(newTitle);
+
     }
 
     /* ********DATABASE******** */

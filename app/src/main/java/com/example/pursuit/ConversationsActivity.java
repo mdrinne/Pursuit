@@ -61,6 +61,8 @@ public class ConversationsActivity extends AppCompatActivity
         dbRef = FirebaseDatabase.getInstance().getReference();
 
         getMyConversations();
+        String newTitle = "Pursuit (" + currentRole + ")";
+        setTitle(newTitle);
     }
 
     ValueEventListener myConversationsListener = new ValueEventListener() {
