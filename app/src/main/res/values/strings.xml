@@ -226,4 +226,7 @@
     <string name="strInterests">Interests</string>
     <string name="strAddInterests">Add Interests</string>
     <string name="enter_a_username">Enter a username</string>
+    <string name="strFilter">Filter</string>
+    <string name="strKeyword">Keyword</string>
+    <string name="strClearFilter">Clear Filter</string>
 </resources>

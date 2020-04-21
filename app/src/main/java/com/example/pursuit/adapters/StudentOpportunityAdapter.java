@@ -101,7 +101,7 @@ public class StudentOpportunityAdapter extends RecyclerView.Adapter<StudentOppor
         holder.companyName.setText(currentOpportunity.getCompanyName());
         holder.position.setText(currentOpportunity.getPosition());
         holder.city.setText(currentOpportunity.getCity() + ", ");
-        holder.city.setText(currentOpportunity.getState());
+        holder.state.setText(currentOpportunity.getState());
         if (!currentOpportunity.getWithWho().equals("")) {
             holder.with.setText("With: " + currentOpportunity.getWithWho());
         }
