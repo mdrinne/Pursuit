@@ -68,8 +68,11 @@ public class LandingActivity extends AppCompatActivity {
         String currentUserNameString;
         if (currentRole.equals("Student")) {
             currentUserNameString = currentStudent.getUsername();
-        } else {
+        } else if (currentRole.equals("Employee")) {
             currentUserNameString = currentEmployee.getUsername();
+        }
+        else {
+            currentUserNameString = currentCompany.getName();
         }
 
         currentUserNameText = findViewById(R.id.currentUserName);
