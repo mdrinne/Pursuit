@@ -145,6 +145,11 @@ public class LandingActivity extends AppCompatActivity {
             switch (item.getItemId()) {
             case R.id.navigation_home:
                 return true;
+            case R.id.navigation_discover:
+                    Intent discover = new Intent(LandingActivity.this, DiscoverActivity.class);
+                    startActivity(discover);
+                    finish();
+                    return true;
             case R.id.navigation_messages:
                 Intent messages = new Intent(LandingActivity.this, ConversationsActivity.class);
                 startActivity(messages);
