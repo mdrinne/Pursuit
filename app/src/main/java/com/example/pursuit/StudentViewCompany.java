@@ -3,7 +3,6 @@ package com.example.pursuit;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -121,7 +120,7 @@ public class StudentViewCompany extends AppCompatActivity {
     }
 
     private void buildRecyclerView() {
-        viewOpportunities = findViewById(R.id.rcycOpportunities);
+        viewOpportunities = findViewById(R.id.rcycStudents);
         viewOpportunities.setHasFixedSize(false);
         filteredOpportunities = new ArrayList<>();
         if (opportunities != null) {

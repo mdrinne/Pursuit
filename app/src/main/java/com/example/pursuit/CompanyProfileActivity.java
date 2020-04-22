@@ -310,7 +310,7 @@ public class CompanyProfileActivity extends AppCompatActivity{
     /* ******END DATABASE****** */
 
     private void buildRecyclerView() {
-        allOpportunities = findViewById(R.id.rcycOpportunities);
+        allOpportunities = findViewById(R.id.rcycStudents);
         allOpportunities.setHasFixedSize(false);
         if (companyOpportunities == null) {
             companyOpportunities = new ArrayList<>();
