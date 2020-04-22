@@ -8,6 +8,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.MenuItem;
 import android.widget.ImageButton;
@@ -46,6 +47,7 @@ public class LandingActivity extends AppCompatActivity {
     private String currentRole;
 
     private ArrayList<Share> shareList;
+    private ArrayList<String> followingIds = new ArrayList<>();
 
     private DatabaseReference dbRef;
 
@@ -60,7 +62,7 @@ public class LandingActivity extends AppCompatActivity {
         findAndSetCurrentUser();
         dbRef = FirebaseDatabase.getInstance().getReference();
 
-        getShares();
+        getMyShares();
 
         String currentUserNameString;
         if (currentRole.equals("Student")) {
@@ -84,7 +86,7 @@ public class LandingActivity extends AppCompatActivity {
         this.startActivity(newShareActivity);
     }
 
-    ValueEventListener sharesListener = new ValueEventListener() {
+    ValueEventListener mySharesListener = new ValueEventListener() {
         @RequiresApi(api = Build.VERSION_CODES.N)
         @Override
         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -100,7 +102,7 @@ public class LandingActivity extends AppCompatActivity {
                 }
             }
 
-            postSharesListener();
+            postMySharesListener();
         }
 
         @Override
@@ -108,7 +110,102 @@ public class LandingActivity extends AppCompatActivity {
     };
 
     @RequiresApi(api = Build.VERSION_CODES.N)
-    private void postSharesListener() {
+    private void postMySharesListener() {
+//        shareList.sort(new Comparator<Share>() {
+//            @RequiresApi(api = Build.VERSION_CODES.O)
+//            @Override
+//            public int compare(Share o1, Share o2) {
+//                return ZonedDateTime.parse(o1.getCreatedAt()).compareTo(ZonedDateTime.parse(o2.getCreatedAt()));
+//            }
+//        });
+//
+//        RecyclerView sharesRecycler = findViewById(R.id.shares_recycler);
+//        ShareListAdapter shareListAdapter = new ShareListAdapter(this, shareList);
+//        sharesRecycler.setAdapter(shareListAdapter);
+//        sharesRecycler.setLayoutManager(new LinearLayoutManager(this));
+
+        getFollowingStudentShares();
+
+    }
+
+    private void getMyShares() {
+        Query sharesQuery;
+        if (currentStudent != null) {
+            sharesQuery = dbRef.child("Students").child(currentStudent.getId()).child("Shares").orderByChild("id");
+        } else {
+            sharesQuery = dbRef.child("Companies").child(currentCompany.getId()).child("Shares").orderByChild("id");
+        }
+
+        sharesQuery.addValueEventListener(mySharesListener);
+    }
+
+    private void getFollowingStudentShares() {
+        Query studentSharesQuery;
+        if (currentRole.equals("Student")) {
+            studentSharesQuery = dbRef.child("Students").child(currentStudent.getId()).child("Following").child("Students").orderByChild("id");
+        } else {
+            studentSharesQuery = dbRef.child("Companies").child(currentCompany.getId()).child("Following").child("Students").orderByChild("id");
+
+        }
+        studentSharesQuery.addValueEventListener(studentSharesListener);
+    }
+
+    ValueEventListener studentSharesListener = new ValueEventListener() {
+        @Override
+        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+            if (dataSnapshot.exists()) {
+                for (DataSnapshot snapshot : dataSnapshot.child("Shares").getChildren()) {
+                    Log.d(TAG, "snapshot exists for company shares");
+                    Share share = snapshot.getValue(Share.class);
+
+                    if (share != null) {
+                        shareList.add(0, share);
+                    }
+                }
+            }
+
+            getFollowingCompanyShares();
+        }
+
+        @Override
+        public void onCancelled(@NonNull DatabaseError databaseError) { }
+    };
+
+    private void getFollowingCompanyShares() {
+        Query companySharesQuery;
+        if (currentRole.equals("Student")) {
+            companySharesQuery = dbRef.child("Students").child(currentStudent.getId()).child("Following").child("Companies").orderByChild("id");
+        } else {
+            companySharesQuery = dbRef.child("Companies").child(currentCompany.getId()).child("Following").child("Companies").orderByChild("id");
+        }
+        companySharesQuery.addValueEventListener(companySharesListener);
+    }
+
+    ValueEventListener companySharesListener = new ValueEventListener() {
+        @RequiresApi(api = Build.VERSION_CODES.N)
+        @Override
+        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+            if (dataSnapshot.exists()) {
+                for (DataSnapshot snapshot : dataSnapshot.child("Shares").getChildren()) {
+                    Log.d(TAG, "snapshot exists for company shares");
+//                    Company company = snapshot.getValue(Company.class);
+                    Share share = snapshot.getValue(Share.class);
+
+                    if (share != null) {
+                        shareList.add(0, share);
+                    }
+                }
+            }
+
+            setRecyclerAdapter();
+        }
+
+        @Override
+        public void onCancelled(@NonNull DatabaseError databaseError) { }
+    };
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    private void setRecyclerAdapter() {
         shareList.sort(new Comparator<Share>() {
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
@@ -121,17 +218,6 @@ public class LandingActivity extends AppCompatActivity {
         ShareListAdapter shareListAdapter = new ShareListAdapter(this, shareList);
         sharesRecycler.setAdapter(shareListAdapter);
         sharesRecycler.setLayoutManager(new LinearLayoutManager(this));
-    }
-
-    private void getShares() {
-        Query sharesQuery;
-        if (currentStudent != null) {
-            sharesQuery = dbRef.child("Students").child(currentStudent.getId()).child("Shares").orderByChild("id");
-        } else {
-            sharesQuery = dbRef.child("Companies").child(currentCompany.getId()).child("Shares").orderByChild("id");
-        }
-
-        sharesQuery.addValueEventListener(sharesListener);
     }
 
     BottomNavigationView.OnNavigationItemSelectedListener navigationItemSelectedListener =
