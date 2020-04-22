@@ -61,15 +61,17 @@ public class UserHolder extends RecyclerView.ViewHolder {
                     .orderByChild("id").equalTo(student.getId());
         }
 
-        checkFollowStatusQuery.addListenerForSingleValueEvent(checkFollowStatusListener);
+        checkFollowStatusQuery.addValueEventListener(checkFollowStatusListener);
     }
 
     private ValueEventListener checkFollowStatusListener = new ValueEventListener() {
         @Override
         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
             if (dataSnapshot.exists()) {
+                Log.d(TAG, "changing to check");
                 updateToggleBtnBackground(1);
             } else {
+                Log.d(TAG, "changing to x");
                 updateToggleBtnBackground(0);
             }
         }
@@ -80,7 +82,6 @@ public class UserHolder extends RecyclerView.ViewHolder {
 
     private void updateToggleBtnBackground(int exists) {
         if (exists == 1) {
-            Log.d(TAG, "TOGGLING");
             toggleFollow.setBackgroundResource(R.drawable.ic_check_black_24dp);
         } else {
             toggleFollow.setBackgroundResource(R.drawable.ic_add_black_24dp);

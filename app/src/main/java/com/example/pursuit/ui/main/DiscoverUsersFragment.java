@@ -35,19 +35,11 @@ import java.util.ArrayList;
  * create an instance of this fragment.
  */
 public class DiscoverUsersFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "currentUserId";
     private static final String ARG_PARAM2 = "currentUserRole";
 
-    // TODO: Rename and change types of parameters
     private String currentUserId;
     private String currentUserRole;
-
-    private Student currentStudent;
-    private Employee currentEmployee;
-    private Company currentCompany;
-    private String currentRole;
     private ArrayList<Student> usersList;
 
     private DatabaseReference dbRef;
@@ -63,6 +55,7 @@ public class DiscoverUsersFragment extends Fragment {
      * this fragment using the provided parameters.
      *
      * @param currentUserId Parameter 1.
+     * @param
      * @return A new instance of fragment DiscoverUsersFragment.
      */
     public static DiscoverUsersFragment newInstance(String currentUserId, String currentUserRole) {

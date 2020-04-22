@@ -137,7 +137,7 @@ public class DiscoverActivity extends AppCompatActivity {
             dbRef.child("Students").child(currentStudent.getId()).child("Following").child("Students")
                     .child(toggleFollowingStudent.getId()).setValue(toggleFollowingStudent);
         } else {
-            dbRef.child("Companies").child(currentCompany.getId()).child("Following").child("Students")
+            dbRef.child("Companies").child(currentEmployee.getCompanyID()).child("Following").child("Students")
                     .child(toggleFollowingStudent.getId()).setValue(toggleFollowingStudent);
         }
     }
