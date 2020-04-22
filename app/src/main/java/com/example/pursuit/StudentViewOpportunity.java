@@ -43,7 +43,7 @@ public class StudentViewOpportunity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_student_view_opportunity);
+        setContentView(R.layout.activity_non_owner_view_opportunity);
         bottomNavigation = findViewById(R.id.bottom_navigation);
         bottomNavigation.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
 
@@ -126,6 +126,12 @@ public class StudentViewOpportunity extends AppCompatActivity {
 
         opportunityKeywords.setLayoutManager(mLayoutManager);
         opportunityKeywords.setAdapter(mAdapter);
+    }
+
+    public void companyProfile(View v) {
+        Intent intent = new Intent(StudentViewOpportunity.this, StudentViewCompany.class);
+        intent.putExtra("EXTRA_COMPANY_ID", currentOpportunity.getCompanyID());
+        startActivity(intent);
     }
 
     BottomNavigationView.OnNavigationItemSelectedListener navigationItemSelectedListener =
