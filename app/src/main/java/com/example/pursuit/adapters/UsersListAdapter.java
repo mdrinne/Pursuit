@@ -22,11 +22,15 @@ public class UsersListAdapter extends RecyclerView.Adapter implements Filterable
     private Context context;
     private ArrayList<Student> usersList;
     private ArrayList<Student> originalList;
+    private String currentUserId;
+    private String currentUserRole;
 
-    public UsersListAdapter(Context context, ArrayList<Student> usersList) {
+    public UsersListAdapter(Context context, ArrayList<Student> usersList, String currentUserId, String currentUserRole) {
         this.context = context;
         this.usersList = usersList;
         this.originalList = usersList;
+        this.currentUserId = currentUserId;
+        this.currentUserRole = currentUserRole;
     }
 
     @NonNull
@@ -40,7 +44,7 @@ public class UsersListAdapter extends RecyclerView.Adapter implements Filterable
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         Student student = usersList.get(position);
-        ((UserHolder) holder).bind(student);
+        ((UserHolder) holder).bind(student, currentUserId, currentUserRole);
     }
 
     @Override

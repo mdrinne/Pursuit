@@ -22,12 +22,14 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
     private final Context mContext;
     private int numTabs;
     private String currentUserId;
+    private String currentUserRole;
 
-    public SectionsPagerAdapter(Context context, FragmentManager fm, int numTabs, String currentUserId) {
+    public SectionsPagerAdapter(Context context, FragmentManager fm, int numTabs, String currentUserId, String currentUserRole) {
         super(fm);
         this.mContext = context;
         this.numTabs = numTabs;
         this.currentUserId = currentUserId;
+        this.currentUserRole = currentUserRole;
     }
 
     @Override
@@ -35,7 +37,7 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
         // getItem is called to instantiate the fragment for the given page.
         switch(position) {
             case 0:
-                return DiscoverUsersFragment.newInstance(currentUserId);
+                return DiscoverUsersFragment.newInstance(currentUserId, currentUserRole);
             case 1:
                 return new DiscoverCompaniesFragment();
             default:

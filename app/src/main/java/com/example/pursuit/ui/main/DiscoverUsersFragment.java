@@ -37,10 +37,12 @@ import java.util.ArrayList;
 public class DiscoverUsersFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
+    private static final String ARG_PARAM1 = "currentUserId";
+    private static final String ARG_PARAM2 = "currentUserRole";
 
     // TODO: Rename and change types of parameters
-    private String mParam1;
+    private String currentUserId;
+    private String currentUserRole;
 
     private Student currentStudent;
     private Employee currentEmployee;
@@ -61,11 +63,11 @@ public class DiscoverUsersFragment extends Fragment {
      * @param currentUserId Parameter 1.
      * @return A new instance of fragment DiscoverUsersFragment.
      */
-    // TODO: Rename and change types and number of parameters
-    public static DiscoverUsersFragment newInstance(String currentUserId) {
+    public static DiscoverUsersFragment newInstance(String currentUserId, String currentUserRole) {
         DiscoverUsersFragment fragment = new DiscoverUsersFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, currentUserId);
+        args.putString(ARG_PARAM2, currentUserRole);
         fragment.setArguments(args);
         return fragment;
     }
@@ -74,7 +76,8 @@ public class DiscoverUsersFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
+            currentUserId = getArguments().getString(ARG_PARAM1);
+            currentUserRole = getArguments().getString(ARG_PARAM2);
         }
         dbRef = FirebaseDatabase.getInstance().getReference();
         getUsers();
@@ -102,7 +105,7 @@ public class DiscoverUsersFragment extends Fragment {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     Student student = snapshot.getValue(Student.class);
 
-                    if (student != null && !student.getId().equals(mParam1)) {
+                    if (student != null && !student.getId().equals(currentUserId)) {
                         usersList.add(student);
                     }
                 }
@@ -112,14 +115,12 @@ public class DiscoverUsersFragment extends Fragment {
         }
 
         @Override
-        public void onCancelled(@NonNull DatabaseError databaseError) {
-
-        }
+        public void onCancelled(@NonNull DatabaseError databaseError) { }
     };
 
     private void postUsersListener() {
         RecyclerView usersRecycler = getView().findViewById(R.id.users_recycler);
-        final UsersListAdapter usersListAdapter = new UsersListAdapter(getContext(), usersList);
+        final UsersListAdapter usersListAdapter = new UsersListAdapter(getContext(), usersList, currentUserId, currentUserRole);
         usersRecycler.setAdapter(usersListAdapter);
         usersRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
         EditText usersFilter = getView().findViewById(R.id.users_filter);

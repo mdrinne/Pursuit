@@ -38,6 +38,7 @@ public class DiscoverActivity extends AppCompatActivity {
     private String currentRole;
 
     private Student toggleFollowingStudent;
+    private View toggleView;
 
     private DatabaseReference dbRef;
 
@@ -62,9 +63,9 @@ public class DiscoverActivity extends AppCompatActivity {
         if (currentStudent != null) {
             currentUserId = currentStudent.getId();
         } else {
-            currentUserId = currentEmployee.getId();
+            currentUserId = currentEmployee.getCompanyID();
         }
-        SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(this, getSupportFragmentManager(), tabLayout.getTabCount(), currentUserId);
+        SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(this, getSupportFragmentManager(), tabLayout.getTabCount(), currentUserId, currentRole);
         viewPager.setAdapter(sectionsPagerAdapter);
 
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
@@ -85,6 +86,8 @@ public class DiscoverActivity extends AppCompatActivity {
     public void toggleFollowStudent(View view) {
         Log.d(TAG, "toggling follow student");
         toggleFollowingStudent = (Student) view.getTag();
+        toggleView = view;
+        Log.d(TAG, toggleView.getClass().toString());
         checkFollowStatus();
     }
 
@@ -121,13 +124,24 @@ public class DiscoverActivity extends AppCompatActivity {
     };
 
     private void unFollowStudent() {
+        Log.d("TOGGLE_ID", toggleFollowingStudent.getId());
         if (currentRole.equals("Student")) {
-            dbRef.child("Students").child(currentStudent.getId()).child("Following").child("Students")
-                    .child(toggleFollowingStudent.getId()).removeValue();
+            DatabaseReference followRef = dbRef.child("Students").child(currentStudent.getId())
+                    .child("Following").child("Students").child(toggleFollowingStudent.getId());
+
+            followRef.removeValue();
+//            dbRef.child("Students").child(currentStudent.getId()).child("Following").child("Students")
+//                    .child(toggleFollowingStudent.getId()).removeValue();
         } else {
-            dbRef.child("Companies").child(currentCompany.getId()).child("Following").child("Students")
-                    .child(toggleFollowingStudent.getId()).removeValue();
+            DatabaseReference followRef = dbRef.child("Companies").child(currentCompany.getId())
+                    .child("Following").child("Students").child(toggleFollowingStudent.getId());
+
+            followRef.removeValue();
+//            dbRef.child("Companies").child(currentCompany.getId()).child("Following").child("Students")
+//                    .child(toggleFollowingStudent.getId()).removeValue();
         }
+
+//        toggleFollowButton();
     }
 
     private void followStudent() {
@@ -139,11 +153,17 @@ public class DiscoverActivity extends AppCompatActivity {
                     .child(toggleFollowingStudent.getId()).setValue(toggleFollowingStudent);
         }
 
-        toggleFollowButton();
+//        toggleFollowButton();
     }
 
     private void toggleFollowButton() {
         Log.d(TAG, "toggle follow button");
+        toggleView.getClass();
+        if (toggleView.getBackground().equals(getResources().getDrawable(R.drawable.ic_add_black_24dp))) {
+            toggleView.setBackgroundResource(R.drawable.ic_check_black_24dp);
+        } else {
+            toggleView.setBackgroundResource(R.drawable.ic_add_black_24dp);
+        }
     }
 
     private void findAndSetCurrentUser() {
