@@ -23,11 +23,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageButton;
 
 import com.example.pursuit.ui.main.SectionsPagerAdapter;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
+
 
 public class DiscoverActivity extends AppCompatActivity {
     private final String TAG = "DiscoverActivity";
@@ -38,7 +36,6 @@ public class DiscoverActivity extends AppCompatActivity {
     private String currentRole;
 
     private Student toggleFollowingStudent;
-    private View toggleView;
 
     private DatabaseReference dbRef;
 
@@ -86,14 +83,11 @@ public class DiscoverActivity extends AppCompatActivity {
     public void toggleFollowStudent(View view) {
         Log.d(TAG, "toggling follow student");
         toggleFollowingStudent = (Student) view.getTag();
-        toggleView = view;
-        Log.d(TAG, toggleView.getClass().toString());
+        Log.d(TAG, view.getClass().toString());
         checkFollowStatus();
     }
 
     private void checkFollowStatus() {
-        Log.d(TAG, "checkFollowStatus");
-        Log.d("TOGGLE_ID", toggleFollowingStudent.getId());
         Query checkQuery;
         if (currentRole.equals("Student")) {
             checkQuery = dbRef.child("Students").child(currentStudent.getId()).child("Following").child("Students")
@@ -125,48 +119,26 @@ public class DiscoverActivity extends AppCompatActivity {
     };
 
     private void unFollowStudent() {
-        Log.d(TAG, "in unFollowStudent");
-        Log.d("TOGGLE_ID", toggleFollowingStudent.getId());
         if (currentRole.equals("Student")) {
             DatabaseReference followRef = dbRef.child("Students").child(currentStudent.getId())
                     .child("Following").child("Students").child(toggleFollowingStudent.getId());
 
             followRef.removeValue();
-//            dbRef.child("Students").child(currentStudent.getId()).child("Following").child("Students")
-//                    .child(toggleFollowingStudent.getId()).removeValue();
         } else {
             DatabaseReference followRef = dbRef.child("Companies").child(currentCompany.getId())
                     .child("Following").child("Students").child(toggleFollowingStudent.getId());
 
             followRef.removeValue();
-//            dbRef.child("Companies").child(currentCompany.getId()).child("Following").child("Students")
-//                    .child(toggleFollowingStudent.getId()).removeValue();
         }
-
-//        toggleFollowButton();
     }
 
     private void followStudent() {
-        Log.d(TAG, "in followStudent");
-        Log.d("TOGGLE_ID", toggleFollowingStudent.getId());
         if (currentRole.equals("Student")) {
             dbRef.child("Students").child(currentStudent.getId()).child("Following").child("Students")
                     .child(toggleFollowingStudent.getId()).setValue(toggleFollowingStudent);
         } else {
             dbRef.child("Companies").child(currentCompany.getId()).child("Following").child("Students")
                     .child(toggleFollowingStudent.getId()).setValue(toggleFollowingStudent);
-        }
-
-//        toggleFollowButton();
-    }
-
-    private void toggleFollowButton() {
-        Log.d(TAG, "toggle follow button");
-        toggleView.getClass();
-        if (toggleView.getBackground().equals(getResources().getDrawable(R.drawable.ic_add_black_24dp))) {
-            toggleView.setBackgroundResource(R.drawable.ic_check_black_24dp);
-        } else {
-            toggleView.setBackgroundResource(R.drawable.ic_add_black_24dp);
         }
     }
 
