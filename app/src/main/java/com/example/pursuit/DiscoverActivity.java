@@ -89,7 +89,6 @@ public class DiscoverActivity extends AppCompatActivity {
     public void toggleFollowStudent(View view) {
         Log.d(TAG, "toggling follow student");
         toggleFollowingStudent = (Student) view.getTag();
-        Log.d(TAG, view.getClass().toString());
         checkFollowStatus();
     }
 
