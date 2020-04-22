@@ -143,7 +143,7 @@ public class StudentViewOpportunity extends AppCompatActivity {
                             finish();
                             return true;
                         case R.id.navigation_profile:
-                            Intent i2 = new Intent(StudentViewOpportunity.this, CompanyProfileActivity.class);
+                            Intent i2 = new Intent(StudentViewOpportunity.this, StudentProfileActivity.class);
                             startActivity(i2);
                             finish();
                             return true;
