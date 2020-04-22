@@ -44,7 +44,6 @@ public class StudentViewCompany extends AppCompatActivity {
 
     private DatabaseReference dbref;
 
-//    FirebaseStorage storage;
     StorageReference sref;
 
     private final int PICK_IMAGE_REQUEST = 22;
