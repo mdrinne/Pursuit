@@ -46,7 +46,7 @@ public class LandingActivity extends AppCompatActivity {
     private Company currentCompany;
     private String currentRole;
 
-    private ArrayList<Share> shareList;
+    private ArrayList<Share> shareList = new ArrayList<>();
     private ArrayList<String> followingIds = new ArrayList<>();
 
     private DatabaseReference dbRef;
@@ -62,7 +62,7 @@ public class LandingActivity extends AppCompatActivity {
         findAndSetCurrentUser();
         dbRef = FirebaseDatabase.getInstance().getReference();
 
-        getMyShares();
+        getShares();
 
         String currentUserNameString;
         if (currentRole.equals("Student")) {
@@ -86,6 +86,19 @@ public class LandingActivity extends AppCompatActivity {
         this.startActivity(newShareActivity);
     }
 
+    private void getShares() {
+//        Query sharesQuery;
+//        if (currentStudent != null) {
+//            sharesQuery = dbRef.child("Students").child(currentStudent.getId()).child("Shares").orderByChild("id");
+//        } else {
+//            sharesQuery = dbRef.child("Companies").child(currentCompany.getId()).child("Shares").orderByChild("id");
+//        }
+//
+//        sharesQuery.addValueEventListener(mySharesListener);
+
+        getFollowingStudentIds();
+    }
+
     ValueEventListener mySharesListener = new ValueEventListener() {
         @RequiresApi(api = Build.VERSION_CODES.N)
         @Override
@@ -102,97 +115,104 @@ public class LandingActivity extends AppCompatActivity {
                 }
             }
 
-            postMySharesListener();
+            getFollowingStudentIds();
         }
 
         @Override
         public void onCancelled(@NonNull DatabaseError databaseError) { }
     };
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
-    private void postMySharesListener() {
-//        shareList.sort(new Comparator<Share>() {
-//            @RequiresApi(api = Build.VERSION_CODES.O)
-//            @Override
-//            public int compare(Share o1, Share o2) {
-//                return ZonedDateTime.parse(o1.getCreatedAt()).compareTo(ZonedDateTime.parse(o2.getCreatedAt()));
-//            }
-//        });
-//
-//        RecyclerView sharesRecycler = findViewById(R.id.shares_recycler);
-//        ShareListAdapter shareListAdapter = new ShareListAdapter(this, shareList);
-//        sharesRecycler.setAdapter(shareListAdapter);
-//        sharesRecycler.setLayoutManager(new LinearLayoutManager(this));
-
-        getFollowingStudentShares();
-
-    }
-
-    private void getMyShares() {
-        Query sharesQuery;
-        if (currentStudent != null) {
-            sharesQuery = dbRef.child("Students").child(currentStudent.getId()).child("Shares").orderByChild("id");
-        } else {
-            sharesQuery = dbRef.child("Companies").child(currentCompany.getId()).child("Shares").orderByChild("id");
-        }
-
-        sharesQuery.addValueEventListener(mySharesListener);
-    }
-
-    private void getFollowingStudentShares() {
-        Query studentSharesQuery;
+    private void getFollowingStudentIds() {
+        Query studentIdsQuery;
         if (currentRole.equals("Student")) {
-            studentSharesQuery = dbRef.child("Students").child(currentStudent.getId()).child("Following").child("Students").orderByChild("id");
+            studentIdsQuery = dbRef.child("Students").child(currentStudent.getId()).child("Following").child("Students").orderByChild("id");
         } else {
-            studentSharesQuery = dbRef.child("Companies").child(currentCompany.getId()).child("Following").child("Students").orderByChild("id");
+            studentIdsQuery = dbRef.child("Companies").child(currentCompany.getId()).child("Following").child("Students").orderByChild("id");
 
         }
-        studentSharesQuery.addValueEventListener(studentSharesListener);
+        studentIdsQuery.addValueEventListener(studentIdsListener);
     }
 
-    ValueEventListener studentSharesListener = new ValueEventListener() {
+    ValueEventListener studentIdsListener = new ValueEventListener() {
         @Override
         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
             if (dataSnapshot.exists()) {
-                for (DataSnapshot snapshot : dataSnapshot.child("Shares").getChildren()) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     Log.d(TAG, "snapshot exists for company shares");
-                    Share share = snapshot.getValue(Share.class);
+                    Student student = snapshot.getValue(Student.class);
 
-                    if (share != null) {
-                        shareList.add(0, share);
+                    if (student != null) {
+                        followingIds.add(student.getId());
                     }
                 }
             }
 
-            getFollowingCompanyShares();
+            getFollowingCompanyIds();
         }
 
         @Override
         public void onCancelled(@NonNull DatabaseError databaseError) { }
     };
 
-    private void getFollowingCompanyShares() {
-        Query companySharesQuery;
+    private void getFollowingCompanyIds() {
+        Query companyIdsQuery;
         if (currentRole.equals("Student")) {
-            companySharesQuery = dbRef.child("Students").child(currentStudent.getId()).child("Following").child("Companies").orderByChild("id");
+            companyIdsQuery = dbRef.child("Students").child(currentStudent.getId()).child("Following").child("Companies").orderByChild("id");
         } else {
-            companySharesQuery = dbRef.child("Companies").child(currentCompany.getId()).child("Following").child("Companies").orderByChild("id");
+            companyIdsQuery = dbRef.child("Companies").child(currentCompany.getId()).child("Following").child("Companies").orderByChild("id");
         }
-        companySharesQuery.addValueEventListener(companySharesListener);
+        companyIdsQuery.addValueEventListener(companyIdsListener);
     }
 
-    ValueEventListener companySharesListener = new ValueEventListener() {
+    ValueEventListener companyIdsListener = new ValueEventListener() {
         @RequiresApi(api = Build.VERSION_CODES.N)
         @Override
         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
             if (dataSnapshot.exists()) {
-                for (DataSnapshot snapshot : dataSnapshot.child("Shares").getChildren()) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     Log.d(TAG, "snapshot exists for company shares");
-//                    Company company = snapshot.getValue(Company.class);
+                    Company company = snapshot.getValue(Company.class);
+                    if (company != null) {
+                        followingIds.add(company.getId());
+                    }
+//                    Share share = snapshot.getValue(Share.class);
+//                    if (share != null) {
+//                        shareList.add(0, share);
+//                    }
+                }
+            }
+
+//            setRecyclerAdapter();
+            getAllShares();
+        }
+
+        @Override
+        public void onCancelled(@NonNull DatabaseError databaseError) { }
+    };
+
+    private void getAllShares() {
+        Query followingSharesQuery = dbRef.child("Shares").orderByChild("id");
+        followingSharesQuery.addValueEventListener(followingSharesListener);
+    }
+
+    ValueEventListener followingSharesListener = new ValueEventListener() {
+        @RequiresApi(api = Build.VERSION_CODES.N)
+        @Override
+        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+            if (dataSnapshot.exists()) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     Share share = snapshot.getValue(Share.class);
 
                     if (share != null) {
-                        shareList.add(0, share);
+                        if (currentRole.equals("Student")) {
+                            if (followingIds.contains(share.getUserId()) || share.getUserId().equals(currentStudent.getId())) {
+                                shareList.add(share);
+                            }
+                        } else {
+                            if (followingIds.contains(share.getUserId()) || share.getUserId().equals(currentCompany.getId())) {
+                                shareList.add(share);
+                            }
+                        }
                     }
                 }
             }
@@ -210,7 +230,7 @@ public class LandingActivity extends AppCompatActivity {
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public int compare(Share o1, Share o2) {
-                return ZonedDateTime.parse(o1.getCreatedAt()).compareTo(ZonedDateTime.parse(o2.getCreatedAt()));
+                return ZonedDateTime.parse(o2.getCreatedAt()).compareTo(ZonedDateTime.parse(o1.getCreatedAt()));
             }
         });
 

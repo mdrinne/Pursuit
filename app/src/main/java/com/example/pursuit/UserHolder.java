@@ -79,6 +79,5 @@ public class UserHolder extends RecyclerView.ViewHolder {
     private void updateToggleBtnBackground() {
         Log.d(TAG, "TOGGLING");
         toggleFollow.setBackgroundResource(R.drawable.ic_check_black_24dp);
-
     }
 }
