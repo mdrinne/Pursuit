@@ -1,23 +1,25 @@
-package com.example.pursuit;
+package com.example.pursuit.ui.main;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
-import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
+
+import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.constraintlayout.widget.ConstraintSet;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.constraintlayout.widget.ConstraintSet;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
+import com.example.pursuit.R;
 import com.example.pursuit.adapters.StudentOpportunityAdapter;
 import com.example.pursuit.models.CompanyOpportunity;
 import com.example.pursuit.models.Keyword;
@@ -31,24 +33,28 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class StudentMatchedOpportunities extends AppCompatActivity {
+/**
+ * A simple {@link Fragment} subclass.
+ * Use the {@link DiscoverOpportunitiesFragment#newInstance} factory method to
+ * create an instance of this fragment.
+ */
+public class DiscoverOpportunitiesFragment extends Fragment {
+    private static final String TAG = "DiscoverOpportunityFragment";
 
-    private final String TAG = "StudentMAtchedOpps";
+    private View fragmentView;
 
-    Student currentStudent;
+    private Student currentStudent;
 
-    private DatabaseReference dbref;
+    private TextView noInterests;
+    private RecyclerView opportunitiesRecycler;
+    private Button btnFilter;
+    private Button btnClearFilter;
+    private ConstraintLayout innerLayout;
 
-    TextView noInterests;
-    RecyclerView opportunitiesRecycler;
-    Button btnFilter;
-    Button btnClearFilter;
-    ConstraintLayout innerLayout;
-
-    ArrayList<String> interests;
-    String currentInterest;
-    ArrayList<String> opportunityIds;
-    String currentOpportunityID;
+    private ArrayList<String> interests;
+    private String currentInterest;
+    private ArrayList<String> opportunityIds;
+    private String currentOpportunityID;
 
     private ArrayList<CompanyOpportunity> allMatchedOpportunities;
     private RecyclerView viewMatchedEmployees;
@@ -62,33 +68,76 @@ public class StudentMatchedOpportunities extends AppCompatActivity {
     private ArrayList<String> cities;
     private ArrayList<String> states;
 
-    String companyFilter;
-    String positionFilter;
-    String keywordFilter;
-    String cityFilter;
-    String stateFilter;
+    private String companyFilter;
+    private String positionFilter;
+    private String keywordFilter;
+    private String cityFilter;
+    private String stateFilter;
 
-    int interestsParser;
-    int getOpportunitiesParser;
+    private int interestsParser;
+    private int getOpportunitiesParser;
 
     private Dialog filterDialog;
 
+    private DatabaseReference dbRef;
+
+    // TODO: Rename parameter arguments, choose names that match
+    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+    private static final String ARG_PARAM1 = "currentUserId";
+
+    // TODO: Rename and change types of parameters
+    private String currentUserId;
+
+    public DiscoverOpportunitiesFragment() {
+        // Required empty public constructor
+    }
+
+    /**
+     * Use this factory method to create a new instance of
+     * this fragment using the provided parameters.
+     *
+//     * @param param1 Parameter 1.
+//     * @param param2 Parameter 2.
+     * @return A new instance of fragment DiscoverOpportunitiesFragment.
+     */
+    // TODO: Rename and change types and number of parameters
+    public static DiscoverOpportunitiesFragment newInstance(String currentUserId) {
+        DiscoverOpportunitiesFragment fragment = new DiscoverOpportunitiesFragment();
+        Bundle args = new Bundle();
+        args.putString(ARG_PARAM1, currentUserId);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            currentUserId = getArguments().getString(ARG_PARAM1);
+        }
+        dbRef = FirebaseDatabase.getInstance().getReference();
+        getCurrentStudent(currentUserId);
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_discover_opportunities, container, false);
+    }
+
     @SuppressLint("SetTextI18n")
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_student_matched_opportunities);
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        fragmentView = view;
 
-        currentStudent = ((PursuitApplication) this.getApplication()).getCurrentStudent();
-        interests = currentStudent.getInterestKeywords();
+        noInterests = view.findViewById(R.id.txtNoInterests);
+        opportunitiesRecycler = view.findViewById(R.id.rcycOpportunities);
+        btnFilter = view.findViewById(R.id.btnFilter);
 
-        noInterests = findViewById(R.id.txtNoInterests);
-        opportunitiesRecycler = findViewById(R.id.rcycOpportunities);
-        btnFilter = findViewById(R.id.btnFilter);
-
-        btnClearFilter = findViewById(R.id.btnClearFilter);
+        btnClearFilter = view.findViewById(R.id.btnClearFilter);
         btnClearFilter.setVisibility(View.GONE);
-        innerLayout = findViewById(R.id.innerLayout);
+        innerLayout = view.findViewById(R.id.innerLayout);
 
         allMatchedOpportunities = new ArrayList<>();
         filteredResults = new ArrayList<>();
@@ -103,24 +152,46 @@ public class StudentMatchedOpportunities extends AppCompatActivity {
         states = new ArrayList<>();
         states.add("");
 
-        filterDialog = new Dialog(this);
+        filterDialog = new Dialog(getContext());
 
         if (interests == null) {
             opportunitiesRecycler.setVisibility(View.GONE);
             btnFilter.setVisibility(View.GONE);
             noInterests.setText("No available opportunities match your interests");
         } else {
-            dbref = FirebaseDatabase.getInstance().getReference();
             opportunityIds = new ArrayList<>();
             interestsParser = 0;
             cycleInterests();
         }
     }
 
-    public void cycleInterests() {
+    private void getCurrentStudent(String currentUserId) {
+        Query currentStudentQuery = dbRef.child("Students").orderByChild("id").equalTo(currentUserId);
+        currentStudentQuery.addListenerForSingleValueEvent(currentStudentListener);
+    }
+
+    private ValueEventListener currentStudentListener = new ValueEventListener() {
+        @Override
+        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+            if (dataSnapshot.exists()) {
+                currentStudent = dataSnapshot.getValue(Student.class);
+                postCurrentStudentListener();
+            }
+        }
+
+        @Override
+        public void onCancelled(@NonNull DatabaseError databaseError) { }
+    };
+
+    private void postCurrentStudentListener() {
+        interests = currentStudent.getInterestKeywords();
+    }
+
+    @SuppressLint("SetTextI18n")
+    private void cycleInterests() {
         if (interestsParser < interests.size()) {
             currentInterest = interests.get(interestsParser);
-            Query keywordQuery = dbref.child("Keywords").orderByChild("text").equalTo(currentInterest);
+            Query keywordQuery = dbRef.child("Keywords").orderByChild("text").equalTo(currentInterest);
             keywordQuery.addListenerForSingleValueEvent(keywordListener);
         } else {
             if (opportunityIds.size() == 0) {
@@ -135,23 +206,21 @@ public class StudentMatchedOpportunities extends AppCompatActivity {
         }
     }
 
-    public void getOpportunities() {
+    private void getOpportunities() {
         if (getOpportunitiesParser < opportunityIds.size()) {
             currentOpportunityID = opportunityIds.get(getOpportunitiesParser);
-            Query opportunityQuery = dbref.child("CompanyOpportunities").orderByKey().equalTo(currentOpportunityID);
+            Query opportunityQuery = dbRef.child("CompanyOpportunities").orderByKey().equalTo(currentOpportunityID);
             opportunityQuery.addListenerForSingleValueEvent(opportunityListener);
         } else {
             buildRecyclerView();
         }
     }
 
-    public void buildRecyclerView() {
-        viewMatchedEmployees = findViewById(R.id.rcycOpportunities);
+    private void buildRecyclerView() {
+        viewMatchedEmployees = fragmentView.findViewById(R.id.rcycOpportunities);
         viewMatchedEmployees.setHasFixedSize(false);
-        mLayoutManager = new LinearLayoutManager(this);
-        for (int i=0; i<allMatchedOpportunities.size(); i++) {
-            filteredResults.add(allMatchedOpportunities.get(i));
-        }
+        mLayoutManager = new LinearLayoutManager(getContext());
+        filteredResults.addAll(allMatchedOpportunities);
         mAdapter = new StudentOpportunityAdapter(filteredResults);
 
         viewMatchedEmployees.setLayoutManager(mLayoutManager);
@@ -167,12 +236,13 @@ public class StudentMatchedOpportunities extends AppCompatActivity {
 
     /* ********DATABASE******** */
 
-    ValueEventListener keywordListener = new ValueEventListener() {
+    private ValueEventListener keywordListener = new ValueEventListener() {
         @Override
         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
             if (dataSnapshot.exists()) {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     Keyword keyword = snapshot.getValue(Keyword.class);
+                    assert keyword != null;
                     keywords.add(keyword.getText());
                     ArrayList<String> opportunities = keyword.getOpportunities();
                     if (opportunities == null) {
@@ -195,12 +265,13 @@ public class StudentMatchedOpportunities extends AppCompatActivity {
         }
     };
 
-    ValueEventListener opportunityListener = new ValueEventListener() {
+    private ValueEventListener opportunityListener = new ValueEventListener() {
         @Override
         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
             if (dataSnapshot.exists()) {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     CompanyOpportunity opportunity = snapshot.getValue(CompanyOpportunity.class);
+                    assert opportunity != null;
                     if (opportunity.getApproved() == 1) {
                         allMatchedOpportunities.add(opportunity);
                         if (!companies.contains(opportunity.getCompanyName())) {
@@ -240,41 +311,41 @@ public class StudentMatchedOpportunities extends AppCompatActivity {
 
         companyName = filterDialog.findViewById(R.id.spnCompanyName);
         ArrayAdapter<String> companyNameAdapter = new ArrayAdapter<String>(
-                                                this,
-                                                        android.R.layout.simple_spinner_item,
-                                                        companies);
+                getContext(),
+                android.R.layout.simple_spinner_item,
+                companies);
         companyNameAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         companyName.setAdapter(companyNameAdapter);
 
         position = filterDialog.findViewById(R.id.spnPosition);
         ArrayAdapter<String> positionAdapter = new ArrayAdapter<String>(
-                                                this,
-                                                        android.R.layout.simple_spinner_item,
-                                                        positions);
+                getContext(),
+                android.R.layout.simple_spinner_item,
+                positions);
         positionAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         position.setAdapter(positionAdapter);
 
         keyword = filterDialog.findViewById(R.id.spnKeyword);
         ArrayAdapter<String> keywordAdapter = new ArrayAdapter<String>(
-                                                this,
-                                                        android.R.layout.simple_spinner_item,
-                                                        keywords);
+                getContext(),
+                android.R.layout.simple_spinner_item,
+                keywords);
         keywordAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         keyword.setAdapter(keywordAdapter);
 
         city = filterDialog.findViewById(R.id.spnCity);
         ArrayAdapter<String> cityAdapter = new ArrayAdapter<String>(
-                                                this,
-                                                        android.R.layout.simple_spinner_item,
-                                                        cities);
+                getContext(),
+                android.R.layout.simple_spinner_item,
+                cities);
         cityAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         city.setAdapter(cityAdapter);
 
         state = filterDialog.findViewById(R.id.spnState);
         ArrayAdapter<String> stateAdapter = new ArrayAdapter<String>(
-                                                this,
-                                                        android.R.layout.simple_spinner_item,
-                                                        states);
+                getContext(),
+                android.R.layout.simple_spinner_item,
+                states);
         stateAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         state.setAdapter(stateAdapter);
 
@@ -318,21 +389,13 @@ public class StudentMatchedOpportunities extends AppCompatActivity {
     }
 
     private boolean allFiltersEmpty() {
-        if (isEmpty(companyFilter) && isEmpty(positionFilter)
+        return isEmpty(companyFilter) && isEmpty(positionFilter)
                 && isEmpty(keywordFilter) && isEmpty(cityFilter)
-                && isEmpty(stateFilter)) {
-            return true;
-        } else {
-            return false;
-        }
+                && isEmpty(stateFilter);
     }
 
     private boolean isEmpty(String str) {
-        if (str.equals("")) {
-            return true;
-        } else {
-            return false;
-        }
+        return str.equals("");
     }
 
     private void filterOpportunities() {
@@ -377,5 +440,6 @@ public class StudentMatchedOpportunities extends AppCompatActivity {
 
         mAdapter.notifyDataSetChanged();
     }
+
 
 }

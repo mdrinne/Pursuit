@@ -18,7 +18,7 @@ import com.example.pursuit.R;
 public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
     @StringRes
-    private static final int[] TAB_TITLES = new int[]{R.string.tab_text_1, R.string.tab_text_2};
+    private static final int[] TAB_TITLES = new int[]{R.string.discover_users_tab, R.string.discover_companies_tab, R.string.discover_opportunities_tab};
     private final Context mContext;
     private int numTabs;
     private String currentUserId;
@@ -40,6 +40,8 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
                 return DiscoverUsersFragment.newInstance(currentUserId, currentUserRole);
             case 1:
                 return new DiscoverCompaniesFragment();
+            case 2:
+                return DiscoverOpportunitiesFragment.newInstance(currentUserId);
             default:
                 return null;
         }
@@ -53,7 +55,6 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        // Show 2 total pages.
         return numTabs;
     }
 }

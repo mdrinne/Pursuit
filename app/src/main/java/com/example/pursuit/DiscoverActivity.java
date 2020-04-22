@@ -53,16 +53,22 @@ public class DiscoverActivity extends AppCompatActivity {
         TabLayout tabLayout = findViewById(R.id.tabs);
         tabLayout.addTab(tabLayout.newTab().setText("Users"));
         tabLayout.addTab(tabLayout.newTab().setText("Companies"));
+        if (currentRole.equals("Student")) {
+            tabLayout.addTab(tabLayout.newTab().setText("Opportunities"));
+        }
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
-        final ViewPager viewPager = findViewById(R.id.view_pager);
         String currentUserId;
-        if (currentStudent != null) {
+        if (currentRole.equals("Student")) {
             currentUserId = currentStudent.getId();
         } else {
             currentUserId = currentEmployee.getCompanyID();
         }
-        SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(this, getSupportFragmentManager(), tabLayout.getTabCount(), currentUserId, currentRole);
+
+        final ViewPager viewPager = findViewById(R.id.view_pager);
+        SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(this, getSupportFragmentManager(),
+                tabLayout.getTabCount(), currentUserId, currentRole);
+
         viewPager.setAdapter(sectionsPagerAdapter);
 
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
