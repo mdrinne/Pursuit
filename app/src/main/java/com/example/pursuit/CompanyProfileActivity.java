@@ -237,7 +237,8 @@ public class CompanyProfileActivity extends AppCompatActivity{
         CompanyOpportunity opportunity = companyOpportunities.get(position);
         opportunity.setApproved(1);
         companyOpportunities.set(position, opportunity);
-        dbref.child("CompanyOpportunities").child(currentCompany.getId()).child(opportunity.getId()).child("approved").setValue(1);
+        dbref.child("Companies").child(currentCompany.getId()).child("opportunities").setValue(companyOpportunities);
+        dbref.child("CompanyOpportunities").child(opportunity.getId()).child("approved").setValue(1);
         mAdapter.notifyItemChanged(position);
     }
 

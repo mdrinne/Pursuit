@@ -26,7 +26,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingBottom="50dp">
+            android:paddingBottom="80dp">
 
             <TextView
                 android:id="@+id/txtCompanyField"
@@ -39,7 +39,7 @@
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/btnEditPicture" />
+                app:layout_constraintTop_toBottomOf="@+id/imgCompanyProfilePic" />
 
             <TextView
                 android:id="@+id/txtCompanyDescription"
@@ -66,54 +66,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <Button
-                android:id="@+id/btnInviteEmployee"
-                android:layout_width="128dp"
-                android:layout_height="30dp"
-                android:layout_gravity="center"
-                android:layout_marginTop="24dp"
-                android:background="@drawable/button_accent1"
-                android:fontFamily="@font/roboto_medium"
-                android:onClick="inviteEmployee"
-                android:text="@string/strInviteEmployee"
-                android:textSize="12sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.511"
-                app:layout_constraintStart_toEndOf="@+id/imgCompanyProfilePic"
-                app:layout_constraintTop_toBottomOf="@+id/txtCompanyName" />
-
-            <Button
-                android:id="@+id/btnViewInvites"
-                android:layout_width="128dp"
-                android:layout_height="30dp"
-                android:layout_gravity="center"
-                android:background="@drawable/button_accent1"
-                android:fontFamily="@font/roboto_medium"
-                android:onClick="viewInvites"
-                android:text="@string/strViewInvites"
-                android:textSize="12sp"
-                app:layout_constraintBottom_toTopOf="@+id/btnViewEmployee"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.511"
-                app:layout_constraintStart_toEndOf="@+id/imgCompanyProfilePic"
-                app:layout_constraintTop_toBottomOf="@+id/btnInviteEmployee" />
-
-            <Button
-                android:id="@+id/btnViewOpportunities"
-                android:layout_width="wrap_content"
-                android:layout_height="30dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="30dp"
-                android:background="@drawable/button_accent1"
-                android:fontFamily="@font/roboto_medium"
-                android:onClick="addOpportunity"
-                android:text="@string/strAddOpportunity"
-                android:textSize="12sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/rcycOpportunities" />
-
             <ImageView
                 android:id="@+id/imgCompanyProfilePic"
                 android:layout_width="140dp"
@@ -121,21 +73,6 @@
                 android:contentDescription="@string/txtCompanyProfilePic"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/txtCompanyName" />
-
-            <Button
-                android:id="@+id/btnEditPicture"
-                android:layout_width="wrap_content"
-                android:layout_height="30dp"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/button_accent1"
-                android:fontFamily="@font/roboto_medium"
-                android:onClick="editPicture"
-                android:text="@string/txtEditPic"
-                android:textSize="12sp"
-                app:layout_constraintEnd_toEndOf="@+id/imgCompanyProfilePic"
-                app:layout_constraintHorizontal_bias="0.465"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imgCompanyProfilePic" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rcycOpportunities"
@@ -165,13 +102,13 @@
                 android:layout_height="30dp"
                 android:background="@drawable/button_accent1"
                 android:fontFamily="@font/roboto_medium"
-                android:onClick="viewEmployees"
                 android:text="@string/strViewEmployees"
                 android:textColor="@color/colorPrimary"
                 android:textSize="12sp"
                 app:layout_constraintBottom_toBottomOf="@+id/imgCompanyProfilePic"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/imgCompanyProfilePic" />
+                app:layout_constraintStart_toEndOf="@+id/imgCompanyProfilePic"
+                app:layout_constraintTop_toTopOf="@+id/imgCompanyProfilePic" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

@@ -34,6 +34,7 @@
                 android:layout_height="wrap_content"
                 android:onClick="filter"
                 android:text="@string/strFilter"
+                android:textColor="@color/colorPrimary"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -68,6 +69,7 @@
                 android:layout_height="wrap_content"
                 android:onClick="clearFilter"
                 android:text="@string/strClearFilter"
+                android:textColor="@color/colorPrimary"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/btnFilter" />
