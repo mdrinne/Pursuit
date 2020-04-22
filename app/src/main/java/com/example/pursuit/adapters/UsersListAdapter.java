@@ -1,6 +1,7 @@
 package com.example.pursuit.adapters;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,6 +45,7 @@ public class UsersListAdapter extends RecyclerView.Adapter implements Filterable
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         Student student = usersList.get(position);
+        Log.d(TAG, Integer.toString(position));
         ((UserHolder) holder).bind(student, currentUserId, currentUserRole);
     }
 

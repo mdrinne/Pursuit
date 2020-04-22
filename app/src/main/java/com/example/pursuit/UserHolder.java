@@ -1,6 +1,7 @@
 package com.example.pursuit;
 
 import android.annotation.SuppressLint;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -18,6 +19,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.example.pursuit.models.Student;
 
 public class UserHolder extends RecyclerView.ViewHolder {
+    private static final String TAG = "UserHolder";
 
     private TextView fullName, username, major, university, bio;
     private ImageButton toggleFollow;
@@ -45,14 +47,17 @@ public class UserHolder extends RecyclerView.ViewHolder {
     }
 
     private void checkFollowStatus(Student student, String currentUserId, String currentUserRole) {
+        Log.d(TAG, "checkFollowStatus");
+        Log.d("USERNAME", student.getUsername());
+//        Log.d("CURRENT_ID", currentUserId);
+//        Log.d("CURRENT_ROLE", currentUserRole);
+        DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference();
         Query checkFollowStatusQuery;
         if (currentUserRole.equals("Student")) {
-            checkFollowStatusQuery = FirebaseDatabase.getInstance().getReference()
-                    .child("Students").child(currentUserId).child("Following").child("Students")
+            checkFollowStatusQuery = dbRef.child("Students").child(currentUserId).child("Following").child("Students")
                     .orderByChild("id").equalTo(student.getId());
         } else {
-            checkFollowStatusQuery = FirebaseDatabase.getInstance().getReference()
-                    .child("Companies").child(currentUserId).child("Following").child("Students")
+            checkFollowStatusQuery = dbRef.child("Companies").child(currentUserId).child("Following").child("Students")
                     .orderByChild("id").equalTo(student.getId());
         }
 
@@ -72,6 +77,8 @@ public class UserHolder extends RecyclerView.ViewHolder {
     };
 
     private void updateToggleBtnBackground() {
+        Log.d(TAG, "TOGGLING");
         toggleFollow.setBackgroundResource(R.drawable.ic_check_black_24dp);
+
     }
 }
