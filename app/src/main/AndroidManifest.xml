@@ -44,6 +44,7 @@
 
         <activity android:name=".ViewOpportunity" />
         <activity android:name=".StudentMatchedOpportunities" />
+        <activity android:name=".StudentViewOpportunity" />
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />

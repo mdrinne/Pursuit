@@ -21,6 +21,7 @@
         app:layout_constraintVertical_bias="0.0">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/innerLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingBottom="40dp">
@@ -31,27 +32,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:fontFamily="@font/roboto_medium"
-                android:text="Company Name"
                 android:textColor="@color/accent1"
                 android:textSize="20sp"
                 android:textStyle="bold"
-                app:layout_constraintEnd_toStartOf="@+id/txtTimestamp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/txtTimestamp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:layout_marginEnd="5dp"
-                android:layout_marginRight="5dp"
-                android:fontFamily="@font/roboto"
-                android:paddingLeft="5dp"
-                android:paddingRight="5dp"
-                android:text="TimeStamp"
-                android:textColor="@color/accent1"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
@@ -59,10 +44,9 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/roboto_medium"
-                android:text="Position"
                 android:textColor="@color/accent1"
                 android:textSize="20sp"
-                app:layout_constraintEnd_toEndOf="@+id/txtCompanyName"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/txtCompanyName" />
 
@@ -85,7 +69,6 @@
                 android:layout_marginStart="5dp"
                 android:layout_marginLeft="5dp"
                 android:fontFamily="@font/roboto"
-                android:text="CITY"
                 android:textColor="@color/accent1"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="@+id/imgLocationIcon"
@@ -97,7 +80,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/roboto"
-                android:text="STATE"
                 android:textColor="@color/accent1"
                 android:textSize="16sp"
                 app:layout_constraintStart_toEndOf="@+id/txtCity"
@@ -108,7 +90,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/roboto"
-                android:text="WITH"
                 android:textColor="@color/accent1"
                 android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="@id/txtCity"
@@ -120,7 +101,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
                 android:fontFamily="@font/roboto"
-                android:text="DESCRIPTION"
                 android:textColor="@color/accent1"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -146,7 +126,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:fontFamily="@font/roboto"
-                android:text="TextView"
                 android:textColor="@color/accent1"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -167,7 +146,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/txtOpportunityRequirements" />
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rcyc"
+                android:id="@+id/rcycKeywords"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
