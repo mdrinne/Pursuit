@@ -9,12 +9,21 @@ import com.example.pursuit.models.Student;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.tabs.TabLayout;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
+
 import androidx.annotation.NonNull;
 import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageButton;
 
 import com.example.pursuit.ui.main.SectionsPagerAdapter;
 import com.google.firebase.database.DatabaseReference;
@@ -27,6 +36,8 @@ public class DiscoverActivity extends AppCompatActivity {
     private Employee currentEmployee;
     private Company currentCompany;
     private String currentRole;
+
+    private Student toggleFollowingStudent;
 
     private DatabaseReference dbRef;
 
@@ -64,19 +75,75 @@ public class DiscoverActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
+            public void onTabUnselected(TabLayout.Tab tab) { }
 
             @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
+            public void onTabReselected(TabLayout.Tab tab) { }
         });
     }
 
-    public void toggleFollow(View view) {
+    public void toggleFollowStudent(View view) {
+        Log.d(TAG, "toggling follow student");
+        toggleFollowingStudent = (Student) view.getTag();
+        checkFollowStatus();
+    }
 
+    private void checkFollowStatus() {
+        Query checkQuery;
+        if (currentRole.equals("Student")) {
+            checkQuery = dbRef.child("Students").child(currentStudent.getId()).child("Following").child("Students")
+                    .orderByChild("id").equalTo(toggleFollowingStudent.getId());
+        } else {
+            checkQuery = dbRef.child("Companies").child(currentCompany.getId()).child("Following").child("Students")
+                    .orderByChild("id").equalTo(toggleFollowingStudent.getId());
+        }
+        checkQuery.addListenerForSingleValueEvent(checkFollowingListener);
+    }
+
+    ValueEventListener checkFollowingListener = new ValueEventListener() {
+        @Override
+        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+            if (dataSnapshot.exists()) {
+                // Following > Students > id exists, meaning that the current
+                // user already follows this student => unfollow them
+                Log.d(TAG, "current user is following this student");
+                toggleFollowingStudent = dataSnapshot.getValue(Student.class);
+                unFollowStudent();
+            } else {
+                // Following > Students > doesn't exist => follow them
+                Log.d(TAG, "current user is not following this student");
+                followStudent();
+            }
+        }
+
+        @Override
+        public void onCancelled(@NonNull DatabaseError databaseError) { }
+    };
+
+    private void unFollowStudent() {
+        if (currentRole.equals("Student")) {
+            dbRef.child("Students").child(currentStudent.getId()).child("Following").child("Students")
+                    .child(toggleFollowingStudent.getId()).removeValue();
+        } else {
+            dbRef.child("Companies").child(currentCompany.getId()).child("Following").child("Students")
+                    .child(toggleFollowingStudent.getId()).removeValue();
+        }
+    }
+
+    private void followStudent() {
+        if (currentRole.equals("Student")) {
+            dbRef.child("Students").child(currentStudent.getId()).child("Following").child("Students")
+                    .child(toggleFollowingStudent.getId()).setValue(toggleFollowingStudent);
+        } else {
+            dbRef.child("Companies").child(currentCompany.getId()).child("Following").child("Students")
+                    .child(toggleFollowingStudent.getId()).setValue(toggleFollowingStudent);
+        }
+
+        toggleFollowButton();
+    }
+
+    private void toggleFollowButton() {
+        Log.d(TAG, "toggle follow button");
     }
 
     private void findAndSetCurrentUser() {

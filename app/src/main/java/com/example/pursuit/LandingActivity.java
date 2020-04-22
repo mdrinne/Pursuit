@@ -104,9 +104,7 @@ public class LandingActivity extends AppCompatActivity {
         }
 
         @Override
-        public void onCancelled(@NonNull DatabaseError databaseError) {
-
-        }
+        public void onCancelled(@NonNull DatabaseError databaseError) { }
     };
 
     @RequiresApi(api = Build.VERSION_CODES.N)
