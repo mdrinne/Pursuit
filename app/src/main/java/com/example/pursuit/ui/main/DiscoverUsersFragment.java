@@ -52,6 +52,8 @@ public class DiscoverUsersFragment extends Fragment {
 
     private DatabaseReference dbRef;
 
+    private View fragmentView;
+
     public DiscoverUsersFragment() {
         // Required empty public constructor
     }
@@ -80,7 +82,7 @@ public class DiscoverUsersFragment extends Fragment {
             currentUserRole = getArguments().getString(ARG_PARAM2);
         }
         dbRef = FirebaseDatabase.getInstance().getReference();
-        getUsers();
+//        getUsers();
     }
 
     @Override
@@ -89,6 +91,12 @@ public class DiscoverUsersFragment extends Fragment {
         // Inflate the layout for this fragment
 //        EditText usersFilter = getView().findViewById(R.id.users_filter);
         return inflater.inflate(R.layout.fragment_discover_users, container, false);
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        fragmentView = view;
+        getUsers();
     }
 
     private void getUsers() {
@@ -119,11 +127,11 @@ public class DiscoverUsersFragment extends Fragment {
     };
 
     private void postUsersListener() {
-        RecyclerView usersRecycler = getView().findViewById(R.id.users_recycler);
+        RecyclerView usersRecycler = fragmentView.findViewById(R.id.users_recycler);
         final UsersListAdapter usersListAdapter = new UsersListAdapter(getContext(), usersList, currentUserId, currentUserRole);
         usersRecycler.setAdapter(usersListAdapter);
         usersRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
-        EditText usersFilter = getView().findViewById(R.id.users_filter);
+        EditText usersFilter = fragmentView.findViewById(R.id.users_filter);
         usersFilter.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) { }

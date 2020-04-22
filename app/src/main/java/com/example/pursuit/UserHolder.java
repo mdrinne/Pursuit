@@ -68,7 +68,9 @@ public class UserHolder extends RecyclerView.ViewHolder {
         @Override
         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
             if (dataSnapshot.exists()) {
-                updateToggleBtnBackground();
+                updateToggleBtnBackground(1);
+            } else {
+                updateToggleBtnBackground(0);
             }
         }
 
@@ -76,8 +78,12 @@ public class UserHolder extends RecyclerView.ViewHolder {
         public void onCancelled(@NonNull DatabaseError databaseError) { }
     };
 
-    private void updateToggleBtnBackground() {
-        Log.d(TAG, "TOGGLING");
-        toggleFollow.setBackgroundResource(R.drawable.ic_check_black_24dp);
+    private void updateToggleBtnBackground(int exists) {
+        if (exists == 1) {
+            Log.d(TAG, "TOGGLING");
+            toggleFollow.setBackgroundResource(R.drawable.ic_check_black_24dp);
+        } else {
+            toggleFollow.setBackgroundResource(R.drawable.ic_add_black_24dp);
+        }
     }
 }
