@@ -59,6 +59,9 @@ public class studentFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+
+        //registrationRedesign activity = (registrationRedesign) getActivity();
+        //String myDataFromActivity = activity.getMyData();
         return inflater.inflate(R.layout.activity_student_registration, container, false);
     }
 }

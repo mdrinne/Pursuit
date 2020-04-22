@@ -1,12 +1,11 @@
 package com.example.pursuit;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import androidx.fragment.app.Fragment;
 
 
 /**
@@ -25,17 +24,9 @@ public class companyFragment extends Fragment {
     private String mParam2;
 
     public companyFragment() {
-        // Required empty public constructor
+        //required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment companyFragment.
-     */
     // TODO: Rename and change types and number of parameters
     public static companyFragment newInstance(String param1, String param2) {
         companyFragment fragment = new companyFragment();
@@ -49,6 +40,7 @@ public class companyFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //setContentView(R.layout.activity_company_registration);
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
