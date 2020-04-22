@@ -12,6 +12,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity
+            android:name=".registrationRedesign"
+            android:label="@string/title_activity_registration_redesign"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity android:name=".CreateOpportunity" />
         <activity android:name=".viewCompaniesActivity" />
         <activity android:name=".MessagesActivity" />
@@ -41,9 +45,9 @@
         <activity android:name=".EmployeeManagement" />
         <activity android:name=".NewConversationActivity" />
         <activity android:name=".NewShareActivity" />
-
         <activity android:name=".ViewOpportunity" />
         <activity android:name=".StudentMatchedOpportunities" />
+
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
