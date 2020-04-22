@@ -102,7 +102,6 @@
                 android:layout_height="30dp"
                 android:background="@drawable/button_accent1"
                 android:fontFamily="@font/roboto_medium"
-                android:onClick="viewEmployees"
                 android:text="@string/strViewEmployees"
                 android:textColor="@color/colorPrimary"
                 android:textSize="12sp"

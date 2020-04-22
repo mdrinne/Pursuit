@@ -5,6 +5,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -35,6 +37,7 @@ import java.util.ArrayList;
 
 public class StudentViewCompany extends AppCompatActivity {
     TextView companyName, companyField, companyDescription;
+    Button btnViewEmployees;
 
     Company viewCompany;
     Student currentStudent;
@@ -68,6 +71,16 @@ public class StudentViewCompany extends AppCompatActivity {
 
         dbref = FirebaseDatabase.getInstance().getReference();
         sref = FirebaseStorage.getInstance().getReference();
+
+        btnViewEmployees = findViewById(R.id.btnViewEmployee);
+        btnViewEmployees.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), StudentViewEmployees.class);
+                intent.putExtra("EXTRA_COMPANY_ID", viewCompany.getId());
+                startActivity(intent);
+            }
+        });
 
         Query companyQuery = dbref.child("Companies").orderByKey().equalTo(getIntent().getStringExtra("EXTRA_COMPANY_ID"));
         companyQuery.addListenerForSingleValueEvent(companyListener);
@@ -197,6 +210,12 @@ public class StudentViewCompany extends AppCompatActivity {
         intent.putExtra("EXTRA_OPPORTUNITY_ID", filteredOpportunities.get(position).getId());
         startActivity(intent);
     }
+
+//    private void viewEmployees(View v) {
+//        Intent intent = new Intent(this, StudentViewEmployees.class);
+//        intent.putExtra("EXTRA_COMPANY_ID", viewCompany.getId());
+//        startActivity(intent);
+//    }
 
     BottomNavigationView.OnNavigationItemSelectedListener navigationItemSelectedListener =
             new BottomNavigationView.OnNavigationItemSelectedListener() {
