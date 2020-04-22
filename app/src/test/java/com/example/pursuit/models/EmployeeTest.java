@@ -6,7 +6,7 @@ import static org.junit.Assert.*;
 
 public class EmployeeTest {
 
-    Employee newEmployee = new Employee("1", "2", "3", "4", "5", "6", "7", "8", "9");
+    Employee newEmployee = new Employee("1", "2", "3", "4", "5", "6", "7", "8", "9", "10");
 
     @Test
     public void getIdTest() {

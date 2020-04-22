@@ -115,6 +115,9 @@ public class StudentProfileActivity extends AppCompatActivity {
         studentProfilePic = findViewById(R.id.imgStudentProfilePic);
         loadStudentProfilePicture();
 
+        String newTitle = "Pursuit (" + "Student" + ")";
+        setTitle(newTitle);
+
     }
 
     /* ********DATABASE******** */
@@ -129,6 +132,7 @@ public class StudentProfileActivity extends AppCompatActivity {
                 }
             }
             postStudentHasProfilePictureListener();
+
         }
 
         @Override
@@ -445,6 +449,8 @@ public class StudentProfileActivity extends AppCompatActivity {
             keywordQuery.addListenerForSingleValueEvent(keywordListener);
         } else {
             dbref.child("Students").child(currentStudent.getId()).child("interestKeywords").setValue(interests);
+            currentStudent.setInterestKeywords(interests);
+            ((PursuitApplication) this.getApplication()).setCurrentStudent(currentStudent);
             mAdapter.notifyDataSetChanged();
             currentStudent.setInterestKeywords(interests);
             ((PursuitApplication) this.getApplication()).setCurrentStudent(currentStudent);

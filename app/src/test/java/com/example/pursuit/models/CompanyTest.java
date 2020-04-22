@@ -5,11 +5,10 @@ import static org.junit.Assert.*;
 
 public class CompanyTest extends Company {
 
-    private Company company1 = new Company("1", "name", "test@email.com", "testpw", "field");
+    private Company company1 = new Company("1", "name", "test@email.com", "testpw", "field", "descript");
 
     @Test
-    public void getIdTest() {
-        assert(company1.getId().equals("1"));
+    public void getIdTest() { assert(company1.getId().equals("1"));
     }
 
     @Test

@@ -2,6 +2,8 @@ package com.example.pursuit.models;
 
 import com.google.firebase.database.IgnoreExtraProperties;
 
+import java.util.ArrayList;
+
 @IgnoreExtraProperties
 public class Company {
 
@@ -11,6 +13,7 @@ public class Company {
     public String password;
     public String field;
     public String description;
+    public ArrayList<CompanyOpportunity> opportunities;
 
     public Company() {
         this.id = "";
@@ -18,13 +21,14 @@ public class Company {
         // DataSnapshot.getValue(Company.class)
     }
 
-    public Company(String id, String name, String email, String password, String field, String description) {
+    public Company(String id, String name, String email, String password, String field, String description, ArrayList<CompanyOpportunity> opportunities) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.password = password;
         this.field = field;
         this.description = description;
+        this.opportunities = opportunities;
     }
 
     public String getId() {
@@ -73,4 +77,11 @@ public class Company {
         this.description = description;
     }
 
+    public ArrayList<CompanyOpportunity> getOpportunities() {
+        return opportunities;
+    }
+
+    public void setOpportunities(ArrayList<CompanyOpportunity> opportunities) {
+        this.opportunities = opportunities;
+    }
 }

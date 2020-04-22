@@ -67,8 +67,11 @@ public class LandingActivity extends AppCompatActivity {
         String currentUserNameString;
         if (currentRole.equals("Student")) {
             currentUserNameString = currentStudent.getUsername();
-        } else {
+        } else if (currentRole.equals("Employee")) {
             currentUserNameString = currentEmployee.getUsername();
+        }
+        else {
+            currentUserNameString = currentCompany.getName();
         }
 
         currentUserNameText = findViewById(R.id.currentUserName);
@@ -78,6 +81,8 @@ public class LandingActivity extends AppCompatActivity {
         if (currentRole.equals("Employee") && currentEmployee.getAdmin() == 0) {
             newShare.setVisibility(View.GONE);
         }
+        String newTitle = "Pursuit (" + currentRole + ")";
+        setTitle(newTitle);
     }
 
     public void newShare(View v) {
@@ -292,6 +297,13 @@ public class LandingActivity extends AppCompatActivity {
         Intent i = new Intent(LandingActivity.this, MainActivity.class);
         startActivity(i);
         finish();
+    }
+
+    public void matchedOpportunities(View v) {
+        if (currentRole.equals("Student")) {
+            Intent intent = new Intent(LandingActivity.this, StudentMatchedOpportunities.class);
+            startActivity(intent);
+        }
     }
 
 }

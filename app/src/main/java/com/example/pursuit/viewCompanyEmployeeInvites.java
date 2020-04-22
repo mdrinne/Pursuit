@@ -51,6 +51,9 @@ public class viewCompanyEmployeeInvites extends AppCompatActivity {
         initializeCurrentCompany();
         initializeCurrentRole();
 
+        String newTitle = "Pursuit (" + currentRole + ")";
+        setTitle(newTitle);
+
         dbref = FirebaseDatabase.getInstance().getReference();
 
         Query inviteQuery = dbref.child("EmployeeInvites").child(currentCompany.getId()).orderByKey();

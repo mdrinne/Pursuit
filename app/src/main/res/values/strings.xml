@@ -226,6 +226,9 @@
     <string name="strInterests">Interests</string>
     <string name="strAddInterests">Add Interests</string>
     <string name="enter_a_username">Enter a username</string>
+    <string name="strFilter">Filter</string>
+    <string name="strKeyword">Keyword</string>
+    <string name="strClearFilter">Clear Filter</string>
     <string name="about_pursuit">About Pursuit</string>
     <string name="view_companies">View Companies</string>
     <string name="log_out">Log Out</string>
