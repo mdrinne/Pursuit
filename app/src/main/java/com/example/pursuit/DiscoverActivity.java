@@ -92,6 +92,8 @@ public class DiscoverActivity extends AppCompatActivity {
     }
 
     private void checkFollowStatus() {
+        Log.d(TAG, "checkFollowStatus");
+        Log.d("TOGGLE_ID", toggleFollowingStudent.getId());
         Query checkQuery;
         if (currentRole.equals("Student")) {
             checkQuery = dbRef.child("Students").child(currentStudent.getId()).child("Following").child("Students")
@@ -110,7 +112,6 @@ public class DiscoverActivity extends AppCompatActivity {
                 // Following > Students > id exists, meaning that the current
                 // user already follows this student => unfollow them
                 Log.d(TAG, "current user is following this student");
-                toggleFollowingStudent = dataSnapshot.getValue(Student.class);
                 unFollowStudent();
             } else {
                 // Following > Students > doesn't exist => follow them
@@ -124,6 +125,7 @@ public class DiscoverActivity extends AppCompatActivity {
     };
 
     private void unFollowStudent() {
+        Log.d(TAG, "in unFollowStudent");
         Log.d("TOGGLE_ID", toggleFollowingStudent.getId());
         if (currentRole.equals("Student")) {
             DatabaseReference followRef = dbRef.child("Students").child(currentStudent.getId())
@@ -145,6 +147,8 @@ public class DiscoverActivity extends AppCompatActivity {
     }
 
     private void followStudent() {
+        Log.d(TAG, "in followStudent");
+        Log.d("TOGGLE_ID", toggleFollowingStudent.getId());
         if (currentRole.equals("Student")) {
             dbRef.child("Students").child(currentStudent.getId()).child("Following").child("Students")
                     .child(toggleFollowingStudent.getId()).setValue(toggleFollowingStudent);

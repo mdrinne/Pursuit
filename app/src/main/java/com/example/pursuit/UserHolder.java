@@ -39,8 +39,9 @@ public class UserHolder extends RecyclerView.ViewHolder {
         university.setText("University: " + student.getUniversity());
         major.setText("Major: " + student.getMajor());
         bio.setText(student.getBio());
-        checkFollowStatus(student, currentUserId, currentUserRole);
         toggleFollow.setTag(student);
+        checkFollowStatus(student, currentUserId, currentUserRole);
+
     }
 
     private void checkFollowStatus(Student student, String currentUserId, String currentUserRole) {
@@ -58,7 +59,7 @@ public class UserHolder extends RecyclerView.ViewHolder {
         checkFollowStatusQuery.addListenerForSingleValueEvent(checkFollowStatusListener);
     }
 
-    ValueEventListener checkFollowStatusListener = new ValueEventListener() {
+    private ValueEventListener checkFollowStatusListener = new ValueEventListener() {
         @Override
         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
             if (dataSnapshot.exists()) {
