@@ -494,12 +494,6 @@ public class StudentProfileActivity extends AppCompatActivity {
         }
     }
 
-    // Checks If TextField Is Empty
-    boolean isEmpty(EditText text) {
-        CharSequence str = text.getText().toString();
-        return TextUtils.isEmpty(str);
-    }
-
     public void editProfile(View view) {
         editStudentUniversity.setVisibility(View.VISIBLE);
         editStudentMajor.setVisibility(View.VISIBLE);

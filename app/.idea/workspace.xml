@@ -11,8 +11,6 @@
   <component name="ChangeListManager">
     <list default="true" id="ede2831d-693d-4796-88a1-0a1f4459ac73" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/pursuit/CompanyProfileActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/pursuit/CompanyProfileActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/res/layout/activity_company_profile.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/res/layout/activity_company_profile.xml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -44,8 +42,8 @@
   <component name="ProjectId" id="1apduYVL9NnvDIrxudx5B4asIXt" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="PropertiesComponent">
-    <property name="DeviceAndSnapshotComboBoxAction.selectedDevice" value="Pixel_3_API_29" />
-    <property name="DeviceAndSnapshotComboBoxAction.selectionTime" value="2020-04-22T16:45:02.892Z" />
+    <property name="DeviceAndSnapshotComboBoxAction.selectedDevice" value="Pixel_3_API_29_2" />
+    <property name="DeviceAndSnapshotComboBoxAction.selectionTime" value="2020-04-22T21:22:27.220Z" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="android.sdk.path" value="$USER_HOME$/Library/Android/sdk" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />

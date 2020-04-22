@@ -492,7 +492,7 @@ public class CompanyProfileActivity extends AppCompatActivity{
         currentCompany.setDescription(editCompanyDescription.getText().toString());
 
         //Submit changes to firebase
-        dbref.child("companies").child(currentCompany.getId()).setValue(currentCompany);
+        dbref.child("Companies").child(currentCompany.getId()).setValue(currentCompany);
 
         exitProfileEditor(view);
     }
