@@ -58,27 +58,33 @@
 
         <Button
             android:id="@+id/btnLogin"
+            style="@style/Widget.AppCompat.Button.Colored"
             android:layout_width="wrap_content"
             android:layout_height="40dp"
-            android:layout_marginTop="40dp"
-            android:background="@drawable/button_accent1"
+            android:layout_marginTop="24dp"
+            android:background="@color/white"
             android:fontFamily="@font/roboto_medium"
             android:onClick="loginUser"
             android:text="@string/strLogin"
-            android:textColor="@color/colorPrimary"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textColor="@color/cardView1"
+            android:textStyle="bold|italic"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txtPassword" />
 
-        <TextView
-            android:id="@+id/txtRegister"
+        <Button
+            android:id="@+id/registerPage"
+            style="@style/Widget.AppCompat.Button.Colored"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:fontFamily="@font/roboto"
+            android:layout_marginTop="72dp"
+            android:background="@color/white"
             android:onClick="registerUser"
             android:text="@string/strRegister"
-            android:textColor="@color/accent1"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textColor="@color/cardView1"
+            android:textStyle="bold|italic"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/btnLogin" />
