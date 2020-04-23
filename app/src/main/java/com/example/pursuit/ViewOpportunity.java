@@ -7,6 +7,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -34,9 +35,10 @@ import java.util.ArrayList;
 public class ViewOpportunity extends AppCompatActivity {
 
     TextView opportunityPosition, opportunityWith, opportunityCity, opportunityState;
-    TextView opportunityDescription, opportunityRequirements, txtKeywords;
+    TextView opportunityDescription, opportunityRequirements, txtKeywords, txtRequirements;
     EditText editPosition, editWith, editCity, editState, editDescription, editRequirements;
     Button approveBtn, editProfileBtn, confirmChangesBtn, cancelBtn;
+    ImageView imgLocation;
 
     BottomNavigationView bottomNavigation;
 
@@ -68,6 +70,8 @@ public class ViewOpportunity extends AppCompatActivity {
         bottomNavigation.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
 
         txtKeywords = findViewById(R.id.txtKeywords);
+        txtRequirements = findViewById(R.id.txtRequirements);
+        imgLocation = findViewById(R.id.imgLocationIcon);
 
         editPosition = findViewById(R.id.editPosition);
         editPosition.setVisibility(View.GONE);
@@ -383,6 +387,14 @@ public class ViewOpportunity extends AppCompatActivity {
         params.topToBottom = cancelBtn.getId();
         txtKeywords.setLayoutParams(params);
 
+        params = (ConstraintLayout.LayoutParams) txtRequirements.getLayoutParams();
+        params.topToBottom = editDescription.getId();
+        txtRequirements.setLayoutParams(params);
+
+        params = (ConstraintLayout.LayoutParams) imgLocation.getLayoutParams();
+        params.topToBottom = editPosition.getId();
+        imgLocation.setLayoutParams(params);
+
         editProfileBtn.setVisibility(View.GONE);
         opportunityRequirements.setVisibility(View.GONE);
         opportunityPosition.setVisibility(View.GONE);
@@ -427,6 +439,14 @@ public class ViewOpportunity extends AppCompatActivity {
         ConstraintLayout.LayoutParams params = (ConstraintLayout.LayoutParams) txtKeywords.getLayoutParams();
         params.topToBottom = editProfileBtn.getId();
         txtKeywords.setLayoutParams(params);
+
+        params = (ConstraintLayout.LayoutParams) txtRequirements.getLayoutParams();
+        params.topToBottom = opportunityDescription.getId();
+        txtRequirements.setLayoutParams(params);
+
+        params = (ConstraintLayout.LayoutParams) imgLocation.getLayoutParams();
+        params.topToBottom = opportunityPosition.getId();
+        imgLocation.setLayoutParams(params);
 
         cancelBtn.setVisibility(View.GONE);
         confirmChangesBtn.setVisibility(View.GONE);
