@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,7 +40,7 @@ import java.util.ArrayList;
  * create an instance of this fragment.
  */
 public class DiscoverOpportunitiesFragment extends Fragment {
-    private static final String TAG = "DiscoverOpportunityFragment";
+    private static final String TAG = "DiscoverOpportunity";
 
     private View fragmentView;
 
@@ -100,7 +101,6 @@ public class DiscoverOpportunitiesFragment extends Fragment {
 //     * @param param2 Parameter 2.
      * @return A new instance of fragment DiscoverOpportunitiesFragment.
      */
-    // TODO: Rename and change types and number of parameters
     public static DiscoverOpportunitiesFragment newInstance(String currentUserId) {
         DiscoverOpportunitiesFragment fragment = new DiscoverOpportunitiesFragment();
         Bundle args = new Bundle();
@@ -116,7 +116,7 @@ public class DiscoverOpportunitiesFragment extends Fragment {
             currentUserId = getArguments().getString(ARG_PARAM1);
         }
         dbRef = FirebaseDatabase.getInstance().getReference();
-        getCurrentStudent(currentUserId);
+//        getCurrentStudent(currentUserId);
     }
 
     @Override
@@ -154,7 +154,50 @@ public class DiscoverOpportunitiesFragment extends Fragment {
 
         filterDialog = new Dialog(getContext());
 
+        getCurrentStudent(currentUserId);
+
+//        if (interests == null) {
+//            Log.d(TAG, "onViewCreated interests is null");
+//            opportunitiesRecycler.setVisibility(View.GONE);
+//            btnFilter.setVisibility(View.GONE);
+//            noInterests.setText("No available opportunities match your interests");
+//        } else {
+//            opportunityIds = new ArrayList<>();
+//            interestsParser = 0;
+//            cycleInterests();
+//        }
+    }
+
+    private void getCurrentStudent(String currentUserId) {
+        Log.d(TAG, "Getting current student");
+        Query currentStudentQuery = dbRef.child("Students").orderByChild("id").equalTo(currentUserId);
+        currentStudentQuery.addListenerForSingleValueEvent(currentStudentListener);
+    }
+
+    private ValueEventListener currentStudentListener = new ValueEventListener() {
+        @Override
+        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+            if (dataSnapshot.exists()) {
+                currentStudent = dataSnapshot.child(currentUserId).getValue(Student.class);
+                if (currentStudent!=null) {
+                    Log.d(TAG, "CurrentStudent is not null");
+                    Log.d("CURRENT_ID", currentStudent.getId());
+                }
+                postCurrentStudentListener();
+            }
+        }
+
+        @Override
+        public void onCancelled(@NonNull DatabaseError databaseError) { }
+    };
+
+    private void postCurrentStudentListener() {
+        Log.d(TAG, "going to get interests");
+        interests = currentStudent.getInterestKeywords();
+        Log.d(TAG, "Got interests");
+        Log.d("INTEREST_SIZE", Integer.toString(interests.size()));
         if (interests == null) {
+            Log.d(TAG, "postListener interests is null");
             opportunitiesRecycler.setVisibility(View.GONE);
             btnFilter.setVisibility(View.GONE);
             noInterests.setText("No available opportunities match your interests");
@@ -165,30 +208,9 @@ public class DiscoverOpportunitiesFragment extends Fragment {
         }
     }
 
-    private void getCurrentStudent(String currentUserId) {
-        Query currentStudentQuery = dbRef.child("Students").orderByChild("id").equalTo(currentUserId);
-        currentStudentQuery.addListenerForSingleValueEvent(currentStudentListener);
-    }
-
-    private ValueEventListener currentStudentListener = new ValueEventListener() {
-        @Override
-        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-            if (dataSnapshot.exists()) {
-                currentStudent = dataSnapshot.getValue(Student.class);
-                postCurrentStudentListener();
-            }
-        }
-
-        @Override
-        public void onCancelled(@NonNull DatabaseError databaseError) { }
-    };
-
-    private void postCurrentStudentListener() {
-        interests = currentStudent.getInterestKeywords();
-    }
-
     @SuppressLint("SetTextI18n")
     private void cycleInterests() {
+        Log.d(TAG, "cycling through interests");
         if (interestsParser < interests.size()) {
             currentInterest = interests.get(interestsParser);
             Query keywordQuery = dbRef.child("Keywords").orderByChild("text").equalTo(currentInterest);
