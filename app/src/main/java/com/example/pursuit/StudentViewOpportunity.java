@@ -28,7 +28,6 @@ import java.util.ArrayList;
 
 public class StudentViewOpportunity extends AppCompatActivity {
     TextView companyName, position, city, state, with, description, requirements;
-    BottomNavigationView bottomNavigation;
 
     Student currentStudent;
     CompanyOpportunity currentOpportunity;
@@ -44,8 +43,6 @@ public class StudentViewOpportunity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_non_owner_view_opportunity);
-        bottomNavigation = findViewById(R.id.bottom_navigation);
-        bottomNavigation.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
 
         currentStudent = ((PursuitApplication) this.getApplicationContext()).getCurrentStudent();
 
