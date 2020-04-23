@@ -602,4 +602,9 @@ public class StudentProfileActivity extends AppCompatActivity {
         studentGPA.setText(currentStudent.getGpa());
         studentBio.setText(currentStudent.getBio());
     }
+
+    public void viewApplications(View v) {
+        Intent intent = new Intent(this, StudentApplications.class);
+        startActivity(intent);
+    }
 }

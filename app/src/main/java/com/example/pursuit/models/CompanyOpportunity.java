@@ -19,6 +19,7 @@ public class CompanyOpportunity {
     public Integer approved;
     public String timeStamp;
     public String companyName;
+    public ArrayList<String> applicants;
 
 
     public CompanyOpportunity() {
@@ -38,6 +39,7 @@ public class CompanyOpportunity {
         this.approved = approved;
         this.timeStamp = timeStamp;
         this.companyName = companyName;
+        this.applicants = null;
     }
 
     public String getId() {
@@ -134,5 +136,13 @@ public class CompanyOpportunity {
 
     public void setCompanyName(String companyName) {
         this.companyName = companyName;
+    }
+
+    public ArrayList<String> getApplicants() {
+        return applicants;
+    }
+
+    public void setApplicants(ArrayList<String> applicants) {
+        this.applicants = applicants;
     }
 }

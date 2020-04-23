@@ -34,7 +34,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-public class StudentViewCompany extends AppCompatActivity {
+public class NonOwnerViewCompany extends AppCompatActivity {
     TextView companyName, companyField, companyDescription;
     Button btnViewEmployees;
 
@@ -205,7 +205,7 @@ public class StudentViewCompany extends AppCompatActivity {
     /* ******END DATABASE****** */
 
     private void viewOpportunity(int position) {
-        Intent intent = new Intent(this, StudentViewOpportunity.class);
+        Intent intent = new Intent(this, NonOwnerViewOpportunity.class);
         intent.putExtra("EXTRA_OPPORTUNITY_ID", filteredOpportunities.get(position).getId());
         startActivity(intent);
     }
@@ -221,17 +221,17 @@ public class StudentViewCompany extends AppCompatActivity {
                 @Override public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                     switch (item.getItemId()) {
                         case R.id.navigation_home:
-                            Intent i0 = new Intent(StudentViewCompany.this, LandingActivity.class);
+                            Intent i0 = new Intent(NonOwnerViewCompany.this, LandingActivity.class);
                             startActivity(i0);
                             finish();
                             return true;
                         case R.id.navigation_messages:
-                            Intent i1 = new Intent(StudentViewCompany.this, ConversationsActivity.class);
+                            Intent i1 = new Intent(NonOwnerViewCompany.this, ConversationsActivity.class);
                             startActivity(i1);
                             finish();
                             return true;
                         case R.id.navigation_profile:
-                            Intent i2 = new Intent(StudentViewCompany.this, StudentProfileActivity.class);
+                            Intent i2 = new Intent(NonOwnerViewCompany.this, StudentProfileActivity.class);
                             startActivity(i2);
                             finish();
                             return true;
