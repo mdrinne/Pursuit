@@ -34,7 +34,6 @@ public class viewCompanyEmployeeInvites extends AppCompatActivity {
 
     Company currentCompany;
     String currentRole;
-    BottomNavigationView bottomNavigation;
 
     private ArrayList<EmployeeInvite> companyInvites;
     private RecyclerView activeInvites;
@@ -46,14 +45,9 @@ public class viewCompanyEmployeeInvites extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.company_view_employee_invites);
-        bottomNavigation = findViewById(R.id.bottom_navigation);
-        bottomNavigation.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
 
         initializeCurrentCompany();
         initializeCurrentRole();
-
-        bottomNavigation.getMenu().removeItem(R.id.navigation_messages);
-        bottomNavigation.getMenu().removeItem(R.id.navigation_discover);
 
         String newTitle = "Pursuit (" + currentRole + ")";
         setTitle(newTitle);
