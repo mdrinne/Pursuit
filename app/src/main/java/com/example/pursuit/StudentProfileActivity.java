@@ -13,7 +13,6 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -25,7 +24,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -121,7 +119,7 @@ public class StudentProfileActivity extends AppCompatActivity {
         studentBio = findViewById(R.id.txtStudentBio);
         studentBio.setText(currentStudent.getBio());
 
-        btnEditProfile = findViewById(R.id.btnEditProfile);
+        btnEditProfile = findViewById(R.id.btnEditOpportunity);
 
         //Hardcoded TextViews
         hardcodedUniversity = findViewById(R.id.studentUniversityHardcode);

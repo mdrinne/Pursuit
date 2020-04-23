@@ -157,7 +157,7 @@
                 android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/btnEditProfile" />
+                app:layout_constraintTop_toBottomOf="@id/btnEditOpportunity" />
 
             <Button
                 android:id="@+id/btnViewEmployee"
@@ -203,7 +203,7 @@
                 app:layout_constraintTop_toBottomOf="@id/editCompanyField" />
 
             <Button
-                android:id="@+id/btnEditProfile"
+                android:id="@+id/btnEditOpportunity"
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"
                 android:layout_marginTop="15dp"

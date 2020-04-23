@@ -34,8 +34,9 @@ import java.util.ArrayList;
 public class ViewOpportunity extends AppCompatActivity {
 
     TextView opportunityPosition, opportunityWith, opportunityCity, opportunityState;
-    TextView opportunityDescription, opportunityRequirements;
-    Button approveBtn;
+    TextView opportunityDescription, opportunityRequirements, txtKeywords;
+    EditText editPosition, editWith, editCity, editState, editDescription, editRequirements;
+    Button approveBtn, editProfileBtn, confirmChangesBtn, cancelBtn;
 
     BottomNavigationView bottomNavigation;
 
@@ -66,8 +67,38 @@ public class ViewOpportunity extends AppCompatActivity {
         bottomNavigation = findViewById(R.id.bottom_navigation);
         bottomNavigation.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
 
+        txtKeywords = findViewById(R.id.txtKeywords);
+
+        editPosition = findViewById(R.id.editPosition);
+        editPosition.setVisibility(View.GONE);
+
+        editWith = findViewById(R.id.editWith);
+        editWith.setVisibility(View.GONE);
+
+        editCity = findViewById(R.id.editCity);
+        editCity.setVisibility(View.GONE);
+
+        editState = findViewById(R.id.editState);
+        editState.setVisibility(View.GONE);
+
+        editDescription = findViewById(R.id.editDescription);
+        editDescription.setVisibility(View.GONE);
+
+        editRequirements = findViewById(R.id.editOpportunityRequirements);
+        editRequirements.setVisibility(View.GONE);
+
+        editProfileBtn = findViewById(R.id.btnEditOpportunity);
+
+        confirmChangesBtn = findViewById(R.id.btnConfirm);
+        confirmChangesBtn.setVisibility(View.GONE);
+
+        cancelBtn = findViewById(R.id.btnCancel);
+        cancelBtn.setVisibility(View.GONE);
+
         setCurrentUser();
         addKeywordsDialog = new Dialog(this);
+
+        if (currentRole.equals("Employee") && currentEmployee.getAdmin() == 0) editProfileBtn.setVisibility(View.GONE);
 
         dbref = FirebaseDatabase.getInstance().getReference();
 
@@ -337,4 +368,82 @@ public class ViewOpportunity extends AppCompatActivity {
                 }
             };
 
+    public void editOpportunity(View view) {
+        editPosition.setVisibility(View.VISIBLE);
+        editWith.setVisibility(View.VISIBLE);
+        editCity.setVisibility(View.VISIBLE);
+        editState.setVisibility(View.VISIBLE);
+        editDescription.setVisibility(View.VISIBLE);
+        editRequirements.setVisibility(View.VISIBLE);
+        confirmChangesBtn.setVisibility(View.VISIBLE);
+        cancelBtn.setVisibility(View.VISIBLE);
+
+        //Rewrite constraints
+        ConstraintLayout.LayoutParams params = (ConstraintLayout.LayoutParams) txtKeywords.getLayoutParams();
+        params.topToBottom = cancelBtn.getId();
+        txtKeywords.setLayoutParams(params);
+
+        editProfileBtn.setVisibility(View.GONE);
+        opportunityRequirements.setVisibility(View.GONE);
+        opportunityPosition.setVisibility(View.GONE);
+        opportunityState.setVisibility(View.GONE);
+        opportunityDescription.setVisibility(View.GONE);
+        opportunityWith.setVisibility(View.GONE);
+        opportunityCity.setVisibility(View.GONE);
+
+        editPosition.setText(currentOpportunity.getPosition());
+        editWith.setText(currentOpportunity.getWithWho());
+        editCity.setText(currentOpportunity.getCity());
+        editState.setText(currentOpportunity.getState());
+        editDescription.setText(currentOpportunity.getDescription());
+        editRequirements.setText(currentOpportunity.getRequirements());
+    }
+
+    public void submitChanges(View view) {
+        //Update currentOpportunity fields
+        currentOpportunity.setPosition(editPosition.getText().toString());
+        currentOpportunity.setWithWho(editWith.getText().toString());
+        currentOpportunity.setCity(editCity.getText().toString());
+        currentOpportunity.setState(editState.getText().toString());
+        currentOpportunity.setDescription(editDescription.getText().toString());
+        currentOpportunity.setRequirements(editRequirements.getText().toString());
+
+        //Submit changes to firebase
+        dbref.child("CompanyOpportunities").child(currentOpportunity.getId()).setValue(currentOpportunity);
+
+        exitOpportunityEditor(view);
+    }
+
+    public void exitOpportunityEditor(View view) {
+        opportunityCity.setVisibility(View.VISIBLE);
+        opportunityWith.setVisibility(View.VISIBLE);
+        opportunityDescription.setVisibility(View.VISIBLE);
+        opportunityState.setVisibility(View.VISIBLE);
+        opportunityPosition.setVisibility(View.VISIBLE);
+        opportunityRequirements.setVisibility(View.VISIBLE);
+        editProfileBtn.setVisibility(View.VISIBLE);
+
+        //Rewrite constraints
+        ConstraintLayout.LayoutParams params = (ConstraintLayout.LayoutParams) txtKeywords.getLayoutParams();
+        params.topToBottom = editProfileBtn.getId();
+        txtKeywords.setLayoutParams(params);
+
+        cancelBtn.setVisibility(View.GONE);
+        confirmChangesBtn.setVisibility(View.GONE);
+        editRequirements.setVisibility(View.GONE);
+        editState.setVisibility(View.GONE);
+        editDescription.setVisibility(View.GONE);
+        editWith.setVisibility(View.GONE);
+        editCity.setVisibility(View.GONE);
+        editPosition.setVisibility(View.GONE);
+
+        //Update TextViews
+        //currentOpportunity = ((PursuitApplication) this.getApplication()).getCurrentOpportunity();
+        opportunityDescription.setText(currentOpportunity.getDescription());
+        opportunityRequirements.setText(currentOpportunity.getRequirements());
+        opportunityWith.setText(currentOpportunity.getWithWho());
+        opportunityState.setText(currentOpportunity.getState());
+        opportunityCity.setText(currentOpportunity.getCity());
+        opportunityPosition.setText(currentOpportunity.getPosition());
+    }
 }

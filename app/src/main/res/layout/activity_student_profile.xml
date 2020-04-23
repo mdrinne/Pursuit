@@ -126,7 +126,7 @@
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/btnEditProfile" />
+                app:layout_constraintTop_toBottomOf="@id/btnEditOpportunity" />
 
             <TextView
                 android:id="@+id/txtInterests"
@@ -208,7 +208,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/txtStudentMinor" />
 
             <Button
-                android:id="@+id/btnEditProfile"
+                android:id="@+id/btnEditOpportunity"
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"
                 android:layout_marginTop="16dp"

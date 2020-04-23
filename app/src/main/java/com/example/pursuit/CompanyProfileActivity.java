@@ -91,7 +91,7 @@ public class CompanyProfileActivity extends AppCompatActivity{
         bottomNavigation = findViewById(R.id.bottom_navigation);
         bottomNavigation.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
 
-        btnEditCompanyProfile = findViewById(R.id.btnEditProfile);
+        btnEditCompanyProfile = findViewById(R.id.btnEditOpportunity);
 
         btnCancel = findViewById(R.id.btnCancel);
         btnCancel.setVisibility(View.GONE);

@@ -12,7 +12,7 @@ public class OpportunityMatchedStudents extends AppCompatActivity {
     private DatabaseReference dbref;
 
     TextView noStudents;
-    btnClearFilter;
+    //btnClearFilter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

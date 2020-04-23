@@ -5,6 +5,7 @@
     <string name="strLogin">Login</string>
     <string name="strRegister">Register</string>
     <string name="strEmail">Email</string>
+    <string name="strEditOpportunity">Edit Opportunity</string>
     <string name="strReEnterPassword">Re-enter password</string>
     <string name="strApplicant">Applicant</string>
     <string name="strCompany">Company</string>
