@@ -1,0 +1,162 @@
+package com.example.pursuit;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.MenuItem;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.pursuit.adapters.StudentOpportunityKeywordAdapter;
+import com.example.pursuit.models.Student;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.StorageReference;
+
+import java.util.ArrayList;
+
+public class NonOwnerViewStudent extends AppCompatActivity {
+
+    TextView name, username, email, university, major, minor, gpa, bio;
+    ImageView studentProfilePic;
+
+    private DatabaseReference dbref;
+    StorageReference sref;
+    BottomNavigationView bottomNavigation;
+
+    final int PICK_IMAGE_REQUEST = 22;
+
+    Student currentStudent;
+    String currentRole;
+
+    private ArrayList<String> interests;
+    private RecyclerView studentInterests;
+    private StudentOpportunityKeywordAdapter mAdapter;
+    private RecyclerView.LayoutManager mLayoutManager;
+
+    int hasPicture;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_non_owner_view_student);
+
+        currentRole = ((PursuitApplication) this.getApplication()).getRole();
+        bottomNavigation = findViewById(R.id.bottom_navigation);
+        bottomNavigation.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
+
+        dbref = FirebaseDatabase.getInstance().getReference();
+
+        Query studentQuery = dbref.child("Students").orderByKey().equalTo(getIntent().getStringExtra("EXTRA_STUDENT_ID"));
+        studentQuery.addListenerForSingleValueEvent(studentListener);
+    }
+
+    private void continueOnCreate() {
+        name = findViewById(R.id.studentFullName);
+        name.setText(currentStudent.getFirstName() + " " + currentStudent.getLastName());
+
+        username = findViewById(R.id.txtStudentUsername);
+        username.setText(currentStudent.getUsername());
+
+        email = findViewById(R.id.txtStudentEmail);
+        email.setText(currentStudent.getEmail());
+
+        university = findViewById(R.id.studentUniversity);
+        university.setText(currentStudent.getUniversity());
+
+        major = findViewById(R.id.studentMajor);
+        major.setText(currentStudent.getMajor());
+
+        minor = findViewById(R.id.txtStudentMinor);
+        minor.setText(currentStudent.getMinor());
+
+        gpa = findViewById(R.id.txtStudentGPA);
+        gpa.setText(currentStudent.getGpa());
+
+        bio = findViewById(R.id.txtStudentBio);
+        bio.setText(currentStudent.getBio());
+
+        interests = currentStudent.getInterestKeywords();
+        buildRecyclerView();
+
+        studentProfilePic = findViewById(R.id.imgStudentProfilePic);
+        loadStudentProfilePic();
+    }
+
+    private void buildRecyclerView() {
+        studentInterests = findViewById(R.id.rcycStudentInterests);
+        studentInterests.setHasFixedSize(false);
+        mLayoutManager = new LinearLayoutManager(this);
+        if (interests == null) {
+            interests = new ArrayList<>();
+        }
+
+        mAdapter = new StudentOpportunityKeywordAdapter(interests);
+
+        studentInterests.setLayoutManager(mLayoutManager);
+        studentInterests.setAdapter(mAdapter);
+    }
+
+    private void loadStudentProfilePic() {
+        
+    }
+
+    /* ********DATABASE******** */
+
+    ValueEventListener studentListener = new ValueEventListener() {
+        @Override
+        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+            if (dataSnapshot.exists()) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    currentStudent = snapshot.getValue(Student.class);
+                }
+            }
+            continueOnCreate();
+        }
+
+        @Override
+        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+        }
+    };
+
+    /* ******END DATABASE****** */
+
+    BottomNavigationView.OnNavigationItemSelectedListener navigationItemSelectedListener =
+            new BottomNavigationView.OnNavigationItemSelectedListener() {
+                @Override public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                    switch (item.getItemId()) {
+                        case R.id.navigation_home:
+                            Intent landing = new Intent(NonOwnerViewStudent.this, LandingActivity.class);
+                            startActivity(landing);
+                            finish();
+                            return true;
+                        case R.id.navigation_messages:
+                            Intent messages = new Intent(NonOwnerViewStudent.this, ConversationsActivity.class);
+                            startActivity(messages);
+                            finish();
+                            return true;
+                        case R.id.navigation_profile:
+                            Intent profile;
+                            if (currentRole.equals("Student")) {
+                                profile = new Intent(NonOwnerViewStudent.this, StudentProfileActivity.class);
+                            } else {
+                                profile = new Intent(NonOwnerViewStudent.this, CompanyProfileActivity.class);
+                            }
+                            startActivity(profile);
+                            finish();
+                            return true;
+                    }
+                    return false;
+                }
+            };
+}

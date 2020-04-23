@@ -251,4 +251,6 @@
     <string name="txtMajor">Major</string>
     <string name="txtMinor">Minor</string>
     <string name="str0">0.0</string>
+    <string name="strUsernameColon">Username: </string>
+    <string name="strEmailColon">Email: </string>
 </resources>

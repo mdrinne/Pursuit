@@ -1,7 +1,9 @@
 package com.example.pursuit;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -20,6 +22,7 @@ import com.example.pursuit.adapters.StudentAdapter;
 import com.example.pursuit.models.CompanyOpportunity;
 import com.example.pursuit.models.Keyword;
 import com.example.pursuit.models.Student;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -235,6 +238,30 @@ public class OpportunityMatchedStudents extends AppCompatActivity {
 
     /* ******END DATABASE****** */
 
+    BottomNavigationView.OnNavigationItemSelectedListener navigationItemSelectedListener =
+            new BottomNavigationView.OnNavigationItemSelectedListener() {
+                @Override public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                    switch (item.getItemId()) {
+                        case R.id.navigation_home:
+                            Intent i0 = new Intent(OpportunityMatchedStudents.this, LandingActivity.class);
+                            startActivity(i0);
+                            finish();
+                            return true;
+                        case R.id.navigation_messages:
+                            Intent i1 = new Intent(OpportunityMatchedStudents.this, ConversationsActivity.class);
+                            startActivity(i1);
+                            finish();
+                            return true;
+                        case R.id.navigation_profile:
+                            Intent i2 = new Intent(OpportunityMatchedStudents.this, CompanyProfileActivity.class);
+                            startActivity(i2);
+                            finish();
+                            return true;
+                    }
+                    return false;
+                }
+            };
+
     public void filter(View v) {
         final Spinner university, major, minor, keyword;
         final EditText gpa;
@@ -381,7 +408,9 @@ public class OpportunityMatchedStudents extends AppCompatActivity {
     }
 
     private void viewStudent(int position) {
-
+        Intent intent = new Intent(OpportunityMatchedStudents.this, NonOwnerViewStudent.class);
+        intent.putExtra("EXTRA_STUDENT_ID", filterResults.get(position).getId());
+        startActivity(intent);
     }
 
 }
