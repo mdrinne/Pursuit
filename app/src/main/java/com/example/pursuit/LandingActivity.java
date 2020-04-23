@@ -92,40 +92,8 @@ public class LandingActivity extends AppCompatActivity {
     }
 
     private void getShares() {
-//        Query sharesQuery;
-//        if (currentStudent != null) {
-//            sharesQuery = dbRef.child("Students").child(currentStudent.getId()).child("Shares").orderByChild("id");
-//        } else {
-//            sharesQuery = dbRef.child("Companies").child(currentCompany.getId()).child("Shares").orderByChild("id");
-//        }
-//
-//        sharesQuery.addValueEventListener(mySharesListener);
-
         getFollowingStudentIds();
     }
-
-    ValueEventListener mySharesListener = new ValueEventListener() {
-        @RequiresApi(api = Build.VERSION_CODES.N)
-        @Override
-        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-            shareList = new ArrayList<>();
-
-            if (dataSnapshot.exists()) {
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    Share share = snapshot.getValue(Share.class);
-
-                    if (share != null) {
-                        shareList.add(0, share);
-                    }
-                }
-            }
-
-            getFollowingStudentIds();
-        }
-
-        @Override
-        public void onCancelled(@NonNull DatabaseError databaseError) { }
-    };
 
     private void getFollowingStudentIds() {
         Query studentIdsQuery;
@@ -180,14 +148,9 @@ public class LandingActivity extends AppCompatActivity {
                     if (company != null) {
                         followingIds.add(company.getId());
                     }
-//                    Share share = snapshot.getValue(Share.class);
-//                    if (share != null) {
-//                        shareList.add(0, share);
-//                    }
                 }
             }
 
-//            setRecyclerAdapter();
             getAllShares();
         }
 
