@@ -24,7 +24,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.example.pursuit.ui.main.SectionsPagerAdapter;
+import com.example.pursuit.ui.main.DiscoverPagerAdapter;
 
 
 public class DiscoverActivity extends AppCompatActivity {
@@ -67,7 +67,7 @@ public class DiscoverActivity extends AppCompatActivity {
         }
 
         final ViewPager viewPager = findViewById(R.id.view_pager);
-        SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(this, getSupportFragmentManager(),
+        DiscoverPagerAdapter sectionsPagerAdapter = new DiscoverPagerAdapter(this, getSupportFragmentManager(),
                 tabLayout.getTabCount(), currentUserId, currentRole);
 
         viewPager.setAdapter(sectionsPagerAdapter);

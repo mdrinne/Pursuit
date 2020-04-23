@@ -15,7 +15,7 @@ import com.example.pursuit.R;
  * A [FragmentPagerAdapter] that returns a fragment corresponding to
  * one of the sections/tabs/pages.
  */
-public class SectionsPagerAdapter extends FragmentPagerAdapter {
+public class DiscoverPagerAdapter extends FragmentPagerAdapter {
 
     @StringRes
     private static final int[] TAB_TITLES = new int[]{R.string.discover_users_tab, R.string.discover_companies_tab, R.string.discover_opportunities_tab};
@@ -24,7 +24,7 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
     private String currentUserId;
     private String currentUserRole;
 
-    public SectionsPagerAdapter(Context context, FragmentManager fm, int numTabs, String currentUserId, String currentUserRole) {
+    public DiscoverPagerAdapter(Context context, FragmentManager fm, int numTabs, String currentUserId, String currentUserRole) {
         super(fm);
         this.mContext = context;
         this.numTabs = numTabs;
