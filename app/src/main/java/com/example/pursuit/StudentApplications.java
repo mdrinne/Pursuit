@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pursuit.adapters.StudentApplicationAdapter;
+import com.example.pursuit.models.Company;
 import com.example.pursuit.models.CompanyOpportunity;
 import com.example.pursuit.models.Student;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -29,6 +30,8 @@ public class StudentApplications extends AppCompatActivity {
 
     Student currentStudent;
     String currentOpportunity;
+    CompanyOpportunity deleteOpp;
+    Company currentCompany;
 
 
     private ArrayList<String> appliedTo;
@@ -84,7 +87,7 @@ public class StudentApplications extends AppCompatActivity {
         mAdapter.setStudentApplicationOnItemClickListener(new StudentApplicationAdapter.StudentApplicationOnItemClickListener() {
             @Override
             public void onDeleteClick(int position) {
-
+                deleteApplication(position);
             }
 
             @Override
@@ -93,6 +96,67 @@ public class StudentApplications extends AppCompatActivity {
             }
         });
     }
+
+    private void deleteApplication(int position) {
+        deleteOpp = opportunities.get(position);
+        for (int i=0; i<appliedTo.size(); i++) {
+            if (appliedTo.get(i).equals(deleteOpp.getId())) {
+                appliedTo.remove(i);
+                opportunities.remove(deleteOpp);
+                break;
+            }
+        }
+        currentStudent.setAppliedTo(appliedTo);
+        dbref.child("Students").child(currentStudent.getId()).setValue(currentStudent);
+        ((PursuitApplication) this.getApplication()).setCurrentStudent(currentStudent);
+
+        Query companyQuery = dbref.child("Companies").orderByKey().equalTo(deleteOpp.getCompanyID());
+        companyQuery.addListenerForSingleValueEvent(companyListener);
+    }
+
+    private void continueDelete() {
+        ArrayList<String> applicants = deleteOpp.getApplicants();
+        for (int i =0; i<applicants.size(); i++) {
+            if (applicants.get(i).equals(currentStudent.getId())) {
+                applicants.remove(i);
+                break;
+            }
+        }
+
+        deleteOpp.setApplicants(applicants);
+
+        ArrayList<CompanyOpportunity> companyOpps = currentCompany.getOpportunities();
+        for (int i=0; i<companyOpps.size(); i++) {
+            if (companyOpps.get(i).getId().equals(deleteOpp.getId())) {
+                companyOpps.remove(companyOpps.get(i));
+                break;
+            }
+        }
+        companyOpps.add(deleteOpp);
+        currentCompany.setOpportunities(companyOpps);
+
+        dbref.child("CompanyOpportunities").child(deleteOpp.getId()).child("applicants").setValue(applicants);
+        dbref.child("Companies").child(currentCompany.getId()).setValue(currentCompany);
+        mAdapter.notifyDataSetChanged();
+
+    }
+
+    ValueEventListener companyListener = new ValueEventListener() {
+        @Override
+        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+            if (dataSnapshot.exists()) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    currentCompany = snapshot.getValue(Company.class);
+                }
+            }
+            continueDelete();
+        }
+
+        @Override
+        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+        }
+    };
 
     private void viewOpportunity(int position) {
         Intent intent = new Intent(this, NonOwnerViewOpportunity.class);
