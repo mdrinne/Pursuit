@@ -27,7 +27,6 @@ import java.util.ArrayList;
 
 public class StudentApplications extends AppCompatActivity {
 
-    BottomNavigationView bottomNavigation;
     Student currentStudent;
     String currentOpportunity;
 
@@ -47,8 +46,6 @@ public class StudentApplications extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_student_applications);
-        bottomNavigation = findViewById(R.id.bottom_navigation);
-        bottomNavigation.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
 
         currentStudent = ((PursuitApplication) this.getApplication()).getCurrentStudent();
 

@@ -30,7 +30,6 @@ import java.util.ArrayList;
 
 public class NonOwnerViewOpportunity extends AppCompatActivity {
     TextView companyName, position, city, state, with, description, requirements;
-    BottomNavigationView bottomNavigation;
     Button btnApply;
 
     Student currentStudent;
@@ -51,8 +50,6 @@ public class NonOwnerViewOpportunity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_non_owner_view_opportunity);
-        bottomNavigation = findViewById(R.id.bottom_navigation);
-        bottomNavigation.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
 
         currentStudent = ((PursuitApplication) this.getApplicationContext()).getCurrentStudent();
 
