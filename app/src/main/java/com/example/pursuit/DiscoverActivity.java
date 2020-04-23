@@ -36,6 +36,7 @@ public class DiscoverActivity extends AppCompatActivity {
     private String currentRole;
 
     private Student toggleFollowingStudent;
+    private Company toggleFollowingCompany;
 
     private DatabaseReference dbRef;
 
@@ -86,13 +87,74 @@ public class DiscoverActivity extends AppCompatActivity {
         });
     }
 
+    public void toggleFollowCompany(View view) {
+        toggleFollowingCompany = (Company) view.getTag();
+        checkCompanyFollowStatus();
+    }
+
+    private void checkCompanyFollowStatus() {
+        Query checkQuery;
+        if (currentRole.equals("Student")) {
+            checkQuery = dbRef.child("Students").child(currentStudent.getId()).child("Following").child("Companies")
+                    .orderByChild("id").equalTo(toggleFollowingCompany.getId());
+        } else {
+            checkQuery = dbRef.child("Companies").child(currentCompany.getId()).child("Following").child("Companies")
+                    .orderByChild("id").equalTo(toggleFollowingCompany.getId());
+        }
+        checkQuery.addListenerForSingleValueEvent(checkFollowingCompanyListener);
+    }
+
+    ValueEventListener checkFollowingCompanyListener = new ValueEventListener() {
+        @Override
+        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+            if (dataSnapshot.exists()) {
+                // Following > Students > id exists, meaning that the current
+                // user already follows this student => unfollow them
+                Log.d(TAG, "current user is following this student");
+                unfollowCompany();
+            } else {
+                // Following > Students > doesn't exist => follow them
+                Log.d(TAG, "current user is not following this student");
+                followCompany();
+            }
+        }
+
+        @Override
+        public void onCancelled(@NonNull DatabaseError databaseError) { }
+    };
+
+    private void unfollowCompany() {
+        if (currentRole.equals("Student")) {
+            DatabaseReference followRef = dbRef.child("Students").child(currentStudent.getId())
+                    .child("Following").child("Companies").child(toggleFollowingCompany.getId());
+
+            followRef.removeValue();
+        } else {
+            DatabaseReference followRef = dbRef.child("Companies").child(currentCompany.getId())
+                    .child("Following").child("Companies").child(toggleFollowingCompany.getId());
+
+            followRef.removeValue();
+        }
+    }
+
+    private void followCompany() {
+        if (currentRole.equals("Student")) {
+            dbRef.child("Students").child(currentStudent.getId()).child("Following").child("Companies")
+                    .child(toggleFollowingCompany.getId()).setValue(toggleFollowingCompany);
+        } else {
+            dbRef.child("Companies").child(currentEmployee.getCompanyID()).child("Following").child("Companies")
+                    .child(toggleFollowingCompany.getId()).setValue(toggleFollowingCompany);
+        }
+    }
+
+
     public void toggleFollowStudent(View view) {
         Log.d(TAG, "toggling follow student");
         toggleFollowingStudent = (Student) view.getTag();
-        checkFollowStatus();
+        checkStudentFollowStatus();
     }
 
-    private void checkFollowStatus() {
+    private void checkStudentFollowStatus() {
         Query checkQuery;
         if (currentRole.equals("Student")) {
             checkQuery = dbRef.child("Students").child(currentStudent.getId()).child("Following").child("Students")
@@ -101,10 +163,10 @@ public class DiscoverActivity extends AppCompatActivity {
             checkQuery = dbRef.child("Companies").child(currentCompany.getId()).child("Following").child("Students")
                     .orderByChild("id").equalTo(toggleFollowingStudent.getId());
         }
-        checkQuery.addListenerForSingleValueEvent(checkFollowingListener);
+        checkQuery.addListenerForSingleValueEvent(checkFollowingStudentListener);
     }
 
-    ValueEventListener checkFollowingListener = new ValueEventListener() {
+    ValueEventListener checkFollowingStudentListener = new ValueEventListener() {
         @Override
         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
             if (dataSnapshot.exists()) {

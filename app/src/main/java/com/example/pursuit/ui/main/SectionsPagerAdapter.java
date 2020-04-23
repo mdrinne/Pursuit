@@ -39,7 +39,7 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
             case 0:
                 return DiscoverUsersFragment.newInstance(currentUserId, currentUserRole);
             case 1:
-                return new DiscoverCompaniesFragment();
+                return DiscoverCompaniesFragment.newInstance(currentUserId, currentUserRole);
             case 2:
                 return DiscoverOpportunitiesFragment.newInstance(currentUserId);
             default:

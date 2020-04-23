@@ -197,7 +197,6 @@ public class DiscoverOpportunitiesFragment extends Fragment {
         Log.d(TAG, "going to get interests");
         interests = currentStudent.getInterestKeywords();
         Log.d(TAG, "Got interests");
-        Log.d("INTEREST_SIZE", Integer.toString(interests.size()));
         if (interests == null) {
             Log.d(TAG, "postListener interests is null");
             opportunitiesRecycler.setVisibility(View.GONE);
