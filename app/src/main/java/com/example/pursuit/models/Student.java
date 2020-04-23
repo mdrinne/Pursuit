@@ -18,6 +18,7 @@ public class Student {
     public String username;
     public String password;
     public ArrayList<String> interestKeywords;
+    public ArrayList<String> appliedTo;
 
     public Student() {
         this.id = "";
@@ -40,6 +41,7 @@ public class Student {
         this.username = username;
         this.password = password;
         this.interestKeywords = interestKeywords;
+        this.appliedTo = null;
     }
 
     public String getId() {
@@ -136,5 +138,13 @@ public class Student {
 
     public void setInterestKeywords(ArrayList<String> interestKeywords) {
         this.interestKeywords = interestKeywords;
+    }
+
+    public ArrayList<String> getAppliedTo() {
+        return appliedTo;
+    }
+
+    public void setAppliedTo(ArrayList<String> appliedTo) {
+        this.appliedTo = appliedTo;
     }
 }
