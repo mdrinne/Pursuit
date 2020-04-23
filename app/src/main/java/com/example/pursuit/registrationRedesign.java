@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -67,6 +68,8 @@ public class registrationRedesign extends FragmentActivity {   //AppCompatActivi
     EditText companyDescription;
     Company newCompany;
 
+    Button employeeRegister;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -90,6 +93,7 @@ public class registrationRedesign extends FragmentActivity {   //AppCompatActivi
         matchedStudentEmails = new ArrayList<>();
         matchedCompanyEmails = new ArrayList<>();
         matchedStudents = new ArrayList<>();
+        employeeRegister = findViewById(R.id.btnContinue);
     }
 
     public static class PlaceholderFragment extends Fragment {
@@ -417,7 +421,8 @@ public class registrationRedesign extends FragmentActivity {   //AppCompatActivi
 
 
     public void checkInvite(View v) {
-        view = v;
+        //xview = v;
+        Log.d(TAG, "INIT OF CHECK INVITE\n\n\n");
         companyCode = findViewById(R.id.txtCompanyCode);
         invitationCode = findViewById(R.id.txtInviteCode);
 
