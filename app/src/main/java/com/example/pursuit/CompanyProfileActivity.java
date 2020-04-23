@@ -315,7 +315,7 @@ public class CompanyProfileActivity extends AppCompatActivity{
     /* ******END DATABASE****** */
 
     private void buildRecyclerView() {
-        allOpportunities = findViewById(R.id.rcycOpportunities);
+        allOpportunities = findViewById(R.id.rcycStudents);
         allOpportunities.setHasFixedSize(false);
         if (companyOpportunities == null) {
             companyOpportunities = new ArrayList<>();
@@ -406,7 +406,7 @@ public class CompanyProfileActivity extends AppCompatActivity{
     }
 
     private void populateTextFields() {
-        companyName = findViewById(R.id.txtCompanyName);
+        companyName = findViewById(R.id.txtUniversity);
         companyName.setText(currentCompany.getName());
 
         companyField = findViewById(R.id.txtCompanyField);

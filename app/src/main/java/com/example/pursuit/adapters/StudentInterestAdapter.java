@@ -9,7 +9,6 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pursuit.R;
-import com.example.pursuit.models.Student;
 import com.google.firebase.database.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -35,7 +34,7 @@ public class StudentInterestAdapter extends RecyclerView.Adapter<StudentInterest
 
         public StudentInterestViewHolder(@NotNull View itemView, final StudentInterestOnItemClickListener listener) {
             super(itemView);
-            studentInterest = itemView.findViewById(R.id.txtKeyword);
+            studentInterest = itemView.findViewById(R.id.txtMinor);
             deleteIcon = itemView.findViewById(R.id.imgDeleteIcon);
 
             deleteIcon.setOnClickListener(new View.OnClickListener() {

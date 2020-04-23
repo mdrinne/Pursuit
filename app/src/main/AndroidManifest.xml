@@ -49,6 +49,8 @@
         <activity android:name=".StudentViewOpportunity" />
         <activity android:name=".StudentViewCompany" />
         <activity android:name=".StudentViewEmployees" />
+        <activity android:name=".OpportunityMatchedStudents" />
+        <activity android:name=".NonOwnerViewStudent" />
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />

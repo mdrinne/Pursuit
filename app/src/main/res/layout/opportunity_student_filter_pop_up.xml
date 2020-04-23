@@ -27,7 +27,7 @@
         android:layout_marginStart="20dp"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="15dp"
-        android:text="@string/strCompanyName"
+        android:text="@string/strUniversity"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtFilter" />
 
@@ -51,7 +51,7 @@
         android:layout_marginStart="20dp"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="15dp"
-        android:text="@string/strPosition"
+        android:text="@string/txtMajor"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/spnUniversity" />
 
@@ -75,7 +75,7 @@
         android:layout_marginStart="20dp"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="15dp"
-        android:text="@string/strKeyword"
+        android:text="@string/txtMinor"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/spnMajor" />
 
@@ -99,9 +99,9 @@
         android:layout_marginStart="20dp"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="15dp"
-        android:text="@string/strCity"
+        android:text="@string/strKeyword"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spnMinor" />
+        app:layout_constraintTop_toBottomOf="@id/txtGPA" />
 
     <Spinner
         android:id="@+id/spnKeyword"
@@ -123,20 +123,24 @@
         android:layout_marginStart="20dp"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="15dp"
-        android:text="@string/strState"
+        android:text="@string/strMinimumGPA"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spnKeyword" />
+        app:layout_constraintTop_toBottomOf="@+id/spnMinor" />
 
-    <Spinner
-        android:id="@+id/spnGPA"
-        android:layout_width="0dp"
+    <EditText
+        android:id="@+id/txtGPA"
+        android:layout_width="75dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="10dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginRight="20dp"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:ems="10"
+        android:fontFamily="@font/roboto"
+        android:hint="@string/str0"
+        android:importantForAutofill="no"
+        android:inputType="textPersonName"
+        android:textColor="@color/accent1"
+        android:textSize="14sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtMinimumGPA" />
 
@@ -146,7 +150,7 @@
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/spnGPA">
+        app:layout_constraintTop_toBottomOf="@id/spnKeyword">
 
         <Button
             android:id="@+id/btnConfirm"

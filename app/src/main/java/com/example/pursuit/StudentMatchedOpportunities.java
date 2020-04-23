@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -82,8 +81,8 @@ public class StudentMatchedOpportunities extends AppCompatActivity {
         currentStudent = ((PursuitApplication) this.getApplication()).getCurrentStudent();
         interests = currentStudent.getInterestKeywords();
 
-        noInterests = findViewById(R.id.txtNoInterests);
-        opportunitiesRecycler = findViewById(R.id.rcycOpportunities);
+        noInterests = findViewById(R.id.txtNoStudents);
+        opportunitiesRecycler = findViewById(R.id.rcycStudents);
         btnFilter = findViewById(R.id.btnFilter);
 
         btnClearFilter = findViewById(R.id.btnClearFilter);
@@ -146,7 +145,7 @@ public class StudentMatchedOpportunities extends AppCompatActivity {
     }
 
     public void buildRecyclerView() {
-        viewMatchedEmployees = findViewById(R.id.rcycOpportunities);
+        viewMatchedEmployees = findViewById(R.id.rcycStudents);
         viewMatchedEmployees.setHasFixedSize(false);
         mLayoutManager = new LinearLayoutManager(this);
         for (int i=0; i<allMatchedOpportunities.size(); i++) {
@@ -238,7 +237,7 @@ public class StudentMatchedOpportunities extends AppCompatActivity {
         cancel = filterDialog.findViewById(R.id.btnCancel);
         confirm = filterDialog.findViewById(R.id.btnConfirm);
 
-        companyName = filterDialog.findViewById(R.id.spnCompanyName);
+        companyName = filterDialog.findViewById(R.id.spnUniversity);
         ArrayAdapter<String> companyNameAdapter = new ArrayAdapter<String>(
                                                 this,
                                                         android.R.layout.simple_spinner_item,
@@ -246,7 +245,7 @@ public class StudentMatchedOpportunities extends AppCompatActivity {
         companyNameAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         companyName.setAdapter(companyNameAdapter);
 
-        position = filterDialog.findViewById(R.id.spnPosition);
+        position = filterDialog.findViewById(R.id.spnMajor);
         ArrayAdapter<String> positionAdapter = new ArrayAdapter<String>(
                                                 this,
                                                         android.R.layout.simple_spinner_item,
@@ -254,7 +253,7 @@ public class StudentMatchedOpportunities extends AppCompatActivity {
         positionAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         position.setAdapter(positionAdapter);
 
-        keyword = filterDialog.findViewById(R.id.spnKeyword);
+        keyword = filterDialog.findViewById(R.id.spnMinor);
         ArrayAdapter<String> keywordAdapter = new ArrayAdapter<String>(
                                                 this,
                                                         android.R.layout.simple_spinner_item,
@@ -262,7 +261,7 @@ public class StudentMatchedOpportunities extends AppCompatActivity {
         keywordAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         keyword.setAdapter(keywordAdapter);
 
-        city = filterDialog.findViewById(R.id.spnCity);
+        city = filterDialog.findViewById(R.id.spnKeyword);
         ArrayAdapter<String> cityAdapter = new ArrayAdapter<String>(
                                                 this,
                                                         android.R.layout.simple_spinner_item,
@@ -270,7 +269,7 @@ public class StudentMatchedOpportunities extends AppCompatActivity {
         cityAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         city.setAdapter(cityAdapter);
 
-        state = filterDialog.findViewById(R.id.spnState);
+        state = filterDialog.findViewById(R.id.spnGPA);
         ArrayAdapter<String> stateAdapter = new ArrayAdapter<String>(
                                                 this,
                                                         android.R.layout.simple_spinner_item,
@@ -305,7 +304,7 @@ public class StudentMatchedOpportunities extends AppCompatActivity {
                     ConstraintSet clearFilter = new ConstraintSet();
                     clearFilter.clone(innerLayout);
                     clearFilter.connect(R.id.btnClearFilter, ConstraintSet.TOP, R.id.btnFilter, ConstraintSet.BOTTOM, 0);
-                    clearFilter.connect(R.id.rcycOpportunities, ConstraintSet.TOP, R.id.btnClearFilter, ConstraintSet.BOTTOM, 0);
+                    clearFilter.connect(R.id.rcycStudents, ConstraintSet.TOP, R.id.btnClearFilter, ConstraintSet.BOTTOM, 0);
                     clearFilter.applyTo(innerLayout);
                 }
 
@@ -365,7 +364,7 @@ public class StudentMatchedOpportunities extends AppCompatActivity {
     public void clearFilter(View v) {
         ConstraintSet clear = new ConstraintSet();
         clear.clone(innerLayout);
-        clear.connect(R.id.rcycOpportunities, ConstraintSet.TOP, R.id.btnFilter, ConstraintSet.BOTTOM, 0);
+        clear.connect(R.id.rcycStudents, ConstraintSet.TOP, R.id.btnFilter, ConstraintSet.BOTTOM, 0);
         clear.applyTo(innerLayout);
         btnClearFilter.setVisibility(View.GONE);
 

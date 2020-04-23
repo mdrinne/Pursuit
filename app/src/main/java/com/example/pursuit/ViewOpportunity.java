@@ -81,15 +81,19 @@ public class ViewOpportunity extends AppCompatActivity {
         approveBtn = findViewById(R.id.btnApprove);
         if (currentOpportunity.getApproved() == 1) {
             approveBtn.setVisibility(View.GONE);
+        } else {
+            Button btnPotentialCandidate = findViewById(R.id.btnPotentialCandidates);
+            btnPotentialCandidate.setVisibility(View.GONE);
         }
 
-        opportunityPosition = findViewById(R.id.txtPosition);
+
+        opportunityPosition = findViewById(R.id.txtMajor);
         opportunityPosition.setText(currentOpportunity.getPosition());
 
-        opportunityCity = findViewById(R.id.txtCity);
+        opportunityCity = findViewById(R.id.txtKeyword);
         opportunityCity.setText(currentOpportunity.getCity() + ", ");
 
-        opportunityState = findViewById(R.id.txtState);
+        opportunityState = findViewById(R.id.txtMinimumGPA);
         opportunityState.setText(currentOpportunity.getState());
 
         opportunityWith = findViewById(R.id.txtWith);
@@ -301,6 +305,12 @@ public class ViewOpportunity extends AppCompatActivity {
             mAdapter.notifyDataSetChanged();
             return;
         }
+    }
+
+    public void potentialCandidates(View v) {
+        Intent intent = new Intent(this, OpportunityMatchedStudents.class);
+        intent.putExtra("EXTRA_OPPORTUNITY_ID", currentOpportunity.getId());
+        startActivity(intent);
     }
 
     BottomNavigationView.OnNavigationItemSelectedListener navigationItemSelectedListener =
