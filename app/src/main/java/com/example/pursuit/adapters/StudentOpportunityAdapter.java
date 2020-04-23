@@ -38,14 +38,14 @@ public class StudentOpportunityAdapter extends RecyclerView.Adapter<StudentOppor
 
         public StudentOpportunityViewHolder(@NotNull View itemView, final StudentOpportunityOnItemClickListener listener) {
             super(itemView);
-            companyName = itemView.findViewById(R.id.txtCompanyName);
-            position = itemView.findViewById(R.id.txtPosition);
+            companyName = itemView.findViewById(R.id.txtUniversity);
+            position = itemView.findViewById(R.id.txtMajor);
             description = itemView.findViewById(R.id.txtDescription);
             with = itemView.findViewById(R.id.txtWith);
             timeStamp = itemView.findViewById(R.id.txtTimeStamp);
-            city = itemView.findViewById(R.id.txtCity);
-            state = itemView.findViewById(R.id.txtState);
-            card = itemView.findViewById(R.id.crdStudentOpportunity);
+            city = itemView.findViewById(R.id.txtKeyword);
+            state = itemView.findViewById(R.id.txtMinimumGPA);
+            card = itemView.findViewById(R.id.crdStudent);
 
             card.setOnClickListener(new View.OnClickListener() {
                 @Override

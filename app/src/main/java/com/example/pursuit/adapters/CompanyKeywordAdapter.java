@@ -36,7 +36,7 @@ public class CompanyKeywordAdapter extends RecyclerView.Adapter<CompanyKeywordAd
 
         public CompanyKeywordViewHolder(@NotNull View itemView, final CompanyKeywordOnItemListener listener) {
             super(itemView);
-            companyKeyword = itemView.findViewById(R.id.txtKeyword);
+            companyKeyword = itemView.findViewById(R.id.txtMinor);
             deleteIcon = itemView.findViewById(R.id.imgDeleteIcon);
 
             deleteIcon.setOnClickListener(new View.OnClickListener() {

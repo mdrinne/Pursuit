@@ -56,7 +56,7 @@
                 tools:targetApi="lollipop" />
 
             <EditText
-                android:id="@+id/txtPosition"
+                android:id="@+id/txtMajor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -72,7 +72,7 @@
                 tools:targetApi="lollipop" />
 
             <EditText
-                android:id="@+id/txtUsername"
+                android:id="@+id/txtStudentUsername"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"

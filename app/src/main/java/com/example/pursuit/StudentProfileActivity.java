@@ -13,6 +13,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -23,6 +24,8 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -54,6 +57,19 @@ public class StudentProfileActivity extends AppCompatActivity {
     TextView studentGPA;
     TextView studentBio;
     ImageView studentProfilePic;
+    TextView hardcodedUniversity;
+    TextView hardcodedMajor;
+    TextView hardcodedMinor;
+    TextView hardcodedGPA;
+    EditText editStudentUniversity;
+    EditText editStudentMajor;
+    EditText editStudentMinor;
+    EditText editStudentGPA;
+    EditText editStudentBio;
+    Button btnEditProfile;
+    Button btnSubmitChanges;
+    Button btnCancel;
+    TextView txtInterests;
 
     private DatabaseReference dbref;
     Uri filePath;
@@ -91,19 +107,52 @@ public class StudentProfileActivity extends AppCompatActivity {
         studentFullName.setText(studentFullNameString);
 
         studentUniversity = findViewById(R.id.studentUniversity);
-        studentUniversity.setText("University: " + currentStudent.getUniversity());
+        studentUniversity.setText(currentStudent.getUniversity());
 
         studentMajor = findViewById(R.id.studentMajor);
-        studentMajor.setText("Major: " + currentStudent.getMajor());
+        studentMajor.setText(currentStudent.getMajor());
 
         studentMinor = findViewById(R.id.txtStudentMinor);
-        studentMinor.setText("Minor: " + currentStudent.getMinor());
+        studentMinor.setText(currentStudent.getMinor());
 
         studentGPA = findViewById(R.id.txtStudentGPA);
-        studentGPA.setText("GPA: " + currentStudent.getGpa());
+        studentGPA.setText(currentStudent.getGpa());
 
         studentBio = findViewById(R.id.txtStudentBio);
         studentBio.setText(currentStudent.getBio());
+
+        btnEditProfile = findViewById(R.id.btnEditProfile);
+
+        //Hardcoded TextViews
+        hardcodedUniversity = findViewById(R.id.studentUniversityHardcode);
+        hardcodedMajor = findViewById(R.id.studentMajorHardcode);
+        hardcodedMinor = findViewById(R.id.txtStudentMinorHardcode);
+        hardcodedGPA = findViewById(R.id.txtStudentGPAHardcode);
+
+        // Edit profile EditTexts
+        editStudentBio= findViewById(R.id.editStudentBio);
+        editStudentBio.setVisibility(View.GONE);
+
+        btnCancel = findViewById(R.id.btnCancel);
+        btnCancel.setVisibility(View.GONE);
+
+        btnSubmitChanges = findViewById(R.id.btnConfirm);
+        btnSubmitChanges.setVisibility(View.GONE);
+
+        editStudentGPA = findViewById(R.id.editStudentGPA);
+        editStudentGPA.setVisibility(View.GONE);
+
+        editStudentMinor = findViewById(R.id.editStudentMinor);
+        editStudentMinor.setVisibility(View.GONE);
+
+        editStudentMajor = findViewById(R.id.editStudentMajor);
+        editStudentMajor.setVisibility(View.GONE);
+
+        editStudentUniversity = findViewById(R.id.editStudentUniversity);
+        editStudentUniversity.setVisibility(View.GONE);
+
+        //Interests TextView
+        txtInterests = findViewById(R.id.txtInterests);
 
         interests = currentStudent.getInterestKeywords();
         buildRecyclerView();
@@ -383,6 +432,11 @@ public class StudentProfileActivity extends AppCompatActivity {
                     startActivity(landing);
                     finish();
                     return true;
+                case R.id.navigation_discover:
+                    Intent discover = new Intent(StudentProfileActivity.this, DiscoverActivity.class);
+                    startActivity(discover);
+                    finish();
+                    return true;
                 case R.id.navigation_messages:
                     Intent messages = new Intent(StudentProfileActivity.this, ConversationsActivity.class);
                     startActivity(messages);
@@ -452,5 +506,100 @@ public class StudentProfileActivity extends AppCompatActivity {
             return;
         }
     }
-    
+
+    public void editProfile(View view) {
+        editStudentUniversity.setVisibility(View.VISIBLE);
+        editStudentMajor.setVisibility(View.VISIBLE);
+        editStudentMinor.setVisibility(View.VISIBLE);
+        editStudentGPA.setVisibility(View.VISIBLE);
+        editStudentBio.setVisibility(View.VISIBLE);
+        btnSubmitChanges.setVisibility(View.VISIBLE);
+        btnCancel.setVisibility(View.VISIBLE);
+
+        //Rewrite constraints
+        ConstraintLayout.LayoutParams params = (ConstraintLayout.LayoutParams) txtInterests.getLayoutParams();
+        params.topToBottom = editStudentBio.getId();
+        txtInterests.setLayoutParams(params);
+
+        params = (ConstraintLayout.LayoutParams) hardcodedMajor.getLayoutParams();
+        params.topToBottom = editStudentUniversity.getId();
+        hardcodedMajor.setLayoutParams(params);
+
+        params = (ConstraintLayout.LayoutParams) hardcodedMinor.getLayoutParams();
+        params.topToBottom = editStudentMajor.getId();
+        hardcodedMinor.setLayoutParams(params);
+
+        params = (ConstraintLayout.LayoutParams) hardcodedGPA.getLayoutParams();
+        params.topToBottom = editStudentMinor.getId();
+        hardcodedGPA.setLayoutParams(params);
+
+        studentBio.setVisibility(View.GONE);
+        btnEditProfile.setVisibility(View.GONE);
+        studentGPA.setVisibility(View.GONE);
+        studentMinor.setVisibility(View.GONE);
+        studentMajor.setVisibility(View.GONE);
+        studentUniversity.setVisibility(View.GONE);
+
+        editStudentUniversity.setText(currentStudent.getUniversity());
+        editStudentMajor.setText(currentStudent.getMajor());
+        editStudentMinor.setText(currentStudent.getMinor());
+        editStudentGPA.setText(currentStudent.getGpa());
+        editStudentBio.setText(currentStudent.getBio());
+    }
+
+    public void submitChanges(View view) {
+        //Update currentStudent fields
+        currentStudent.setUniversity(editStudentUniversity.getText().toString());
+        currentStudent.setMajor(editStudentMajor.getText().toString());
+        currentStudent.setMinor(editStudentMinor.getText().toString());
+        currentStudent.setGpa(editStudentGPA.getText().toString());
+        currentStudent.setBio(editStudentBio.getText().toString());
+
+        //Submit changes to firebase
+        dbref.child("Students").child(currentStudent.getId()).setValue(currentStudent);
+
+        exitProfileEditor(view);
+    }
+
+    public void exitProfileEditor(View view) {
+        studentUniversity.setVisibility(View.VISIBLE);
+        studentMajor.setVisibility(View.VISIBLE);
+        studentMinor.setVisibility(View.VISIBLE);
+        studentGPA.setVisibility(View.VISIBLE);
+        btnEditProfile.setVisibility(View.VISIBLE);
+        studentBio.setVisibility(View.VISIBLE);
+
+        //Rewrite constraints
+        ConstraintLayout.LayoutParams params = (ConstraintLayout.LayoutParams) txtInterests.getLayoutParams();
+        params.topToBottom = studentBio.getId();
+        txtInterests.setLayoutParams(params);
+
+        params = (ConstraintLayout.LayoutParams) hardcodedMajor.getLayoutParams();
+        params.topToBottom = studentUniversity.getId();
+        hardcodedMajor.setLayoutParams(params);
+
+        params = (ConstraintLayout.LayoutParams) hardcodedMinor.getLayoutParams();
+        params.topToBottom = studentMajor.getId();
+        hardcodedMinor.setLayoutParams(params);
+
+        params = (ConstraintLayout.LayoutParams) hardcodedGPA.getLayoutParams();
+        params.topToBottom = studentMinor.getId();
+        hardcodedGPA.setLayoutParams(params);
+
+        btnCancel.setVisibility(View.GONE);
+        btnSubmitChanges.setVisibility(View.GONE);
+        editStudentBio.setVisibility(View.GONE);
+        editStudentGPA.setVisibility(View.GONE);
+        editStudentMinor.setVisibility(View.GONE);
+        editStudentMajor.setVisibility(View.GONE);
+        editStudentUniversity.setVisibility(View.GONE);
+
+        //Update TextViews
+        currentStudent = ((PursuitApplication) this.getApplication()).getCurrentStudent();
+        studentUniversity.setText(currentStudent.getUniversity());
+        studentMajor.setText(currentStudent.getMajor());
+        studentMinor.setText(currentStudent.getMinor());
+        studentGPA.setText(currentStudent.getGpa());
+        studentBio.setText(currentStudent.getBio());
+    }
 }

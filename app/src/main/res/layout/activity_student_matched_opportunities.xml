@@ -34,12 +34,13 @@
                 android:layout_height="wrap_content"
                 android:onClick="filter"
                 android:text="@string/strFilter"
+                android:textColor="@color/colorPrimary"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rcycOpportunities"
+                android:id="@+id/rcycStudents"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -50,7 +51,7 @@
                 app:layout_constraintVertical_bias="0.0" />
 
             <TextView
-                android:id="@+id/txtNoInterests"
+                android:id="@+id/txtNoStudents"
                 android:layout_width="250dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="100dp"
@@ -68,6 +69,7 @@
                 android:layout_height="wrap_content"
                 android:onClick="clearFilter"
                 android:text="@string/strClearFilter"
+                android:textColor="@color/colorPrimary"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/btnFilter" />

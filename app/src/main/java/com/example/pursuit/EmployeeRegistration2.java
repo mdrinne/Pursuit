@@ -136,8 +136,8 @@ public class EmployeeRegistration2 extends AppCompatActivity {
         view = v;
         firstName = findViewById(R.id.txtFirstName);
         lastName = findViewById(R.id.txtLastName);
-        position = findViewById(R.id.txtPosition);
-        username = findViewById(R.id.txtUsername);
+        position = findViewById(R.id.txtMajor);
+        username = findViewById(R.id.txtStudentUsername);
         password = findViewById(R.id.txtPassword);
         reEnterPassword = findViewById(R.id.txtReEnterPassword);
 

@@ -1,9 +1,9 @@
 package com.example.pursuit;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -72,6 +72,7 @@ public class StudentMatchedOpportunities extends AppCompatActivity {
 
     private Dialog filterDialog;
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,8 +81,8 @@ public class StudentMatchedOpportunities extends AppCompatActivity {
         currentStudent = ((PursuitApplication) this.getApplication()).getCurrentStudent();
         interests = currentStudent.getInterestKeywords();
 
-        noInterests = findViewById(R.id.txtNoInterests);
-        opportunitiesRecycler = findViewById(R.id.rcycOpportunities);
+        noInterests = findViewById(R.id.txtNoStudents);
+        opportunitiesRecycler = findViewById(R.id.rcycStudents);
         btnFilter = findViewById(R.id.btnFilter);
 
         btnClearFilter = findViewById(R.id.btnClearFilter);
@@ -144,7 +145,7 @@ public class StudentMatchedOpportunities extends AppCompatActivity {
     }
 
     public void buildRecyclerView() {
-        viewMatchedEmployees = findViewById(R.id.rcycOpportunities);
+        viewMatchedEmployees = findViewById(R.id.rcycStudents);
         viewMatchedEmployees.setHasFixedSize(false);
         mLayoutManager = new LinearLayoutManager(this);
         for (int i=0; i<allMatchedOpportunities.size(); i++) {
@@ -158,7 +159,7 @@ public class StudentMatchedOpportunities extends AppCompatActivity {
         mAdapter.setStudentOpportunityOnItemClickListener(new StudentOpportunityAdapter.StudentOpportunityOnItemClickListener() {
             @Override
             public void onCardClick(int position) {
-
+                viewOpportunity(position);
             }
         });
     }
@@ -303,7 +304,7 @@ public class StudentMatchedOpportunities extends AppCompatActivity {
                     ConstraintSet clearFilter = new ConstraintSet();
                     clearFilter.clone(innerLayout);
                     clearFilter.connect(R.id.btnClearFilter, ConstraintSet.TOP, R.id.btnFilter, ConstraintSet.BOTTOM, 0);
-                    clearFilter.connect(R.id.rcycOpportunities, ConstraintSet.TOP, R.id.btnClearFilter, ConstraintSet.BOTTOM, 0);
+                    clearFilter.connect(R.id.rcycStudents, ConstraintSet.TOP, R.id.btnClearFilter, ConstraintSet.BOTTOM, 0);
                     clearFilter.applyTo(innerLayout);
                 }
 
@@ -363,7 +364,7 @@ public class StudentMatchedOpportunities extends AppCompatActivity {
     public void clearFilter(View v) {
         ConstraintSet clear = new ConstraintSet();
         clear.clone(innerLayout);
-        clear.connect(R.id.rcycOpportunities, ConstraintSet.TOP, R.id.btnFilter, ConstraintSet.BOTTOM, 0);
+        clear.connect(R.id.rcycStudents, ConstraintSet.TOP, R.id.btnFilter, ConstraintSet.BOTTOM, 0);
         clear.applyTo(innerLayout);
         btnClearFilter.setVisibility(View.GONE);
 
@@ -374,6 +375,12 @@ public class StudentMatchedOpportunities extends AppCompatActivity {
         }
 
         mAdapter.notifyDataSetChanged();
+    }
+
+    public void viewOpportunity(int position) {
+        Intent intent = new Intent(this, StudentViewOpportunity.class);
+        intent.putExtra("EXTRA_OPPORTUNITY_ID", filteredResults.get(position).getId());
+        startActivity(intent);
     }
 
 }
