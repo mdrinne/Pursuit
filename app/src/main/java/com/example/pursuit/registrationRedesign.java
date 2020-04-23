@@ -696,7 +696,7 @@ public class registrationRedesign extends FragmentActivity {   //AppCompatActivi
         gpa = findViewById(R.id.txtStudentGPA2);
         bio = findViewById(R.id.txtBio);
         email = findViewById(R.id.txtEmail);
-        username = findViewById(R.id.txtUsername);
+        username = findViewById(R.id.txtStudentUsername);
         studentPassword = findViewById(R.id.txtPassword);
         studentReEnterPassword = findViewById(R.id.txtReEnterPassword);
         interestKeywords = findViewById(R.id.txtInterests);
