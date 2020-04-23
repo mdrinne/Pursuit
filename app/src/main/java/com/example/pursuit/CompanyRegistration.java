@@ -43,6 +43,10 @@ public class CompanyRegistration extends AppCompatActivity {
     EditText companyDescription;
 
     Company newCompany;
+
+    public void CompanyRegistration() {
+        //empty public constructor
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

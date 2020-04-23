@@ -246,6 +246,11 @@
     <string name="full_name">Full Name</string>
     <string name="message">The message content</string>
     <string name="date">12/28/97</string>
+
+
+    <string name="title_activity_registration_redesign">registrationRedesign</string>
+    <string name="title_activity_main2">Main2Activity</string>
+
     <string name="strPotentialCandidates">Potential Candidates</string>
     <string name="strMinimumGPA">Minimum GPA</string>
     <string name="txtMajor">Major</string>
@@ -265,4 +270,5 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="search_for_other_users">Search by Name, Username, University, or Major</string>
     <string name="follow">follow</string>
+
 </resources>
