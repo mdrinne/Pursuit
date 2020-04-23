@@ -2,6 +2,7 @@ package com.example.pursuit.ui.main;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -23,6 +24,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.pursuit.R;
+import com.example.pursuit.StudentViewOpportunity;
 import com.example.pursuit.adapters.StudentOpportunityAdapter;
 import com.example.pursuit.models.CompanyOpportunity;
 import com.example.pursuit.models.Keyword;
@@ -252,7 +254,7 @@ public class DiscoverOpportunitiesFragment extends Fragment {
         mAdapter.setStudentOpportunityOnItemClickListener(new StudentOpportunityAdapter.StudentOpportunityOnItemClickListener() {
             @Override
             public void onCardClick(int position) {
-
+                viewOpportunity(position);
             }
         });
     }
@@ -463,5 +465,10 @@ public class DiscoverOpportunitiesFragment extends Fragment {
         mAdapter.notifyDataSetChanged();
     }
 
+    public void viewOpportunity(int position) {
+        Intent intent = new Intent(getActivity(), StudentViewOpportunity.class);
+        intent.putExtra("EXTRA_OPPORTUNITY_ID", filteredResults.get(position).getId());
+        startActivity(intent);
+    }
 
 }
