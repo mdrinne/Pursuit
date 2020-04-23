@@ -21,7 +21,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/txtUniversity"
+        android:id="@+id/txtCompanyName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
@@ -32,7 +32,7 @@
         app:layout_constraintTop_toBottomOf="@+id/txtFilter" />
 
     <Spinner
-        android:id="@+id/spnUniversity"
+        android:id="@+id/spnCompanyName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
@@ -42,10 +42,10 @@
         android:layout_marginRight="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtUniversity" />
+        app:layout_constraintTop_toBottomOf="@+id/txtCompanyName" />
 
     <TextView
-        android:id="@+id/txtMajor"
+        android:id="@+id/txtPosition"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
@@ -53,10 +53,10 @@
         android:layout_marginTop="15dp"
         android:text="@string/strPosition"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spnUniversity" />
+        app:layout_constraintTop_toBottomOf="@+id/spnCompanyName" />
 
     <Spinner
-        android:id="@+id/spnMajor"
+        android:id="@+id/spnPosition"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
@@ -66,31 +66,7 @@
         android:layout_marginRight="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtMajor" />
-
-    <TextView
-        android:id="@+id/txtMinor"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="15dp"
-        android:text="@string/strKeyword"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spnMajor" />
-
-    <Spinner
-        android:id="@+id/spnMinor"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginRight="20dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtMinor" />
+        app:layout_constraintTop_toBottomOf="@+id/txtPosition" />
 
     <TextView
         android:id="@+id/txtKeyword"
@@ -99,9 +75,9 @@
         android:layout_marginStart="20dp"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="15dp"
-        android:text="@string/strCity"
+        android:text="@string/strKeyword"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spnMinor" />
+        app:layout_constraintTop_toBottomOf="@+id/spnPosition" />
 
     <Spinner
         android:id="@+id/spnKeyword"
@@ -117,18 +93,18 @@
         app:layout_constraintTop_toBottomOf="@+id/txtKeyword" />
 
     <TextView
-        android:id="@+id/txtMinimumGPA"
+        android:id="@+id/txtCity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="15dp"
-        android:text="@string/strState"
+        android:text="@string/strCity"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/spnKeyword" />
 
     <Spinner
-        android:id="@+id/spnGPA"
+        android:id="@+id/spnCity"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
@@ -138,7 +114,31 @@
         android:layout_marginRight="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtMinimumGPA" />
+        app:layout_constraintTop_toBottomOf="@+id/txtCity" />
+
+    <TextView
+        android:id="@+id/txtState"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="15dp"
+        android:text="@string/strState"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spnCity" />
+
+    <Spinner
+        android:id="@+id/spnState"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginRight="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtState" />
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -146,7 +146,7 @@
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/spnGPA">
+        app:layout_constraintTop_toBottomOf="@id/spnState">
 
         <Button
             android:id="@+id/btnConfirm"
