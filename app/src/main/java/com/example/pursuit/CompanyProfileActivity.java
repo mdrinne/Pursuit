@@ -91,8 +91,12 @@ public class CompanyProfileActivity extends AppCompatActivity{
         bottomNavigation = findViewById(R.id.bottom_navigation);
         bottomNavigation.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
 
-        bottomNavigation.getMenu().removeItem(R.id.navigation_messages);
-        bottomNavigation.getMenu().removeItem(R.id.navigation_discover);
+        setCurrentUser();
+
+        if (currentRole.equals("Company")) {
+            bottomNavigation.getMenu().removeItem(R.id.navigation_messages);
+            bottomNavigation.getMenu().removeItem(R.id.navigation_discover);
+        }
 
         btnEditCompanyProfile = findViewById(R.id.btnEditProfile);
 
@@ -110,7 +114,6 @@ public class CompanyProfileActivity extends AppCompatActivity{
 
         txtOpportunities = findViewById(R.id.txtOpportunities);
 
-        setCurrentUser();
         deleteDialog = new Dialog(this);
 
         if (currentRole.equals("Employee") && currentEmployee.getAdmin() == 0) btnEditCompanyProfile.setVisibility(View.GONE);
