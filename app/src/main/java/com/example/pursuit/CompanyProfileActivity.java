@@ -2,6 +2,7 @@ package com.example.pursuit;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -15,6 +16,7 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.view.View;
@@ -51,6 +53,12 @@ public class CompanyProfileActivity extends AppCompatActivity{
     TextView companyName;
     TextView companyField;
     TextView companyDescription;
+    TextView txtOpportunities;
+    EditText editCompanyField;
+    EditText editCompanyDescription;
+    Button btnEditCompanyProfile;
+    Button btnSubmitChanges;
+    Button btnCancel;
     Company currentCompany;
     Employee currentEmployee;
     BottomNavigationView bottomNavigation;
@@ -83,8 +91,29 @@ public class CompanyProfileActivity extends AppCompatActivity{
         bottomNavigation = findViewById(R.id.bottom_navigation);
         bottomNavigation.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
 
+        bottomNavigation.getMenu().removeItem(R.id.navigation_messages);
+        bottomNavigation.getMenu().removeItem(R.id.navigation_discover);
+
+        btnEditCompanyProfile = findViewById(R.id.btnEditProfile);
+
+        btnCancel = findViewById(R.id.btnCancel);
+        btnCancel.setVisibility(View.GONE);
+
+        btnSubmitChanges = findViewById(R.id.btnConfirm);
+        btnSubmitChanges.setVisibility(View.GONE);
+
+        editCompanyDescription = findViewById(R.id.editCompanyDescription);
+        editCompanyDescription.setVisibility(View.GONE);
+
+        editCompanyField = findViewById(R.id.editCompanyField);
+        editCompanyField.setVisibility(View.GONE);
+
+        txtOpportunities = findViewById(R.id.txtOpportunities);
+
         setCurrentUser();
         deleteDialog = new Dialog(this);
+
+        if (currentRole.equals("Employee") && currentEmployee.getAdmin() == 0) btnEditCompanyProfile.setVisibility(View.GONE);
 
         populateTextFields();
 
@@ -237,7 +266,8 @@ public class CompanyProfileActivity extends AppCompatActivity{
         CompanyOpportunity opportunity = companyOpportunities.get(position);
         opportunity.setApproved(1);
         companyOpportunities.set(position, opportunity);
-        dbref.child("CompanyOpportunities").child(currentCompany.getId()).child(opportunity.getId()).child("approved").setValue(1);
+        dbref.child("Companies").child(currentCompany.getId()).child("opportunities").setValue(companyOpportunities);
+        dbref.child("CompanyOpportunities").child(opportunity.getId()).child("approved").setValue(1);
         mAdapter.notifyItemChanged(position);
     }
 
@@ -285,7 +315,7 @@ public class CompanyProfileActivity extends AppCompatActivity{
     /* ******END DATABASE****** */
 
     private void buildRecyclerView() {
-        allOpportunities = findViewById(R.id.rcycOpportunities);
+        allOpportunities = findViewById(R.id.rcycStudents);
         allOpportunities.setHasFixedSize(false);
         if (companyOpportunities == null) {
             companyOpportunities = new ArrayList<>();
@@ -341,6 +371,11 @@ public class CompanyProfileActivity extends AppCompatActivity{
                             startActivity(i0);
                             finish();
                             return true;
+                        case R.id.navigation_discover:
+                            Intent discover = new Intent(CompanyProfileActivity.this, DiscoverActivity.class);
+                            startActivity(discover);
+                            finish();
+                            return true;
                         case R.id.navigation_messages:
                             Intent i1 = new Intent(CompanyProfileActivity.this, ConversationsActivity.class);
                             startActivity(i1);
@@ -371,7 +406,7 @@ public class CompanyProfileActivity extends AppCompatActivity{
     }
 
     private void populateTextFields() {
-        companyName = findViewById(R.id.txtCompanyName);
+        companyName = findViewById(R.id.txtUniversity);
         companyName.setText(currentCompany.getName());
 
         companyField = findViewById(R.id.txtCompanyField);
@@ -460,4 +495,54 @@ public class CompanyProfileActivity extends AppCompatActivity{
         startActivity(intent);
     }
 
+    public void editProfile(View view) {
+        editCompanyField.setVisibility(View.VISIBLE);
+        editCompanyDescription.setVisibility(View.VISIBLE);
+        btnSubmitChanges.setVisibility(View.VISIBLE);
+        btnCancel.setVisibility(View.VISIBLE);
+
+        //Rewrite constraints
+        ConstraintLayout.LayoutParams params = (ConstraintLayout.LayoutParams) txtOpportunities.getLayoutParams();
+        params.topToBottom = btnCancel.getId();
+        txtOpportunities.setLayoutParams(params);
+
+        companyDescription.setVisibility(View.GONE);
+        companyField.setVisibility(View.GONE);
+        btnEditCompanyProfile.setVisibility(View.GONE);
+
+        editCompanyField.setText(currentCompany.getField());
+        editCompanyDescription.setText(currentCompany.getDescription());
+    }
+
+    public void submitChanges(View view) {
+        //Update currentCompany fields
+        currentCompany.setField(editCompanyField.getText().toString());
+        currentCompany.setDescription(editCompanyDescription.getText().toString());
+
+        //Submit changes to firebase
+        dbref.child("Companies").child(currentCompany.getId()).setValue(currentCompany);
+
+        exitProfileEditor(view);
+    }
+
+    public void exitProfileEditor(View view) {
+        companyField.setVisibility(View.VISIBLE);
+        companyDescription.setVisibility(View.VISIBLE);
+        btnEditCompanyProfile.setVisibility(View.VISIBLE);
+
+        //Rewrite constraints
+        ConstraintLayout.LayoutParams params = (ConstraintLayout.LayoutParams) txtOpportunities.getLayoutParams();
+        params.topToBottom = btnEditCompanyProfile.getId();
+        txtOpportunities.setLayoutParams(params);
+
+        btnCancel.setVisibility(View.GONE);
+        btnSubmitChanges.setVisibility(View.GONE);
+        editCompanyDescription.setVisibility(View.GONE);
+        editCompanyField.setVisibility(View.GONE);
+
+        //Update TextViews
+        currentCompany = ((PursuitApplication) this.getApplication()).getCurrentCompany();
+        companyField.setText(currentCompany.getField());
+        companyDescription.setText(currentCompany.getDescription());
+    }
 }

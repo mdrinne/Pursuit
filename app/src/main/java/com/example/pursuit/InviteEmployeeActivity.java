@@ -57,6 +57,9 @@ public class InviteEmployeeActivity extends AppCompatActivity {
 
         initializeCurrentCompany();
 
+        bottomNavigation.getMenu().removeItem(R.id.navigation_messages);
+        bottomNavigation.getMenu().removeItem(R.id.navigation_discover);
+
         dbRef = FirebaseDatabase.getInstance().getReference();
     }
 
@@ -157,6 +160,11 @@ public class InviteEmployeeActivity extends AppCompatActivity {
                         case R.id.navigation_home:
                             Intent i0 = new Intent(InviteEmployeeActivity.this, LandingActivity.class);
                             startActivity(i0);
+                            finish();
+                            return true;
+                        case R.id.navigation_discover:
+                            Intent discover = new Intent(InviteEmployeeActivity.this, DiscoverActivity.class);
+                            startActivity(discover);
                             finish();
                             return true;
                         case R.id.navigation_messages:

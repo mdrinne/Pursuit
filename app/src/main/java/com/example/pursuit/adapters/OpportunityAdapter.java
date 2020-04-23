@@ -45,15 +45,15 @@ public class OpportunityAdapter extends RecyclerView.Adapter<OpportunityAdapter.
 
         public OpportunityViewHolder(@NonNull View itemView, final OpportunityOnItemClickListener listener) {
             super(itemView);
-            opportunityPosition = itemView.findViewById(R.id.txtPosition);
+            opportunityPosition = itemView.findViewById(R.id.txtMajor);
             opportunityWith = itemView.findViewById(R.id.txtWith);
             opportunityDescription = itemView.findViewById(R.id.txtDescription);
             opportunityTimeStamp = itemView.findViewById(R.id.txtTimeStamp);
             approve = itemView.findViewById(R.id.btnApprove);
             deleteOpportunity = itemView.findViewById(R.id.imgDeleteOpportunity);
-            opportunityCity = itemView.findViewById(R.id.txtCity);
-            opportunityState = itemView.findViewById(R.id.txtState);
-            card = itemView.findViewById(R.id.crdStudentOpportunity);
+            opportunityCity = itemView.findViewById(R.id.txtKeyword);
+            opportunityState = itemView.findViewById(R.id.txtMinimumGPA);
+            card = itemView.findViewById(R.id.crdStudent);
 
             approve.setOnClickListener(new View.OnClickListener() {
                 @Override

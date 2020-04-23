@@ -70,7 +70,7 @@
             android:autofillHints="@string/what_are_you_talking_about"
             android:inputType="textMultiLine"
             android:lines="4"
-            android:gravity="top|left"
+            android:gravity="top|start"
             android:background="#f1f3f4" />
 
 

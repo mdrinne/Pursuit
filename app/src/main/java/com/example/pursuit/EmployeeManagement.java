@@ -51,6 +51,9 @@ public class EmployeeManagement extends AppCompatActivity {
         bottomNavigation = findViewById(R.id.bottom_navigation);
         bottomNavigation.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
 
+        bottomNavigation.getMenu().removeItem(R.id.navigation_messages);
+        bottomNavigation.getMenu().removeItem(R.id.navigation_discover);
+
         setCurrentUser();
         deleteDialog = new Dialog(this);
 
@@ -205,6 +208,11 @@ public class EmployeeManagement extends AppCompatActivity {
                         case R.id.navigation_home:
                             Intent i0 = new Intent(EmployeeManagement.this, LandingActivity.class);
                             startActivity(i0);
+                            finish();
+                            return true;
+                        case R.id.navigation_discover:
+                            Intent discover = new Intent(EmployeeManagement.this, DiscoverActivity.class);
+                            startActivity(discover);
                             finish();
                             return true;
                         case R.id.navigation_messages:

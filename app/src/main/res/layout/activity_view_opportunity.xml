@@ -22,10 +22,11 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/innerConstraintLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:paddingBottom="60dp">
 
             <TextView
-                android:id="@+id/txtPosition"
+                android:id="@+id/txtMajor"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="10dp"
@@ -46,7 +47,7 @@
                 android:fontFamily="@font/roboto"
                 android:textColor="@color/accent1"
                 android:textSize="16sp"
-                app:layout_constraintStart_toStartOf="@id/txtCity"
+                app:layout_constraintStart_toStartOf="@id/txtKeyword"
                 app:layout_constraintTop_toBottomOf="@+id/imgLocationIcon" />
 
             <TextView
@@ -108,11 +109,11 @@
                 android:layout_marginTop="5dp"
                 android:contentDescription="@string/strLocationIcon"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txtPosition"
+                app:layout_constraintTop_toBottomOf="@+id/txtMajor"
                 app:srcCompat="@drawable/location" />
 
             <TextView
-                android:id="@+id/txtCity"
+                android:id="@+id/txtKeyword"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
@@ -125,14 +126,14 @@
                 app:layout_constraintTop_toTopOf="@id/imgLocationIcon" />
 
             <TextView
-                android:id="@+id/txtState"
+                android:id="@+id/txtMinimumGPA"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/roboto"
                 android:textColor="@color/accent1"
                 android:textSize="16sp"
-                app:layout_constraintStart_toEndOf="@+id/txtCity"
-                app:layout_constraintTop_toTopOf="@+id/txtCity" />
+                app:layout_constraintStart_toEndOf="@+id/txtKeyword"
+                app:layout_constraintTop_toTopOf="@+id/txtKeyword" />
 
             <TextView
                 android:id="@+id/txtRequirements"
@@ -181,17 +182,31 @@
                 app:layout_constraintTop_toBottomOf="@id/txtKeywords" />
 
             <Button
-                android:id="@+id/button"
-                android:layout_width="wrap_content"
+                android:id="@+id/btnAddKeywords"
+                android:layout_width="0dp"
                 android:layout_height="30dp"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="20dp"
                 android:background="@drawable/button_accent1"
                 android:onClick="addKeywords"
                 android:text="@string/strAddKeywords"
                 android:textColor="@color/colorPrimary"
+                app:layout_constraintEnd_toEndOf="@+id/btnPotentialCandidates"
+                app:layout_constraintStart_toStartOf="@+id/btnPotentialCandidates"
+                app:layout_constraintTop_toBottomOf="@+id/rcycKeywords" />
+
+            <Button
+                android:id="@+id/btnPotentialCandidates"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/button_accent1"
+                android:fontFamily="@font/roboto_medium"
+                android:onClick="potentialCandidates"
+                android:text="@string/strPotentialCandidates"
+                android:textColor="@color/colorPrimary"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/rcycKeywords" />
+                app:layout_constraintTop_toBottomOf="@+id/btnAddKeywords" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
@@ -211,7 +226,8 @@
             android:background="@color/navbar"
             app:itemIconTint="@color/white"
             app:itemTextColor="@color/white"
-            app:menu="@menu/bottom_navigation_menu" />
+            app:menu="@menu/bottom_navigation_menu"
+            app:labelVisibilityMode="labeled"/>
 
     </FrameLayout>
 
