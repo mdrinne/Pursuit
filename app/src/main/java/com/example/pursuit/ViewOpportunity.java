@@ -312,6 +312,11 @@ public class ViewOpportunity extends AppCompatActivity {
                             startActivity(i0);
                             finish();
                             return true;
+                        case R.id.navigation_discover:
+                            Intent discover = new Intent(ViewOpportunity.this, DiscoverActivity.class);
+                            startActivity(discover);
+                            finish();
+                            return true;
                         case R.id.navigation_messages:
                             Intent i1 = new Intent(ViewOpportunity.this, ConversationsActivity.class);
                             startActivity(i1);

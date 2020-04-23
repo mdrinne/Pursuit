@@ -158,6 +158,11 @@ public class CreateOpportunity extends AppCompatActivity implements AdapterView.
                             startActivity(i0);
                             finish();
                             return true;
+                        case R.id.navigation_discover:
+                            Intent discover = new Intent(CreateOpportunity.this, DiscoverActivity.class);
+                            startActivity(discover);
+                            finish();
+                            return true;
                         case R.id.navigation_messages:
                             Intent i1 = new Intent(CreateOpportunity.this, ConversationsActivity.class);
                             startActivity(i1);

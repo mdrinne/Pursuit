@@ -246,4 +246,16 @@
     <string name="full_name">Full Name</string>
     <string name="message">The message content</string>
     <string name="date">12/28/97</string>
+    <string name="home">Home</string>
+    <string name="discover">Discover</string>
+    <string name="messages">Messages</string>
+    <string name="profile">Profile</string>
+    <string name="title_activity_discover2">DiscoverActivity2</string>
+    <string name="discover_users_tab">Users</string>
+    <string name="discover_companies_tab">Companies</string>
+    <string name="discover_opportunities_tab">Opportunities</string>
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="search_for_other_users">Search by Name, Username, University, or Major</string>
+    <string name="follow">follow</string>
 </resources>

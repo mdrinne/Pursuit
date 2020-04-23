@@ -220,6 +220,11 @@ public class ConversationsActivity extends AppCompatActivity
                         startActivity(home);
                         finish();
                         return true;
+                    case R.id.navigation_discover:
+                        Intent discover = new Intent(ConversationsActivity.this, DiscoverActivity.class);
+                        startActivity(discover);
+                        finish();
+                        return true;
                     case R.id.navigation_messages:
                         return true;
                     case R.id.navigation_profile:

@@ -82,7 +82,8 @@ public class NewShareActivity extends AppCompatActivity {
 
         newShare = new Share(id, userId, userFullName, userUsername, userRole, type, subject, message, interestKeywords, likes, createdAt);
 
-        dbRef.child("Students").child(userId).child("Shares").child(id).setValue(newShare);
+//        dbRef.child("Students").child(userId).child("Shares").child(id).setValue(newShare);
+        dbRef.child("Shares").child(id).setValue(newShare);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -101,7 +102,8 @@ public class NewShareActivity extends AppCompatActivity {
 
         newShare = new Share(id, userId, userFullName, userUsername, userRole, type, subject, message, interestKeywords, likes, createdAt);
 
-        dbRef.child("Companies").child(userId).child("Shares").child(id).setValue(newShare);
+//        dbRef.child("Companies").child(userId).child("Shares").child(id).setValue(newShare);
+        dbRef.child("Shares").child(id).setValue(newShare);
     }
 
     private void findAndSetCurrentUser() {

@@ -366,6 +366,11 @@ public class CompanyProfileActivity extends AppCompatActivity{
                             startActivity(i0);
                             finish();
                             return true;
+                        case R.id.navigation_discover:
+                            Intent discover = new Intent(CompanyProfileActivity.this, DiscoverActivity.class);
+                            startActivity(discover);
+                            finish();
+                            return true;
                         case R.id.navigation_messages:
                             Intent i1 = new Intent(CompanyProfileActivity.this, ConversationsActivity.class);
                             startActivity(i1);

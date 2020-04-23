@@ -207,6 +207,11 @@ public class EmployeeManagement extends AppCompatActivity {
                             startActivity(i0);
                             finish();
                             return true;
+                        case R.id.navigation_discover:
+                            Intent discover = new Intent(EmployeeManagement.this, DiscoverActivity.class);
+                            startActivity(discover);
+                            finish();
+                            return true;
                         case R.id.navigation_messages:
                             Intent i1 = new Intent(EmployeeManagement.this, MessagesActivity.class);
                             startActivity(i1);
