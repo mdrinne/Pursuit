@@ -12,9 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pursuit.CompanyHolder;
 import com.example.pursuit.R;
-import com.example.pursuit.UserHolder;
 import com.example.pursuit.models.Company;
-import com.example.pursuit.models.Student;
 
 import java.util.ArrayList;
 

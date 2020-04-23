@@ -21,7 +21,6 @@ import com.google.firebase.database.ValueEventListener;
 public class CompanyHolder extends RecyclerView.ViewHolder {
     private static final String TAG = "CompanyHolder";
 
-//    private TextView fullName, username, major, university, bio;
     private  TextView name, field;
     private ImageButton toggleFollow;
 
@@ -29,21 +28,11 @@ public class CompanyHolder extends RecyclerView.ViewHolder {
         super(itemView);
         name = itemView.findViewById(R.id.name);
         field = itemView.findViewById(R.id.field);
-//        fullName = itemView.findViewById(R.id.full_name);
-//        username = itemView.findViewById(R.id.username);
-//        university = itemView.findViewById(R.id.university);
-//        major = itemView.findViewById(R.id.major);
-//        bio = itemView.findViewById(R.id.bio);
         toggleFollow = itemView.findViewById(R.id.toggle_follow_btn);
     }
 
     @SuppressLint("SetTextI18n")
     public void bind(Company company, String currentUserId, String currentUserRole) {
-//        fullName.setText(company.getFirstName() + " " + company.getLastName());
-//        username.setText(company.getUsername());
-//        university.setText("University: " + company.getUniversity());
-//        major.setText("Major: " + company.company());
-//        bio.setText(company.company());
         name.setText(company.getName());
         field.setText(company.getField());
         toggleFollow.setTag(company);
@@ -53,9 +42,6 @@ public class CompanyHolder extends RecyclerView.ViewHolder {
 
     private void checkFollowStatus(Company company, String currentUserId, String currentUserRole) {
         Log.d(TAG, "checkFollowStatus");
-//        Log.d("USERNAME", company.getUsername());
-//        Log.d("CURRENT_ID", currentUserId);
-//        Log.d("CURRENT_ROLE", currentUserRole);
         DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference();
         Query checkFollowStatusQuery;
         if (currentUserRole.equals("Student")) {
