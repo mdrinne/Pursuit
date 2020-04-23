@@ -2,9 +2,11 @@ package com.example.pursuit.ui.main;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.fragment.app.Fragment;
@@ -33,6 +35,7 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -53,14 +56,10 @@ public class DiscoverOpportunitiesFragment extends Fragment {
     private ConstraintLayout innerLayout;
 
     private ArrayList<String> interests;
-    private String currentInterest;
     private ArrayList<String> opportunityIds;
-    private String currentOpportunityID;
 
     private ArrayList<CompanyOpportunity> allMatchedOpportunities;
-    private RecyclerView viewMatchedEmployees;
     private StudentOpportunityAdapter mAdapter;
-    private RecyclerView.LayoutManager mLayoutManager;
     private ArrayList<CompanyOpportunity> filteredResults;
 
     private ArrayList<String> companies;
@@ -101,7 +100,7 @@ public class DiscoverOpportunitiesFragment extends Fragment {
 //     * @param param2 Parameter 2.
      * @return A new instance of fragment DiscoverOpportunitiesFragment.
      */
-    public static DiscoverOpportunitiesFragment newInstance(String currentUserId) {
+    static DiscoverOpportunitiesFragment newInstance(String currentUserId) {
         DiscoverOpportunitiesFragment fragment = new DiscoverOpportunitiesFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, currentUserId);
@@ -116,9 +115,9 @@ public class DiscoverOpportunitiesFragment extends Fragment {
             currentUserId = getArguments().getString(ARG_PARAM1);
         }
         dbRef = FirebaseDatabase.getInstance().getReference();
-//        getCurrentStudent(currentUserId);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -126,13 +125,12 @@ public class DiscoverOpportunitiesFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_discover_opportunities, container, false);
         fragmentView = view;
 
-        fragmentView = view;
-
         noInterests = view.findViewById(R.id.txtNoInterests);
         opportunitiesRecycler = view.findViewById(R.id.rcycOpportunities);
         btnFilter = view.findViewById(R.id.btnFilter);
 
         btnFilter.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
             public void onClick(View v) {
                 filter(v);
@@ -164,43 +162,12 @@ public class DiscoverOpportunitiesFragment extends Fragment {
         states = new ArrayList<>();
         states.add("");
 
-        filterDialog = new Dialog(getContext());
+        filterDialog = new Dialog(Objects.requireNonNull(getContext()));
 
         getCurrentStudent(currentUserId);
 
         return view;
     }
-
-//    @SuppressLint("SetTextI18n")
-//    @Override
-//    public void onViewCreated(View view, Bundle savedInstanceState) {
-//        fragmentView = view;
-//
-//        noInterests = view.findViewById(R.id.txtNoInterests);
-//        opportunitiesRecycler = view.findViewById(R.id.rcycOpportunities);
-//        btnFilter = view.findViewById(R.id.btnFilter);
-//
-//        btnClearFilter = view.findViewById(R.id.btnClearFilter);
-//        btnClearFilter.setVisibility(View.GONE);
-//        innerLayout = view.findViewById(R.id.innerLayout);
-//
-//        allMatchedOpportunities = new ArrayList<>();
-//        filteredResults = new ArrayList<>();
-//        companies = new ArrayList<>();
-//        companies.add("");
-//        positions = new ArrayList<>();
-//        positions.add("");
-//        keywords = new ArrayList<>();
-//        keywords.add("");
-//        cities = new ArrayList<>();
-//        cities.add("");
-//        states = new ArrayList<>();
-//        states.add("");
-//
-//        filterDialog = new Dialog(getContext());
-//
-//        getCurrentStudent(currentUserId);
-//    }
 
     private void getCurrentStudent(String currentUserId) {
         Log.d(TAG, "Getting current student");
@@ -225,6 +192,7 @@ public class DiscoverOpportunitiesFragment extends Fragment {
         public void onCancelled(@NonNull DatabaseError databaseError) { }
     };
 
+    @SuppressLint("SetTextI18n")
     private void postCurrentStudentListener() {
         Log.d(TAG, "going to get interests");
         interests = currentStudent.getInterestKeywords();
@@ -246,7 +214,7 @@ public class DiscoverOpportunitiesFragment extends Fragment {
     private void cycleInterests() {
         Log.d(TAG, "cycling through interests");
         if (interestsParser < interests.size()) {
-            currentInterest = interests.get(interestsParser);
+            String currentInterest = interests.get(interestsParser);
             Query keywordQuery = dbRef.child("Keywords").orderByChild("text").equalTo(currentInterest);
             keywordQuery.addListenerForSingleValueEvent(keywordListener);
         } else {
@@ -264,7 +232,7 @@ public class DiscoverOpportunitiesFragment extends Fragment {
 
     private void getOpportunities() {
         if (getOpportunitiesParser < opportunityIds.size()) {
-            currentOpportunityID = opportunityIds.get(getOpportunitiesParser);
+            String currentOpportunityID = opportunityIds.get(getOpportunitiesParser);
             Query opportunityQuery = dbRef.child("CompanyOpportunities").orderByKey().equalTo(currentOpportunityID);
             opportunityQuery.addListenerForSingleValueEvent(opportunityListener);
         } else {
@@ -273,9 +241,9 @@ public class DiscoverOpportunitiesFragment extends Fragment {
     }
 
     private void buildRecyclerView() {
-        viewMatchedEmployees = fragmentView.findViewById(R.id.rcycOpportunities);
+        RecyclerView viewMatchedEmployees = fragmentView.findViewById(R.id.rcycOpportunities);
         viewMatchedEmployees.setHasFixedSize(false);
-        mLayoutManager = new LinearLayoutManager(getContext());
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
         filteredResults.addAll(allMatchedOpportunities);
         mAdapter = new StudentOpportunityAdapter(filteredResults);
 
@@ -350,13 +318,12 @@ public class DiscoverOpportunitiesFragment extends Fragment {
         }
 
         @Override
-        public void onCancelled(@NonNull DatabaseError databaseError) {
-
-        }
+        public void onCancelled(@NonNull DatabaseError databaseError) { }
     };
 
     /* ******END DATABASE****** */
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public void filter(View v) {
         final Spinner companyName, position, keyword, city, state;
         Button cancel, confirm;
@@ -367,7 +334,7 @@ public class DiscoverOpportunitiesFragment extends Fragment {
 
         companyName = filterDialog.findViewById(R.id.spnCompanyName);
         ArrayAdapter<String> companyNameAdapter = new ArrayAdapter<>(
-                getContext(),
+                Objects.requireNonNull(getContext()),
                 android.R.layout.simple_spinner_item,
                 companies);
         companyNameAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -481,7 +448,7 @@ public class DiscoverOpportunitiesFragment extends Fragment {
         }
     }
 
-    public void clearFilter(View v) {
+    private void clearFilter(View v) {
         ConstraintSet clear = new ConstraintSet();
         clear.clone(innerLayout);
         clear.connect(R.id.rcycOpportunities, ConstraintSet.TOP, R.id.btnFilter, ConstraintSet.BOTTOM, 0);
