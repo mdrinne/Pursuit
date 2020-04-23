@@ -96,7 +96,7 @@ public class StudentViewCompany extends AppCompatActivity {
     }
 
     private void populateTextFields() {
-        companyName = findViewById(R.id.txtCompanyName);
+        companyName = findViewById(R.id.txtUniversity);
         companyName.setText(viewCompany.getName());
 
         companyField = findViewById(R.id.txtCompanyField);

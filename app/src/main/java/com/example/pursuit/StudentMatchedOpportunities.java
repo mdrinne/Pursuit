@@ -235,7 +235,7 @@ public class StudentMatchedOpportunities extends AppCompatActivity {
         cancel = filterDialog.findViewById(R.id.btnCancel);
         confirm = filterDialog.findViewById(R.id.btnConfirm);
 
-        companyName = filterDialog.findViewById(R.id.spnCompanyName);
+        companyName = filterDialog.findViewById(R.id.spnUniversity);
         ArrayAdapter<String> companyNameAdapter = new ArrayAdapter<String>(
                                                 this,
                                                         android.R.layout.simple_spinner_item,
@@ -243,7 +243,7 @@ public class StudentMatchedOpportunities extends AppCompatActivity {
         companyNameAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         companyName.setAdapter(companyNameAdapter);
 
-        position = filterDialog.findViewById(R.id.spnPosition);
+        position = filterDialog.findViewById(R.id.spnMajor);
         ArrayAdapter<String> positionAdapter = new ArrayAdapter<String>(
                                                 this,
                                                         android.R.layout.simple_spinner_item,
@@ -251,7 +251,7 @@ public class StudentMatchedOpportunities extends AppCompatActivity {
         positionAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         position.setAdapter(positionAdapter);
 
-        keyword = filterDialog.findViewById(R.id.spnKeyword);
+        keyword = filterDialog.findViewById(R.id.spnMinor);
         ArrayAdapter<String> keywordAdapter = new ArrayAdapter<String>(
                                                 this,
                                                         android.R.layout.simple_spinner_item,
@@ -259,7 +259,7 @@ public class StudentMatchedOpportunities extends AppCompatActivity {
         keywordAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         keyword.setAdapter(keywordAdapter);
 
-        city = filterDialog.findViewById(R.id.spnCity);
+        city = filterDialog.findViewById(R.id.spnKeyword);
         ArrayAdapter<String> cityAdapter = new ArrayAdapter<String>(
                                                 this,
                                                         android.R.layout.simple_spinner_item,
@@ -267,7 +267,7 @@ public class StudentMatchedOpportunities extends AppCompatActivity {
         cityAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         city.setAdapter(cityAdapter);
 
-        state = filterDialog.findViewById(R.id.spnState);
+        state = filterDialog.findViewById(R.id.spnGPA);
         ArrayAdapter<String> stateAdapter = new ArrayAdapter<String>(
                                                 this,
                                                         android.R.layout.simple_spinner_item,

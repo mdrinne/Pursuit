@@ -32,7 +32,7 @@ public class StudentOpportunityKeywordAdapter extends RecyclerView.Adapter<Stude
 
         public StudentOpportunityKeywordViewHolder(@NotNull View itemView, StudentOpportunityKeywordOnItemClickListener listener) {
             super(itemView);
-            keyword = itemView.findViewById(R.id.txtKeyword);
+            keyword = itemView.findViewById(R.id.txtMinor);
             deleteIcon = itemView.findViewById(R.id.imgDeleteIcon);
         }
     }

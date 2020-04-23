@@ -87,13 +87,13 @@ public class ViewOpportunity extends AppCompatActivity {
         }
 
 
-        opportunityPosition = findViewById(R.id.txtPosition);
+        opportunityPosition = findViewById(R.id.txtMajor);
         opportunityPosition.setText(currentOpportunity.getPosition());
 
-        opportunityCity = findViewById(R.id.txtCity);
+        opportunityCity = findViewById(R.id.txtKeyword);
         opportunityCity.setText(currentOpportunity.getCity() + ", ");
 
-        opportunityState = findViewById(R.id.txtState);
+        opportunityState = findViewById(R.id.txtMinimumGPA);
         opportunityState.setText(currentOpportunity.getState());
 
         opportunityWith = findViewById(R.id.txtWith);

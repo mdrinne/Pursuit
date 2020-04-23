@@ -56,16 +56,16 @@ public class StudentViewOpportunity extends AppCompatActivity {
     }
 
     private void continueOnCreate() {
-        companyName = findViewById(R.id.txtCompanyName);
+        companyName = findViewById(R.id.txtUniversity);
         companyName.setText(currentOpportunity.getCompanyName());
 
-        position = findViewById(R.id.txtPosition);
+        position = findViewById(R.id.txtMajor);
         position.setText(currentOpportunity.getPosition());
 
-        city = findViewById(R.id.txtCity);
+        city = findViewById(R.id.txtKeyword);
         city.setText(currentOpportunity.getCity() + ", ");
 
-        state = findViewById(R.id.txtState);
+        state = findViewById(R.id.txtMinimumGPA);
         state.setText(currentOpportunity.getState());
 
         if (!currentOpportunity.getWithWho().equals("")) {

@@ -26,7 +26,7 @@
             android:paddingBottom="60dp">
 
             <TextView
-                android:id="@+id/txtPosition"
+                android:id="@+id/txtMajor"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="10dp"
@@ -47,7 +47,7 @@
                 android:fontFamily="@font/roboto"
                 android:textColor="@color/accent1"
                 android:textSize="16sp"
-                app:layout_constraintStart_toStartOf="@id/txtCity"
+                app:layout_constraintStart_toStartOf="@id/txtKeyword"
                 app:layout_constraintTop_toBottomOf="@+id/imgLocationIcon" />
 
             <TextView
@@ -109,11 +109,11 @@
                 android:layout_marginTop="5dp"
                 android:contentDescription="@string/strLocationIcon"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txtPosition"
+                app:layout_constraintTop_toBottomOf="@+id/txtMajor"
                 app:srcCompat="@drawable/location" />
 
             <TextView
-                android:id="@+id/txtCity"
+                android:id="@+id/txtKeyword"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
@@ -126,14 +126,14 @@
                 app:layout_constraintTop_toTopOf="@id/imgLocationIcon" />
 
             <TextView
-                android:id="@+id/txtState"
+                android:id="@+id/txtMinimumGPA"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/roboto"
                 android:textColor="@color/accent1"
                 android:textSize="16sp"
-                app:layout_constraintStart_toEndOf="@+id/txtCity"
-                app:layout_constraintTop_toTopOf="@+id/txtCity" />
+                app:layout_constraintStart_toEndOf="@+id/txtKeyword"
+                app:layout_constraintTop_toTopOf="@+id/txtKeyword" />
 
             <TextView
                 android:id="@+id/txtRequirements"

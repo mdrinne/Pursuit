@@ -396,7 +396,7 @@ public class CompanyProfileActivity extends AppCompatActivity{
     }
 
     private void populateTextFields() {
-        companyName = findViewById(R.id.txtCompanyName);
+        companyName = findViewById(R.id.txtUniversity);
         companyName.setText(currentCompany.getName());
 
         companyField = findViewById(R.id.txtCompanyField);

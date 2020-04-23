@@ -29,9 +29,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
-import java.security.Key;
-import java.time.Instant;
-import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
@@ -233,10 +230,10 @@ public class CreateOpportunity extends AppCompatActivity implements AdapterView.
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void addOpportunity(View v) {
         view = v;
-        opportunityPosition = findViewById(R.id.txtPosition);
+        opportunityPosition = findViewById(R.id.txtMajor);
         opportunityWithWho = findViewById(R.id.txtWith);
         opportunityDescription = findViewById(R.id.txtDescription);
-        opportunityCity = findViewById(R.id.txtCity);
+        opportunityCity = findViewById(R.id.txtKeyword);
         selectedState = opportunityState.getSelectedItem().toString();
         opportunityRequirements = findViewById(R.id.txtRequirements);
         opportunityKeywords = findViewById(R.id.txtKeywords);

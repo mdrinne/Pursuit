@@ -247,4 +247,8 @@
     <string name="message">The message content</string>
     <string name="date">12/28/97</string>
     <string name="strPotentialCandidates">Potential Candidates</string>
+    <string name="strMinimumGPA">Minimum GPA</string>
+    <string name="txtMajor">Major</string>
+    <string name="txtMinor">Minor</string>
+    <string name="str0">0.0</string>
 </resources>
