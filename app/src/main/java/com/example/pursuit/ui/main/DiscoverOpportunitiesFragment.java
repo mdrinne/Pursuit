@@ -123,20 +123,32 @@ public class DiscoverOpportunitiesFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_discover_opportunities, container, false);
-    }
+        View view = inflater.inflate(R.layout.fragment_discover_opportunities, container, false);
+        fragmentView = view;
 
-    @SuppressLint("SetTextI18n")
-    @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
         fragmentView = view;
 
         noInterests = view.findViewById(R.id.txtNoInterests);
         opportunitiesRecycler = view.findViewById(R.id.rcycOpportunities);
         btnFilter = view.findViewById(R.id.btnFilter);
 
+        btnFilter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                filter(v);
+            }
+        });
+
         btnClearFilter = view.findViewById(R.id.btnClearFilter);
         btnClearFilter.setVisibility(View.GONE);
+        btnClearFilter.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                clearFilter(v);
+            }
+        });
+
         innerLayout = view.findViewById(R.id.innerLayout);
 
         allMatchedOpportunities = new ArrayList<>();
@@ -156,17 +168,39 @@ public class DiscoverOpportunitiesFragment extends Fragment {
 
         getCurrentStudent(currentUserId);
 
-//        if (interests == null) {
-//            Log.d(TAG, "onViewCreated interests is null");
-//            opportunitiesRecycler.setVisibility(View.GONE);
-//            btnFilter.setVisibility(View.GONE);
-//            noInterests.setText("No available opportunities match your interests");
-//        } else {
-//            opportunityIds = new ArrayList<>();
-//            interestsParser = 0;
-//            cycleInterests();
-//        }
+        return view;
     }
+
+//    @SuppressLint("SetTextI18n")
+//    @Override
+//    public void onViewCreated(View view, Bundle savedInstanceState) {
+//        fragmentView = view;
+//
+//        noInterests = view.findViewById(R.id.txtNoInterests);
+//        opportunitiesRecycler = view.findViewById(R.id.rcycOpportunities);
+//        btnFilter = view.findViewById(R.id.btnFilter);
+//
+//        btnClearFilter = view.findViewById(R.id.btnClearFilter);
+//        btnClearFilter.setVisibility(View.GONE);
+//        innerLayout = view.findViewById(R.id.innerLayout);
+//
+//        allMatchedOpportunities = new ArrayList<>();
+//        filteredResults = new ArrayList<>();
+//        companies = new ArrayList<>();
+//        companies.add("");
+//        positions = new ArrayList<>();
+//        positions.add("");
+//        keywords = new ArrayList<>();
+//        keywords.add("");
+//        cities = new ArrayList<>();
+//        cities.add("");
+//        states = new ArrayList<>();
+//        states.add("");
+//
+//        filterDialog = new Dialog(getContext());
+//
+//        getCurrentStudent(currentUserId);
+//    }
 
     private void getCurrentStudent(String currentUserId) {
         Log.d(TAG, "Getting current student");
@@ -332,7 +366,7 @@ public class DiscoverOpportunitiesFragment extends Fragment {
         confirm = filterDialog.findViewById(R.id.btnConfirm);
 
         companyName = filterDialog.findViewById(R.id.spnCompanyName);
-        ArrayAdapter<String> companyNameAdapter = new ArrayAdapter<String>(
+        ArrayAdapter<String> companyNameAdapter = new ArrayAdapter<>(
                 getContext(),
                 android.R.layout.simple_spinner_item,
                 companies);
@@ -340,7 +374,7 @@ public class DiscoverOpportunitiesFragment extends Fragment {
         companyName.setAdapter(companyNameAdapter);
 
         position = filterDialog.findViewById(R.id.spnPosition);
-        ArrayAdapter<String> positionAdapter = new ArrayAdapter<String>(
+        ArrayAdapter<String> positionAdapter = new ArrayAdapter<>(
                 getContext(),
                 android.R.layout.simple_spinner_item,
                 positions);
@@ -348,7 +382,7 @@ public class DiscoverOpportunitiesFragment extends Fragment {
         position.setAdapter(positionAdapter);
 
         keyword = filterDialog.findViewById(R.id.spnKeyword);
-        ArrayAdapter<String> keywordAdapter = new ArrayAdapter<String>(
+        ArrayAdapter<String> keywordAdapter = new ArrayAdapter<>(
                 getContext(),
                 android.R.layout.simple_spinner_item,
                 keywords);
@@ -356,7 +390,7 @@ public class DiscoverOpportunitiesFragment extends Fragment {
         keyword.setAdapter(keywordAdapter);
 
         city = filterDialog.findViewById(R.id.spnCity);
-        ArrayAdapter<String> cityAdapter = new ArrayAdapter<String>(
+        ArrayAdapter<String> cityAdapter = new ArrayAdapter<>(
                 getContext(),
                 android.R.layout.simple_spinner_item,
                 cities);
@@ -364,7 +398,7 @@ public class DiscoverOpportunitiesFragment extends Fragment {
         city.setAdapter(cityAdapter);
 
         state = filterDialog.findViewById(R.id.spnState);
-        ArrayAdapter<String> stateAdapter = new ArrayAdapter<String>(
+        ArrayAdapter<String> stateAdapter = new ArrayAdapter<>(
                 getContext(),
                 android.R.layout.simple_spinner_item,
                 states);
