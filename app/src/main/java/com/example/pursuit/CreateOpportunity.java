@@ -53,8 +53,6 @@ public class CreateOpportunity extends AppCompatActivity implements AdapterView.
     ArrayList<String> keywordArrayList;
     String selectedState;
 
-    BottomNavigationView bottomNavigation;
-
     CompanyOpportunity newOpportunity;
 
     Company currentCompany;
@@ -67,12 +65,6 @@ public class CreateOpportunity extends AppCompatActivity implements AdapterView.
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_opportunity);
-
-        bottomNavigation = findViewById(R.id.bottom_navigation);
-        bottomNavigation.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
-
-        bottomNavigation.getMenu().removeItem(R.id.navigation_messages);
-        bottomNavigation.getMenu().removeItem(R.id.navigation_discover);
 
         opportunityState = findViewById(R.id.spinnerSate);
         ArrayAdapter<CharSequence> stateAdapter = ArrayAdapter.createFromResource(this, R.array.states, android.R.layout.simple_spinner_item);
@@ -101,6 +93,7 @@ public class CreateOpportunity extends AppCompatActivity implements AdapterView.
         dbref.child("Companies").child(currentCompany.getId()).child("opportunities").setValue(currentCompanyOpportunities);
         currentCompany.setOpportunities(currentCompanyOpportunities);
         ((PursuitApplication) this.getApplication()).setCurrentCompany(currentCompany);
+        ((PursuitApplication) this.getApplication()).setCurrentRole("Employee");
     }
 
     ValueEventListener keywordListener = new ValueEventListener() {
@@ -148,35 +141,6 @@ public class CreateOpportunity extends AppCompatActivity implements AdapterView.
     }
 
     /* ******END DATABASE****** */
-
-    BottomNavigationView.OnNavigationItemSelectedListener navigationItemSelectedListener =
-            new BottomNavigationView.OnNavigationItemSelectedListener() {
-                @Override public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                    switch (item.getItemId()) {
-                        case R.id.navigation_home:
-                            Intent i0 = new Intent(CreateOpportunity.this, LandingActivity.class);
-                            startActivity(i0);
-                            finish();
-                            return true;
-                        case R.id.navigation_discover:
-                            Intent discover = new Intent(CreateOpportunity.this, DiscoverActivity.class);
-                            startActivity(discover);
-                            finish();
-                            return true;
-                        case R.id.navigation_messages:
-                            Intent i1 = new Intent(CreateOpportunity.this, ConversationsActivity.class);
-                            startActivity(i1);
-                            finish();
-                            return true;
-                        case R.id.navigation_profile:
-                            Intent i2 = new Intent(CreateOpportunity.this, CompanyProfileActivity.class);
-                            startActivity(i2);
-                            finish();
-                            return true;
-                    }
-                    return false;
-                }
-            };
 
     private void setCurrentUser() {
         currentRole = ((PursuitApplication) this.getApplicationContext()).getRole();

@@ -37,8 +37,6 @@ public class ViewOpportunity extends AppCompatActivity {
     TextView opportunityDescription, opportunityRequirements;
     Button approveBtn;
 
-    BottomNavigationView bottomNavigation;
-
     Company currentCompany;
     Employee currentEmployee;
     String currentRole;
@@ -63,8 +61,6 @@ public class ViewOpportunity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_opportunity);
-        bottomNavigation = findViewById(R.id.bottom_navigation);
-        bottomNavigation.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
 
         setCurrentUser();
         addKeywordsDialog = new Dialog(this);

@@ -422,7 +422,7 @@ public class CompanyProfileActivity extends AppCompatActivity{
     public void inviteEmployee(View v) {
         Log.d(TAG, "inviting");
 
-        if (currentRole.equals("Employee")) {
+        if (currentRole.equals("Employee") && currentEmployee.getAdmin() == 0) {
             Toast.makeText(v.getContext(), "Only Admin Has Access To Invite", Toast.LENGTH_SHORT).show();
         } else {
             Intent intent = new Intent(this, InviteEmployeeActivity.class);
@@ -436,7 +436,7 @@ public class CompanyProfileActivity extends AppCompatActivity{
     }
 
     public void editPicture(View v) {
-        if (currentRole.equals("Employee")) {
+        if (currentRole.equals("Employee") && currentEmployee.getAdmin() == 0) {
             Toast.makeText(v.getContext(), "Only Admin Has Profile Picture Edit Rights", Toast.LENGTH_SHORT).show();
         } else {
             Intent intent = new Intent();

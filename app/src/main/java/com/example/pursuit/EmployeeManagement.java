@@ -30,7 +30,6 @@ import java.util.ArrayList;
 
 public class EmployeeManagement extends AppCompatActivity {
 
-    BottomNavigationView bottomNavigation;
     Company currentCompany;
     Employee currentEmployee;
     String currentRole;
@@ -48,11 +47,6 @@ public class EmployeeManagement extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_emploee_management);
-        bottomNavigation = findViewById(R.id.bottom_navigation);
-        bottomNavigation.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
-
-        bottomNavigation.getMenu().removeItem(R.id.navigation_messages);
-        bottomNavigation.getMenu().removeItem(R.id.navigation_discover);
 
         setCurrentUser();
         deleteDialog = new Dialog(this);
@@ -108,6 +102,9 @@ public class EmployeeManagement extends AppCompatActivity {
     private void buildRecyclerView() {
         viewEmployees = findViewById(R.id.rcycCompanyEmployees);
         viewEmployees.setHasFixedSize(false);
+        if (companyEmployees == null) {
+            companyEmployees = new ArrayList<>();
+        }
         mLayoutManager = new LinearLayoutManager(this);
         if (currentRole.equals("Company")) {
             mAdapter = new ManageEmployeeAdapter(companyEmployees, null);

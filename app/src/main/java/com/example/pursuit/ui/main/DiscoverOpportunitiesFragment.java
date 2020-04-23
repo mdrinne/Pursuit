@@ -24,7 +24,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.pursuit.R;
-import com.example.pursuit.StudentViewOpportunity;
+import com.example.pursuit.NonOwnerViewOpportunity;
 import com.example.pursuit.adapters.StudentOpportunityAdapter;
 import com.example.pursuit.models.CompanyOpportunity;
 import com.example.pursuit.models.Keyword;
@@ -466,7 +466,7 @@ public class DiscoverOpportunitiesFragment extends Fragment {
     }
 
     public void viewOpportunity(int position) {
-        Intent intent = new Intent(getActivity(), StudentViewOpportunity.class);
+        Intent intent = new Intent(getActivity(), NonOwnerViewOpportunity.class);
         intent.putExtra("EXTRA_OPPORTUNITY_ID", filteredResults.get(position).getId());
         startActivity(intent);
     }

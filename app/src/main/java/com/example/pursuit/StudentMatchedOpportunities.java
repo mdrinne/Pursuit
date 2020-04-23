@@ -378,7 +378,7 @@ public class StudentMatchedOpportunities extends AppCompatActivity {
     }
 
     public void viewOpportunity(int position) {
-        Intent intent = new Intent(this, StudentViewOpportunity.class);
+        Intent intent = new Intent(this, NonOwnerViewOpportunity.class);
         intent.putExtra("EXTRA_OPPORTUNITY_ID", filteredResults.get(position).getId());
         startActivity(intent);
     }

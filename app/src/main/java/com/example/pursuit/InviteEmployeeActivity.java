@@ -42,8 +42,6 @@ public class InviteEmployeeActivity extends AppCompatActivity {
     private final String appPassword = "Cs495spring2020";
     String body;
 
-    BottomNavigationView bottomNavigation;
-
     EmployeeInvite newInvite;
 
     View view;
@@ -52,13 +50,8 @@ public class InviteEmployeeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_invite_employee);
-        bottomNavigation = findViewById(R.id.bottom_navigation);
-        bottomNavigation.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
 
         initializeCurrentCompany();
-
-        bottomNavigation.getMenu().removeItem(R.id.navigation_messages);
-        bottomNavigation.getMenu().removeItem(R.id.navigation_discover);
 
         dbRef = FirebaseDatabase.getInstance().getReference();
     }
