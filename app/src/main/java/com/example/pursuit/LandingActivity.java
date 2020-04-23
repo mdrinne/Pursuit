@@ -57,9 +57,17 @@ public class LandingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_landing);
         bottomNavigation = findViewById(R.id.bottom_navigation);
+        bottomNavigation.getMenu().removeGroup(R.id.navigation_messages);
         bottomNavigation.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
 
         findAndSetCurrentUser();
+
+        if (currentRole.equals("Company")) {
+            Log.d(TAG, "current role is company");
+            bottomNavigation.getMenu().removeItem(R.id.navigation_messages);
+            bottomNavigation.getMenu().removeItem(R.id.navigation_discover);
+        }
+
         dbRef = FirebaseDatabase.getInstance().getReference();
 
         getShares();

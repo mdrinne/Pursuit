@@ -57,6 +57,9 @@ public class InviteEmployeeActivity extends AppCompatActivity {
 
         initializeCurrentCompany();
 
+        bottomNavigation.getMenu().removeItem(R.id.navigation_messages);
+        bottomNavigation.getMenu().removeItem(R.id.navigation_discover);
+
         dbRef = FirebaseDatabase.getInstance().getReference();
     }
 
