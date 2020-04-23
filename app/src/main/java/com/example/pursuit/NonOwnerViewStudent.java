@@ -1,6 +1,7 @@
 package com.example.pursuit;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.ImageView;
@@ -13,6 +14,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pursuit.adapters.StudentOpportunityKeywordAdapter;
 import com.example.pursuit.models.Student;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -20,7 +23,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageException;
 import com.google.firebase.storage.StorageReference;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -55,6 +61,7 @@ public class NonOwnerViewStudent extends AppCompatActivity {
         bottomNavigation.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
 
         dbref = FirebaseDatabase.getInstance().getReference();
+        sref = FirebaseStorage.getInstance().getReference();
 
         Query studentQuery = dbref.child("Students").orderByKey().equalTo(getIntent().getStringExtra("EXTRA_STUDENT_ID"));
         studentQuery.addListenerForSingleValueEvent(studentListener);
@@ -107,7 +114,16 @@ public class NonOwnerViewStudent extends AppCompatActivity {
     }
 
     private void loadStudentProfilePic() {
-        
+        Query hasProfilePicQuery = dbref.child("ProfilePicture").orderByChild(currentStudent.getId()).equalTo(1);
+        hasProfilePicQuery.addListenerForSingleValueEvent(hasProfilePicListener);
+    }
+
+    private void setProfilePicture() {
+        if (hasPicture == 1) {
+            downloadStudentProfilePic();
+        } else {
+            studentProfilePic.setImageDrawable(getResources().getDrawable(R.drawable.ic_add_a_photo));
+        }
     }
 
     /* ********DATABASE******** */
@@ -128,6 +144,43 @@ public class NonOwnerViewStudent extends AppCompatActivity {
 
         }
     };
+
+    ValueEventListener hasProfilePicListener = new ValueEventListener() {
+        @Override
+        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+            if (dataSnapshot.exists()) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    hasPicture = 1;
+                }
+            }
+            setProfilePicture();
+        }
+
+        @Override
+        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+        }
+    };
+
+    private void downloadStudentProfilePic() {
+        StorageReference profilePic = sref.child("images").child("StudentProfilePictures").child(currentStudent.getId());
+        profilePic.getDownloadUrl()
+                .addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        Picasso.get().load(uri.toString()).into(studentProfilePic);
+
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        int errorCode = ((StorageException) e).getErrorCode();
+                        if (errorCode == StorageException.ERROR_OBJECT_NOT_FOUND) {
+                        }
+                    }
+                });
+    }
 
     /* ******END DATABASE****** */
 
