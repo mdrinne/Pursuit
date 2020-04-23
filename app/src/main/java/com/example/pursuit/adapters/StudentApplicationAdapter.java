@@ -26,6 +26,10 @@ public class StudentApplicationAdapter extends RecyclerView.Adapter<StudentAppli
         void onCardClick(int position);
     }
 
+    public void setStudentApplicationOnItemClickListener(StudentApplicationOnItemClickListener listener) {
+        mListener = listener;
+    }
+
     public class StudentApplicationViewHolder extends RecyclerView.ViewHolder {
         TextView companyName, position, description, with, city, state;
         ImageView imgDelete;

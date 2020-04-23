@@ -328,6 +328,7 @@
                 android:layout_marginTop="15dp"
                 android:background="@drawable/button_accent1"
                 android:fontFamily="@font/roboto_medium"
+                android:onClick="viewApplications"
                 android:text="@string/strApplications"
                 android:textColor="@color/colorPrimary"
                 app:layout_constraintEnd_toEndOf="@+id/btnAddInterests"

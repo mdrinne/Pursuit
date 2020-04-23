@@ -108,6 +108,9 @@ public class EmployeeManagement extends AppCompatActivity {
     private void buildRecyclerView() {
         viewEmployees = findViewById(R.id.rcycCompanyEmployees);
         viewEmployees.setHasFixedSize(false);
+        if (companyEmployees == null) {
+            companyEmployees = new ArrayList<>();
+        }
         mLayoutManager = new LinearLayoutManager(this);
         if (currentRole.equals("Company")) {
             mAdapter = new ManageEmployeeAdapter(companyEmployees, null);

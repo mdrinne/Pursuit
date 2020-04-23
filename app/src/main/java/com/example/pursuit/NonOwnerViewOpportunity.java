@@ -153,6 +153,8 @@ public class NonOwnerViewOpportunity extends AppCompatActivity {
     };
 
     private void updateDB() {
+        currentStudent.setAppliedTo(appliedTo);
+        ((PursuitApplication) this.getApplication()).setCurrentStudent(currentStudent);
         dbref.child("Students").child(currentStudent.getId()).child("appliedTo").setValue(appliedTo);
         Query companyQuery = dbref.child("Companies").orderByKey().equalTo(currentOpportunity.getCompanyID());
         companyQuery.addListenerForSingleValueEvent(companyListener);
@@ -240,7 +242,7 @@ public class NonOwnerViewOpportunity extends AppCompatActivity {
                             finish();
                             return true;
                         case R.id.navigation_discover:
-                            Intent discover = new Intent(StudentViewOpportunity.this, DiscoverActivity.class);
+                            Intent discover = new Intent(NonOwnerViewOpportunity.this, DiscoverActivity.class);
                             startActivity(discover);
                             finish();
                             return true;
