@@ -55,6 +55,7 @@
         <activity android:name=".StudentViewEmployees" />
         <activity android:name=".OpportunityMatchedStudents" />
         <activity android:name=".NonOwnerViewStudent" />
+        <activity android:name=".DiscoverActivity"/>
 
         <meta-data
             android:name="preloaded_fonts"
