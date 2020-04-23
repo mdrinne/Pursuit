@@ -421,7 +421,20 @@ public class ViewOpportunity extends AppCompatActivity {
         currentOpportunity.setRequirements(editRequirements.getText().toString());
 
         //Submit changes to firebase
+        //dbref.child("Companies").child(currentCompany.getId()).child("opportunities").child(currentOpportunity.getId()).setValue(currentOpportunity);
+        ArrayList<CompanyOpportunity> companyOpps = currentCompany.getOpportunities();
+        for (int i = 0; i < companyOpps.size(); i++) {
+            if (companyOpps.get(i).getId().equals(currentOpportunity.getId())) {
+                companyOpps.remove(companyOpps.get(i));
+                break;
+            }
+        }
+        companyOpps.add(currentOpportunity);
+        currentCompany.setOpportunities(companyOpps);
+
+        dbref.child("Companies").child(currentCompany.getId()).setValue(currentCompany);
         dbref.child("CompanyOpportunities").child(currentOpportunity.getId()).setValue(currentOpportunity);
+        ((PursuitApplication) this.getApplication()).setCurrentCompany(currentCompany);
 
         exitOpportunityEditor(view);
     }
@@ -458,7 +471,6 @@ public class ViewOpportunity extends AppCompatActivity {
         editPosition.setVisibility(View.GONE);
 
         //Update TextViews
-        //currentOpportunity = ((PursuitApplication) this.getApplication()).getCurrentOpportunity();
         opportunityDescription.setText(currentOpportunity.getDescription());
         opportunityRequirements.setText(currentOpportunity.getRequirements());
         opportunityWith.setText(currentOpportunity.getWithWho());
