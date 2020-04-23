@@ -18,8 +18,8 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toTopOf="@id/companies_recycler"
-            android:hint="@string/search_for_other_users"
-            android:autofillHints="@string/search_for_other_users"
+            android:hint="@string/search_for_companies"
+            android:autofillHints="@string/search_for_companies"
             android:inputType="text"/>
 
         <androidx.recyclerview.widget.RecyclerView
