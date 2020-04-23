@@ -71,7 +71,7 @@ public class ViewOpportunity extends AppCompatActivity {
 
         dbref = FirebaseDatabase.getInstance().getReference();
 
-        Query getOpportunityQuery = dbref.child("CompanyOpportunities").child(currentCompany.getId()).orderByKey().equalTo(getIntent().getStringExtra("EXTRA_OPPORTUNITY_ID"));
+        Query getOpportunityQuery = dbref.child("CompanyOpportunities").orderByKey().equalTo(getIntent().getStringExtra("EXTRA_OPPORTUNITY_ID"));
         getOpportunityQuery.addListenerForSingleValueEvent(getOpportunityListener);
 
     }

@@ -24,6 +24,11 @@
     <string name="strUsernameEmail">Username/Email</string>
     <string name="strCompanyDescription">Company Description</string>
     <string name="strCompanyName">Company Name</string>
+    <string name="txtUniversityColon">University: </string>
+    <string name="txtMajorColon">Major: </string>
+    <string name="txtMinorColon">Minor: </string>
+    <string name="txtGPAColon">GPA: </string>
+    <string name="txtEditProfile">Edit Profile</string>
     <string name="strCompanyEmail">Company Email</string>
     <string name="strInviteEmployee">Invite Employee</string>
     <string name="strEmployeeEmail">Employee Email</string>

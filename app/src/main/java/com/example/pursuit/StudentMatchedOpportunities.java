@@ -160,7 +160,7 @@ public class StudentMatchedOpportunities extends AppCompatActivity {
         mAdapter.setStudentOpportunityOnItemClickListener(new StudentOpportunityAdapter.StudentOpportunityOnItemClickListener() {
             @Override
             public void onCardClick(int position) {
-
+                viewOpportunity(position);
             }
         });
     }
@@ -376,6 +376,12 @@ public class StudentMatchedOpportunities extends AppCompatActivity {
         }
 
         mAdapter.notifyDataSetChanged();
+    }
+
+    public void viewOpportunity(int position) {
+        Intent intent = new Intent(this, StudentViewOpportunity.class);
+        intent.putExtra("EXTRA_OPPORTUNITY_ID", filteredResults.get(position).getId());
+        startActivity(intent);
     }
 
 }
