@@ -17,7 +17,6 @@
             android:name=".registrationRedesign"
             android:label="@string/title_activity_registration_redesign"
             android:theme="@style/AppTheme.NoActionBar" />
-            android:name=".DiscoverActivity"
         <activity android:name=".CreateOpportunity" />
         <activity android:name=".viewCompaniesActivity" />
         <activity android:name=".MessagesActivity" />
