@@ -113,6 +113,8 @@ public class CompanyProfileActivity extends AppCompatActivity{
         setCurrentUser();
         deleteDialog = new Dialog(this);
 
+        if (currentRole.equals("Employee") && currentEmployee.getAdmin() == 0) btnEditCompanyProfile.setVisibility(View.GONE);
+
         populateTextFields();
 
         dbref = FirebaseDatabase.getInstance().getReference();
