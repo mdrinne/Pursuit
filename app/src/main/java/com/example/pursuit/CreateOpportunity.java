@@ -101,6 +101,7 @@ public class CreateOpportunity extends AppCompatActivity implements AdapterView.
         dbref.child("Companies").child(currentCompany.getId()).child("opportunities").setValue(currentCompanyOpportunities);
         currentCompany.setOpportunities(currentCompanyOpportunities);
         ((PursuitApplication) this.getApplication()).setCurrentCompany(currentCompany);
+        ((PursuitApplication) this.getApplication()).setCurrentRole("Employee");
     }
 
     ValueEventListener keywordListener = new ValueEventListener() {
