@@ -58,6 +58,13 @@ public class ConversationsActivity extends AppCompatActivity
         bottomNavigation.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
 
         findAndSetCurrentUser();
+
+        if (currentRole.equals("Company")) {
+            Log.d(TAG, "current role is company");
+            bottomNavigation.getMenu().removeItem(R.id.navigation_messages);
+            bottomNavigation.getMenu().removeItem(R.id.navigation_discover);
+        }
+
         dbRef = FirebaseDatabase.getInstance().getReference();
 
         getMyConversations();
@@ -218,6 +225,11 @@ public class ConversationsActivity extends AppCompatActivity
                     case R.id.navigation_home:
                         Intent home = new Intent(ConversationsActivity.this, LandingActivity.class);
                         startActivity(home);
+                        finish();
+                        return true;
+                    case R.id.navigation_discover:
+                        Intent discover = new Intent(ConversationsActivity.this, DiscoverActivity.class);
+                        startActivity(discover);
                         finish();
                         return true;
                     case R.id.navigation_messages:

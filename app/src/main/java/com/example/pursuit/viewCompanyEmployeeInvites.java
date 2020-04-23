@@ -6,6 +6,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
@@ -50,6 +51,9 @@ public class viewCompanyEmployeeInvites extends AppCompatActivity {
 
         initializeCurrentCompany();
         initializeCurrentRole();
+
+        bottomNavigation.getMenu().removeItem(R.id.navigation_messages);
+        bottomNavigation.getMenu().removeItem(R.id.navigation_discover);
 
         String newTitle = "Pursuit (" + currentRole + ")";
         setTitle(newTitle);
@@ -101,6 +105,11 @@ public class viewCompanyEmployeeInvites extends AppCompatActivity {
                         case R.id.navigation_home:
                             Intent i0 = new Intent(viewCompanyEmployeeInvites.this, LandingActivity.class);
                             startActivity(i0);
+                            finish();
+                            return true;
+                        case R.id.navigation_discover:
+                            Intent discover = new Intent(viewCompanyEmployeeInvites.this, DiscoverActivity.class);
+                            startActivity(discover);
                             finish();
                             return true;
                         case R.id.navigation_messages:

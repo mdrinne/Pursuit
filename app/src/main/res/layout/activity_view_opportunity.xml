@@ -226,7 +226,8 @@
             android:background="@color/navbar"
             app:itemIconTint="@color/white"
             app:itemTextColor="@color/white"
-            app:menu="@menu/bottom_navigation_menu" />
+            app:menu="@menu/bottom_navigation_menu"
+            app:labelVisibilityMode="labeled"/>
 
     </FrameLayout>
 
