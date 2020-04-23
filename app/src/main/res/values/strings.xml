@@ -266,4 +266,5 @@
     <string name="search_for_other_users">Search by Name, Username, University, or Major</string>
     <string name="follow">follow</string>
     <string name="strApply">Apply</string>
+    <string name="strApplications">Applications</string>
 </resources>

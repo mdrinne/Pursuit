@@ -18,13 +18,13 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.625">
+        app:layout_constraintVertical_bias="0.0">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingBottom="50dp">
+            android:paddingBottom="60dp">
 
             <ImageView
                 android:id="@+id/imgStudentProfilePic"
@@ -214,9 +214,9 @@
                 android:layout_marginTop="16dp"
                 android:background="@drawable/button_accent1"
                 android:fontFamily="@font/roboto_medium"
+                android:onClick="editProfile"
                 android:text="@string/txtEditProfile"
                 android:textColor="@color/colorPrimary"
-                android:onClick="editProfile"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/txtStudentGPAHardcode"
                 app:layout_constraintTop_toBottomOf="@+id/txtStudentGPA" />
@@ -284,9 +284,9 @@
                 android:layout_marginTop="16dp"
                 android:background="@drawable/button_accent1"
                 android:fontFamily="@font/roboto_medium"
+                android:onClick="submitChanges"
                 android:text="@string/strConfirm"
                 android:textColor="@color/colorPrimary"
-                android:onClick="submitChanges"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/txtStudentGPAHardcode"
                 app:layout_constraintTop_toBottomOf="@id/editStudentGPA" />
@@ -314,12 +314,25 @@
                 android:layout_marginTop="16dp"
                 android:background="@drawable/button_accent1"
                 android:fontFamily="@font/roboto_medium"
+                android:onClick="exitProfileEditor"
                 android:text="@string/strCancel"
                 android:textColor="@color/colorPrimary"
-                android:onClick="exitProfileEditor"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/txtStudentGPAHardcode"
                 app:layout_constraintTop_toBottomOf="@+id/btnConfirm" />
+
+            <Button
+                android:id="@+id/btnApplications"
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/button_accent1"
+                android:fontFamily="@font/roboto_medium"
+                android:text="@string/strApplications"
+                android:textColor="@color/colorPrimary"
+                app:layout_constraintEnd_toEndOf="@+id/btnAddInterests"
+                app:layout_constraintStart_toStartOf="@+id/btnAddInterests"
+                app:layout_constraintTop_toBottomOf="@+id/btnAddInterests" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
