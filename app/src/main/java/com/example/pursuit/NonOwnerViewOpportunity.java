@@ -239,6 +239,11 @@ public class NonOwnerViewOpportunity extends AppCompatActivity {
                             startActivity(i0);
                             finish();
                             return true;
+                        case R.id.navigation_discover:
+                            Intent discover = new Intent(StudentViewOpportunity.this, DiscoverActivity.class);
+                            startActivity(discover);
+                            finish();
+                            return true;
                         case R.id.navigation_messages:
                             Intent i1 = new Intent(NonOwnerViewOpportunity.this, ConversationsActivity.class);
                             startActivity(i1);

@@ -5,6 +5,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
+        android:windowSoftInputMode="adjustPan|adjustResize"
         android:name=".PursuitApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -13,15 +14,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".DiscoverActivity"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:name=".registrationRedesign"
+            android:label="@string/title_activity_registration_redesign"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".CreateOpportunity" />
         <activity android:name=".viewCompaniesActivity" />
         <activity android:name=".MessagesActivity" />
-        <activity
-            android:name=".ViewOpportunities"
-            android:label="@string/title_activity_view_opportunities"
-            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".StudentProfileActivity" />
         <activity android:name=".aboutPursuitActivity" />
         <activity android:name=".LandingActivity" />
@@ -52,6 +50,9 @@
         <activity android:name=".OpportunityMatchedStudents" />
         <activity android:name=".NonOwnerViewStudent" />
         <activity android:name=".StudentApplications" />
+
+        <activity android:name=".DiscoverActivity"/>
+
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
