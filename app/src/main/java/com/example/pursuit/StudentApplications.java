@@ -1,5 +1,7 @@
 package com.example.pursuit;
 
+import android.os.Bundle;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -23,5 +25,10 @@ public class StudentApplications extends AppCompatActivity {
     private RecyclerView viewApplications;
     private StudentApplicationAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
-    
+
+//    @Override
+//    protected void onCreate(Bundle savedInstanceState) {
+//        super
+//    }
+
 }
