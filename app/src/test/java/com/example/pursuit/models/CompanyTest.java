@@ -1,11 +1,14 @@
 package com.example.pursuit.models;
 
 import org.junit.Test;
+
+import java.util.ArrayList;
+
 import static org.junit.Assert.*;
 
 public class CompanyTest extends Company {
-
-    private Company company1 = new Company("1", "name", "test@email.com", "testpw", "field", "descript");
+    ArrayList<CompanyOpportunity> y = new ArrayList<CompanyOpportunity>(0);
+    private Company company1 = new Company("1", "name", "test@email.com", "testpw", "field", "descript", y);
 
     @Test
     public void getIdTest() { assert(company1.getId().equals("1"));
