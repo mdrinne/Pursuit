@@ -52,7 +52,7 @@ public class CreateOpportunity extends AppCompatActivity implements AdapterView.
     String[] keywordArray;
     ArrayList<String> keywordArrayList;
     String selectedState;
-    
+
     CompanyOpportunity newOpportunity;
 
     Company currentCompany;
