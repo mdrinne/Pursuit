@@ -57,7 +57,6 @@ public class LandingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_landing);
         bottomNavigation = findViewById(R.id.bottom_navigation);
-        bottomNavigation.getMenu().removeGroup(R.id.navigation_messages);
         bottomNavigation.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
 
         findAndSetCurrentUser();
