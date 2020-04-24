@@ -1,6 +1,7 @@
 package com.example.pursuit;
 
 import com.example.pursuit.models.Company;
+import com.example.pursuit.models.CompanyOpportunity;
 import com.example.pursuit.models.Employee;
 import com.example.pursuit.models.Student;
 
@@ -13,8 +14,9 @@ import static org.junit.Assert.*;
 public class PursuitApplicationTest {
 
     ArrayList<String> x = new ArrayList<String>(0);
+    ArrayList<CompanyOpportunity> y = new ArrayList<CompanyOpportunity>(0);
     Student testStudent = new Student("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", x);
-    Company testCompany = new Company("1", "2", "3", "4", "5", "6");
+    Company testCompany = new Company("1", "2", "3", "4", "5", "6", y);
     Employee testEmployee = new Employee("1", "2", "3", "4", "5", "6", "7", "8", "9", "10");
     String testRole = "role";
 

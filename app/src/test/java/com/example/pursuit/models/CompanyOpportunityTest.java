@@ -9,8 +9,9 @@ import static org.junit.Assert.*;
 public class CompanyOpportunityTest {
 
     ArrayList<String> x = new ArrayList<String>(0);
-    private CompanyOpportunity newOp = new CompanyOpportunity("1", "2", "3", "4", "5", "6", "7", "8", x, 1, "9");
-    private Company newCompany = new Company("id", "name", "email", "pw", "field", "description");
+    ArrayList<CompanyOpportunity> y = new ArrayList<CompanyOpportunity>(0);
+    private CompanyOpportunity newOp = new CompanyOpportunity("1", "2", "3", "4", "5", "6", "7", "8", x, 1, "9", "");
+    private Company newCompany = new Company("id", "name", "email", "pw", "field", "description", y);
 
     @Test
     public void getIdTest() {
