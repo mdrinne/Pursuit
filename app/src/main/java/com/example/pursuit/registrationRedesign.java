@@ -430,7 +430,7 @@ public class registrationRedesign extends FragmentActivity {   //AppCompatActivi
             Toast.makeText(view.getContext(), "All Fields are Required", Toast.LENGTH_SHORT).show();
         } else {
 
-            Query companyCodeQuery = dbref.child("Companies").orderByChild("id").equalTo(toString(companyCode));
+            Query companyCodeQuery = mRef.child("Companies").orderByChild("id").equalTo(toString(companyCode));
 
             if (companyCodeQuery == null) {
                 Log.d(TAG, "company query is null");
@@ -449,7 +449,7 @@ public class registrationRedesign extends FragmentActivity {   //AppCompatActivi
         } else {
             Log.d(TAG, "Company exists");
 
-            Query inviteCodeQuery = dbref.child("EmployeeInvites").child(toString(companyCode)).orderByChild("code").equalTo(toString(invitationCode));
+            Query inviteCodeQuery = mRef.child("EmployeeInvites").child(toString(companyCode)).orderByChild("code").equalTo(toString(invitationCode));
 
             inviteCodeQuery.addListenerForSingleValueEvent(inviteCodeListener);
         }
@@ -696,7 +696,7 @@ public class registrationRedesign extends FragmentActivity {   //AppCompatActivi
         gpa = findViewById(R.id.txtStudentGPA2);
         bio = findViewById(R.id.txtBio);
         email = findViewById(R.id.txtEmail);
-        username = findViewById(R.id.txtUsername);
+        username = findViewById(R.id.txtStudentUsername);
         studentPassword = findViewById(R.id.txtPassword);
         studentReEnterPassword = findViewById(R.id.txtReEnterPassword);
         interestKeywords = findViewById(R.id.txtInterests);

@@ -40,6 +40,8 @@ public class CreateOpportunity extends AppCompatActivity implements AdapterView.
 
     DatabaseReference dbref;
 
+    int wasEmp;
+
     View view;
     EditText opportunityPosition;
     EditText opportunityWithWho;
@@ -93,7 +95,9 @@ public class CreateOpportunity extends AppCompatActivity implements AdapterView.
         dbref.child("Companies").child(currentCompany.getId()).child("opportunities").setValue(currentCompanyOpportunities);
         currentCompany.setOpportunities(currentCompanyOpportunities);
         ((PursuitApplication) this.getApplication()).setCurrentCompany(currentCompany);
-        ((PursuitApplication) this.getApplication()).setCurrentRole("Employee");
+        if (wasEmp == 1) {
+            ((PursuitApplication) this.getApplication()).setCurrentRole("Employee");
+        }
     }
 
     ValueEventListener keywordListener = new ValueEventListener() {
@@ -147,6 +151,9 @@ public class CreateOpportunity extends AppCompatActivity implements AdapterView.
         currentCompany = ((PursuitApplication) this.getApplicationContext()).getCurrentCompany();
         if (currentRole.equals("Employee")) {
             currentEmployee = ((PursuitApplication) this.getApplicationContext()).getCurrentEmployee();
+            wasEmp = 1;
+        } else {
+            wasEmp = 0;
         }
     }
 
