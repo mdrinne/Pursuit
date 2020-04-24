@@ -273,5 +273,6 @@
     <string name="strApply">Apply</string>
     <string name="strApplications">Applications</string>
     <string name="search_for_companies">Search by company name or field</string>
+    <string name="strApplicants">Applicants</string>
 
 </resources>

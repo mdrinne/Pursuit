@@ -50,7 +50,7 @@
         <activity android:name=".OpportunityMatchedStudents" />
         <activity android:name=".NonOwnerViewStudent" />
         <activity android:name=".StudentApplications" />
-
+        <activity android:name=".ViewApplicants" />
         <activity android:name=".DiscoverActivity"/>
 
         <meta-data
