@@ -397,7 +397,7 @@ public class MainActivity extends AppCompatActivity {
     public void registerUser(View v) {
         Log.d(TAG, "register");
 
-        Intent intent = new Intent(this, registrationRedesign.class);
+        Intent intent = new Intent(this, RegistrationActivity.class);
         startActivity(intent);
     }
 }
