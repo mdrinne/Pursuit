@@ -208,6 +208,18 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/btnAddKeywords" />
 
+            <Button
+                android:id="@+id/btnApplicants"
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/button_accent1"
+                android:onClick="applicants"
+                android:text="@string/strApplicants"
+                app:layout_constraintEnd_toEndOf="@+id/btnPotentialCandidates"
+                app:layout_constraintStart_toStartOf="@+id/btnPotentialCandidates"
+                app:layout_constraintTop_toBottomOf="@+id/btnPotentialCandidates" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 

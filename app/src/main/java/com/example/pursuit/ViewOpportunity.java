@@ -82,6 +82,11 @@ public class ViewOpportunity extends AppCompatActivity {
             btnPotentialCandidate.setVisibility(View.GONE);
         }
 
+        Button btnApplicants = findViewById(R.id.btnApplicants);
+        if (currentOpportunity.getApplicants() == null) {
+            btnApplicants.setVisibility(View.GONE);
+        }
+
 
         opportunityPosition = findViewById(R.id.txtMajor);
         opportunityPosition.setText(currentOpportunity.getPosition());
@@ -337,5 +342,11 @@ public class ViewOpportunity extends AppCompatActivity {
                     return false;
                 }
             };
+
+    public void applicants(View v) {
+        Intent intent = new Intent(this, ViewApplicants.class);
+        intent.putExtra("EXTRA_OPPORTUNITY_ID", currentOpportunity.getId());
+        startActivity(intent);
+    }
 
 }
